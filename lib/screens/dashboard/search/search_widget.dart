@@ -26,54 +26,59 @@ class SearchWidget {
 
   //Occupied Container
   occUnoccContainer({String? icon, String? titleUnit, String? units}) {
-    return Container(
-      width: Get.width / 2.2,
-      height: 90.h,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(color: lightBorderGrey)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
-            child: Row(
-              children: [
-                Image.asset(
-                  icon!,
-                  height: 20.h,
-                  width: 20.w,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  titleUnit!,
-                  style: TextStyle(fontSize: 14.sp, color: black),
-                ),
-              ],
+    return Expanded(
+      child: Container(
+        // width: Get.width / 2.9,
+        // constraints: BoxConstraints(minWidth:150.w, ),
+        height: 90.h,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(color: lightBorderGrey)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
+              child: Row(
+                children: [
+                  Image.asset(
+                    icon!,
+                    height: 20.h,
+                    width: 20.w,
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Expanded(
+                    child: Text(
+                      titleUnit!,
+                      style: TextStyle(fontSize: 14.sp, color: black),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Divider(
-            color: lightBorderGrey,
-            height: 1.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-            child: Text(
-              units!,
-              style: TextStyle(
-                  fontSize: 20.sp, color: black, fontWeight: FontWeight.w700),
+            Divider(
+              color: lightBorderGrey,
+              height: 1.h,
             ),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+              child: Text(
+                units!,
+                style: TextStyle(
+                    fontSize: 20.sp, color: black, fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  unitList(
-
-      {
+  unitList({
     String? unitTitle,
     String? price,
     String? availablityTitle,
@@ -89,9 +94,7 @@ class SearchWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-          searchCntl.onItemTap(
-
-          );
+          searchCntl.onItemTap();
         },
         child: Container(
           height: 120.h,

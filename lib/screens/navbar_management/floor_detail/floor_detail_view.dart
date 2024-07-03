@@ -5,7 +5,7 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_controller.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_widget.dart';
 
-import '../../../common/constants.dart';
+
 
 class FloorDetailView extends StatelessWidget {
    FloorDetailView({super.key});

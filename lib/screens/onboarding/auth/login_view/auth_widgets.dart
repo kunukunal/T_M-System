@@ -115,7 +115,7 @@ class AuthWidget {
                     );
                   },
                   text: 'Register Now',
-                  height: 37.h)
+                  height: 40.h)
             ],
           ),
         ),

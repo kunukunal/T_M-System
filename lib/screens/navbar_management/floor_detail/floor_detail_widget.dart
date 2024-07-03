@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/floor/floor_controller.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_controller.dart';
+import 'package:tanent_management/screens/navbar_management/floor_detail/unit_history.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/text_styles.dart';
 
-class FloorDetailWidget{
+class FloorDetailWidget {
   appBar() {
     return AppBar(
       leading: InkWell(
@@ -21,30 +22,28 @@ class FloorDetailWidget{
         ),
       ),
       centerTitle: true,
-      title: Text('Building A - Floor 1', style: CustomStyles.otpStyle050505W700S16),
+      title: Text('Building A - Floor 1',
+          style: CustomStyles.otpStyle050505W700S16),
     );
   }
 
-  unitList(
-
-      {
-        String? unitTitle,
-        String? price,
-        String? availablityTitle,
-        String? icon,
-        String? buildingIcon,
-        String? property,
-        String? building,
-        String? floor,
-        bool? isOccupied,
-
-      }) {
+  unitList({
+    String? unitTitle,
+    String? price,
+    String? availablityTitle,
+    String? icon,
+    String? buildingIcon,
+    String? property,
+    String? building,
+    String? floor,
+    bool? isOccupied,
+  }) {
     final floorCntrl = Get.find<FloorDetailController>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-floorCntrl.onBuildingTap();
+          floorCntrl.onBuildingTap();
         },
         child: Container(
           height: 120.h,
@@ -113,56 +112,69 @@ floorCntrl.onBuildingTap();
                             ),
                             isOccupied!
                                 ? RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Occupied From July/2024 ',
-                                    style: TextStyle(
-                                      color: red,
-                                      fontSize: 12.sp,
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Occupied From July/2024 ',
+                                          style: TextStyle(
+                                            color: red,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '\n John Wick',
+                                          style: TextStyle(
+                                              color: black, fontSize: 12.sp),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : FittedBox(
+                                    child: Text(
+                                      availablityTitle!,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.sp,
+                                          color: green),
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: '\n John Wick',
-                                    style: TextStyle(
-                                        color: black, fontSize: 12.sp),
-                                  ),
-                                ],
-                              ),
-                            )
-                                : FittedBox(
-                                  child: Text(
-
-                                                                availablityTitle!,
-                                                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12.sp,
-                                    color: green),
-                                                              ),
-                                ),
                             SizedBox(
-                              width:isOccupied!?2.w: 17.w,
+                              width: isOccupied! ? 2.w : 17.w,
                             ),
-
-                            isOccupied!?Container(height: 20.h,width: 20.w,):    Image.asset(
-                              'assets/icons/timer.png',
-                              width: 20.w,
-                              height: 20.h,
-
-                            ),
+                            isOccupied!
+                                ? Container(
+                                    height: 20.h,
+                                    width: 20.w,
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => UnitHistory());
+                                    },
+                                    child: Image.asset(
+                                      'assets/icons/timer.png',
+                                      width: 20.w,
+                                      height: 20.h,
+                                    ),
+                                  ),
                             SizedBox(
                               width: 2.w,
                             ),
-                            isOccupied!? Image.asset(
-                              'assets/icons/timer.png',
-                              width: 20.w,
-                              height: 20.h,
-
-                            ):Image.asset(
-                              'assets/icons/Frame.png',
-                              height: 20.h,
-                              width: 20.w,
-                            ),
+                            isOccupied!
+                                ? GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => UnitHistory());
+                                    },
+                                    child: Image.asset(
+                                      'assets/icons/timer.png',
+                                      width: 20.w,
+                                      height: 20.h,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    'assets/icons/Frame.png',
+                                    height: 20.h,
+                                    width: 20.w,
+                                  ),
                           ],
                         ),
                       ],

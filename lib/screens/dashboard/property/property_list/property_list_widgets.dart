@@ -55,7 +55,7 @@ class PropertyWidget{
 propertyCntrl.onItemTap();
         },
         child: Container(
-          height: 114.h,
+          // height: 114.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: lightBorderGrey)),

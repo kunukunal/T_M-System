@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/floor/floor_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/floor/floor_widget.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_widgets.dart';
 
 class FloorView extends StatelessWidget {
   FloorView({super.key});

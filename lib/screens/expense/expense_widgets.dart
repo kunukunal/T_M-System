@@ -76,7 +76,6 @@ class ExpenseWidgets{
               return Padding(
                 padding:  EdgeInsets.symmetric(vertical: 7.h),
                 child: Container(
-                  height: 156.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(color: HexColor('#EBEBEB'))

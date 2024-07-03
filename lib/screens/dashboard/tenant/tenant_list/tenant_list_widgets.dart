@@ -194,7 +194,7 @@ class TenantListWidgets{
         itemBuilder: (context, index){
         amenities = cntrl.tenantUnitList[index]['amenities'];
           return Container(
-            height: 208.h,
+            // height: 208.h,
             width: double.infinity,
             decoration:  BoxDecoration(
                 border: Border.all(color: HexColor('#EBEBEB')),

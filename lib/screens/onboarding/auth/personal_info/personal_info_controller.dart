@@ -159,7 +159,7 @@ class PersonalInfoController extends GetxController {
         stateCntrl.value.text.trim().isNotEmpty) {
       userProfileUpdate(isFromRegister: isFromRegister);
     } else {
-      customSnackBar(Get.context!, "Please fill the data currectly");
+      customSnackBar(Get.context!, "Please fill the data correctly");
     }
   }
 
