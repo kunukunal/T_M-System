@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
-import 'package:tanent_management/screens/dashboard/management/management_widgets.dart';
 import 'package:tanent_management/screens/navbar_management/navbar_management_controller.dart';
 
 import '../../common/text_styles.dart';

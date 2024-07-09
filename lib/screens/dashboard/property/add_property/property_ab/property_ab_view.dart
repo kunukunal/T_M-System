@@ -5,27 +5,45 @@ import 'package:tanent_management/screens/dashboard/property/add_property/proper
 import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_widgets.dart';
 
 class PropertyAb extends StatelessWidget {
-   PropertyAb({super.key});
+
+   PropertyAb({super.key,});
+
   final propertyAbCntrl = Get.put(PropertyAbCntroller());
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: PropertyAbWidget().appBar(),
+    return Scaffold(
+      appBar: PropertyAbWidget().appBar(propertyAbCntrl.propertyName.value),
       body: Column(
         children: [
-          Padding(
-            padding:  EdgeInsets.only(top: 10.h),
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount:propertyAbCntrl.propertyList.value.length,
-                itemBuilder: (context, index) {
-                  return PropertyAbWidget().propertyList(
-                      buildingTitle: propertyAbCntrl.propertyList.value[index]['buildingTitle'] as String,
-                      floor:  propertyAbCntrl.propertyList.value[index]['floor'] as String,
-
-                      isFeature:  propertyAbCntrl.propertyList.value[index]['isFeatured'] as bool
-                  );}),
+          Expanded(
+            child: Obx(() {
+              return Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: propertyAbCntrl.isBuildingDataListLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : propertyAbCntrl.buildingList.isEmpty
+                        ? const Center(
+                            child: Text("No Building data Found"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: propertyAbCntrl.buildingList.length,
+                            itemBuilder: (context, index) {
+                              return PropertyAbWidget().propertyList(
+                                buildingId:propertyAbCntrl
+                                      .buildingList[index]['id'] ,
+                                  buildingTitle: propertyAbCntrl
+                                      .buildingList[index]['name'],
+                                  floor: propertyAbCntrl.buildingList[index]
+                                          ['number_of_floors']
+                                      .toString(),
+                                  isFeature: true);
+                            }),
+              );
+            }),
           ),
         ],
       ),

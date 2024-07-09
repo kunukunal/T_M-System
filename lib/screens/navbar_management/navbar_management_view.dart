@@ -5,7 +5,6 @@ import 'package:tanent_management/screens/navbar_management/navbar_management_co
 import 'package:tanent_management/screens/navbar_management/navbar_management_widgets.dart';
 
 import '../../common/constants.dart';
-import '../../common/text_styles.dart';
 
 class NavbarManagementScreen extends StatelessWidget {
    NavbarManagementScreen({super.key});

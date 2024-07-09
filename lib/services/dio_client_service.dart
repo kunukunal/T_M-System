@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -14,19 +15,21 @@ class DioClientServices {
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 30)));
 
-  Future dioPostCall({
-    required dynamic body,
-    required dynamic headers,
-    required String url,
-    required bool? isLoading,
-  }) async {
+  Future dioPostCall(
+      {required dynamic body,
+      required dynamic headers,
+      required String url,
+      required bool? isLoading,
+      bool? isRawData = false}) async {
     try {
-      
+      FormData? formData;
       isLoading = true;
-      FormData formData = FormData.fromMap(body);
+      if (isRawData == false) {
+        formData = FormData.fromMap(body);
+      } else {}
       Response response = await _dio.post(
         (commonBaseUrl + url),
-        data: formData,
+        data: isRawData == true ? jsonEncode(body) : formData,
         options: Options(headers: headers),
       );
       isLoading = false;
@@ -74,7 +77,6 @@ class DioClientServices {
         log("$e", name: "Exception response null");
         if (e.type == DioExceptionType.connectionError ||
             e.type == DioExceptionType.connectionTimeout) {
-          
           // showCustomFlushbar(context,
           //     message: AppLocalizations.of(context)!.internet_check); // connectivity check
         }
@@ -91,8 +93,88 @@ class DioClientServices {
       return e.response;
     }
   }
-  multipartFile({required XFile file})async{
-   return await MultipartFile.fromFile(file.path, filename: file.name);
+
+  Future dioDeleteCall({
+    required dynamic headers,
+    required String url,
+  }) async {
+    try {
+      Response response = await _dio.delete(
+        (commonBaseUrl + url),
+        options: Options(headers: headers),
+      );
+
+      return response;
+    } on DioException catch (e) {
+      log("${e.response?.statusCode}", name: "Exception response null");
+
+      if (e.response == null) {
+        log("$e", name: "Exception response null");
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout) {
+          // showCustomFlushbar(context,
+          //     message: AppLocalizations.of(context)!.internet_check); // connectivity check
+        }
+      } else if (e.response != null) {
+        log('Dio error!', name: "dioGetCall");
+        log('STATUS: ${e.response?.statusCode}', name: "dioGetCall");
+        log('DATA: ${e.response?.data}', name: "dioGetCall");
+        log('HEADERS: ${e.response?.headers}', name: "dioGetCall");
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+      } else {
+        log('Error sending request!', name: "dioGetCall");
+        log("${e.message}", name: "dioGetCall");
+      }
+      return e.response;
+    }
   }
-  
+
+  Future dioPatchCall(
+      {required dynamic body,
+      required dynamic headers,
+      required String url,
+      required bool? isLoading,
+      bool? isRawData = false}) async {
+    try {
+      FormData? formData;
+      isLoading = true;
+      if (isRawData == false) {
+        formData = FormData.fromMap(body);
+      } else {}
+      Response response = await _dio.patch(
+        (commonBaseUrl + url),
+        data: isRawData == true ? jsonEncode(body) : formData,
+        options: Options(headers: headers),
+      );
+      isLoading = false;
+      return response;
+    } on DioException catch (e) {
+      isLoading = true;
+
+      log("${e.response?.statusCode}", name: "Exception response null");
+      if (e.response == null) {
+        log("$e", name: "Exception response null");
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout) {
+          // showCustomFlushbar(context,
+          //     message: AppLocalizations.of(context)!.internet_check); // connectivity check
+        }
+      } else if (e.response != null) {
+        log('Dio error!', name: "dioGetCall");
+        log('STATUS: ${e.response?.statusCode}', name: "dioGetCall");
+        log('DATA: ${e.response?.data}', name: "dioGetCall");
+        log('HEADERS: ${e.response?.headers}', name: "dioGetCall");
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+      } else {
+        log('Error sending request!', name: "dioGetCall");
+        log("${e.message}", name: "dioGetCall");
+      }
+      return e.response;
+    }
+  }
+
+
+  multipartFile({required XFile file}) async {
+    return await MultipartFile.fromFile(file.path, filename: file.name);
+  }
 }

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/widgets.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/add_amenities/add_amentities_widget.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/add_building/add_building_controller.dart';
+import 'package:tanent_management/screens/dashboard/property/add_property/add_unit/add_unit_amentities_widget.dart';
+import 'package:tanent_management/screens/dashboard/property/add_property/add_unit/add_unit_controller.dart';
 
 import '../../../../../common/constants.dart';
 
-class AddAmentiesView extends StatelessWidget {
-  final int ind;
-  AddAmentiesView({required this.ind, super.key});
-  final addBuildingCntrl = Get.find<AddBuildingCntroller>();
+class AddUnitAmentiesView extends StatelessWidget {
+  AddUnitAmentiesView({super.key});
+  final addUnitController = Get.find<AddUnitController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +40,16 @@ class AddAmentiesView extends StatelessWidget {
                   Obx(() {
                     return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: addBuildingCntrl.tempAmenitiestList.length,
+                        itemCount: addUnitController.tempAmenitiestList.length,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return AddAmenitiesWidget().addAmenitiesContainer(
+                          return AddUnitAmenitiesWidget().addAmenitiesContainer(
                             amenitiesElement:
-                                addBuildingCntrl.tempAmenitiestList[index],
+                                addUnitController.tempAmenitiestList[index],
                             onCancelTap: () {
-                              addBuildingCntrl.tempAmenitiestList
+                              addUnitController.tempAmenitiestList
                                   .removeAt(index);
-                              addBuildingCntrl.tempAmenitiestList.refresh();
+                              addUnitController.tempAmenitiestList.refresh();
                             },
                           );
                         });
@@ -59,13 +58,13 @@ class AddAmentiesView extends StatelessWidget {
                     padding: EdgeInsets.only(top: 0.h, bottom: 5.h),
                     child: GestureDetector(
                       onTap: () {
-                        addBuildingCntrl.tempAmenitiestList.add(
+                        addUnitController.tempAmenitiestList.add(
                           {
                             "amenity_name": TextEditingController(),
                             "ammount": TextEditingController(),
                           },
                         );
-                        addBuildingCntrl.tempAmenitiestList.refresh();
+                        addUnitController.tempAmenitiestList.refresh();
                       },
                       child: Row(
                         children: [
@@ -89,7 +88,7 @@ class AddAmentiesView extends StatelessWidget {
             ),
             customButton(
                 onPressed: () {
-                  bool allFieldsFilled = addBuildingCntrl.tempAmenitiestList
+                  bool allFieldsFilled = addUnitController.tempAmenitiestList
                       .every((e) =>
                           e['amenity_name'] != null &&
                           e['amenity_name'].text.isNotEmpty &&
@@ -97,14 +96,14 @@ class AddAmentiesView extends StatelessWidget {
                           e['ammount'].text.isNotEmpty);
 
                   if (allFieldsFilled) {
-                    addBuildingCntrl.addMultipleBuilding[ind]['amenities'] =
-                        addBuildingCntrl.tempAmenitiestList
+                    addUnitController.ametiesList.value =
+                        addUnitController.tempAmenitiestList
                             .map((e) => {
                                   "amenity_name": e['amenity_name'],
                                   "ammount": e['ammount'],
                                 })
                             .toList();
-                    addBuildingCntrl.addMultipleBuilding.refresh();
+                    addUnitController.ametiesList.refresh();
                     Get.back();
                   } else {
                     customSnackBar(context,

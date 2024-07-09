@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/tenant/add_tenant/tenant_documents.dart';
 import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 
-import '../../../../common/widgets.dart';
-
 class AddTenantController extends GetxController{
   final firstNameCntrl = TextEditingController().obs;
   final lastNameCntrl = TextEditingController().obs;

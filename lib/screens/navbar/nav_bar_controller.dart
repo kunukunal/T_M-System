@@ -4,7 +4,6 @@ import 'package:tanent_management/screens/navbar_management/navbar_management_vi
 import 'package:tanent_management/screens/profile/my_profile/my_profile_view.dart';
 
 import '../dashboard/dashboard_view.dart';
-import '../dashboard/tenant/tenant_list/tenant_list_view.dart';
 import '../expense/expense_view.dart';
 import '../reports/report_view.dart';
 
@@ -17,7 +16,7 @@ class NavBarController extends GetxController{
   //List Variables
   late final pages = [
     DashboardScreen(),
-    ReportScreen(),
+    const ReportScreen(),
     NavbarManagementScreen()    ,// TenantListScreen(),
     ExpenseScreen(),
     MyProfileView(),

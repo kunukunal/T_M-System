@@ -7,8 +7,7 @@ import 'package:tanent_management/screens/dashboard/property/property_list/prope
 import '../../../../common/constants.dart';
 import '../../../../common/text_styles.dart';
 
-class PropertyWidget{
-
+class PropertyWidget {
   appBar() {
     final propertyCntrl = Get.find<PropertyListController>();
 
@@ -26,33 +25,31 @@ class PropertyWidget{
       title: Text('Property List', style: CustomStyles.otpStyle050505W700S16),
       actions: [
         InkWell(
-            onTap: (){
+            onTap: () {
               propertyCntrl.onAddTap();
             },
             child: Padding(
-              padding:  EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
               child: addIcon,
             )),
-
-
       ],
     );
   }
 
-  unitList(
-      {
-        String? propertyTitle,
-        String? location,
-        String? icon,
-        String? buildingIcon,
-        bool? isFeature,
-      }) {
+  unitList({
+    int? id,
+    String? propertyTitle,
+    String? location,
+    // String? icon,
+    List? buildingIcon,
+    // bool? isFeature,
+  }) {
     final propertyCntrl = Get.find<PropertyListController>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-propertyCntrl.onItemTap();
+          propertyCntrl.onItemTap(id: id!, propertyTitle: propertyTitle);
         },
         child: Container(
           // height: 114.h,
@@ -71,9 +68,15 @@ propertyCntrl.onItemTap();
                     decoration: BoxDecoration(
                       color: HexColor('#444444'),
                       borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                          image: Image.asset(buildingIcon!).image,
-                          fit: BoxFit.cover),
+                      image: buildingIcon!.isEmpty
+                          ? DecorationImage(
+                              image: Image.asset(
+                                      "assets/images/apartment1_image.png")
+                                  .image,
+                              fit: BoxFit.cover)
+                          : DecorationImage(
+                              image: NetworkImage(buildingIcon[0]['image']!),
+                              fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -97,8 +100,10 @@ propertyCntrl.onItemTap();
                       ),
                       Row(
                         children: [
-                            featureRentContainer(isFeatured: true,title: 'Featured'),
-                            featureRentContainer(isFeatured: false,title: 'For Rent'),
+                          featureRentContainer(
+                              isFeatured: true, title: 'Featured'),
+                          featureRentContainer(
+                              isFeatured: false, title: 'For Rent'),
                         ],
                       ),
                       SizedBox(
@@ -107,7 +112,7 @@ propertyCntrl.onItemTap();
                       Row(
                         children: [
                           Image.asset(
-                            icon!,
+                            "assets/icons/location.png",
                             height: 23.h,
                             width: 20.w,
                           ),
@@ -125,7 +130,6 @@ propertyCntrl.onItemTap();
                                   color: black),
                             ),
                           ),
-                  
                         ],
                       ),
                     ],
@@ -139,18 +143,22 @@ propertyCntrl.onItemTap();
     );
   }
 
-  featureRentContainer({bool? isFeatured,String? title}){
+  featureRentContainer({bool? isFeatured, String? title}) {
     return Padding(
-      padding:  EdgeInsets.only(right: 10.w),
+      padding: EdgeInsets.only(right: 10.w),
       child: Container(
         height: 25.h,
         width: 90.w,
         decoration: BoxDecoration(
-
             borderRadius: BorderRadius.circular(5.r),
-            border: Border.all(color:isFeatured!? lightBlue:lightBorderGrey  )
-        ),
-        child: Center(child: Text(title!,style: TextStyle(fontSize: 12.sp,color: black,fontWeight: FontWeight.w500),)),
+            border:
+                Border.all(color: isFeatured! ? lightBlue : lightBorderGrey)),
+        child: Center(
+            child: Text(
+          title!,
+          style: TextStyle(
+              fontSize: 12.sp, color: black, fontWeight: FontWeight.w500),
+        )),
       ),
     );
   }

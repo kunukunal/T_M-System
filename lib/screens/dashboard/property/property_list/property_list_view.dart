@@ -6,37 +6,54 @@ import 'package:tanent_management/screens/dashboard/property/property_list/prope
 import 'package:tanent_management/screens/dashboard/property/property_list/property_list_widgets.dart';
 
 class PropertyListView extends StatelessWidget {
-
-   PropertyListView({super.key});
+  PropertyListView({super.key});
   final propertyCntrl = Get.put(PropertyListController());
-
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: PropertyWidget().appBar(),
-      body:  Column(children: [
-        Divider(
-          color: lightBorderGrey,
-          height: 1.h,
-        ),
-      Expanded(
-        child: Padding(
-          padding:  EdgeInsets.only(top: 10.h),
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount:propertyCntrl.propertyList.value.length,
-              itemBuilder: (context, index) {
-              return PropertyWidget().unitList(
-              propertyTitle: propertyCntrl.propertyList.value[index]['propertyTitle'] as String,
-              location:  propertyCntrl.propertyList.value[index]['location'] as String,
-              icon:  propertyCntrl.propertyList.value[index]['icon'] as String,
-              buildingIcon:  propertyCntrl.propertyList.value[index]['buildingIcon'] as String,
-              isFeature:  propertyCntrl.propertyList.value[index]['isFeatured'] as bool
-              );}),
-        ),
-      )
-      ],),
+      body: Column(
+        children: [
+          Divider(
+            color: lightBorderGrey,
+            height: 1.h,
+          ),
+          Expanded(
+            child: Obx(() {
+              return Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: propertyCntrl.isPropertyDataListLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : propertyCntrl.propertyList.isEmpty
+                        ? Center(
+                            child: Image.asset(
+                                "assets/images/available_occupied_image.png"),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: propertyCntrl.propertyList.length,
+                            itemBuilder: (context, index) {
+                              return PropertyWidget().unitList(
+                                id: propertyCntrl.propertyList[index]
+                                    ['id'],
+                                propertyTitle: propertyCntrl.propertyList[index]
+                                    ['title'],
+                                location: propertyCntrl.propertyList[index]
+                                    ['address'],
+                                // icon:  propertyCntrl.propertyList[index]['icon'] as String,
+                                buildingIcon: propertyCntrl.propertyList[index]
+                                    ['images'],
+                                // isFeature:  propertyCntrl.propertyList[index]['isFeatured'] as bool
+                              );
+                            }),
+              );
+            }),
+          )
+        ],
+      ),
     );
   }
 }

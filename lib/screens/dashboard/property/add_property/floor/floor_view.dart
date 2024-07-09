@@ -10,23 +10,40 @@ class FloorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: FloorWidget().appBar(),
+    return Scaffold(
+      appBar: FloorWidget().appBar(floorCntrl.buildingName.value),
       body: Column(
         children: [
-          Padding(
-            padding:  EdgeInsets.only(top: 10.h),
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount:floorCntrl.floorList.value.length,
-                itemBuilder: (context, index) {
-                  return FloorWidget().floorList(
-                      buildingTitle: floorCntrl.floorList.value[index]['buildingTitle'] as String,
-                      floor:  floorCntrl.floorList.value[index]['floor'] as String,
-
-                      isFeature:  floorCntrl.floorList.value[index]['isFeatured'] as bool
-                  );}),
-          ),
+          Obx(() {
+            return Expanded(
+              child: floorCntrl.isFloorDataLoaded.value == true
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : floorCntrl.floorList.isEmpty
+                      ? const Center(
+                          child: Text("No Floor available"),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: 10.h),
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: floorCntrl.floorList.length,
+                              itemBuilder: (context, index) {
+                                return FloorWidget().floorList(
+                                  floorId: floorCntrl.floorList[index]
+                                        ['id'] ,
+                                    buildingTitle: floorCntrl.floorList[index]
+                                        ['name'],
+                                    floor: floorCntrl.floorList[index]
+                                            ['number_of_units']
+                                        ,
+                                    isFeature: floorCntrl.floorList[index]
+                                        ['is_active']);
+                              }),
+                        ),
+            );
+          }),
         ],
       ),
     );

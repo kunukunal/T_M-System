@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_property_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_property_widgets.dart';
 
@@ -10,42 +12,40 @@ import '../../../../common/text_styles.dart';
 import '../../../../common/widgets.dart';
 
 class AddPropertyView extends StatelessWidget {
-   AddPropertyView({super.key});
+  AddPropertyView({super.key});
   final addPropertyCntrl = Get.put(AddPropertyCntroller());
-
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AddPropertyWidget().appBar(),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
           children: [
             Expanded(
               child: ListView(
-
                 children: [
-                Text('Property Details', style: CustomStyles.skipBlack),
-                Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 8.h),
-                  child: Divider(height: 1,color: lightBorderGrey,),
-
-                ),
-                  AddPropertyWidget().commomText('Property Title',
-                      isMandatory: true),
+                  Text('Property Details', style: CustomStyles.skipBlack),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: Divider(
+                      height: 1,
+                      color: lightBorderGrey,
+                    ),
+                  ),
+                  AddPropertyWidget()
+                      .commomText('Property Title', isMandatory: true),
                   customTextField(
-                      controller: addPropertyCntrl.propertyTitleCntrl.value,
+                    controller: addPropertyCntrl.propertyTitleCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
-                      hintText: 'Type Here...',
-                      isBorder: true,
-                      // color: HexColor('#F7F7F7'),
-                      isFilled: false
-                    ,
+                    hintText: 'Type Here...',
+                    isBorder: true,
+                    // color: HexColor('#F7F7F7'),
+                    isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('Address',
-                      isMandatory: true),
+                  AddPropertyWidget().commomText('Address', isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.addressCntrl.value,
                     textInputAction: TextInputAction.done,
@@ -54,11 +54,10 @@ class AddPropertyView extends StatelessWidget {
                     isBorder: true,
                     maxLines: 2,
                     // color: HexColor('#F7F7F7'),
-                    isFilled: false
-                    ,
+                    isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('Landmark',
-                      isMandatory: false),
+                  AddPropertyWidget()
+                      .commomText('Landmark', isMandatory: false),
                   customTextField(
                     controller: addPropertyCntrl.landmarkCntrl.value,
                     textInputAction: TextInputAction.done,
@@ -66,80 +65,121 @@ class AddPropertyView extends StatelessWidget {
                     hintText: 'Type Here...',
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
-                    isFilled: false
-                    ,
-                  ),  AddPropertyWidget().commomText('Pin Code',
-                      isMandatory: true),
+                    isFilled: false,
+                  ),
+                  AddPropertyWidget().commomText('Pin Code', isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.pinCodeCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     hintText: 'Type Here...',
+                    maxLength: 6,
+
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
-                    isFilled: false
-                    ,
+                    isFilled: false,
                   ),
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AddPropertyWidget().commomText('City',
-                              isMandatory: true),
+                          AddPropertyWidget()
+                              .commomText('City', isMandatory: true),
                           customTextField(
                             controller: addPropertyCntrl.cityCntrl.value,
                             textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.number,
+                            // keyboardType: TextInputType.number,
                             hintText: 'Type Here...',
                             isBorder: true,
                             // color: HexColor('#F7F7F7'),
                             isFilled: false,
-                              width: Get.width / 2.3,
-
-
+                            width: Get.width / 2.3,
                           ),
-
                         ],
                       ),
                       SizedBox(width: 15.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AddPropertyWidget().commomText('State',
-                              isMandatory: true),
+                          AddPropertyWidget()
+                              .commomText('State', isMandatory: true),
                           customTextField(
                             controller: addPropertyCntrl.stateCntrl.value,
                             textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.number,
+                            // keyboardType: TextInputType.number,
                             hintText: 'Type Here...',
                             isBorder: true,
                             // color: HexColor('#F7F7F7'),
                             isFilled: false,
-                              width: Get.width / 2.3,
-
-
+                            width: Get.width / 2.3,
                           ),
                         ],
                       )
-
                     ],
                   ),
-                  AddPropertyWidget().commomText('Upload Picture',
-                      isMandatory: false),
-                  uploadPicture,
-
-              ],),
+                  AddPropertyWidget()
+                      .commomText('Upload Picture', isMandatory: false),
+                  Obx(() {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: addPropertyCntrl.propertyPickedImage.length,
+                      // padding: EdgeInsets.only(bottom: 10),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: ListTile(
+                            leading: Container(
+                              height: 150.h,
+                              width: 60.w,
+                              // padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade500),
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: FileImage(File(addPropertyCntrl
+                                          .propertyPickedImage[index].path)),
+                                      fit: BoxFit.cover)),
+                            ),
+                            titleAlignment: ListTileTitleAlignment.top,
+                            title: Text(addPropertyCntrl
+                                .propertyPickedImage[index].name),
+                            trailing: IconButton(
+                                onPressed: () {
+                                  addPropertyCntrl.propertyPickedImage
+                                      .removeAt(index);
+                                },
+                                icon: const Icon(Icons.cancel)),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
+                    );
+                  }),
+                  GestureDetector(
+                      onTap: () {
+                        AddPropertyWidget().showSelectionDialog(context);
+                      },
+                      child: uploadPicture),
+                ],
+              ),
             ),
-            customButton(
-                onPressed: () {
-                  addPropertyCntrl.onSaveTap();
-                },
-                text: 'Save',
-                width: Get.width,
-                verticalPadding: 10.h),
+            Obx(
+              () => addPropertyCntrl.isPropertyAdded.value == true
+                  ? const CircularProgressIndicator()
+                  : customButton(
+                      onPressed: () {
+                        addPropertyCntrl.onSaveTap();
+                      },
+                      text: 'Save',
+                      width: Get.width,
+                      verticalPadding: 10.h),
+            )
           ],
-
         ),
       ),
     );

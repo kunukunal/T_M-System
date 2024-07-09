@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/search/search_view.dart';
-import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_view.dart';
 import 'package:tanent_management/screens/navbar_management/property_detail/property_detail_view.dart';
 
 class NavBarManagementCntroller extends GetxController{

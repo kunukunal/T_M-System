@@ -21,3 +21,7 @@ const String userDocumentType = "document-type/";
 
 // User document
 const String userDocument = "accounts/user-document/";
+const String getOrAddPropertyList = "property/property/";
+const String addbuildingData = "building/building/";
+const String deleteFloor = "building/floor/";
+const String addUnit = "unit/unit/";

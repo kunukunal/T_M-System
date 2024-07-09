@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,153 +11,291 @@ import '../../../../../common/constants.dart';
 import '../../../../../common/widgets.dart';
 
 class AddUnitView extends StatelessWidget {
-   AddUnitView({super.key});
-final addUnitCntrl = Get.put(AddUnitController());
+  AddUnitView({super.key});
+  final addUnitCntrl = Get.put(AddUnitController());
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar:AddUnitWidget().appBar() ,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AddUnitWidget().appBar(),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-          Expanded
-            (
-            child
-                : ListView(children: [
-              Padding(
-                padding:  EdgeInsets.symmetric(vertical: 8.h),
-                child: Text('Unit Details',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16.sp,color:black),),
-              ),
-              Divider(color: lightBorderGrey,height: 1.h,),
-
-              AddUnitWidget().commomText('Unit Name',isMandatory: true),
-              customTextField(
-                controller: addUnitCntrl.unitNameCntrl.value,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.number,
-                hintText: 'Flat 101',
-                isBorder: true,
-                // color: HexColor('#F7F7F7'),
-                isFilled: false,
-
-
-
-              ),
-              AddUnitWidget().commomText('Unit Type',),
-              bigDropDown(selectedItem: addUnitCntrl.selectedUnitType.value,color:whiteColor , items: addUnitCntrl.unitType.value, onChange: (item){
-                addUnitCntrl.selectedUnitType.value=item;
-              }),
-              AddUnitWidget().commomText('Unit Features',),
-              bigDropDown(selectedItem: addUnitCntrl.selectedUnitFeature.value,color:whiteColor , items: addUnitCntrl.unitFeature.value, onChange: (item){
-                addUnitCntrl.selectedUnitFeature.value=item;
-              }),
-              AddUnitWidget().commomText('Unit Rent',),
-              bigDropDown(selectedItem: addUnitCntrl.selectedUnitRent.value,color:whiteColor , items: addUnitCntrl.unitRent.value, onChange: (item){
-                addUnitCntrl.selectedUnitRent.value=item;
-              }),
-              Obx(
-                      () {
-                    return Padding(
-                      padding:  EdgeInsets.only(top: 8.h),
+            Expanded(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: Text(
+                      'Unit Details',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.sp,
+                          color: black),
+                    ),
+                  ),
+                  Divider(
+                    color: lightBorderGrey,
+                    height: 1.h,
+                  ),
+                  AddUnitWidget().commomText('Unit Name', isMandatory: true),
+                  customTextField(
+                    controller: addUnitCntrl.unitNameCntrl.value,
+                    textInputAction: TextInputAction.done,
+                    hintText: 'Flat 101',
+                    isBorder: true,
+                    isFilled: false,
+                  ),
+                  AddUnitWidget().commomText('Unit Type', isMandatory: true),
+                  Obx(() {
+                    return bigDropDown(
+                        selectedItem: addUnitCntrl.selectedUnitType.value,
+                        color: whiteColor,
+                        items: addUnitCntrl.unitType,
+                        onChange: (item) {
+                          addUnitCntrl.selectedUnitType.value = item;
+                        });
+                  }),
+                  AddUnitWidget()
+                      .commomText('Unit Features', isMandatory: true),
+                  Obx(() {
+                    return bigDropDown(
+                        selectedItem: addUnitCntrl.selectedUnitFeature.value,
+                        color: whiteColor,
+                        items: addUnitCntrl.unitFeature,
+                        onChange: (item) {
+                          addUnitCntrl.selectedUnitFeature.value = item;
+                        });
+                  }),
+                  AddUnitWidget().commomText('Unit Rent', isMandatory: true),
+                  customTextField(
+                    controller: addUnitCntrl.unitRentCntrl.value,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    hintText: '5000.00',
+                    isBorder: true,
+                    // color: HexColor('#F7F7F7'),
+                    isFilled: false,
+                  ),
+                  AddUnitWidget().commomText('Area Size', isMandatory: true),
+                  customTextField(
+                    controller: addUnitCntrl.areaSizeCntrl.value,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
+                    hintText: 'Type Here... Sq.ft',
+                    isBorder: true,
+                    // color: HexColor('#F7F7F7'),
+                    isFilled: false,
+                  ),
+                  Obx(() {
+                    return Column(
+                      children: [
+                        CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          enableFeedback: false,
+                          contentPadding: EdgeInsets.zero,
+                          value: addUnitCntrl.isNegosiateSelected.value,
+                          onChanged: (value) {
+                            addUnitCntrl.isNegosiateSelected.value = value!;
+                          },
+                          title: Text(
+                            "Is Rent Negotiable",
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: black),
+                          ),
+                        ),
+                        CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          enableFeedback: false,
+                          contentPadding: EdgeInsets.zero,
+                          value: addUnitCntrl.isActiveSelected.value,
+                          onChanged: (value) {
+                            addUnitCntrl.isActiveSelected.value = value!;
+                          },
+                          title: Text(
+                            "Is Active",
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: black),
+                          ),
+                        ),
+                        CheckboxListTile(
+                          controlAffinity: ListTileControlAffinity.leading,
+                          enableFeedback: false,
+                          contentPadding: EdgeInsets.zero,
+                          value: addUnitCntrl.isOccupiedSelected.value,
+                          onChanged: (value) {
+                            addUnitCntrl.isOccupiedSelected.value = value!;
+                          },
+                          title: Text(
+                            "Is Available",
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: black),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                  AddUnitWidget().commomText(
+                    'Note',
+                  ),
+                  customTextField(
+                    controller: addUnitCntrl.noteCntrl.value,
+                    textInputAction: TextInputAction.done,
+                    hintText: 'Type Here...',
+                    isBorder: true,
+                    maxLines: 3,
+                    // color: HexColor('#F7F7F7'),
+                    isFilled: false,
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Obx(() {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: Wrap(
+                            runSpacing: 10,
+                            spacing: 10,
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.start,
+                            runAlignment: WrapAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            children: List.generate(
+                                (addUnitCntrl.ametiesList as List).length,
+                                (ind) {
+                              return Container(
+                                width: 100,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: HexColor("#D9E3F4"),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        (addUnitCntrl.ametiesList as List)[ind]
+                                                ['amenity_name']
+                                            .text,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          (addUnitCntrl.ametiesList as List)
+                                              .removeAt(ind);
+                                          addUnitCntrl.ametiesList.refresh();
+                                        },
+                                        child: crossIcon),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: GestureDetector(
+                      onTap: () {
+                        addUnitCntrl.onAddAmeties();
+                      },
                       child: Row(
                         children: [
-                          GestureDetector
-                            (onTap: (){
-                            addUnitCntrl.isSelected.value=! addUnitCntrl.isSelected.value;
-                          },
-                              child
-                                  :addUnitCntrl.isSelected.value?selectedCheckboxIcon: checkboxIcon),
-                          SizedBox(width: 10.w,),
-                          Text('Is Rent Negotiable',style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.w500,color: black),),
-
+                          addIcon,
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Text(
+                            'Add Amenities(s)',
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: black),
+                          ),
                         ],
                       ),
+                    ),
+                  ),
+                  AddUnitWidget().commomText(
+                    'Upload Picture/Video',
+                  ),
+                  Obx(() {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: addUnitCntrl.unitPickedImage.length,
+                      // padding: EdgeInsets.only(bottom: 10),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: ListTile(
+                            leading: Container(
+                              height: 150.h,
+                              width: 60.w,
+                              // padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade500),
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: FileImage(File(addUnitCntrl
+                                          .unitPickedImage[index].path)),
+                                      fit: BoxFit.cover)),
+                            ),
+                            titleAlignment: ListTileTitleAlignment.top,
+                            title:
+                                Text(addUnitCntrl.unitPickedImage[index].name),
+                            trailing: IconButton(
+                                onPressed: () {
+                                  addUnitCntrl.unitPickedImage.removeAt(index);
+                                },
+                                icon: const Icon(Icons.cancel)),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider();
+                      },
                     );
-                  }
+                  }),
+                  GestureDetector(
+                      onTap: () {
+                        AddUnitWidget().showSelectionDialog(context);
+                      },
+                      child: uploadPicture),
+                ],
               ),
-              AddUnitWidget().commomText('Area Size',),
-              customTextField(
-                controller: addUnitCntrl.areaSizeCntrl.value,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.number,
-                hintText: 'Type Here...                                  Sq.ft',
-                isBorder: true,
-                // color: HexColor('#F7F7F7'),
-                isFilled: false,
-
-
-
-              ),
-              AddUnitWidget().commomText('Note',),
-              customTextField(
-                controller: addUnitCntrl.noteCntrl.value,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.number,
-                hintText: 'Type Here...',
-                isBorder: true,
-                maxLines: 3,
-                // color: HexColor('#F7F7F7'),
-                isFilled: false,
-
-
-
-              ),
-
-              Padding(
-                padding:  EdgeInsets.only(top: 8.h),
-                child: Row(
-                  children: [
-                    GestureDetector
-                      (onTap: (){
-
+            ),
+            Obx(() {
+              return addUnitCntrl.isAddUnitdataUploaded.value == true
+                  ? const Center(child: CircularProgressIndicator())
+                  : customBorderButton('Save', () {
+                      addUnitCntrl.onSaveTap();
                     },
-                        child
-                            :addIcon),
-                    SizedBox(width: 10.w,),
-                    Text('Add Amenities(s)',style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.w500,color: black),),
-
-                  ],
-                ),
-
-              ),
-              AddUnitWidget().commomText('Upload Picture/Video',),
-              uploadPicture,
-
-
-
-            ],),
-          ),
-            Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  customBorderButton('Previous', () {
-
-                  },
                       verticalPadding: 10.h,
                       horizontalPadding: 2.w,
                       btnHeight: 40.h,
-                      width: Get.width / 2.3,
-                      borderColor: HexColor('#679BF1'),
-                      textColor: HexColor('#679BF1')),
-                  customBorderButton('Save', () {
-
-                  },
-                      verticalPadding: 10.h,
-                      horizontalPadding: 2.w,
-                      btnHeight: 40.h,
-                      width: Get.width / 2.3,
+                      width: Get.width,
                       color: HexColor('#679BF1'),
                       textColor: HexColor('#FFFFFF'),
-                      borderColor: Colors.transparent)
-                ],
-              )
-            ],)
-          ],),
+                      borderColor: Colors.transparent);
+            })
+          ],
+        ),
       ),
     );
   }

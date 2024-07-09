@@ -5,7 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../../../../common/constants.dart';
 import '../../../../../common/widgets.dart';
 
-class AddAmenitiesWidget {
+class AddUnitAmenitiesWidget {
   commomText(String title, {bool? isMandatory = false}) {
     return Padding(
       padding: EdgeInsets.only(top: 8.h, bottom: 8.h),

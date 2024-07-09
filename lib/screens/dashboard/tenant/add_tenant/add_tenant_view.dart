@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
-import 'package:tanent_management/screens/expense/add_expense/add_expense_controller.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/text_styles.dart';

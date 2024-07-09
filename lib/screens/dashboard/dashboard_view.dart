@@ -9,7 +9,7 @@ import 'package:tanent_management/screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_complete.dart';
 
 class DashboardScreen extends StatelessWidget {
-  bool isFromMain;
+  final bool isFromMain;
   DashboardScreen({super.key, this.isFromMain = true});
   final dashCntrl = Get.put(DashBoardController());
 
@@ -72,7 +72,6 @@ class DashboardScreen extends StatelessWidget {
             image: incomeExpenseImage,
             height: 300.86.h,
             isTackVisible: true,
-            
             title: 'Income/Expense'),
         SizedBox(
           height: 16.h,

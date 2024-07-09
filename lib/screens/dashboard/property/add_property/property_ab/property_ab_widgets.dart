@@ -6,9 +6,8 @@ import 'package:tanent_management/screens/dashboard/property/add_property/proper
 import '../../../../../common/constants.dart';
 import '../../../../../common/text_styles.dart';
 
-class PropertyAbWidget{
-
-  appBar() {
+class PropertyAbWidget {
+  appBar(String title) {
     final propertyAbCntrl = Get.find<PropertyAbCntroller>();
 
     return AppBar(
@@ -22,38 +21,40 @@ class PropertyAbWidget{
         ),
       ),
       centerTitle: true,
-      title: Text('Property AB', style: CustomStyles.otpStyle050505W700S16),
+      title: Text(title, style: CustomStyles.otpStyle050505W700S16),
       actions: [
         InkWell(
-            onTap: (){
+            onTap: () {
               propertyAbCntrl.onAddTap();
             },
             child: Padding(
-              padding:  EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
               child: addIcon,
             )),
-
-
       ],
-      bottom:  PreferredSize(
+      bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
-        child: Divider(height: 1,color: lightBorderGrey,),
+        child: Divider(
+          height: 1,
+          color: lightBorderGrey,
+        ),
       ),
     );
   }
 
-  propertyList(
-      {
-        String? buildingTitle,
-        String? floor,
-        bool? isFeature,
-      }) {
+  propertyList({
+    int? buildingId,
+    String? buildingTitle,
+    String? floor,
+    bool? isFeature,
+  }) {
     final propertyAbCntrl = Get.find<PropertyAbCntroller>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-propertyAbCntrl.onListTap();
+          propertyAbCntrl.onListTap(
+              buildingId: buildingId!, buildingName: buildingTitle);
         },
         child: Container(
           height: 84.h,
@@ -76,14 +77,14 @@ propertyAbCntrl.onListTap();
                           color: black),
                     ),
                     Expanded(
-                      child
-                          : Row(
+                      child: Row(
                         children: [
-                          featureRentContainer(isFeatured: true,title: 'Featured'),
-                          featureRentContainer(isFeatured: false,title: 'For Rent'),
-                          
+                          featureRentContainer(
+                              isFeatured: true, title: 'Featured'),
+                          featureRentContainer(
+                              isFeatured: false, title: 'For Rent'),
                           Padding(
-                            padding:  EdgeInsets.only(left: 60.w),
+                            padding: EdgeInsets.only(left: 60.w),
                             child: Text(
                               '$floor  Floor',
                               style: TextStyle(
@@ -97,7 +98,6 @@ propertyAbCntrl.onListTap();
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -106,18 +106,22 @@ propertyAbCntrl.onListTap();
     );
   }
 
-  featureRentContainer({bool? isFeatured,String? title}){
+  featureRentContainer({bool? isFeatured, String? title}) {
     return Padding(
-      padding:  EdgeInsets.only(right: 10.w),
+      padding: EdgeInsets.only(right: 10.w),
       child: Container(
         height: 25.h,
         width: 80.w,
         decoration: BoxDecoration(
-
             borderRadius: BorderRadius.circular(5.r),
-            border: Border.all(color:isFeatured!? lightBlue:lightBorderGrey  )
-        ),
-        child: Center(child: Text(title!,style: TextStyle(fontSize: 12.sp,color: black,fontWeight: FontWeight.w500),)),
+            border:
+                Border.all(color: isFeatured! ? lightBlue : lightBorderGrey)),
+        child: Center(
+            child: Text(
+          title!,
+          style: TextStyle(
+              fontSize: 12.sp, color: black, fontWeight: FontWeight.w500),
+        )),
       ),
     );
   }

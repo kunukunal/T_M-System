@@ -1,33 +1,106 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/add_building/add_%20building_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/unit_List/unit_list_view.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
-class FloorCntroller extends GetxController{
-  final floorList= [
-    {
-      'buildingTitle': 'Floor 1',
-      'floor': '10',
-      'isFeatured':true
+class FloorCntroller extends GetxController {
+  final floorList = [].obs;
+  final updateFloorName = TextEditingController().obs;
+  final activeFloor = false.obs;
 
-    },
-    {
-      'buildingTitle': 'Floor 2',
-      'floor': '10',
-      'isFeatured':true
-    },
-    {
-      'buildingTitle': 'Floor 3',
-      'floor': '10',
-      'isFeatured':true
+  final buildingId = 0.obs;
+  final buildingName = "".obs;
 
-    },
+  @override
+  void onInit() {
+    buildingId.value = Get.arguments[0];
+    buildingName.value = Get.arguments[1];
+    getFloorData();
+    super.onInit();
+  }
 
-  ].obs;
+  final isFloorDataLoaded = false.obs;
+  onAddTap() {}
 
-  onAddTap(){}
+  onFloorTap({required int floorId, required String floorName}) {
+    Get.to(() => UnitView(), arguments: [floorId, floorName]);
+  }
 
-  onFloorTap(){
-    Get.to(()=>
-        UnitView());
+  getFloorData() async {
+    isFloorDataLoaded.value = true;
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioGetCall(headers: {
+      'Authorization': "Bearer $accessToken",
+    }, url: '$addbuildingData${buildingId.value}/');
+    if (response != null) {
+      if (response.statusCode == 200) {
+        floorList.clear();
+        floorList.addAll(response.data['floors']);
+        isFloorDataLoaded.value = false;
+      } else if (response.statusCode == 400) {}
+    }
+  }
+
+  deleteFloorData({required int floorId}) async {
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioDeleteCall(headers: {
+      'Authorization': "Bearer $accessToken",
+    }, url: '$deleteFloor$floorId/');
+
+    print("hjhjhj ${response}");
+    if (response != null) {
+      if (response.statusCode == 204) {
+        getFloorData();
+      } else if (response.statusCode == 400) {}
+    }
+  }
+
+  updateFloorData({required int noOfUnits, required int floorId}) async {
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioPatchCall(
+        body: {
+          "name": updateFloorName.value.text,
+          "number_of_units": noOfUnits,
+          "is_active": activeFloor.value
+        },
+        isLoading: true,
+        headers: {
+          'Authorization': "Bearer $accessToken",
+        },
+        url: '$deleteFloor$floorId/');
+    if (response != null) {
+      if (response.statusCode == 200) {
+        getFloorData();
+      } else if (response.statusCode == 400) {}
+    }
+  }
+
+  addFloorData({required String floorName, required int units}) async {
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+
+    final response = await DioClientServices.instance.dioPostCall(
+        body: {
+          "building": buildingId.value,
+          "name": floorName,
+          "number_of_units": units
+        },
+        isRawData: true,
+        isLoading: true,
+        headers: {
+          'Authorization': "Bearer $accessToken",
+        },
+        url: deleteFloor);
+    if (response != null) {
+      if (response.statusCode == 201) {
+        getFloorData();
+      } else if (response.statusCode == 400) {}
+    }
   }
 }

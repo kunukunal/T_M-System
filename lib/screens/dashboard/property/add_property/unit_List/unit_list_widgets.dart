@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/floor/floor_controller.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/unit_List/unit_list_controller.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/text_styles.dart';
 
-class UnitWidget{
-
-  appBar() {
+class UnitWidget {
+  appBar(String title) {
     final unitCntrl = Get.find<UnitCntroller>();
 
     return AppBar(
@@ -24,39 +21,37 @@ class UnitWidget{
         ),
       ),
       centerTitle: true,
-      title: Text('Floor 1', style: CustomStyles.otpStyle050505W700S16),
+      title: Text(title, style: CustomStyles.otpStyle050505W700S16),
       actions: [
         InkWell(
-            onTap: (){
+            onTap: () {
               unitCntrl.onAddTap();
             },
             child: Padding(
-              padding:  EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
               child: addIcon,
             )),
-
-
       ],
-      bottom:  PreferredSize(
+      bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
-        child: Divider(height: 1,color: lightBorderGrey,),
+        child: Divider(
+          height: 1,
+          color: lightBorderGrey,
+        ),
       ),
     );
   }
 
-  unitList(
-      {
-        String? buildingTitle,
-        String? floor,
-        bool? isOccupied,
-      }) {
-    final unitCntrl = Get.find<UnitCntroller>();
-
+  unitList({
+    int? index,
+    String? floorName,
+    bool? isOccupied,
+  }) {
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-          unitCntrl.onItemTap();
+          ;
         },
         child: Container(
           height: 68.h,
@@ -68,21 +63,22 @@ class UnitWidget{
             child: Row(
               children: [
                 Expanded(
-                  child
-                      : Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        buildingTitle!,
+                        'Unit ${index! + 1}',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp,
                             color: black),
                       ),
-                      SizedBox(height: 5.h,),
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       Text(
-                        'Floor  $floor',
+                        floorName!,
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 12.sp,
@@ -92,11 +88,11 @@ class UnitWidget{
                   ),
                 ),
                 Text(
-                  isOccupied!?'Occupied':'Available',
+                  isOccupied! ? 'Occupied' : 'Available',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 14.sp,
-                      color:  isOccupied!?red:green),
+                      color: isOccupied ? red : green),
                 ),
               ],
             ),
@@ -105,6 +101,4 @@ class UnitWidget{
       ),
     );
   }
-
-
 }
