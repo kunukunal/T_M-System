@@ -37,7 +37,7 @@ class AddBuildingCntroller extends GetxController {
       buildingId.value = editData['id'];
       (addMultipleBuilding[0]["building_name"] as TextEditingController).text =
           editData['name'];
-      (addMultipleBuilding[0]['floor'] as TextEditingController).text = editData['num_of_floors']??"0";
+      (addMultipleBuilding[0]['floor'] as TextEditingController).text = editData['num_of_floors'].toString()??"0";
       // (addMultipleBuilding[0]['units'] as TextEditingController).text = "2";
       (addMultipleBuilding[0]['amenities'] as List)
           .clear(); // Clear existing amenities before adding new ones

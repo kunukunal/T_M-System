@@ -17,6 +17,7 @@ class PropertyAbCntroller extends GetxController {
 
   final propertyId = 0.obs;
   final propertyName = "".obs;
+  final isApiNeeded = false.obs;
 
   //asda
 
@@ -24,21 +25,23 @@ class PropertyAbCntroller extends GetxController {
   void onInit() {
     propertyId.value = Get.arguments[0];
     propertyName.value = Get.arguments[1];
+    isApiNeeded.value = false;
     getBuildingData();
     super.onInit();
   }
 
-  onAddTap( ) {
+  onAddTap() {
     Get.to(() => AddBuildingView(), arguments: [propertyId.value, false, {}])
         ?.then((value) {
       if (value == true) {
+        isApiNeeded.value = true;
         getBuildingData();
       }
     });
   }
 
   onEditAddTap(Map item) {
-    Get.to(() => AddBuildingView(), arguments: [propertyId.value, true, item ])
+    Get.to(() => AddBuildingView(), arguments: [propertyId.value, true, item])
         ?.then((value) {
       if (value == true) {
         getBuildingData();
@@ -50,7 +53,16 @@ class PropertyAbCntroller extends GetxController {
     required int buildingId,
     required String buildingName,
   }) {
-    Get.to(() => FloorView(), arguments: [buildingId, buildingName]);
+    Get.to(() => FloorView(), arguments: [buildingId, buildingName])?.then((value) {
+
+if (value == true) {
+        isApiNeeded.value = true;
+        getBuildingData();
+      }
+
+
+
+    });
   }
 
   getBuildingData() async {
@@ -78,6 +90,7 @@ class PropertyAbCntroller extends GetxController {
     }, url: "$addbuildingData$buildingId/");
     if (response != null) {
       if (response.statusCode == 200) {
+        isApiNeeded.value = true;
         getBuildingData();
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {

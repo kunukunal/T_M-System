@@ -11,10 +11,13 @@ class UnitCntroller extends GetxController {
   final floorId = 0.obs;
   final floorName = "".obs;
 
+  final isBackNeeded = false.obs;
+
   @override
   void onInit() {
     floorId.value = Get.arguments[0];
     floorName.value = Get.arguments[1];
+    isBackNeeded.value = false;
     getAllUnit();
     super.onInit();
   }
@@ -23,6 +26,7 @@ class UnitCntroller extends GetxController {
     Get.to(() => AddUnitView(), arguments: [floorId.value, false, {}])!
         .then((value) {
       if (value == true) {
+        isBackNeeded.value = true;
         getAllUnit();
       }
     });
@@ -51,6 +55,7 @@ class UnitCntroller extends GetxController {
     if (response != null) {
       if (response.statusCode == 200) {
         print("fdsfds ${response.data}");
+
         unitList.clear();
         unitList.addAll(response.data['units']);
         isUnitLoaded.value = false;
@@ -66,6 +71,7 @@ class UnitCntroller extends GetxController {
     }, url: "$addUnit$unitId/");
     if (response != null) {
       if (response.statusCode == 200) {
+        isBackNeeded.value = true;
         getAllUnit();
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {

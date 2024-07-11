@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/floor/floor_controller.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_controller.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/unit_history.dart';
 

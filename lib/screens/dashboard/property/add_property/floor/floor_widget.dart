@@ -12,10 +12,11 @@ import '../../../../../common/text_styles.dart';
 
 class FloorWidget {
   appBar(String title) {
+    final floorCntrl = Get.find<FloorCntroller>();
     return AppBar(
       leading: InkWell(
         onTap: () {
-          Get.back();
+          Get.back(result: floorCntrl.isApiNeeded.value);
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -55,7 +56,7 @@ class FloorWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-          floorCntrl.onFloorTap(floorId: floorId!,floorName: buildingTitle);
+          floorCntrl.onFloorTap(floorId: floorId!, floorName: buildingTitle);
         },
         child: Container(
           height: 84.h,
@@ -183,8 +184,6 @@ class FloorWidget {
       ),
     );
   }
-
-
 
   updateFloorDetails({
     required String title,

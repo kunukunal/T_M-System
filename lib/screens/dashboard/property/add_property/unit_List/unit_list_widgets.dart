@@ -15,7 +15,7 @@ class UnitWidget {
     return AppBar(
       leading: InkWell(
         onTap: () {
-          Get.back();
+          Get.back(result: unitCntrl.isBackNeeded.value);
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),

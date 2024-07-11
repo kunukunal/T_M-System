@@ -13,9 +13,11 @@ class FloorCntroller extends GetxController {
 
   final buildingId = 0.obs;
   final buildingName = "".obs;
+    final  isApiNeeded=false.obs;
 
   @override
   void onInit() {
+    isApiNeeded.value=false;
     buildingId.value = Get.arguments[0];
     buildingName.value = Get.arguments[1];
     getFloorData();
@@ -26,7 +28,12 @@ class FloorCntroller extends GetxController {
   onAddTap() {}
 
   onFloorTap({required int floorId, required String floorName}) {
-    Get.to(() => UnitView(), arguments: [floorId, floorName]);
+    Get.to(() => UnitView(), arguments: [floorId, floorName])!.then((value) {
+      if (value) {
+         isApiNeeded.value=true;
+        getFloorData();
+      }
+    });
   }
 
   getFloorData() async {
@@ -53,6 +60,7 @@ class FloorCntroller extends GetxController {
     }, url: '$deleteFloor$floorId/');
     if (response != null) {
       if (response.statusCode == 200) {
+         isApiNeeded.value=true;
         getFloorData();
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {}
@@ -98,6 +106,7 @@ class FloorCntroller extends GetxController {
         url: deleteFloor);
     if (response != null) {
       if (response.statusCode == 201) {
+         isApiNeeded.value=true;
         getFloorData();
       } else if (response.statusCode == 400) {}
     }
