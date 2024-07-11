@@ -15,10 +15,12 @@ class PersonalInfo extends StatefulWidget {
   final bool? isFromRegister;
   final String? mobileContrl;
   final String? phoneCode;
+  final bool? isprofileDetailsRequired;
   const PersonalInfo(
       {required this.isFromRegister,
       this.mobileContrl,
       this.phoneCode,
+      this.isprofileDetailsRequired = false,
       super.key});
 
   @override
@@ -30,8 +32,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final authCntrl = Get.put(AuthController());
   @override
   void initState() {
-    personalInfoCntrl.phoneCntrl.value.text = widget.mobileContrl!;
-    authCntrl.selectedItem.value = widget.phoneCode!;
+    if (widget.isprofileDetailsRequired == true) {
+      personalInfoCntrl.getPersonalDetails();
+    } else {
+      personalInfoCntrl.phoneCntrl.value.text = widget.mobileContrl!;
+      authCntrl.selectedItem.value = widget.phoneCode!;
+    }
     super.initState();
   }
 
@@ -82,43 +88,72 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: Obx(() {
-                          return Container(
-                            height: 99.h,
-                            width: 110.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: HexColor('#444444'),
-                              borderRadius: BorderRadius.circular(10.r),
-                              image: personalInfoCntrl.imageFile.value == null
-                                  ? const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/icons/cameraIcon.png"),
-                                    )
-                                  : DecorationImage(
-                                      image: FileImage(File(personalInfoCntrl
-                                          .imageFile.value!.path)),
-                                      fit: BoxFit.cover),
-                            ),
-                          );
-                        }),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: TextButton(
-                          onPressed: () {
-                            PersonlInfoWidget().showSelectionDialog(context);
-                          },
-                          child: Text('Add Profile',
-                              style: CustomStyles.skipBlack
-                                  .copyWith(fontWeight: FontWeight.w400)),
+                  GestureDetector(
+                    onTap: () {
+                      PersonlInfoWidget().showSelectionDialog(context);
+                    },
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Obx(() {
+                            return Container(
+                              height: 99.h,
+                              width: 110.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: HexColor('#444444'),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  image: personalInfoCntrl.imageFile.value ==
+                                              null &&
+                                          personalInfoCntrl
+                                                  .networkImage.value ==
+                                              ""
+                                      ? const DecorationImage(
+                                          image: AssetImage(
+                                              "assets/icons/cameraIcon.png"),
+                                        )
+                                      : personalInfoCntrl.imageFile.value !=
+                                              null
+                                          ? DecorationImage(
+                                              image: FileImage(File(
+                                                  personalInfoCntrl
+                                                      .imageFile.value!.path)),
+                                              fit: BoxFit.cover)
+                                          : personalInfoCntrl
+                                                      .networkImage.value !=
+                                                  ""
+                                              ? DecorationImage(
+                                                  image: NetworkImage(
+                                                      personalInfoCntrl
+                                                          .networkImage.value),
+                                                  fit: BoxFit.cover)
+                                              : const DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/icons/cameraIcon.png"),
+                                                )),
+                            );
+                          }),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Text('Add Profile',
+                            style: CustomStyles.skipBlack
+                                .copyWith(fontWeight: FontWeight.w400)),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        //   child: TextButton(
+                        //     onPressed: () {
+
+                        //     },
+                        //     child: Text('Add Profile',
+                        //         style: CustomStyles.skipBlack
+                        //             .copyWith(fontWeight: FontWeight.w400)),
+                        //   ),
+                        // )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 5.h,
@@ -192,9 +227,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PersonlInfoWidget.commomText('City'),
+                          PersonlInfoWidget.commomText('State'),
                           customTextField(
-                            controller: personalInfoCntrl.cityCntrl.value,
+                              controller: personalInfoCntrl.stateCntrl.value,
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
@@ -206,16 +241,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PersonlInfoWidget.commomText('State'),
+                          PersonlInfoWidget.commomText('City'),
                           customTextField(
-                            controller: personalInfoCntrl.stateCntrl.value,
+                              controller: personalInfoCntrl.cityCntrl.value,
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   customButton(

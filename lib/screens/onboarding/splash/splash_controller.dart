@@ -13,6 +13,7 @@ class SplashController extends GetxController {
   bool isLoggedIn = false;
 
   bool isUserLogin = false;
+  final isProfileSetup = true.obs;
 
   @override
   void onInit() {
@@ -23,6 +24,8 @@ class SplashController extends GetxController {
 
   _getUserLogin() async {
     final prefs = await SharedPreferences.getInstance();
+
+    isProfileSetup.value = prefs.getBool('is_personal_info_completed') ?? true;
     String token = prefs.getString('access_token') ?? "";
     isUserLogin = token.isNotEmpty;
   }

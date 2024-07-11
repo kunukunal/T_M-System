@@ -39,18 +39,20 @@ class OtpScreen extends StatelessWidget {
                   },
                   text: 'Submit',
                   width: Get.width),
-              AuthWidget.resendButtonWidget(
-                
-                  onPressed: () {
-                    if (authCntrl.isTimeComplete.value == true) {
-                      authCntrl.phoneOtpApi();
-                      authCntrl.countController.restart();
-                      authCntrl.isTimeComplete.value = false;
-                    } else {
-                      customSnackBar(Get.context!,
-                          "Please wait until the timer completes.");
-                    }
-                  })
+              AuthWidget.resendButtonWidget(onPressed: () {
+                if (authCntrl.isTimeComplete.value == true) {
+                  if (isFromRegister!) {
+                    authCntrl.signUpApi(isFromRegister: isFromRegister!);
+                  } else {
+                    authCntrl.phoneOtpApi(isFromRegister: isFromRegister!);
+                  }
+                  authCntrl.countController.restart();
+                  authCntrl.isTimeComplete.value = false;
+                } else {
+                  customSnackBar(
+                      Get.context!, "Please wait until the timer completes.");
+                }
+              })
             ],
           ),
         ),

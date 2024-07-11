@@ -7,36 +7,35 @@ import 'package:tanent_management/screens/navbar_management/navbar_management_co
 
 import '../../common/text_styles.dart';
 
-class NavBarManagementWidget{
-  appBar(){
+class NavBarManagementWidget {
+  appBar() {
     final managementCntrl = Get.find<NavBarManagementCntroller>();
-  return  AppBar(
+    return AppBar(
       centerTitle: true,
       automaticallyImplyLeading: false,
-
       title: Text('Management', style: CustomStyles.otpStyle050505W700S16),
       actions: [
         InkWell(
-            onTap: (){
+            onTap: () {
               managementCntrl.onSearchTap();
             },
             child: Padding(
-              padding:  EdgeInsets.all(8.r),
+              padding: EdgeInsets.all(8.r),
               child: searchIcon,
             )),
-
-
       ],
-      bottom:  PreferredSize(
+      bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
-        child: Divider(height: 1,color: lightBorderGrey,),
+        child: Divider(
+          height: 1,
+          color: lightBorderGrey,
+        ),
       ),
     );
   }
 
   //Occupied Container
   occUnoccContainer({String? icon, String? titleUnit, String? units}) {
-
     return Container(
       width: Get.width / 2.2,
       height: 90.h,
@@ -82,31 +81,30 @@ class NavBarManagementWidget{
     );
   }
 
-  commonText({String? title}){
+  commonText({String? title}) {
     final managementCntrl = Get.find<NavBarManagementCntroller>();
 
     return GestureDetector(
-      onTap: (){
-        // managementCntrl.onBuildingTap();
-      },
-        child: Text(title!,style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16.sp,color: black),));
-
+        onTap: () {
+          // managementCntrl.onBuildingTap();
+        },
+        child: Text(
+          title!,
+          style: TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 16.sp, color: black),
+        ));
   }
 
-  propertyList(
-
-      {
-        String? propertyTitle,
-        String? propertyDec,
-        String? unitsAvailable,
-        String? unitsOccupied,
-
-
-      }) {
+  propertyList({
+    String? propertyTitle,
+    String? propertyDec,
+    String? unitsAvailable,
+    String? unitsOccupied,
+  }) {
     final managementCntrl = Get.find<NavBarManagementCntroller>();
 
     return Padding(
-      padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h,top: 10.h),
+      padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
       child: GestureDetector(
         onTap: () {
           managementCntrl.onItemTap();
@@ -130,7 +128,6 @@ class NavBarManagementWidget{
                         decoration: BoxDecoration(
                           color: HexColor('#BCD1F3'),
                           borderRadius: BorderRadius.circular(10.r),
-
                         ),
                         child: Center(child: Text('A')),
                       ),
@@ -140,11 +137,10 @@ class NavBarManagementWidget{
                     ),
                     Expanded(
                       child: Column(
-
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                          'Property $propertyTitle',
+                            'Property $propertyTitle',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
@@ -155,7 +151,7 @@ class NavBarManagementWidget{
                           ),
                           Text(
                             propertyDec!,
-                       maxLines: 1,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -169,7 +165,7 @@ class NavBarManagementWidget{
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Divider(
                   color: HexColor('#EBEBEB'),
                   height: 1.h,
@@ -177,15 +173,15 @@ class NavBarManagementWidget{
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 10.w,right: 10.w),
+                  padding: EdgeInsets.only(left: 10.w, right: 10.w),
                   child: Row(
-                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           availableIcon,
                           Padding(
-                            padding:  EdgeInsets.only(left: 5.w),
+                            padding: EdgeInsets.only(left: 5.w),
                             child: Text(
                               unitsAvailable!,
                               style: TextStyle(
@@ -200,10 +196,9 @@ class NavBarManagementWidget{
                         children: [
                           occupiedIcon2,
                           Padding(
-                            padding:  EdgeInsets.only(left: 5.w),
-
+                            padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                             unitsOccupied!,
+                              unitsOccupied!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp,
@@ -212,7 +207,6 @@ class NavBarManagementWidget{
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),

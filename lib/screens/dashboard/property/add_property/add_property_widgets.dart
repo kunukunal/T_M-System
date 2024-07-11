@@ -175,7 +175,12 @@ class AddPropertyWidget {
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      propertyCntrl.propertyPickedImage.add(pickedFile);
+      propertyCntrl.propertyPickedImage.add({
+        "id": -1,
+        "image": pickedFile,
+        "isNetwork": false,
+        "isDelete": false
+      });
     } else {
       return null;
     }
@@ -188,7 +193,12 @@ class AddPropertyWidget {
       source: ImageSource.camera,
     );
     if (pickedFile != null) {
-      propertyCntrl.propertyPickedImage.add(pickedFile);
+      propertyCntrl.propertyPickedImage.add({
+        "id": -1,
+        "image": pickedFile,
+        "isNetwork": false,
+        "isDelete": false
+      });
     } else {
       return null;
     }

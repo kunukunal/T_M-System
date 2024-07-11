@@ -18,7 +18,7 @@ class AddUnitView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AddUnitWidget().appBar(),
+      appBar: AddUnitWidget().appBar(addUnitCntrl.isEdit.value?"Update Unit":"Add Unit"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -234,43 +234,76 @@ class AddUnitView extends StatelessWidget {
                     'Upload Picture/Video',
                   ),
                   Obx(() {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addUnitCntrl.unitPickedImage.length,
-                      // padding: EdgeInsets.only(bottom: 10),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: ListTile(
-                            leading: Container(
-                              height: 150.h,
-                              width: 60.w,
-                              // padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey.shade500),
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      image: FileImage(File(addUnitCntrl
-                                          .unitPickedImage[index].path)),
-                                      fit: BoxFit.cover)),
-                            ),
-                            titleAlignment: ListTileTitleAlignment.top,
-                            title:
-                                Text(addUnitCntrl.unitPickedImage[index].name),
-                            trailing: IconButton(
-                                onPressed: () {
-                                  addUnitCntrl.unitPickedImage.removeAt(index);
-                                },
-                                icon: const Icon(Icons.cancel)),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider();
-                      },
-                    );
+                    return addUnitCntrl.unitPickedImage.isEmpty
+                        ? const SizedBox()
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: addUnitCntrl.unitPickedImage.length,
+                            // padding: EdgeInsets.only(bottom: 10),
+                            itemBuilder: (context, index) {
+                              if (addUnitCntrl.unitPickedImage[index]
+                                      ['isDelete'] ==
+                                  false) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: ListTile(
+                                    leading: Container(
+                                      height: 150.h,
+                                      width: 60.w,
+                                      // padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey.shade500),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: addUnitCntrl
+                                                          .unitPickedImage[index]
+                                                      ['isNetwork'] ==
+                                                  true
+                                              ? DecorationImage(
+                                                  image: NetworkImage(addUnitCntrl
+                                                          .unitPickedImage[index]
+                                                      ['image']),
+                                                  fit: BoxFit.cover)
+                                              : DecorationImage(
+                                                  image: FileImage(
+                                                      File(addUnitCntrl.unitPickedImage[index]['image'].path)),
+                                                  fit: BoxFit.cover)),
+                                    ),
+                                    titleAlignment: ListTileTitleAlignment.top,
+                                    title: Text("Image ${index + 1}"),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          if (addUnitCntrl
+                                                      .unitPickedImage[index]
+                                                  ['isNetwork'] ==
+                                              false) {
+                                            addUnitCntrl.unitPickedImage
+                                                .removeAt(index);
+                                          } else {
+                                            addUnitCntrl.unitPickedImage[index]
+                                                ['isDelete'] = true;
+                                            addUnitCntrl.unitPickedImage
+                                                .refresh();
+                                          }
+                                        },
+                                        icon: const Icon(Icons.cancel)),
+                                  ),
+                                );
+                              }
+                              return const SizedBox();
+                            },
+                            separatorBuilder: (context, index) {
+                              if (addUnitCntrl.unitPickedImage[index]
+                                      ['isDelete'] ==
+                                  false) {
+                                return const Divider();
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          );
                   }),
                   GestureDetector(
                       onTap: () {
@@ -283,7 +316,7 @@ class AddUnitView extends StatelessWidget {
             Obx(() {
               return addUnitCntrl.isAddUnitdataUploaded.value == true
                   ? const Center(child: CircularProgressIndicator())
-                  : customBorderButton('Save', () {
+                  : customBorderButton(  addUnitCntrl.isEdit.value?"Update": 'Save', () {
                       addUnitCntrl.onSaveTap();
                     },
                       verticalPadding: 10.h,

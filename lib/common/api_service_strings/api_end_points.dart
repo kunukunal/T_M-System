@@ -10,8 +10,11 @@ const String phoneOtp = "accounts/phone-otp/";
 // Sign Up
 const String signUp = "accounts/signup/";
 
-// Sign Up
+// Login Up
 const String phoneOtpVerify = "accounts/phone-otp-verify/";
+
+// Signup otp verify
+const String signUpOtpVerify = "accounts/signup-otp-verify/";
 
 // User Profile
 const String userProfile = "accounts/user-profile/";

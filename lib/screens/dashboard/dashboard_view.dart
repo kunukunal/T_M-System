@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,17 +13,23 @@ class DashboardScreen extends StatelessWidget {
   final bool isFromMain;
   DashboardScreen({super.key, this.isFromMain = true});
   final dashCntrl = Get.put(DashBoardController());
+  final _key = GlobalKey<ExpandableFabState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-      floatingActionButton: Obx(() {
-        return dashCntrl.isAddTap.value
-            ? DashBoardWidgets().expandedFloatButton()
-            : DashBoardWidgets().floatingActionButton();
-      }),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
+            floatingActionButtonLocation: ExpandableFab.location,
+
+      floatingActionButton: DashBoardWidgets().expandedFloatButton(_key),
+      
+      
+      // Obx(() {
+      //   return dashCntrl.isAddTap.value
+      //       ? DashBoardWidgets().expandedFloatButton(_key)
+      //       : DashBoardWidgets().floatingActionButton();
+      // }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -51,11 +51,10 @@ class FloorCntroller extends GetxController {
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
     }, url: '$deleteFloor$floorId/');
-
-    print("hjhjhj ${response}");
     if (response != null) {
-      if (response.statusCode == 204) {
+      if (response.statusCode == 200) {
         getFloorData();
+        customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {}
     }
   }

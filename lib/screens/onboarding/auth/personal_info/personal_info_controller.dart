@@ -42,7 +42,8 @@ class PersonalInfoController extends GetxController {
   final isPercentageLoadingStart = false.obs;
   final profileImage = Rxn<dynamic>();
   final documentTypeList = [].obs;
-  final isDocumentTypeDataLoading = false.obs;
+  final isDocumentTypeDataLoading = true.obs;
+  final networkImage = "".obs;
 
   //finctions
   onPreviousTap() {
@@ -54,9 +55,6 @@ class PersonalInfoController extends GetxController {
     if (documentTypeList.isEmpty) {
       getDocumentType();
     }
-
-    // phoneCntrl.value=
-
     super.onInit();
   }
 
@@ -81,8 +79,12 @@ class PersonalInfoController extends GetxController {
         if (i == documentTypeList.length - 1) {
           // Navigate to next screen based on the registration status
           if (isFromRegistered == true) {
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setBool('is_personal_info_completed', true);
             Get.offAll(() => const NavBar(initialPage: 0));
           } else {
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setBool('is_personal_info_completed', true);
             Get.offAll(() => SignInScreen(isFromRegister: isFromRegistered));
           }
         }
@@ -92,7 +94,8 @@ class PersonalInfoController extends GetxController {
   }
 
   getDocumentType() async {
-    final authCntrl = Get.find<AuthController>();
+    isDocumentTypeDataLoading.value = true;
+    final authCntrl = Get.put(AuthController());
     final prefs = await SharedPreferences.getInstance();
     String languaeCode = prefs.getString('languae_code') ?? "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
@@ -100,7 +103,7 @@ class PersonalInfoController extends GetxController {
     }, url: "$userDocumentType?limit=100&${authCntrl.onButtonTapTenant.value == 2 ? "for_tenant=true" : "for_landlord=true"}");
     if (response != null) {
       if (response.statusCode == 200) {
-        isDocumentTypeDataLoading.value = true;
+        isDocumentTypeDataLoading.value = false;
         final data = response.data;
         documentTypeList.clear();
         isPercentageLoadingStart.value = false;
@@ -174,23 +177,35 @@ class PersonalInfoController extends GetxController {
 
     final response = await DioClientServices.instance.dioPostCall(
         isLoading: true,
-        body: {
-          "profile_image": imageFile.value != null
-              ? await DioClientServices.instance
-                  .multipartFile(file: imageFile.value!)
-              : "",
-          "name": nameCntrl.value.text.trim(),
-          "email": emailCntrl.value.text.trim(),
-          // "age": 19,
-          // "gender": "M",
-          "address": permanentAddCntrl.value.text.trim(),
-          "city": cityCntrl.value.text.trim(),
-          "zip_code": pinNoCntrl.value.text,
-          "state": stateCntrl.value.text.trim(),
-          // "country": "Country",
-          // "longitude": 98.5656665,
-          // "latitude": 78.5656665,
-        },
+        body: imageFile.value != null
+            ? {
+                "profile_image": await DioClientServices.instance
+                    .multipartFile(file: imageFile.value!),
+                "name": nameCntrl.value.text.trim(),
+                "email": emailCntrl.value.text.trim(),
+                // "age": 19,
+                // "gender": "M",
+                "address": permanentAddCntrl.value.text.trim(),
+                "city": cityCntrl.value.text.trim(),
+                "zip_code": pinNoCntrl.value.text,
+                "state": stateCntrl.value.text.trim(),
+                // "country": "Country",
+                // "longitude": 98.5656665,
+                // "latitude": 78.5656665,
+              }
+            : {
+                "name": nameCntrl.value.text.trim(),
+                "email": emailCntrl.value.text.trim(),
+                // "age": 19,
+                // "gender": "M",
+                "address": permanentAddCntrl.value.text.trim(),
+                "city": cityCntrl.value.text.trim(),
+                "zip_code": pinNoCntrl.value.text,
+                "state": stateCntrl.value.text.trim(),
+                // "country": "Country",
+                // "longitude": 98.5656665,
+                // "latitude": 78.5656665,
+              },
         headers: {
           "Accept-Language": languaeCode,
           'Authorization': "Bearer $accessToken",
@@ -205,6 +220,36 @@ class PersonalInfoController extends GetxController {
         if (response.data.toString().contains("email")) {
           customSnackBar(Get.context!, response.data['email'][0].toString());
         }
+      }
+    }
+  }
+
+  getPersonalDetails() async {
+    final authCntrl = Get.find<AuthController>();
+    final prefs = await SharedPreferences.getInstance();
+    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioGetCall(headers: {
+      "Accept-Language": languaeCode,
+      'Authorization': "Bearer $accessToken",
+    }, url: userProfile);
+    if (response != null) {
+      if (response.statusCode == 200) {
+        final data = response.data;
+        authCntrl.onButtonTapTenant.value = data['user_type'] ?? 2;
+        phoneCntrl.value.text = data['phone'] ?? "";
+        authCntrl.selectedItem.value = "  ${data['phone_code']}";
+        nameCntrl.value.text = data['name'] ?? "";
+        emailCntrl.value.text = data['email'] ?? "";
+        permanentAddCntrl.value.text = data['address'] ?? "";
+        pinNoCntrl.value.text = data['zip_code'] ?? "";
+        cityCntrl.value.text = data['city'] ?? "";
+        stateCntrl.value.text = data['state'] ?? "";
+        networkImage.value = data['profile_image'] ?? "";
+      } else if (response.statusCode == 400) {
+        // if (response.data.toString().contains("email")) {
+        //   customSnackBar(Get.context!, response.data['email'][0].toString());
+        // }
       }
     }
   }

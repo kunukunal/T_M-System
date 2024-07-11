@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
 
 import '../../../../../common/constants.dart';
@@ -43,6 +45,7 @@ class PropertyAbWidget {
   }
 
   propertyList({
+    int? itemIndex,
     int? buildingId,
     String? buildingTitle,
     String? floor,
@@ -61,44 +64,84 @@ class PropertyAbWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: lightBorderGrey)),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-            child: Row(
+          child: Slidable(
+            key: UniqueKey(),
+            endActionPane: ActionPane(
+              motion: const DrawerMotion(),
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      buildingTitle!,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.sp,
-                          color: black),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          featureRentContainer(
-                              isFeatured: true, title: 'Featured'),
-                          featureRentContainer(
-                              isFeatured: false, title: 'For Rent'),
-                          Padding(
-                            padding: EdgeInsets.only(left: 60.w),
-                            child: Text(
-                              '$floor  Floor',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp,
-                                  color: black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                SlidableAction(
+                  onPressed: (context) {
+                    propertyAbCntrl
+                        .onEditAddTap(propertyAbCntrl.buildingList[itemIndex!]);
+                  },
+                  backgroundColor: Colors.blue,
+                  foregroundColor: whiteColor,
+                  icon: Icons.edit,
+                ),
+
+                //
+
+                SlidableAction(
+                  onPressed: (context) {
+                    deleteFloorPopup(
+                        button1: "No",
+                        button2: "Yes",
+                        onButton1Tap: () {
+                          Get.back();
+                        },
+                        onButton2Tap: () {
+                          Get.back();
+                          propertyAbCntrl.deleteBuildingData(
+                              buildingId: buildingId!);
+                        },
+                        title:
+                            "Are you sure you want to Permanent remove $buildingTitle");
+                  },
+                  backgroundColor: const Color(0xFFFE4A49),
+                  foregroundColor: whiteColor,
+                  icon: Icons.cancel,
                 ),
               ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        buildingTitle!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            color: black),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            featureRentContainer(
+                                isFeatured: true, title: 'Featured'),
+                            featureRentContainer(
+                                isFeatured: false, title: 'For Rent'),
+                            Padding(
+                              padding: EdgeInsets.only(left: 60.w),
+                              child: Text(
+                                '$floor  Floor',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14.sp,
+                                    color: black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

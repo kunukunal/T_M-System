@@ -11,7 +11,7 @@ import '../../../../../common/constants.dart';
 import '../../../../../common/text_styles.dart';
 
 class AddUnitWidget {
-  appBar() {
+  appBar(String title) {
     return AppBar(
       surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
@@ -25,7 +25,7 @@ class AddUnitWidget {
         ),
       ),
       centerTitle: true,
-      title: Text('Add Unit', style: CustomStyles.otpStyle050505W700S16),
+      title: Text(title, style: CustomStyles.otpStyle050505W700S16),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
         child: Divider(
@@ -179,7 +179,12 @@ class AddUnitWidget {
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      addUnitController.unitPickedImage.add(pickedFile);
+      addUnitController.unitPickedImage.add({
+        "id": -1,
+        "image": pickedFile,
+        "isNetwork": false,
+        "isDelete": false
+      });
     } else {
       return null;
     }
@@ -192,7 +197,12 @@ class AddUnitWidget {
       source: ImageSource.camera,
     );
     if (pickedFile != null) {
-      addUnitController.unitPickedImage.add(pickedFile);
+      addUnitController.unitPickedImage.add({
+        "id": -1,
+        "image": pickedFile,
+        "isNetwork": false,
+        "isDelete": false
+      });
     } else {
       return null;
     }

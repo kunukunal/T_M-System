@@ -54,6 +54,7 @@ dependencies:
   flutter_slidable: ^3.0.0
   flutter_svg: ^2.0.10+1
   fl_chart: ^0.40.0
+  flutter_expandable_fab: ^2.1.0
 
 
 

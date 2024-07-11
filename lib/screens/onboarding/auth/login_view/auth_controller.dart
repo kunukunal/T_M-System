@@ -18,7 +18,7 @@ class AuthController extends GetxController {
   var items = ["  +91", "  +64"].obs;
 
   final isTimeComplete = false.obs;
-  final isFromRegister = false.obs;
+  // final isFromRegister = false.obs;
   final countdownTimer = Rxn<Timer>().obs;
   final myDuration = const Duration(seconds: 60).obs;
 
@@ -48,14 +48,23 @@ class AuthController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('is_personal_info_completed', false);
     Get.offAll(() => PersonalInfo(
-          isFromRegister: isFromRegister,
-          mobileContrl: mobileNumberController.value.text,
-          phoneCode:selectedItem.value
-        ));
+        isFromRegister: isFromRegister,
+        mobileContrl: mobileNumberController.value.text,
+        phoneCode: selectedItem.value));
   }
 
-  onOtpSubmitPressed() {
-    Get.offAll(() => const NavBar(initialPage: 0));
+  onOtpSubmitPressed({required bool isProfileUpdated}) async {
+    if (isProfileUpdated) {
+      Get.offAll(() => const NavBar(initialPage: 0));
+    } else {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('is_personal_info_completed', false);
+      Get.offAll(() => PersonalInfo(
+          isFromRegister: true,
+          isprofileDetailsRequired: true,
+          mobileContrl: mobileNumberController.value.text,
+          phoneCode: selectedItem.value));
+    }
   }
 
   // void startTimer() {
@@ -79,7 +88,7 @@ class AuthController extends GetxController {
   //   }
   // }
 
-  openOtpScreen() {
+  openOtpScreen({required bool isFromRegister}) {
     otpController1.value.clear();
     otpController2.value.clear();
     otpController3.value.clear();
@@ -87,58 +96,77 @@ class AuthController extends GetxController {
     countController.start();
     isTimeComplete.value = false;
     Get.to(() => OtpScreen(
-          isFromRegister: isFromRegister.value,
+          isFromRegister: isFromRegister,
         ));
   }
 
-  phoneOtpApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    final response = await DioClientServices.instance.dioPostCall(
-        isLoading: true,
-        body: {
-          'phone_code': selectedItem.value.toString().trim(),
-          'phone': mobileNumberController.value.text
-        },
-        headers: {
-          "Accept-Language": languaeCode,
-        },
-        url: phoneOtp);
+  phoneOtpApi({required bool isFromRegister}) async {
+    if (mobileNumberController.value.text.trim().isNotEmpty) {
+      if (mobileNumberController.value.text.trim().length == 10) {
+        final prefs = await SharedPreferences.getInstance();
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+        final response = await DioClientServices.instance.dioPostCall(
+            isLoading: true,
+            body: {
+              'phone_code': selectedItem.value.toString().trim(),
+              'phone': mobileNumberController.value.text
+            },
+            headers: {
+              "Accept-Language": languaeCode,
+            },
+            url: phoneOtp);
 
-    if (response != null) {
-      if (response.statusCode == 200) {
-        customSnackBar(Get.context!, response.data['message'][0].toString());
-        openOtpScreen();
-        log("OTP send Successfully.");
-      } else if (response.statusCode == 400) {
-        customSnackBar(Get.context!, response.data['phone'][0].toString());
+        if (response != null) {
+          if (response.statusCode == 200) {
+            customSnackBar(
+                Get.context!, response.data['message'][0].toString());
+            openOtpScreen(isFromRegister: isFromRegister);
+            log("OTP send Successfully.");
+          } else if (response.statusCode == 400) {
+            customSnackBar(Get.context!, response.data['phone'][0].toString());
+          }
+        }
+      } else {
+        customSnackBar(Get.context!, "Please Enter the correct mobile number");
       }
+    } else {
+      customSnackBar(Get.context!, "Please Enter the correct mobile number");
     }
   }
 
-  signUpApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    final response = await DioClientServices.instance.dioPostCall(
-        isLoading: true,
-        body: {
-          'user_type': onButtonTapTenant.value,
-          'phone_code': selectedItem.value.toString().trim(),
-          'phone': mobileNumberController.value.text
-        },
-        headers: {
-          "Accept-Language": languaeCode,
-        },
-        url: signUp);
+  signUpApi({required bool isFromRegister}) async {
+    if (mobileNumberController.value.text.trim().isNotEmpty) {
+      if (mobileNumberController.value.text.trim().length == 10) {
+        final prefs = await SharedPreferences.getInstance();
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+        print("fsdlkfsd ${onButtonTapTenant.value}");
+        final response = await DioClientServices.instance.dioPostCall(
+            isLoading: true,
+            body: {
+              'user_type': onButtonTapTenant.value,
+              'phone_code': selectedItem.value.toString().trim(),
+              'phone': mobileNumberController.value.text
+            },
+            headers: {
+              "Accept-Language": languaeCode,
+            },
+            url: signUp);
 
-    if (response != null) {
-      if (response.statusCode == 200) {
-        customSnackBar(Get.context!, response.data['message'][0].toString());
-        openOtpScreen();
-        log("OTP send Successfully. ${response.data}");
-      } else if (response.statusCode == 400) {
-        customSnackBar(Get.context!, response.data['phone'][0].toString());
+        if (response != null) {
+          if (response.statusCode == 200) {
+            customSnackBar(
+                Get.context!, response.data['message'][0].toString());
+            openOtpScreen(isFromRegister: isFromRegister);
+            log("OTP send Successfully. ${response.data}");
+          } else if (response.statusCode == 400) {
+            customSnackBar(Get.context!, response.data['phone'][0].toString());
+          }
+        }
+      } else {
+        customSnackBar(Get.context!, "Please Enter the correct mobile number");
       }
+    } else {
+      customSnackBar(Get.context!, "Please Enter the mobile number");
     }
   }
 
@@ -151,21 +179,21 @@ class AuthController extends GetxController {
           'phone_code': selectedItem.value.toString().trim(),
           'phone': mobileNumberController.value.text,
           'otp':
-              "${otpController1.value.text}${otpController2.value.text}${otpController3.value.text}${otpController4.value.text}" 
+              "${otpController1.value.text}${otpController2.value.text}${otpController3.value.text}${otpController4.value.text}"
         },
         headers: {
           "Accept-Language": languaeCode,
         },
-        url: phoneOtpVerify);
+        url: isFromRegister ? signUpOtpVerify : phoneOtpVerify);
     if (response != null) {
       // here api send 202 on success
       if (response.statusCode == 202) {
         prefs.setString('access_token', response.data['token']['access']);
         prefs.setString('refresh_token', response.data['token']['refresh']);
-
         isFromRegister
             ? onSubmitTapfromRegister(isFromRegister)
-            : onOtpSubmitPressed();
+            : onOtpSubmitPressed(
+                isProfileUpdated: response.data['documents_uploaded']);
         log("Login send Successfully.");
       } else if (response.statusCode == 400) {
         if (response.data.toString().contains('otp') == true) {

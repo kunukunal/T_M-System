@@ -124,7 +124,14 @@ class MyProfileView extends StatelessWidget {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.remove("access_token");
                           Get.deleteAll();
-                          Get.offAll(() => SignInScreen(isFromRegister: false));
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SignInScreen(isFromRegister: false),
+                              ),
+                              (route) => false);
+                          // Get.offAll(() => SignInScreen(isFromRegister: false));
                         },
                       );
                     },

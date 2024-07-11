@@ -54,36 +54,42 @@ class LandlordDocView extends StatelessWidget {
                             'Submit essential photos/documents for smooth landlord-business relationship.',
                             fontsize: 16.sp),
                         Obx(() {
-                          return landlordDocCntrl.documentTypeList.isEmpty
+                          return landlordDocCntrl
+                                      .isDocumentTypeDataLoading.value ==
+                                  true
                               ? const Center(
                                   child: CircularProgressIndicator(),
                                 )
-                              : ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      landlordDocCntrl.documentTypeList.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        LandlordDocWidget.commomText(
-                                          landlordDocCntrl
-                                                  .documentTypeList[index]
-                                              ['type_title'],
-                                        ),
-                                        LandlordDocWidget.commonDocUpload(
-                                            index: index,
-                                            title:
-                                                '${landlordDocCntrl.documentTypeList[index]['type_title']}',
-                                            fileImage: landlordDocCntrl
-                                                    .documentTypeList[index]
-                                                ['image']),
-                                      ],
+                              : landlordDocCntrl.documentTypeList.isEmpty
+                                  ? const Center(
+                                      child: Text("No Document Found"))
+                                  : ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: landlordDocCntrl
+                                          .documentTypeList.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            LandlordDocWidget.commomText(
+                                              landlordDocCntrl
+                                                      .documentTypeList[index]
+                                                  ['type_title'],
+                                            ),
+                                            LandlordDocWidget.commonDocUpload(
+                                                index: index,
+                                                title:
+                                                    '${landlordDocCntrl.documentTypeList[index]['type_title']}',
+                                                fileImage: landlordDocCntrl
+                                                        .documentTypeList[index]
+                                                    ['image']),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
                         }),
 
                         // ListView(

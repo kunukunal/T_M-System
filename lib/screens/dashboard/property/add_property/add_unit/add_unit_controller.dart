@@ -30,10 +30,44 @@ class AddUnitController extends GetxController {
   final isAddUnitdataUploaded = false.obs;
 
   final floorId = 0.obs;
+  final isEdit = false.obs;
+  final unitId = 0.obs;
   @override
   void onInit() {
     floorId.value = Get.arguments[0];
     numberOfUnits.value.text = "1";
+    isEdit.value = Get.arguments[1];
+    if (isEdit.value == true) {
+      Map item = Get.arguments[2];
+      unitId.value = item['id'];
+      unitNameCntrl.value.text = item['name'];
+      unitRentCntrl.value.text = item['unit_rent'];
+      areaSizeCntrl.value.text = item['area_size'];
+      noteCntrl.value.text = item['note'];
+      selectedUnitType.value = unitType[item['unit_type'] - 1];
+      selectedUnitFeature.value = unitFeature[item['unit_feature'] - 1];
+      isNegosiateSelected.value = item['is_rent_negotiable'];
+      isActiveSelected.value = item['is_active'];
+      isOccupiedSelected.value = !item['is_occupied'];
+      ametiesList.addAll((item['amenities'] as List)
+          .map((e) => {
+                "amenity_name": TextEditingController(text: e['name']),
+                "ammount": TextEditingController(text: e['price'].toString()),
+              })
+          .toList());
+
+      for (int i = 0; i < item['images'].length; i++) {
+        unitPickedImage.add({
+          "id": item['images'][i]['id'],
+          "image": item['images'][i]['image_url'],
+          "isNetwork": true,
+          "isDelete": false
+        });
+      }
+    }
+
+//
+
     super.onInit();
   }
 
@@ -42,8 +76,8 @@ class AddUnitController extends GetxController {
     '2 BHK',
     '3 BHK',
     '4 BHK',
-    '5 BHK',
-    '6 BHK',
+    // '5 BHK',
+    // '6 BHK',
   ].obs;
   final unitFeature = [
     'For Rent',
@@ -65,28 +99,32 @@ class AddUnitController extends GetxController {
     if (unitNameCntrl.value.text.trim().isNotEmpty) {
       if (unitRentCntrl.value.text.trim().isNotEmpty) {
         if (areaSizeCntrl.value.text.trim().isNotEmpty) {
-          AddUnitWidget().addMultipleUnits(
-            title: "How Many Unit are With Same Configuration",
-            button1: "Cancel",
-            button2: "Submit",
-            onButton1Tap: () {
-              Get.back();
-            },
-            onButton2Tap: () {
-              String count = numberOfUnits.value.text.trim();
-              if (int.parse(count) != 0) {
-                if (int.parse(count) <= 10) {
-                  Get.back();
-                  addUnitApi();
+          if (isEdit.value == false) {
+            AddUnitWidget().addMultipleUnits(
+              title: "How Many Unit are With Same Configuration",
+              button1: "Cancel",
+              button2: "Submit",
+              onButton1Tap: () {
+                Get.back();
+              },
+              onButton2Tap: () {
+                String count = numberOfUnits.value.text.trim();
+                if (int.parse(count) != 0) {
+                  if (int.parse(count) <= 10) {
+                    Get.back();
+                    addUnitApi();
+                  } else {
+                    customSnackBar(
+                        Get.context!, "You can create max 10 units at a time");
+                  }
                 } else {
-                  customSnackBar(
-                      Get.context!, "You can create max 10 units at a time");
+                  customSnackBar(Get.context!, "Unit count can not be zero");
                 }
-              } else {
-                customSnackBar(Get.context!, "Unit count can not be zero");
-              }
-            },
-          );
+              },
+            );
+          } else {
+            updateUnitAPi();
+          }
         } else {
           customSnackBar(Get.context!, "Please fill the Area Size");
         }
@@ -117,7 +155,7 @@ class AddUnitController extends GetxController {
     var unitImage = [];
     for (int i = 0; i < unitPickedImage.length; i++) {
       unitImage.add(await DioClientServices.instance
-          .multipartFile(file: unitPickedImage[i]));
+          .multipartFile(file: unitPickedImage[i]['image']));
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
@@ -150,6 +188,66 @@ class AddUnitController extends GetxController {
         isAddUnitdataUploaded.value = false;
         customSnackBar(Get.context!,
             "${unitNameCntrl.value.text.trim()} created Successfully");
+        Get.back(result: true);
+      } else if (response.statusCode == 400) {
+        // Handle error
+      }
+    }
+  }
+
+  updateUnitAPi() async {
+    isAddUnitdataUploaded.value = true;
+    final transformedData = ametiesList.map((amenity) {
+      return {
+        "name": (amenity["amenity_name"] as TextEditingController).text,
+        "price": (amenity["ammount"] as TextEditingController).text,
+      };
+    }).toList();
+    var unitImage = [];
+    var deleteImage = [];
+    for (int i = 0; i < unitPickedImage.length; i++) {
+      if (unitPickedImage[i]['isNetwork'] == false) {
+        unitImage.add(await DioClientServices.instance
+            .multipartFile(file: unitPickedImage[i]["image"]));
+      } else {
+        if (unitPickedImage[i]['isDelete'] == true) {
+          deleteImage.add(unitPickedImage[i]['id']);
+        }
+      }
+    }
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioPatchCall(
+      isLoading: true,
+      body: {
+        "floor": floorId.value,
+        "name": unitNameCntrl.value.text.trim(),
+        "unit_type": getBhkId(),
+        "unit_feature": getFeature(),
+        "unit_rent": unitRentCntrl.value.text.trim(),
+        "area_size": areaSizeCntrl.value.text.trim(),
+        "note": noteCntrl.value.text.trim(),
+        "is_rent_negotiable": isNegosiateSelected.value,
+        "unit_images": unitImage,
+        "amenities": jsonEncode(transformedData),
+        "units_with_same_config": numberOfUnits.value.text,
+        "is_occupied": !isOccupiedSelected.value,
+        "is_active": isActiveSelected.value,
+        "img_deleted": jsonEncode(deleteImage)
+      },
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      url: "$addUnit${unitId.value}/",
+    );
+
+    if (response != null) {
+      print("fsal ${response}");
+      if (response.statusCode == 200) {
+        isAddUnitdataUploaded.value = false;
+        customSnackBar(Get.context!,
+            "${unitNameCntrl.value.text.trim()} updated Successfully");
         Get.back(result: true);
       } else if (response.statusCode == 400) {
         // Handle error

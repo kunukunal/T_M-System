@@ -31,6 +31,7 @@ class UnitView extends StatelessWidget {
                             itemCount: unitCntrl.unitList.length,
                             itemBuilder: (context, index) {
                               return UnitWidget().unitList(
+                                  unitId: unitCntrl.unitList[index]['id'],
                                   index: index,
                                   floorName: unitCntrl.unitList[index]['name'],
                                   isOccupied: unitCntrl.unitList[index]

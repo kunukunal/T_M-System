@@ -9,7 +9,7 @@ import '../../../../../common/text_styles.dart';
 import '../../../../../common/widgets.dart';
 
 class AddBuildingWidgets {
-  appBar() {
+  appBar(String title) {
     return AppBar(
       leading: InkWell(
         onTap: () {
@@ -21,7 +21,7 @@ class AddBuildingWidgets {
         ),
       ),
       centerTitle: true,
-      title: Text('Add Building', style: CustomStyles.otpStyle050505W700S16),
+      title: Text(title, style: CustomStyles.otpStyle050505W700S16),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
         child: Divider(
@@ -98,21 +98,22 @@ class AddBuildingWidgets {
                       maxLength: 2,
                       hintText: 'Type Here...',
                       isBorder: true,
+                      readOnly: addBuildingCntrl.fromEdit.value?true:false,
                       // color: HexColor('#F7F7F7'),
                       isFilled: false,
                     ),
-                    commomText('No. of Units', isMandatory: true),
-                    customTextField(
-                      controller: addBuildingCntrl.addMultipleBuilding[index]
-                          ['units'] as TextEditingController,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      maxLength: 2,
-                      hintText: 'Type Here...',
-                      isBorder: true,
-                      // color: HexColor('#F7F7F7'),
-                      isFilled: false,
-                    ),
+                    // commomText('No. of Units', isMandatory: true),
+                    // customTextField(
+                    //   controller: addBuildingCntrl.addMultipleBuilding[index]
+                    //       ['units'] as TextEditingController,
+                    //   textInputAction: TextInputAction.done,
+                    //   keyboardType: TextInputType.number,
+                    //   maxLength: 2,
+                    //   hintText: 'Type Here...',
+                    //   isBorder: true,
+                    //   // color: HexColor('#F7F7F7'),
+                    //   isFilled: false,
+                    // ),
                     SizedBox(
                       height: 5.h,
                     ),
@@ -196,11 +197,13 @@ class AddBuildingWidgets {
                 ),
               ),
             ),
-            GestureDetector(
-                onTap: () {
-                  addBuildingCntrl.addMultipleBuilding.removeAt(index);
-                },
-                child: crossIcon)
+            addBuildingCntrl.fromEdit.value == true
+                ? const SizedBox()
+                : GestureDetector(
+                    onTap: () {
+                      addBuildingCntrl.addMultipleBuilding.removeAt(index);
+                    },
+                    child: crossIcon)
           ],
         ));
   }

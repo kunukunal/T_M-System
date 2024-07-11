@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_property_controller.dart';
@@ -121,44 +120,78 @@ class AddPropertyView extends StatelessWidget {
                   AddPropertyWidget()
                       .commomText('Upload Picture', isMandatory: false),
                   Obx(() {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addPropertyCntrl.propertyPickedImage.length,
-                      // padding: EdgeInsets.only(bottom: 10),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: ListTile(
-                            leading: Container(
-                              height: 150.h,
-                              width: 60.w,
-                              // padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey.shade500),
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      image: FileImage(File(addPropertyCntrl
-                                          .propertyPickedImage[index].path)),
-                                      fit: BoxFit.cover)),
-                            ),
-                            titleAlignment: ListTileTitleAlignment.top,
-                            title: Text(addPropertyCntrl
-                                .propertyPickedImage[index].name),
-                            trailing: IconButton(
-                                onPressed: () {
-                                  addPropertyCntrl.propertyPickedImage
-                                      .removeAt(index);
-                                },
-                                icon: const Icon(Icons.cancel)),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider();
-                      },
-                    );
+                    return addPropertyCntrl.propertyPickedImage.isEmpty
+                        ? const SizedBox()
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:
+                                addPropertyCntrl.propertyPickedImage.length,
+                            // padding: EdgeInsets.only(bottom: 10),
+                            itemBuilder: (context, index) {
+                              if (addPropertyCntrl.propertyPickedImage[index]
+                                      ['isDelete'] ==
+                                  false) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: ListTile(
+                                    leading: Container(
+                                      height: 150.h,
+                                      width: 60.w,
+                                      // padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey.shade500),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: addPropertyCntrl
+                                                          .propertyPickedImage[index]
+                                                      ['isNetwork'] ==
+                                                  true
+                                              ? DecorationImage(
+                                                  image: NetworkImage(addPropertyCntrl
+                                                          .propertyPickedImage[index]
+                                                      ['image']),
+                                                  fit: BoxFit.cover)
+                                              : DecorationImage(
+                                                  image: FileImage(
+                                                      File(addPropertyCntrl.propertyPickedImage[index]['image'].path)),
+                                                  fit: BoxFit.cover)),
+                                    ),
+                                    titleAlignment: ListTileTitleAlignment.top,
+                                    title: Text("Image ${index + 1}"),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          if (addPropertyCntrl
+                                                      .propertyPickedImage[
+                                                  index]['isNetwork'] ==
+                                              false) {
+                                            addPropertyCntrl.propertyPickedImage
+                                                .removeAt(index);
+                                          } else {
+                                            addPropertyCntrl
+                                                    .propertyPickedImage[index]
+                                                ['isDelete'] = true;
+                                            addPropertyCntrl.propertyPickedImage
+                                                .refresh();
+                                          }
+                                        },
+                                        icon: const Icon(Icons.cancel)),
+                                  ),
+                                );
+                              }
+                              return const SizedBox();
+                            },
+                            separatorBuilder: (context, index) {
+                              if (addPropertyCntrl.propertyPickedImage[index]
+                                      ['isDelete'] ==
+                                  false) {
+                                return const Divider();
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          );
                   }),
                   GestureDetector(
                       onTap: () {
@@ -170,12 +203,14 @@ class AddPropertyView extends StatelessWidget {
             ),
             Obx(
               () => addPropertyCntrl.isPropertyAdded.value == true
-                  ? const CircularProgressIndicator()
+                  ? const Center(child: CircularProgressIndicator())
                   : customButton(
                       onPressed: () {
                         addPropertyCntrl.onSaveTap();
                       },
-                      text: 'Save',
+                      text: addPropertyCntrl.isForEdit.value == true
+                          ? "Update"
+                          : 'Save',
                       width: Get.width,
                       verticalPadding: 10.h),
             )

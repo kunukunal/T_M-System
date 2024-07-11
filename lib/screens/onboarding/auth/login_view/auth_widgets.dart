@@ -8,7 +8,6 @@ import 'package:tanent_management/screens/onboarding/auth/login_view/sign_in.dar
 import 'package:timer_count_down/timer_count_down.dart';
 
 import '../../../../common/widgets.dart';
-import '../personal_info/personal_info.dart';
 
 class AuthWidget {
   static loginForm(bool isFromRegister) {
@@ -41,9 +40,9 @@ class AuthWidget {
           customButton(
               onPressed: () {
                 if (isFromRegister) {
-                  authCntrl.signUpApi();
+                  authCntrl.signUpApi(isFromRegister: isFromRegister);
                 } else {
-                  authCntrl.phoneOtpApi();
+                  authCntrl.phoneOtpApi(isFromRegister: isFromRegister);
                 }
               },
               text: isFromRegister ? 'Proceed' : 'Login',
@@ -93,24 +92,16 @@ class AuthWidget {
                       button1: 'Landlord',
                       button2: 'Tenants',
                       onButton1Tap: () {
-                        authCntrl.isFromRegister.value = true;
+                        // isFromRegister = true;
                         authCntrl.onButtonTapTenant.value = 1;
                         Get.back();
-                        Get.to(() => authCntrl.isFromRegister.value
-                            ? SignInScreen(isFromRegister: true)
-                            : PersonalInfo(
-                                isFromRegister: authCntrl.isFromRegister.value,
-                              ));
+                        Get.to(() => SignInScreen(isFromRegister: true));
                       },
                       onButton2Tap: () {
-                        authCntrl.isFromRegister.value = true;
+                        // isFromRegister = true;
                         authCntrl.onButtonTapTenant.value = 2;
                         Get.back();
-                        Get.to(() => authCntrl.isFromRegister.value
-                            ? SignInScreen(isFromRegister: true)
-                            : PersonalInfo(
-                                isFromRegister: authCntrl.isFromRegister.value,
-                              ));
+                        Get.to(() => SignInScreen(isFromRegister: true));
                       },
                     );
                   },
@@ -285,9 +276,9 @@ Widget otpTextField(TextEditingController controller, FocusNode focus,
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: const BorderSide(color: Colors.transparent)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: const BorderSide(color: Colors.transparent)),
+        // enabledBorder: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(8.r),
+        //     borderSide: const BorderSide(color: Colors.transparent)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(color: HexColor('#111111'))),

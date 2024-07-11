@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
 import '../../../common/constants.dart';
 import '../../../common/text_styles.dart';
 import '../../../common/widgets.dart';
@@ -15,6 +16,7 @@ class ManagementScreen extends StatelessWidget {
    ManagementScreen({required this.isFromDashboard, super.key});
 
    final manageCntrl = Get.put(ManagementController());
+   final authCntrl = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(

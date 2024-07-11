@@ -14,7 +14,10 @@ class AddBuildingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AddBuildingWidgets().appBar(),
+      appBar: AddBuildingWidgets().appBar(
+          addBuildingCntrl.fromEdit.value == true
+              ? "Update Building"
+              : 'Add Building'),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -56,80 +59,95 @@ class AddBuildingView extends StatelessWidget {
                               .addBuildingContainer(index: index);
                         });
                   }),
-                  Padding(
-                    padding: EdgeInsets.only(top: 0.h, bottom: 5.h),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (addBuildingCntrl.addMultipleBuilding.length <= 10) {
-                          addBuildingCntrl.addMultipleBuilding.add(
-                            {
-                              "building_name": TextEditingController(),
-                              "floor": TextEditingController(),
-                              "units": TextEditingController(),
-                              "amenities": [],
+                  addBuildingCntrl.fromEdit.value == true
+                      ? const SizedBox()
+                      : Padding(
+                          padding: EdgeInsets.only(top: 0.h, bottom: 5.h),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (addBuildingCntrl.addMultipleBuilding.length <=
+                                  10) {
+                                addBuildingCntrl.addMultipleBuilding.add(
+                                  {
+                                    "building_name": TextEditingController(),
+                                    "floor": TextEditingController(),
+                                    // "units": TextEditingController(),
+                                    "amenities": [],
+                                  },
+                                );
+                              } else {
+                                customSnackBar(
+                                    context, "You can 10 building at a time");
+                              }
                             },
-                          );
-                        } else {
-                          customSnackBar(
-                              context, "You can 10 building at a time");
-                        }
-                      },
-                      child: Row(
-                        children: [
-                          addIcon,
-                          SizedBox(
-                            width: 10.w,
+                            child: Row(
+                              children: [
+                                addIcon,
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Text(
+                                  'Add New Building',
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: black),
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            'Add New Building',
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w700,
-                                color: black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
                 ],
               ),
             ),
-            addBuildingCntrl.isBuildingDataUploaded.value==true? const CircularProgressIndicator():
-            customButton(
-                onPressed: () {
-                  if (addBuildingCntrl.addMultipleBuilding.isNotEmpty) {
-                    bool allFieldsFilled = addBuildingCntrl.addMultipleBuilding
-                        .every((e) =>
-                            e['building_name'] != null &&
-                            (e['building_name'] as TextEditingController)
-                                .text
-                                .isNotEmpty &&
-                            e['floor'] != null &&
-                            (e['floor'] as TextEditingController)
-                                .text
-                                .isNotEmpty &&
-                            e['units'] != null &&
-                            (e['units'] as TextEditingController)
-                                .text
-                                .isNotEmpty);
-                    if (allFieldsFilled) {
-                      // final propertyIndex = Get.arguments[0].value;
-                      addBuildingCntrl.isBuildingDataUploaded.value=true;
-                      addBuildingCntrl.addBuildingData();
-                    } else {
-                      customSnackBar(context,
-                          "Please check all field are filled correctly");
-                    }
-                  } else {
-                    customSnackBar(
-                        context, "No building data aavailable for add");
-                  }
+            addBuildingCntrl.isBuildingDataUploaded.value == true
+                ? const Center(child: CircularProgressIndicator())
+                : customButton(
+                    onPressed: () {
+                      if (addBuildingCntrl.addMultipleBuilding.isNotEmpty) {
+                        bool allFieldsFilled =
+                            addBuildingCntrl.addMultipleBuilding.every((e) =>
+                                e['building_name'] != null &&
+                                (e['building_name'] as TextEditingController)
+                                    .text
+                                    .isNotEmpty &&
+                                e['floor'] != null &&
+                                (e['floor'] as TextEditingController)
+                                    .text
+                                    .isNotEmpty 
+                                    
+                                //     &&
+                                // e['units'] != null &&
+                                // (e['units'] as TextEditingController)
+                                //     .text
+                                //     .isNotEmpty
+                                    
+                                    );
+                        if (allFieldsFilled) {
+                          // final propertyIndex = Get.arguments[0].value;
+                          addBuildingCntrl.isBuildingDataUploaded.value = true;
 
-                  // Get.back();
-                },
-                text: 'Save',
-                width: Get.width,
-                verticalPadding: 10.h),
+                          if (addBuildingCntrl.fromEdit.value == true) {
+                            addBuildingCntrl.updateBuilding();
+                          } else {
+                            addBuildingCntrl.addBuildingData();
+                          }
+                        } else {
+                          customSnackBar(context,
+                              "Please check all field are filled correctly");
+                        }
+                      } else {
+                        customSnackBar(
+                            context, "No building data aavailable for add");
+                      }
+
+                      // Get.back();
+                    },
+                    text: addBuildingCntrl.fromEdit.value == true
+                        ? "Update"
+                        : 'Save',
+                    width: Get.width,
+                    verticalPadding: 10.h),
           ],
         ),
       ),

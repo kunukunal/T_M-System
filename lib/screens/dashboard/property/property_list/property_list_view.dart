@@ -37,6 +37,7 @@ class PropertyListView extends StatelessWidget {
                             itemCount: propertyCntrl.propertyList.length,
                             itemBuilder: (context, index) {
                               return PropertyWidget().unitList(
+                                propertyIndex: index,
                                 id: propertyCntrl.propertyList[index]
                                     ['id'],
                                 propertyTitle: propertyCntrl.propertyList[index]

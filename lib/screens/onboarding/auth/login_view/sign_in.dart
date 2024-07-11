@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tanent_management/common/constants.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
 
 import 'auth_widgets.dart';
@@ -18,6 +18,11 @@ class SignInScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: appBar(
+            title: isFromRegister!
+                ? "Register as ${authCntrl.onButtonTapTenant.value == 2 ? "Tenant" : "Landlord"}"
+                : "Login",
+            isBack: false),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

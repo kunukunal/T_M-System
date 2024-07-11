@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/navbar/navbar_view.dart';
+import 'package:tanent_management/screens/onboarding/auth/personal_info/personal_info.dart';
 import 'package:tanent_management/screens/onboarding/splash/splash_controller.dart';
 
 import '../../../common/constants.dart';
@@ -33,9 +34,14 @@ class SplashScreen extends StatelessWidget {
                     return onboardCntrl.isgoThroughVisible.value
                         ? WalkThroughScreen()
                         : onboardCntrl.isUserLogin == true
-                            ? const NavBar(
-                                initialPage: 0,
-                              )
+                            ? onboardCntrl.isProfileSetup.value == true
+                                ? const NavBar(
+                                    initialPage: 0,
+                                  )
+                                : const PersonalInfo(
+                                    isFromRegister: true,
+                                    isprofileDetailsRequired: true,
+                                  )
                             : SignInScreen(
                                 isFromRegister: false,
                                 isFrstTime: true,

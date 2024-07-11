@@ -110,7 +110,7 @@ class FloorWidget {
                           floorCntrl.deleteFloorData(floorId: floorId!);
                         },
                         title:
-                            "Are you sure you want to Perment remove $buildingTitle");
+                            "Are you sure you want to Permanent remove $buildingTitle");
                   },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: whiteColor,
@@ -184,83 +184,7 @@ class FloorWidget {
     );
   }
 
-  deleteFloorPopup({
-    required String title,
-    required String button1,
-    required String button2,
-    required Function() onButton1Tap,
-    required Function() onButton2Tap,
-  }) async {
-    return await Get.dialog(
-      Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.r,
-        ),
-        child: Center(
-          child: Material(
-            borderRadius: BorderRadius.circular(
-              18.r,
-            ),
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400.w, // Adjust the max width as needed
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                    18.r,
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(title,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700)),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          customBorderButton(button1, onButton1Tap,
-                              verticalPadding: 5.h,
-                              horizontalPadding: 2.w,
-                              btnHeight: 35.h,
-                              width: 140.w,
-                              borderColor: HexColor('#679BF1'),
-                              textColor: HexColor('#679BF1')),
-                          customBorderButton(
-                            button2,
-                            onButton2Tap,
-                            verticalPadding: 5.h,
-                            horizontalPadding: 2.w,
-                            btnHeight: 35.h,
-                            color: HexColor('#679BF1'),
-                            textColor: Colors.white,
-                            width: 140.w,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-      barrierDismissible: true,
-    );
-  }
+
 
   updateFloorDetails({
     required String title,

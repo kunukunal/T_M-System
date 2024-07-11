@@ -33,12 +33,13 @@ class PropertyAb extends StatelessWidget {
                             itemCount: propertyAbCntrl.buildingList.length,
                             itemBuilder: (context, index) {
                               return PropertyAbWidget().propertyList(
+                                itemIndex: index,
                                 buildingId:propertyAbCntrl
                                       .buildingList[index]['id'] ,
                                   buildingTitle: propertyAbCntrl
                                       .buildingList[index]['name'],
                                   floor: propertyAbCntrl.buildingList[index]
-                                          ['number_of_floors']
+                                          ['num_of_floors']
                                       .toString(),
                                   isFeature: true);
                             }),
