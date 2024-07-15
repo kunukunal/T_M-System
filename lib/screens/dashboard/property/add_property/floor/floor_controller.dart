@@ -13,13 +13,15 @@ class FloorCntroller extends GetxController {
 
   final buildingId = 0.obs;
   final buildingName = "".obs;
-    final  isApiNeeded=false.obs;
+  final  isApiNeeded=false.obs;
+  final buildingitemAmenties ={}.obs;
 
   @override
   void onInit() {
     isApiNeeded.value=false;
     buildingId.value = Get.arguments[0];
     buildingName.value = Get.arguments[1];
+    buildingitemAmenties.value = Get.arguments[2];
     getFloorData();
     super.onInit();
   }
@@ -28,7 +30,7 @@ class FloorCntroller extends GetxController {
   onAddTap() {}
 
   onFloorTap({required int floorId, required String floorName}) {
-    Get.to(() => UnitView(), arguments: [floorId, floorName])!.then((value) {
+    Get.to(() => UnitView(), arguments: [floorId, floorName,buildingitemAmenties])!.then((value) {
       if (value) {
          isApiNeeded.value=true;
         getFloorData();

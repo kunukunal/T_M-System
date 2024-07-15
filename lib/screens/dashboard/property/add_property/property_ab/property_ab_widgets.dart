@@ -57,7 +57,7 @@ class PropertyAbWidget {
       child: GestureDetector(
         onTap: () {
           propertyAbCntrl.onListTap(
-              buildingId: buildingId!, buildingName: buildingTitle);
+              buildingId: buildingId!, buildingName: buildingTitle,item: propertyAbCntrl.buildingList[itemIndex!]);
         },
         child: Container(
           height: 84.h,

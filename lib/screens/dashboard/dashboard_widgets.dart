@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -101,78 +103,93 @@ class DashBoardWidgets {
         color: Colors.white.withOpacity(0.9),
       ),
       children: [
-        Row(
-          children: [
-            Text(
-              'Add Expense',
-              style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                dashCntrl.onAddExpenseTap();
-              },
-              heroTag: null,
-              backgroundColor: Colors.white,
-              shape: CircleBorder(
-                side: BorderSide(
-                  color: HexColor('#EBEBEB'), // Border color
-                  width: 1.w, // Border width
-                ),
+        GestureDetector(
+          onTap: () {
+            dashCntrl.onAddExpenseTap();
+          },
+          child: Row(
+            children: [
+              Text(
+                'Add Expense',
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
               ),
-              child: addExpenseIcon,
-            ),
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  dashCntrl.onAddExpenseTap();
+                },
+                heroTag: null,
+                backgroundColor: Colors.white,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: HexColor('#EBEBEB'), // Border color
+                    width: 1.w, // Border width
+                  ),
+                ),
+                child: addExpenseIcon,
+              ),
+            ],
+          ),
         ),
-        Row(
-          children: [
-            Text(
-              'Add Tenant',
-              style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                dashCntrl.onAddTenantTap();
-              },
-              heroTag: null,
-              backgroundColor: Colors.white,
-              shape: CircleBorder(
-                side: BorderSide(
-                  color: HexColor('#EBEBEB'), // Border color
-                  width: 1.w, // Border width
-                ),
+        GestureDetector(
+          onTap: () {
+            dashCntrl.onAddTenantTap();
+          },
+          child: Row(
+            children: [
+              Text(
+                'Add Tenant',
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
               ),
-              child: addTanantIcon,
-            ),
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  dashCntrl.onAddTenantTap();
+                },
+                heroTag: null,
+                backgroundColor: Colors.white,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: HexColor('#EBEBEB'), // Border color
+                    width: 1.w, // Border width
+                  ),
+                ),
+                child: addTanantIcon,
+              ),
+            ],
+          ),
         ),
-        Row(
-          children: [
-            Text(
-              'Add Properties',
-              style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
-            ),
-            const SizedBox(width: 20),
-            FloatingActionButton(
-              onPressed: () {
-                dashCntrl.onAddPropertyTap();
-              },
-              heroTag: null,
-              backgroundColor: Colors.white,
-              shape: CircleBorder(
-                side: BorderSide(
-                  color: HexColor('#EBEBEB'), // Border color
-                  width: 1.w, // Border width
-                ),
+        GestureDetector(
+          onTap: () {
+            dashCntrl.onAddPropertyTap();
+          },
+          child: Row(
+            children: [
+              Text(
+                'Add Properties',
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
               ),
-              child: addPropertyIcon,
-            ),
-          ],
+              const SizedBox(width: 20),
+              FloatingActionButton(
+                onPressed: () {
+                  dashCntrl.onAddPropertyTap();
+                },
+                heroTag: null,
+                backgroundColor: Colors.white,
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: HexColor('#EBEBEB'), // Border color
+                    width: 1.w, // Border width
+                  ),
+                ),
+                child: addPropertyIcon,
+              ),
+            ],
+          ),
         ),
       ],
     );

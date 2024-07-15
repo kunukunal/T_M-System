@@ -52,16 +52,14 @@ class PropertyAbCntroller extends GetxController {
   onListTap({
     required int buildingId,
     required String buildingName,
+    required Map item
   }) {
-    Get.to(() => FloorView(), arguments: [buildingId, buildingName])?.then((value) {
-
-if (value == true) {
+    Get.to(() => FloorView(), arguments: [buildingId, buildingName, item])
+        ?.then((value) {
+      if (value == true) {
         isApiNeeded.value = true;
         getBuildingData();
       }
-
-
-
     });
   }
 

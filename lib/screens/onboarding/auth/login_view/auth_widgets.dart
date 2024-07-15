@@ -57,57 +57,58 @@ class AuthWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Container(
-        // height: 149.h,
-        width: Get.width,
-        decoration: BoxDecoration(
-            color: HexColor('#F8F8F8'),
-            borderRadius: BorderRadius.circular(7.r),
-            border: Border.all(color: HexColor('#8AB9F1'), width: 2.w)),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 17.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Registration',
-                style: CustomStyles.titleText
-                    .copyWith(fontWeight: FontWeight.w600, fontFamily: 'Inter'),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                  'Join us today and experience the daily benefits of freshness firsthand!',
-                  style: CustomStyles.descriptionText6c6c6c),
-              SizedBox(
-                height: 5.h,
-              ),
-              customButton(
-                  onPressed: () {
-                    resgisterPopup(
-                      title: 'Registration',
-                      subtitle:
-                          'Join us today and experience the daily benefits of freshness firsthand!',
-                      button1: 'Landlord',
-                      button2: 'Tenants',
-                      onButton1Tap: () {
-                        // isFromRegister = true;
-                        authCntrl.onButtonTapTenant.value = 1;
-                        Get.back();
-                        Get.to(() => SignInScreen(isFromRegister: true));
-                      },
-                      onButton2Tap: () {
-                        // isFromRegister = true;
-                        authCntrl.onButtonTapTenant.value = 2;
-                        Get.back();
-                        Get.to(() => SignInScreen(isFromRegister: true));
-                      },
-                    );
-                  },
-                  text: 'Register Now',
-                  height: 40.h)
-            ],
+      child: IntrinsicHeight(
+        child: Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+              color: HexColor('#F8F8F8'),
+              borderRadius: BorderRadius.circular(7.r),
+              border: Border.all(color: HexColor('#8AB9F1'), width: 2.w)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 17.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Registration',
+                  style: CustomStyles.titleText.copyWith(
+                      fontWeight: FontWeight.w600, fontFamily: 'Inter'),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Text(
+                    'Join us today and experience the daily benefits of freshness firsthand!',
+                    style: CustomStyles.descriptionText6c6c6c),
+                SizedBox(
+                  height: 5.h,
+                ),
+                customButton(
+                    onPressed: () {
+                      resgisterPopup(
+                        title: 'Registration',
+                        subtitle:
+                            'Join us today and experience the daily benefits of freshness firsthand!',
+                        button1: 'Landlord',
+                        button2: 'Tenants',
+                        onButton1Tap: () {
+                          // isFromRegister = true;
+                          authCntrl.onButtonTapTenant.value = 1;
+                          Get.back();
+                          Get.to(() => SignInScreen(isFromRegister: true));
+                        },
+                        onButton2Tap: () {
+                          // isFromRegister = true;
+                          authCntrl.onButtonTapTenant.value = 2;
+                          Get.back();
+                          Get.to(() => SignInScreen(isFromRegister: true));
+                        },
+                      );
+                    },
+                    text: 'Register Now',
+                    height: 40.h)
+              ],
+            ),
           ),
         ),
       ),

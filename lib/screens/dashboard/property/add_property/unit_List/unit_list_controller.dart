@@ -13,17 +13,21 @@ class UnitCntroller extends GetxController {
 
   final isBackNeeded = false.obs;
 
+  final buildingAmenties={}.obs;
+
+
   @override
   void onInit() {
     floorId.value = Get.arguments[0];
     floorName.value = Get.arguments[1];
+    buildingAmenties.value=Get.arguments[2];
     isBackNeeded.value = false;
     getAllUnit();
     super.onInit();
   }
 
   onAddTap() {
-    Get.to(() => AddUnitView(), arguments: [floorId.value, false, {}])!
+    Get.to(() => AddUnitView(), arguments: [floorId.value, false,buildingAmenties])!
         .then((value) {
       if (value == true) {
         isBackNeeded.value = true;

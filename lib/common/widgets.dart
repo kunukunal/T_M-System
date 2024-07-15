@@ -29,7 +29,7 @@ customTextField({
   TextInputAction? textInputAction,
   TextInputType? keyboardType,
   bool? obscureText,
-  bool onDropdownChanged=true,
+  bool onDropdownChanged = true,
 }) {
   return Container(
     width: width ?? Get.width,
@@ -42,7 +42,9 @@ customTextField({
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        isForCountryCode ? dropDownMenu(onDropdownChanged: onDropdownChanged) : Container(),
+        isForCountryCode
+            ? dropDownMenu(onDropdownChanged: onDropdownChanged)
+            : Container(),
         Expanded(
           child: TextField(
             maxLength: maxLength,
@@ -81,7 +83,7 @@ customTextField({
   );
 }
 
-Widget dropDownMenu({  bool onDropdownChanged=true}) {
+Widget dropDownMenu({bool onDropdownChanged = true}) {
   final authCntrl = Get.find<AuthController>();
   return Obx(() {
     return Padding(
@@ -102,9 +104,11 @@ Widget dropDownMenu({  bool onDropdownChanged=true}) {
             ),
           );
         }).toList(),
-        onChanged: onDropdownChanged?(item) {
-          authCntrl.selectedItem.value = item.toString();
-        }:null,
+        onChanged: onDropdownChanged
+            ? (item) {
+                authCntrl.selectedItem.value = item.toString();
+              }
+            : null,
       ),
     );
   });
@@ -211,7 +215,10 @@ backArrowIcon() {
         shape: BoxShape.circle,
         border: Border.all(color: HexColor('#EBEBEB')),
       ),
-      child: const Icon(Icons.arrow_back_ios_new,size: 15,),
+      child: const Icon(
+        Icons.arrow_back_ios_new,
+        size: 15,
+      ),
     ),
   );
 }
@@ -266,99 +273,97 @@ resgisterPopup({
   required Function() onButton2Tap,
 }) async {
   return await Get.dialog(
-      Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: 20.r, vertical: title == 'Logout' ? 260.h : 244.h),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                18.r,
-              )),
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 5.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                            color: black,
-                            fontSize: 18.sp,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: crossIcon)
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    subtitle,
-                    textAlign: TextAlign.start,
-                    style: title == 'Logout'
-                        ? CustomStyles.otpStyle050505.copyWith(
-                            fontFamily: 'DM Sans',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.none)
-                        : TextStyle(
-                            fontFamily: 'Inter',
-                            decoration: TextDecoration.none,
-                            height: 1.4,
-                            color: HexColor('#6C6C6C'),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                  ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customBorderButton(button1, onButton1Tap,
-                        verticalPadding: 5.h,
-                        horizontalPadding: 2.w,
-                        btnHeight: 35.h,
-                        width: 140.w,
-                        borderColor: HexColor('#679BF1'),
-                        textColor: HexColor('#679BF1')),
-                    title == 'Logout'
-                        ? customButton(
-                            onPressed: onButton2Tap,
-                            text: button2,
-                            width: 140.w)
-                        : customBorderButton(
-                            button2,
-                            onButton2Tap,
-                            verticalPadding: 5.h,
-                            horizontalPadding: 2.w,
-                            btnHeight: 35.h,
-                            width: 140.w,
-                          )
-                  ],
-                )
-              ],
+    AlertDialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18.r),
+      ),
+      titlePadding: EdgeInsets.only(top: 5.h, left: 14.w, right: 14.w),
+      contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                color: black,
+                fontSize: 18.sp,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.w700),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: crossIcon,
+          ),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0),
+            child: Text(
+              subtitle,
+              textAlign: TextAlign.start,
+              style: title == 'Logout'
+                  ? CustomStyles.otpStyle050505.copyWith(
+                      fontFamily: 'DM Sans',
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none)
+                  : TextStyle(
+                      fontFamily: 'Inter',
+                      decoration: TextDecoration.none,
+                      height: 1.4,
+                      color: HexColor('#6C6C6C'),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500),
             ),
           ),
-        ),
+          SizedBox(height: 10.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: customBorderButton(
+                  button1,
+                  onButton1Tap,
+                  verticalPadding: 5.h,
+                  horizontalPadding: 2.w,
+                  btnHeight: 35.h,
+                  width: 140.w,
+                  borderColor: HexColor('#679BF1'),
+                  textColor: HexColor('#679BF1'),
+                ),
+              ),
+              title == 'Logout'
+                  ? customButton(
+                      onPressed: onButton2Tap,
+                      text: button2,
+                      width: 140.w,
+                    )
+                  : customBorderButton(
+                      button2,
+                      onButton2Tap,
+                      verticalPadding: 5.h,
+                      horizontalPadding: 2.w,
+                      btnHeight: 35.h,
+                      width: 140.w,
+                    ),
+            ],
+          ),
+        ],
       ),
-      barrierDismissible: true);
-  /*
+    ),
+    barrierDismissible: true,
+  );
+}
+
+/*
   showDialog<bool>(
     context: Get.context!,
     builder: (ctx) {
@@ -397,7 +402,6 @@ resgisterPopup({
     },
   );
   */
-}
 
 //Common Button
 Widget customBorderButton(
@@ -713,80 +717,81 @@ commonDeclinePopup({
       ),
       barrierDismissible: true);
 }
-  deleteFloorPopup({
-    required String title,
-    required String button1,
-    required String button2,
-    required Function() onButton1Tap,
-    required Function() onButton2Tap,
-  }) async {
-    return await Get.dialog(
-      Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.r,
-        ),
-        child: Center(
-          child: Material(
-            borderRadius: BorderRadius.circular(
-              18.r,
+
+deleteFloorPopup({
+  required String title,
+  required String button1,
+  required String button2,
+  required Function() onButton1Tap,
+  required Function() onButton2Tap,
+}) async {
+  return await Get.dialog(
+    Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.r,
+      ),
+      child: Center(
+        child: Material(
+          borderRadius: BorderRadius.circular(
+            18.r,
+          ),
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: 400.w, // Adjust the max width as needed
             ),
-            child: Container(
-              constraints: BoxConstraints(
-                maxWidth: 400.w, // Adjust the max width as needed
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                    18.r,
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(title,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w700)),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          customBorderButton(button1, onButton1Tap,
-                              verticalPadding: 5.h,
-                              horizontalPadding: 2.w,
-                              btnHeight: 35.h,
-                              width: 140.w,
-                              borderColor: HexColor('#679BF1'),
-                              textColor: HexColor('#679BF1')),
-                          customBorderButton(
-                            button2,
-                            onButton2Tap,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(
+                  18.r,
+                )),
+            child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(title,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w700)),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        customBorderButton(button1, onButton1Tap,
                             verticalPadding: 5.h,
                             horizontalPadding: 2.w,
                             btnHeight: 35.h,
-                            color: HexColor('#679BF1'),
-                            textColor: Colors.white,
                             width: 140.w,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                            borderColor: HexColor('#679BF1'),
+                            textColor: HexColor('#679BF1')),
+                        customBorderButton(
+                          button2,
+                          onButton2Tap,
+                          verticalPadding: 5.h,
+                          horizontalPadding: 2.w,
+                          btnHeight: 35.h,
+                          color: HexColor('#679BF1'),
+                          textColor: Colors.white,
+                          width: 140.w,
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
           ),
         ),
       ),
-      barrierDismissible: true,
-    );
-  }
+    ),
+    barrierDismissible: true,
+  );
+}

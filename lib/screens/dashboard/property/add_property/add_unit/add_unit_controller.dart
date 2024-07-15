@@ -64,6 +64,14 @@ class AddUnitController extends GetxController {
           "isDelete": false
         });
       }
+    } else {
+      Map item = Get.arguments[2];
+      ametiesList.addAll((item['amenities'] as List)
+          .map((e) => {
+                "amenity_name": TextEditingController(text: e['name']),
+                "ammount": TextEditingController(text: e['price'].toString()),
+              })
+          .toList());
     }
 
 //

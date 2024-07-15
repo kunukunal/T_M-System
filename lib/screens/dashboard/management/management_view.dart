@@ -103,12 +103,12 @@ class ManagementScreen extends StatelessWidget {
                         manageCntrl.selectedTenantName.value=item;
                       }),
                       SizedBox(height: 5.h,),
-                      PersonlInfoWidget.commomText('Project'),
+                      PersonlInfoWidget.commomText('Property'),
                       bigDropDown(selectedItem: manageCntrl.selectedProjectName.value, items: manageCntrl.projectsList.value, onChange: (item){
                         manageCntrl.selectedProjectName.value=item;
                       }),
                       SizedBox(height: 5.h,),
-                      PersonlInfoWidget.commomText('Tower'),
+                      PersonlInfoWidget.commomText('Building'),
                       bigDropDown(selectedItem: manageCntrl.selectedTowerName.value, items: manageCntrl.towerList.value, onChange: (item){
                         manageCntrl.selectedTowerName.value=item;
                       }),
