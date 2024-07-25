@@ -101,7 +101,7 @@ class FloorCntroller extends GetxController {
           "number_of_units": units
         },
         isRawData: true,
-        isLoading: true,
+
         headers: {
           'Authorization': "Bearer $accessToken",
         },

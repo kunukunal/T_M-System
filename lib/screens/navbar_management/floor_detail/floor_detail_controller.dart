@@ -1,78 +1,75 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/screens/dashboard/management/management_view.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
-class FloorDetailController extends GetxController{
-  final items = [
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
+class FloorDetailController extends GetxController {
+  final items = [].obs;
 
-    },
-    {
-      'unitTitle': 'Unit 3',
-      'price': '₹3500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
+  final floorId = 0.obs;
+  final propertyFloorName = "".obs;
 
-    },
-    {
-      'unitTitle': 'Unit 2',
-      'price': '₹2900.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/profileIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':true
+  final unitPropertyNameData = {}.obs;
+  final unitBuildingNameData = {}.obs;
+  final unitFloorNameData = {}.obs;
 
-    },
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
+  @override
+  onInit() {
+    floorId.value = Get.arguments[0];
+    propertyFloorName.value = Get.arguments[1];
 
-    },
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
+    getUnitsStats();
+    super.onInit();
+  }
 
-    },
-  ].obs;
+  final isUnitsStatsLoading = false.obs;
+  onBuildingTap(Map unitNameData, List amenities, Map rentData) {
+    Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
+      false,
+      [
+        unitPropertyNameData,
+        unitBuildingNameData,
+        unitFloorNameData,
+        unitNameData
+      ],
+      amenities,
+      rentData
+    ])!
+        .then((value) {
+      if (value == true) {
+        getUnitsStats();
+      }
+    });
+  }
 
-  onBuildingTap(){
-    Get.to(()=>
-        ManagementScreen(isFromDashboard: false));
+  getUnitsStats() async {
+    isUnitsStatsLoading.value = true;
 
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      url: "$floortatistics${floorId.value}/unit-statistics/",
+    );
+
+    if (response != null) {
+      if (response.statusCode == 200) {
+        isUnitsStatsLoading.value = false;
+
+        final data = response.data;
+        print(data);
+        unitPropertyNameData.value = data['property'];
+        unitBuildingNameData.value = data['building'];
+        unitFloorNameData.value = data['floor'];
+        items.clear();
+        items.addAll(data['units']);
+      } else if (response.statusCode == 400) {
+        // Handle error
+      }
+    }
   }
 }

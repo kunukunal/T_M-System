@@ -19,11 +19,11 @@ class DioClientServices {
       {required dynamic body,
       required dynamic headers,
       required String url,
-      required bool? isLoading,
+
       bool? isRawData = false}) async {
     try {
       FormData? formData;
-      isLoading = true;
+
       if (isRawData == false) {
         formData = FormData.fromMap(body);
       } else {}
@@ -32,10 +32,10 @@ class DioClientServices {
         data: isRawData == true ? jsonEncode(body) : formData,
         options: Options(headers: headers),
       );
-      isLoading = false;
+
       return response;
     } on DioException catch (e) {
-      isLoading = true;
+
 
       log("${e.response?.statusCode}", name: "Exception response null");
       if (e.response == null) {

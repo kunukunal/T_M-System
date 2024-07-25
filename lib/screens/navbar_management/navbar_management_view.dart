@@ -7,67 +7,84 @@ import 'package:tanent_management/screens/navbar_management/navbar_management_wi
 import '../../common/constants.dart';
 
 class NavbarManagementScreen extends StatelessWidget {
-   NavbarManagementScreen({super.key});
+  NavbarManagementScreen({super.key});
   final navBarManagementCntrl = Get.put(NavBarManagementCntroller());
-
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: NavBarManagementWidget().appBar(),
-      body:Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-      Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 15.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+      body: RefreshIndicator(
+        onRefresh: () async {
+          navBarManagementCntrl.getPropertyManagementStats();
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          NavBarManagementWidget().occUnoccContainer(
-              icon: occupiedIcon,
-              titleUnit: 'Occupied Units',
-              units: '300'),
-          NavBarManagementWidget().occUnoccContainer(
-              icon: unOccupiedIcon,
-              titleUnit: 'Unoccupied Units',
-              units: '200'),
-        ],),
-      ),
-        Padding(
-          padding:   EdgeInsets.symmetric(horizontal: 10.w),
-
-      child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            NavBarManagementWidget().commonText(title: 'Property'),
-           Row(
-             children: [ NavBarManagementWidget().commonText(title: 'All Units'),
-             SizedBox(width: 10.w,),
-             filterIcon2],)
-          ],),
-        )
-          ,
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount:navBarManagementCntrl.items.length,
-              itemBuilder: (context, index) {
-                return NavBarManagementWidget().propertyList(
-                    propertyTitle: navBarManagementCntrl.items[index]['propTitle'],
-                    propertyDec: navBarManagementCntrl.items[index]['propDesc'] ,
-                   unitsAvailable : navBarManagementCntrl.items[index]['availablityTitle'],
-                    unitsOccupied: navBarManagementCntrl.items[index]['occupiedTitle'],
-
-
-
-                );
-              },
-
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NavBarManagementWidget().occUnoccContainer(
+                      icon: occupiedIcon,
+                      titleUnit: 'Occupied Units',
+                      units: navBarManagementCntrl.totalOccupiedUnits.value
+                          .toString()),
+                  NavBarManagementWidget().occUnoccContainer(
+                      icon: unOccupiedIcon,
+                      titleUnit: 'Unoccupied Units',
+                      units: navBarManagementCntrl.totalUnOccupiedUnits.value
+                          .toString()),
+                ],
+              ),
             ),
-          )
-
-      ],),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NavBarManagementWidget().commonText(title: 'Property'),
+                  //  Row(
+                  //    children: [ NavBarManagementWidget().commonText(title: 'All Units'),
+                  //    SizedBox(width: 10.w,),
+                  //    filterIcon2],)
+                ],
+              ),
+            ),
+            Expanded(
+              child: navBarManagementCntrl.isPropertyStatsLoading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : navBarManagementCntrl.items.isEmpty
+                      ? const Center(
+                          child: Text("No Property Found"),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: navBarManagementCntrl.items.length,
+                          itemBuilder: (context, index) {
+                            return NavBarManagementWidget().propertyList(
+                              id: navBarManagementCntrl.items[index]['id'],
+                              propertyTitle: navBarManagementCntrl.items[index]
+                                  ['title'],
+                              propertyDec: navBarManagementCntrl.items[index]
+                                  ['address'],
+                              unitsAvailable: navBarManagementCntrl.items[index]
+                                  ['available_units'],
+                              totalUnit: navBarManagementCntrl.items[index]
+                                  ['total_units'],
+                              unitsOccupied: navBarManagementCntrl.items[index]
+                                  ['occupied_units'],
+                            );
+                          },
+                        ),
+            )
+          ],
+        ),
+      ),
     ));
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/screens/navbar_management/navbar_management_controller.dart';
 
@@ -82,7 +83,7 @@ class NavBarManagementWidget {
   }
 
   commonText({String? title}) {
-    final managementCntrl = Get.find<NavBarManagementCntroller>();
+    // final managementCntrl = Get.find<NavBarManagementCntroller>();
 
     return GestureDetector(
         onTap: () {
@@ -96,10 +97,12 @@ class NavBarManagementWidget {
   }
 
   propertyList({
+    int? id,
     String? propertyTitle,
     String? propertyDec,
-    String? unitsAvailable,
-    String? unitsOccupied,
+    int? unitsAvailable,
+    int? unitsOccupied,
+    int? totalUnit,
   }) {
     final managementCntrl = Get.find<NavBarManagementCntroller>();
 
@@ -107,7 +110,7 @@ class NavBarManagementWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
       child: GestureDetector(
         onTap: () {
-          managementCntrl.onItemTap();
+          managementCntrl.onItemTap(id!,propertyTitle);
         },
         child: Container(
           height: 120.h,
@@ -129,7 +132,8 @@ class NavBarManagementWidget {
                           color: HexColor('#BCD1F3'),
                           borderRadius: BorderRadius.circular(10.r),
                         ),
-                        child: Center(child: Text('A')),
+                        child: Center(
+                            child: Text(propertyTitle![0].toUpperCase())),
                       ),
                     ),
                     SizedBox(
@@ -140,7 +144,7 @@ class NavBarManagementWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Property $propertyTitle',
+                            propertyTitle,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp,
@@ -179,11 +183,17 @@ class NavBarManagementWidget {
                     children: [
                       Row(
                         children: [
-                          availableIcon,
+                          // availableIcon,
+                          CircularPercentIndicator(
+                            radius: 12.0,
+                            lineWidth: 4.0,
+                            percent: unitsAvailable! / totalUnit!,
+                            progressColor: Colors.blue,
+                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              unitsAvailable!,
+                              "$unitsAvailable Units(Available)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp,
@@ -194,11 +204,16 @@ class NavBarManagementWidget {
                       ),
                       Row(
                         children: [
-                          occupiedIcon2,
+                          CircularPercentIndicator(
+                            radius: 12.0,
+                            lineWidth: 4.0,
+                            percent: unitsOccupied! / totalUnit,
+                            progressColor: Colors.green,
+                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              unitsOccupied!,
+                              "$unitsOccupied Units(Occupied)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp,

@@ -89,7 +89,7 @@ class AddBuildingCntroller extends GetxController {
     String accessToken = prefs.getString('access_token') ?? "";
 
     final response = await DioClientServices.instance.dioPostCall(
-      isLoading: true,
+ 
       body: transformedData, // Ensure this is correctly handled as a List
       isRawData: true,
       headers: {

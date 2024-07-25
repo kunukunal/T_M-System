@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -28,6 +29,8 @@ customTextField({
   bool? readOnly,
   TextInputAction? textInputAction,
   TextInputType? keyboardType,
+  List<TextInputFormatter>? inputFormatters,
+
   bool? obscureText,
   bool onDropdownChanged = true,
 }) {
@@ -41,6 +44,7 @@ customTextField({
         borderRadius: BorderRadius.circular(8.r)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
+      
       children: [
         isForCountryCode
             ? dropDownMenu(onDropdownChanged: onDropdownChanged)
@@ -55,6 +59,8 @@ customTextField({
             readOnly: readOnly ?? false,
             keyboardType: keyboardType ?? TextInputType.name,
             textInputAction: textInputAction ?? TextInputAction.next,
+
+            inputFormatters: inputFormatters,
             strutStyle: StrutStyle.fromTextStyle(CustomStyles.lightHint16),
             onTap: onTap ?? () {},
             onChanged: onChange,
@@ -168,6 +174,7 @@ customButton(
 bigDropDown(
     {required String selectedItem,
     required List items,
+    bool isReadOnly = false,
     required Function(String) onChange,
     Color? color,
     double? width}) {
@@ -194,9 +201,11 @@ bigDropDown(
             ),
           );
         }).toList(),
-        onChanged: (item) {
-          onChange(item.toString());
-        },
+        onChanged: isReadOnly
+            ? null
+            : (item) {
+                onChange(item.toString());
+              },
       ),
     ),
   );

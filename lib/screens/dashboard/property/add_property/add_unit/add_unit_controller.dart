@@ -168,7 +168,7 @@ class AddUnitController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
     final response = await DioClientServices.instance.dioPostCall(
-      isLoading: true,
+
       body: {
         "floor": floorId.value,
         "name": unitNameCntrl.value.text.trim(),

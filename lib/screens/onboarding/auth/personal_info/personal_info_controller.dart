@@ -130,7 +130,7 @@ class PersonalInfoController extends GetxController {
     String languaeCode = prefs.getString('languae_code') ?? "en";
     String accessToken = prefs.getString('access_token') ?? "";
     final response = await DioClientServices.instance.dioPostCall(
-        isLoading: true,
+ 
         body: {
           'document_type': documentType,
           'image': await DioClientServices.instance.multipartFile(file: file)
@@ -176,7 +176,7 @@ class PersonalInfoController extends GetxController {
     String accessToken = prefs.getString('access_token') ?? "";
 
     final response = await DioClientServices.instance.dioPostCall(
-        isLoading: true,
+
         body: imageFile.value != null
             ? {
                 "profile_image": await DioClientServices.instance

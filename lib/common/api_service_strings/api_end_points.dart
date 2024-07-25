@@ -24,7 +24,24 @@ const String userDocumentType = "document-type/";
 
 // User document
 const String userDocument = "accounts/user-document/";
+
 const String getOrAddPropertyList = "property/property/";
+
 const String addbuildingData = "building/building/";
+
 const String deleteFloor = "building/floor/";
+
 const String addUnit = "unit/unit/";
+
+const String propertyStatistics = "management/property-statistics/";
+
+const String propertyBuildingStatistics = "management/property/";
+
+const String floortatistics = "management/floor/";
+
+const String unitHistory = "unit/unit-history/";
+
+const String checTenantStatus = "accounts/check-tenant/";
+
+const String addNewTenant = "unit/unit_rental/";
+const String verifyTenantOtpapi = "unit/assign_unit/";

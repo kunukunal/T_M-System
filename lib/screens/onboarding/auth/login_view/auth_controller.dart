@@ -106,7 +106,7 @@ class AuthController extends GetxController {
         final prefs = await SharedPreferences.getInstance();
         String languaeCode = prefs.getString('languae_code') ?? "en";
         final response = await DioClientServices.instance.dioPostCall(
-            isLoading: true,
+     
             body: {
               'phone_code': selectedItem.value.toString().trim(),
               'phone': mobileNumberController.value.text
@@ -141,7 +141,7 @@ class AuthController extends GetxController {
         String languaeCode = prefs.getString('languae_code') ?? "en";
         print("fsdlkfsd ${onButtonTapTenant.value}");
         final response = await DioClientServices.instance.dioPostCall(
-            isLoading: true,
+      
             body: {
               'user_type': onButtonTapTenant.value,
               'phone_code': selectedItem.value.toString().trim(),
@@ -174,7 +174,7 @@ class AuthController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String languaeCode = prefs.getString('languae_code') ?? "en";
     final response = await DioClientServices.instance.dioPostCall(
-        isLoading: true,
+     
         body: {
           'phone_code': selectedItem.value.toString().trim(),
           'phone': mobileNumberController.value.text,

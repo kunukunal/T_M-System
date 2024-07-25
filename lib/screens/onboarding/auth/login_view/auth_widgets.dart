@@ -241,6 +241,44 @@ class AuthWidget {
       ),
     );
   }
+
+  static resendTenantOtp({
+    VoidCallback? onPressed,
+  }) {
+    final authCntrl = Get.find<AuthController>();
+    return Flexible(
+      child: Padding(
+        padding: EdgeInsets.only(top: 10.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+                flex: 1,
+                child: Text('Didn’t receive the code? ',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: CustomStyles.lightHint16)),
+            Obx(() {
+              return Flexible(
+                flex: 2,
+                child: TextButton(
+                  onPressed: onPressed,
+                  child: Text(
+                    'Resend',
+                    style: CustomStyles.titleText.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: authCntrl.isTimeComplete.value == false
+                            ? Colors.grey
+                            : Colors.black),
+                  ),
+                ),
+              );
+            })
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 Widget otpTextField(TextEditingController controller, FocusNode focus,
