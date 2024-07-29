@@ -15,31 +15,29 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: appBar(
-            title: isFromRegister!
-                ? "Register as ${authCntrl.onButtonTapTenant.value == 2 ? "Tenant" : "Landlord"}"
-                : "Login",
-            isBack: false),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: 90.h, bottom: 30.h, right: 50.w, left: 50.w),
-                child: Image.asset(
-                  "assets/images/splash_image.png",
-                  width: 220.w,
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: appBar(
+          title: isFromRegister!
+              ? "Register as ${authCntrl.onButtonTapTenant.value == 2 ? "Tenant" : "Landlord"}"
+              : "Login",
+          isBack: false),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 90.h, bottom: 30.h, right: 50.w, left: 50.w),
+              child: Image.asset(
+                "assets/images/splash_image.png",
+                width: 220.w,
               ),
             ),
-            AuthWidget.loginForm(isFromRegister!),
-            isFromRegister! ? const SizedBox() : AuthWidget.registrationBox()
-          ],
-        ),
+          ),
+          AuthWidget.loginForm(isFromRegister!),
+          isFromRegister! ? const SizedBox() : AuthWidget.registrationBox()
+        ],
       ),
     );
   }

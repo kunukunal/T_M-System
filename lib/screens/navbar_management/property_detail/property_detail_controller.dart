@@ -39,11 +39,13 @@ class PropertyDetailCntroller extends GetxController {
 
   final isExpand = false.obs;
 
-  RxInt selectedIndex =  0.obs;
+  RxInt selectedIndex = 0.obs;
 
   final propertId = 0.obs;
   final propertTitle = "".obs;
   final isPropertyBuildingStatsLoading = false.obs;
+
+  final isRefreshmentRequired = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -53,7 +55,13 @@ class PropertyDetailCntroller extends GetxController {
   }
 
   onBuildingTap(int id, String floorName) {
-    Get.to(() => FloorDetailView(),arguments: [id,floorName]);
+    Get.to(() => FloorDetailView(), arguments: [id, floorName])!.then((value) {
+      print("jhjhjh ${value}");
+      if (value==true) {
+        isRefreshmentRequired.value = value!;
+        getPropertyManagementStats();
+      }
+    });
   }
 
   getPropertyManagementStats() async {

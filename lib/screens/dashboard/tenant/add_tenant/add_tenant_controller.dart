@@ -40,28 +40,51 @@ class AddTenantController extends GetxController {
 
   final isFromCheckTenat = false.obs;
 
+  final isComingForEdit = false.obs;
+
+  final profileImageEdit = "".obs;
+  final kireyderId = 0.obs;
   @override
   onInit() {
     isFromCheckTenat.value = Get.arguments[0];
-
-    if (isFromCheckTenat.value) {
+    final editData = Get.arguments[2];
+    if (isFromCheckTenat.value && editData['isEdit'] == false) {
       final data = Get.arguments[1];
 
       phoneCntrl.value.text = data['phone'];
     }
+    if (editData['isEdit'] == true) {
+      final authCntrl = Get.put(AuthController());
 
+      isComingForEdit.value = true;
+      name.value.text = editData['name'];
+      authCntrl.selectedItem.value = "  ${editData['phone_code']}";
+      emailCntrl.value.text = editData['email'];
+      kireyderId.value = editData['id'];
+      phoneCntrl.value.text = editData['phone_number'];
+      permanentAddCntrl.value.text = editData['address'];
+      streetdCntrl.value.text = editData['landmark'];
+      pinNoCntrl.value.text = editData['pincode'];
+      cityCntrl.value.text = editData['city'];
+      stateCntrl.value.text = editData['state'];
+      profileImageEdit.value = editData['profile_pic'];
+    }
     super.onInit();
   }
 
   //functions
-  onNextTap() {
+  onNextTap(bool isForEdit) {
     if (name.value.text.trim().isNotEmpty) {
       if (emailCntrl.value.text.trim().isNotEmpty) {
         if (phoneCntrl.value.text.trim().isNotEmpty) {
           if (pinNoCntrl.value.text.trim().isNotEmpty) {
             if (cityCntrl.value.text.trim().isNotEmpty) {
               if (stateCntrl.value.text.trim().isNotEmpty) {
-                addTenantByLandLordApi();
+                if (isForEdit) {
+                  updateTenantApi();
+                } else {
+                  addTenantByLandLordApi();
+                }
               } else {
                 customSnackBar(Get.context!, "Please enter the State");
               }
@@ -107,6 +130,7 @@ class AddTenantController extends GetxController {
         "phone_code": authCntrl.selectedItem.trim(),
         "phone": phoneCntrl.value.text.trim(),
         "name": name.value.text.trim(),
+        "landmark": streetdCntrl.value.text.trim(),
         "profile_image": image,
         "email": emailCntrl.value.text.trim(),
         "address": permanentAddCntrl.value.text.trim(),
@@ -122,7 +146,6 @@ class AddTenantController extends GetxController {
     );
 
     if (response != null) {
-      print("dlskdlsklkslad ${response.data} ${response.statusCode}");
       if (response.statusCode == 200) {
         if (istenantaddfromOtp) {
           addTenantOtpVerify.value = false;
@@ -173,7 +196,7 @@ class AddTenantController extends GetxController {
         Get.back();
         customSnackBar(Get.context!, response.data['message']);
         Get.off(() => TenantDocScreen(),
-            arguments: [response.data['data']['id'], isFromCheckTenat.value]);
+            arguments: [response.data['data']['id'], isFromCheckTenat.value,{'isEdit':false,'isConsent':true}]);
       } else if (response.statusCode == 400) {
         addTenantOtpVerify.value = false;
         if (response.data.toString().contains("otp")) {
@@ -181,6 +204,148 @@ class AddTenantController extends GetxController {
         }
         if (response.data.toString().contains("phone")) {
           customSnackBar(Get.context!, response.data['phone'][0]);
+        }
+      } else {
+        addTenantOtpVerify.value = false;
+      }
+    }
+  }
+
+  updateTenantApi({bool istenantaddfromOtp = true}) async {
+    final authCntrl = Get.find<AuthController>();
+    authCntrl.otpController1.value.clear();
+    authCntrl.otpController2.value.clear();
+    authCntrl.otpController3.value.clear();
+    authCntrl.otpController4.value.clear();
+
+    final image = profileImage.value != null
+        ? await DioClientServices.instance
+            .multipartFile(file: profileImage.value!)
+        : null;
+    addTenantByLandlordLaoding.value = true;
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioPostCall(
+      body: profileImage.value != null
+          ? {
+              "id": kireyderId.value,
+              "phone_code": authCntrl.selectedItem.trim(),
+              "phone": phoneCntrl.value.text.trim(),
+              "name": name.value.text.trim(),
+              "landmark": streetdCntrl.value.text.trim(),
+              "profile_image": image,
+              "email": emailCntrl.value.text.trim(),
+              "address": permanentAddCntrl.value.text.trim(),
+              "city": cityCntrl.value.text.trim(),
+              "zip_code": pinNoCntrl.value.text.trim(),
+              "state": stateCntrl.value.text.trim(),
+            }
+          : {
+              "id": kireyderId.value,
+              "phone_code": authCntrl.selectedItem.trim(),
+              "phone": phoneCntrl.value.text.trim(),
+              "name": name.value.text.trim(),
+              "landmark": streetdCntrl.value.text.trim(),
+              "email": emailCntrl.value.text.trim(),
+              "address": permanentAddCntrl.value.text.trim(),
+              "city": cityCntrl.value.text.trim(),
+              "zip_code": pinNoCntrl.value.text.trim(),
+              "state": stateCntrl.value.text.trim(),
+            },
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      url: updateTenantByLandlord,
+    );
+      print("kjkjkjkjk ${response.data} ${response.statusCode}");
+
+    if (response != null) {
+      if (response.statusCode == 200) {
+        if (istenantaddfromOtp) {
+          addTenantOtpVerify.value = false;
+          AddTenantWidgets().otpPop();
+        }
+
+        customSnackBar(Get.context!, response.data['message'][0]);
+        addTenantByLandlordLaoding.value = false;
+      } else if (response.statusCode == 400) {
+        addTenantByLandlordLaoding.value = false;
+        if (response.data.toString().contains("phone")) {
+          customSnackBar(Get.context!, response.data['phone'][0]);
+        }
+        if (response.data.toString().contains("email")) {
+          customSnackBar(Get.context!, response.data['email'][0]);
+        }
+        // Handle error
+      } else {
+        addTenantByLandlordLaoding.value = false;
+      }
+    }
+  }
+
+  verifyupdateTenantApi() async {
+    final authCntrl = Get.find<AuthController>();
+    final image = profileImage.value != null
+        ? await DioClientServices.instance
+            .multipartFile(file: profileImage.value!)
+        : null;
+    addTenantOtpVerify.value = true;
+
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioPostCall(
+      body: profileImage.value != null
+          ? {
+              "id": kireyderId.value,
+              "phone_code": authCntrl.selectedItem.trim(),
+              "otp": authCntrl.otpController1.value.text +
+                  authCntrl.otpController2.value.text +
+                  authCntrl.otpController3.value.text +
+                  authCntrl.otpController4.value.text,
+              "phone": phoneCntrl.value.text.trim(),
+              "name": name.value.text.trim(),
+              "landmark": streetdCntrl.value.text.trim(),
+              "profile_image": image,
+              "email": emailCntrl.value.text.trim(),
+              "address": permanentAddCntrl.value.text.trim(),
+              "city": cityCntrl.value.text.trim(),
+              "zip_code": pinNoCntrl.value.text.trim(),
+              "state": stateCntrl.value.text.trim(),
+            }
+          : {
+              "id": kireyderId.value,
+              "phone_code": authCntrl.selectedItem.trim(),
+              "otp": authCntrl.otpController1.value.text +
+                  authCntrl.otpController2.value.text +
+                  authCntrl.otpController3.value.text +
+                  authCntrl.otpController4.value.text,
+              "phone": phoneCntrl.value.text.trim(),
+              "name": name.value.text.trim(),
+              "landmark": streetdCntrl.value.text.trim(),
+              "email": emailCntrl.value.text.trim(),
+              "address": permanentAddCntrl.value.text.trim(),
+              "city": cityCntrl.value.text.trim(),
+              "zip_code": pinNoCntrl.value.text.trim(),
+              "state": stateCntrl.value.text.trim(),
+            },
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      url: updateTenantByLandlordVerify,
+    );
+
+    if (response != null) {
+      if (response.statusCode == 200) {
+        addTenantOtpVerify.value = false;
+        Get.back();
+        Get.back(result: true);
+        customSnackBar(Get.context!, response.data['message']);
+      } else if (response.statusCode == 400) {
+        addTenantOtpVerify.value = false;
+        if (response.data['success']==false) {
+          customSnackBar(Get.context!, response.data['message']);
         }
       } else {
         addTenantOtpVerify.value = false;

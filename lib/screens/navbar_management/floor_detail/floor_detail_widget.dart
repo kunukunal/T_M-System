@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/widgets.dart';
@@ -62,182 +63,295 @@ class FloorDetailWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: lightBorderGrey)),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Container(
-                        height: 55.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                          color: HexColor('#444444'),
-                          borderRadius: BorderRadius.circular(10.r),
-                          image: buildingIcon != null
-                              ? DecorationImage(
-                                  image: NetworkImage(buildingIcon),
-                                  fit: BoxFit.cover)
-                              : const DecorationImage(
-                                  image: AssetImage("assets/icons/a.png"),
-                                  fit: BoxFit.cover),
+          child: Slidable(
+            key: UniqueKey(),
+            endActionPane: 
+            
+            isOccupied==true?
+            ActionPane(
+              motion: const DrawerMotion(),
+              children: [
+                //
+
+                SlidableAction(
+                  onPressed: (context) {
+                    exitTenant(
+                        button1: "No",
+                        button2: "Yes",
+                        onButton1Tap: () {
+                          Get.back();
+                        },
+                        onButton2Tap: () {
+                          Get.back();
+                          floorCntrl.removeTenant(unitId!);
+                          // floorCntrl.deleteFloorData(floorId: floorId!);
+                        },
+                        title: "Are you sure you want to remove the tenant?");
+                  },
+                  backgroundColor: const Color(0xFFFE4A49),
+                  foregroundColor: whiteColor,
+                  icon: Icons.exit_to_app,
+                  label: "Exit Tenant",
+                ),
+              ],
+            ):null,
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: Container(
+                          height: 55.h,
+                          width: 90.w,
+                          decoration: BoxDecoration(
+                            color: HexColor('#444444'),
+                            borderRadius: BorderRadius.circular(10.r),
+                            image: buildingIcon != null
+                                ? DecorationImage(
+                                    image: NetworkImage(buildingIcon),
+                                    fit: BoxFit.cover)
+                                : const DecorationImage(
+                                    image: AssetImage("assets/icons/a.png"),
+                                    fit: BoxFit.cover),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  unitTitle!,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
-                                      color: black),
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  price!,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp,
-                                      color: black),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Row(children: [
-                                  Image.asset(
-                                    icon!,
-                                    height: 23.h,
-                                    width: isOccupied! ? 25.w : 20.w,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  isOccupied
-                                      ? Flexible(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '$availablityTitle',
-                                                style: TextStyle(
-                                                  color: red,
-                                                  fontSize: 12.sp,
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              Text(
-                                                tenantName ?? "",
-                                                style: TextStyle(
-                                                    color: black,
-                                                    fontSize: 12.sp),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      : FittedBox(
-                                          child: Text(
-                                            availablityTitle ?? "Available",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 12.sp,
-                                                color: green),
-                                          ),
-                                        ),
-                                ]),
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => UnitHistory(),
-                                          arguments: [unitId]);
-                                    },
-                                    child: Image.asset(
-                                      'assets/icons/timer.png',
-                                      width: 20.w,
-                                      height: 20.h,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  if (isOccupied == false)
-                                    Image.asset(
-                                      'assets/icons/Frame.png',
-                                      height: 20.h,
-                                      width: 20.w,
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10.w,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    unitTitle!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.sp,
+                                        color: black),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    price!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.sp,
+                                        color: black),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.w,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(children: [
+                                    Image.asset(
+                                      icon!,
+                                      height: 23.h,
+                                      width: isOccupied! ? 25.w : 20.w,
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    isOccupied
+                                        ? Flexible(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '$availablityTitle',
+                                                  style: TextStyle(
+                                                    color: red,
+                                                    fontSize: 12.sp,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
+                                                  tenantName ?? "",
+                                                  style: TextStyle(
+                                                      color: black,
+                                                      fontSize: 12.sp),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        : FittedBox(
+                                            child: Text(
+                                              availablityTitle ?? "Available",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12.sp,
+                                                  color: green),
+                                            ),
+                                          ),
+                                  ]),
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => UnitHistory(),
+                                            arguments: [unitId]);
+                                      },
+                                      child: Image.asset(
+                                        'assets/icons/timer.png',
+                                        width: 20.w,
+                                        height: 20.h,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    if (isOccupied == false)
+                                      Image.asset(
+                                        'assets/icons/Frame.png',
+                                        height: 20.h,
+                                        width: 20.w,
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              // Divider(
-              //   color: HexColor('#EBEBEB'),
-              //   height: 1.h,
-              // ),
-              // Expanded(
-              //   child: Padding(
-              //     padding: EdgeInsets.only(left: 10.w),
-              //     child: Row(
-              //       children: [
-              //         Text(
-              //           'Property $property    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp,
-              //               color: grey),
-              //         ),
-              //         Text(
-              //           'Building $building    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp,
-              //               color: grey),
-              //         ),
-              //         Text(
-              //           'Floor $floor    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp,
-              //               color: grey),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
+                // Divider(
+                //   color: HexColor('#EBEBEB'),
+                //   height: 1.h,
+                // ),
+                // Expanded(
+                //   child: Padding(
+                //     padding: EdgeInsets.only(left: 10.w),
+                //     child: Row(
+                //       children: [
+                //         Text(
+                //           'Property $property    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp,
+                //               color: grey),
+                //         ),
+                //         Text(
+                //           'Building $building    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp,
+                //               color: grey),
+                //         ),
+                //         Text(
+                //           'Floor $floor    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp,
+                //               color: grey),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  exitTenant({
+    required String title,
+    required String button1,
+    required String button2,
+    required Function() onButton1Tap,
+    required Function() onButton2Tap,
+  }) async {
+    return await Get.dialog(
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.r,
+        ),
+        child: Center(
+          child: Material(
+            borderRadius: BorderRadius.circular(
+              18.r,
+            ),
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 400.w, // Adjust the max width as needed
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                    18.r,
+                  )),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(title,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          customBorderButton(button1, onButton1Tap,
+                              verticalPadding: 5.h,
+                              horizontalPadding: 2.w,
+                              btnHeight: 35.h,
+                              width: 140.w,
+                              borderColor: HexColor('#679BF1'),
+                              textColor: HexColor('#679BF1')),
+                          customBorderButton(
+                            button2,
+                            onButton2Tap,
+                            verticalPadding: 5.h,
+                            horizontalPadding: 2.w,
+                            btnHeight: 35.h,
+                            color: HexColor('#679BF1'),
+                            textColor: Colors.white,
+                            width: 140.w,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: true,
     );
   }
 }

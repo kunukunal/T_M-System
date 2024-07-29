@@ -8,37 +8,35 @@ import 'package:tanent_management/screens/onboarding/walk_through/walk_through_w
 import '../../../common/constants.dart';
 
 class WalkThroughScreen extends StatelessWidget {
-   WalkThroughScreen({super.key});
+  WalkThroughScreen({super.key});
 
-   final cntrl = Get.put(WalkThroughController());
+  final cntrl = Get.put(WalkThroughController());
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-           children:[
-             Padding(
-               padding:  EdgeInsets.only(left:20.w, right: 20.w, top:20.h, bottom: 5.h),
-               child: SizedBox(
-                   height: 60.h,
-                   width: 135.w,
-                   child: splashImage),
-             ),
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 20.w, right: 20.w, top: 20.h, bottom: 5.h),
+              child: SizedBox(height: 60.h, width: 135.w, child: splashImage),
+            ),
             WalkThroughWidget.pageViewWidget(),
-             Padding(
-               padding: EdgeInsets.symmetric(horizontal: 15 .w),
-               child:
-               customButton(onPressed: (){
-                 cntrl.onGetStartedTap();
-               },text: 'Get Started',width: Get.width,suffix: getStartedButtonIcon)
-             ),
-
-           ],
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                child: customButton(
+                    onPressed: () {
+                      cntrl.onGetStartedTap();
+                    },
+                    text: 'Get Started',
+                    width: Get.width,
+                    suffix: getStartedButtonIcon)),
+          ],
         ),
       ),
     );
-
   }
 }

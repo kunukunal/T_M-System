@@ -360,7 +360,6 @@ class ManagementController extends GetxController {
     );
 
     if (response != null) {
-      print("dsklasklsad ${response.data}");
       if (response.statusCode == 200) {
         tenantCheckLoading.value = false;
 
@@ -377,13 +376,14 @@ class ManagementController extends GetxController {
               true,
               {
                 'phone': mobileCntrl.value.text,
-              }
+              },
+              {'isEdit': false}
             ],
           );
         } else if (response.data['tenant'] &&
             response.data['documents'] == false) {
           Get.off(() => TenantDocScreen(),
-              arguments: [response.data['data']['id'], true]);
+              arguments: [response.data['data']['id'], true,{'isEdit':false,'isConsent':true}]);
         }
       } else if (response.statusCode == 400) {
         customSnackBar(Get.context!, response.data['message']);
@@ -562,10 +562,10 @@ class ManagementController extends GetxController {
         addTenantOtpVerify.value = false;
       } else if (response.statusCode == 201) {
         if (response.data['success'] == true) {
-          Get.back();
+          Get.back(result: true);
           Get.back(result: true);
         } else {
-          Get.back();
+          Get.back(result: true);
         }
 
         customSnackBar(Get.context!, response.data['message']);

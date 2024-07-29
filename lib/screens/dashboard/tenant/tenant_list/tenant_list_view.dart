@@ -33,7 +33,11 @@ class TenantListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => AddTenantScreen(), arguments: [false, {}])!
+          Get.to(() => AddTenantScreen(), arguments: [
+            false,
+            {},
+            {'isEdit': false}
+          ])!
               .then((value) {
             if (value == true) {
               tenantCntrl.getKireyderList();

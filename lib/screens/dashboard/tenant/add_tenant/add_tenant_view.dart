@@ -34,7 +34,11 @@ class AddTenantScreen extends StatelessWidget {
           ),
         ),
         // automaticallyImplyLeading: false,
-        title: Text('Add Kirayedar', style: CustomStyles.otpStyle050505W700S16),
+        title: Text(
+            addTenantCntrl.isComingForEdit.value
+                ? 'Update Kirayedar'
+                : 'Add Kirayedar',
+            style: CustomStyles.otpStyle050505W700S16),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -62,26 +66,10 @@ class AddTenantScreen extends StatelessWidget {
                             AddTenantWidgets()
                                 .showSelectionDialog(Get.context!, true);
                           },
-                          child: addTenantCntrl.profileImage.value != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  child: Container(
-                                    height: 99.h,
-                                    width: 110.w,
-                                    decoration: BoxDecoration(
-                                      color: HexColor('#444444'),
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: Image.file(File(addTenantCntrl
-                                                  .profileImage.value!.path))
-                                              .image,
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                )
-                              : Stack(
-                                  children: [
-                                    ClipRRect(
+                          child: Stack(
+                            children: [
+                              addTenantCntrl.profileImage.value != null
+                                  ? ClipRRect(
                                       borderRadius: BorderRadius.circular(10.r),
                                       child: Container(
                                         height: 99.h,
@@ -90,29 +78,71 @@ class AddTenantScreen extends StatelessWidget {
                                           color: HexColor('#444444'),
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                              image: Image.asset(
-                                                      'assets/icons/profile.png')
+                                              image: Image.file(File(
+                                                      addTenantCntrl
+                                                          .profileImage
+                                                          .value!
+                                                          .path))
                                                   .image,
                                               fit: BoxFit.cover),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                        bottom: 0.h,
-                                        right: 0.w,
-                                        child: Stack(
-                                          children: [
-                                            backgroundCameraIcon,
-                                            Positioned(
-                                                top: 11.h,
-                                                bottom: 11.h,
-                                                right: 10.w,
-                                                left: 10.w,
-                                                child: cameraTenantIcon)
-                                          ],
-                                        ))
-                                  ],
-                                ),
+                                    )
+                                  : addTenantCntrl.isComingForEdit.value &&
+                                          addTenantCntrl
+                                                  .profileImageEdit.value !=
+                                              ""
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          child: Container(
+                                            height: 99.h,
+                                            width: 110.w,
+                                            decoration: BoxDecoration(
+                                              color: HexColor('#444444'),
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      addTenantCntrl
+                                                          .profileImageEdit
+                                                          .value),
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          child: Container(
+                                            height: 99.h,
+                                            width: 110.w,
+                                            decoration: BoxDecoration(
+                                              color: HexColor('#444444'),
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  image: Image.asset(
+                                                          'assets/icons/profile.png')
+                                                      .image,
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                        ),
+                              Positioned(
+                                  bottom: 0.h,
+                                  right: 0.w,
+                                  child: Stack(
+                                    children: [
+                                      backgroundCameraIcon,
+                                      Positioned(
+                                          top: 11.h,
+                                          bottom: 11.h,
+                                          right: 10.w,
+                                          left: 10.w,
+                                          child: cameraTenantIcon)
+                                    ],
+                                  ))
+                            ],
+                          ),
                         );
                       }),
                     ],
@@ -186,7 +216,7 @@ class AddTenantScreen extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       hintText: 'Enter Mobile Number',
                       isBorder: true,
-                      onDropdownChanged: addTenantCntrl.isFromCheckTenat.value,
+                      onDropdownChanged: !addTenantCntrl.isFromCheckTenat.value,
                       readOnly: addTenantCntrl.isFromCheckTenat.value,
                       maxLength: 10,
                       color: HexColor('#F7F7F7'),
@@ -284,9 +314,12 @@ class AddTenantScreen extends StatelessWidget {
                   ),
                   customButton(
                       onPressed: () {
-                        addTenantCntrl.onNextTap();
+                        addTenantCntrl
+                            .onNextTap(addTenantCntrl.isComingForEdit.value);
                       },
-                      text: 'Next',
+                      text: addTenantCntrl.isComingForEdit.value
+                          ? 'Update'
+                          : 'Next',
                       width: Get.width,
                       verticalPadding: 10.h),
                   SizedBox(

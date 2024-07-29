@@ -45,52 +45,59 @@ class ManagementWidgets {
   amenitiesList() {
     final manageCntrl = Get.find<ManagementController>();
 
-    return Wrap(children: [
-      ...List.generate(
-          manageCntrl.amenitiesList.length,
-          (index) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    manageCntrl.onPaymentTypeTap(index);
-                  },
-                  child: Row(
-                    children: [
-                      manageCntrl.amenitiesList[index]['isSelected']
-                          ? selectedCheckboxIcon
-                          : checkboxIcon,
-                      SizedBox(
-                        width: 10.w,
+    return manageCntrl.amenitiesList.isEmpty
+        ? const Center(
+            child: const Text("No Amenities"),
+          )
+        : Wrap(children: [
+            ...List.generate(
+                manageCntrl.amenitiesList.length,
+                (index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          manageCntrl.onPaymentTypeTap(index);
+                        },
+                        child: Row(
+                          children: [
+                            manageCntrl.amenitiesList[index]['isSelected']
+                                ? selectedCheckboxIcon
+                                : checkboxIcon,
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              '${manageCntrl.amenitiesList[index]['name']} - ',
+                              style: manageCntrl.amenitiesList[index]
+                                      ['isSelected']
+                                  ? CustomStyles.otpStyle050505W400S14
+                                      .copyWith(fontSize: 14.sp)
+                                  : CustomStyles.desc606060.copyWith(
+                                      fontFamily: 'DM Sans', fontSize: 14.sp),
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  priceEditingPopup(index);
+                                },
+                                child: Text(
+                                  '${manageCntrl.amenitiesList[index]['amount'].text}',
+                                  style: manageCntrl.amenitiesList[index]
+                                          ['isSelected']
+                                      ? CustomStyles.otpStyle050505W400S14
+                                          .copyWith(
+                                              fontSize: 14.sp,
+                                              decoration:
+                                                  TextDecoration.underline)
+                                      : CustomStyles.desc606060.copyWith(
+                                          fontFamily: 'DM Sans',
+                                          fontSize: 14.sp,
+                                          decoration: TextDecoration.underline),
+                                ))
+                          ],
+                        ),
                       ),
-                      Text(
-                        '${manageCntrl.amenitiesList[index]['name']} - ',
-                        style: manageCntrl.amenitiesList[index]['isSelected']
-                            ? CustomStyles.otpStyle050505W400S14
-                                .copyWith(fontSize: 14.sp)
-                            : CustomStyles.desc606060.copyWith(
-                                fontFamily: 'DM Sans', fontSize: 14.sp),
-                      ),
-                      InkWell(
-                          onTap: () {
-                            priceEditingPopup(index);
-                          },
-                          child: Text(
-                            '${manageCntrl.amenitiesList[index]['amount'].text}',
-                            style: manageCntrl.amenitiesList[index]
-                                    ['isSelected']
-                                ? CustomStyles.otpStyle050505W400S14.copyWith(
-                                    fontSize: 14.sp,
-                                    decoration: TextDecoration.underline)
-                                : CustomStyles.desc606060.copyWith(
-                                    fontFamily: 'DM Sans',
-                                    fontSize: 14.sp,
-                                    decoration: TextDecoration.underline),
-                          ))
-                    ],
-                  ),
-                ),
-              ))
-    ]);
+                    ))
+          ]);
   }
 
   priceEditingPopup(int index) {
@@ -107,7 +114,7 @@ class ManagementWidgets {
         titlePadding: EdgeInsets.only(top: 5.h, left: 14.w, right: 14.w),
         contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
         title: Text(
-          "Update Ammount",
+          "Update Amount",
           style: TextStyle(
               color: black,
               fontSize: 18.sp,
@@ -284,7 +291,7 @@ class ManagementWidgets {
                       },
                       text: 'Submit',
                       width: Get.width)
-                  : const Center(child:  CircularProgressIndicator()),
+                  : const Center(child: CircularProgressIndicator()),
             ),
             AuthWidget.resendTenantOtp(onPressed: () {
               if (authCntrl.isTimeComplete.value == true) {

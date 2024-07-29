@@ -6,35 +6,22 @@ import 'package:tanent_management/screens/navbar_management/property_detail/prop
 import 'package:tanent_management/services/dio_client_service.dart';
 
 class NavBarManagementCntroller extends GetxController {
-  final items = [
-    // {
-    //   'propTitle': ' A',
-    //   'propDesc': '2118 Thornridge Cir. Syracuse, Connecticut',
-    //   'availablityTitle': '20 Units(Available)',
-    //   'occupiedTitle': '80 Units(Occupied)',
-    //   'isOccupied': false
-    // },
-    // {
-    //   'propTitle': ' B',
-    //   'propDesc': '2464 Royal Ln. Mesa, New Jersey 45463',
-    //   'availablityTitle': '20 Units(Available)',
-    //   'occupiedTitle': '80 Units(Occupied)',
-    //   'isOccupied': false
-    // },
-    // {
-    //   'propTitle': ' C',
-    //   'propDesc': '2972 Westheimer Rd. Santa Ana, Illinois 854',
-    //   'availablityTitle': '20 Units(Available)',
-    //   'occupiedTitle': '80 Units(Occupied)',
-    //   'isOccupied': false
-    // },
-  ].obs;
+  final items = [].obs;
   onSearchTap() {
     Get.to(() => SearchView());
   }
 
+  final isRefreshmentRequired = false.obs;
+
   onItemTap(int propertyId, String propertyTitle) {
-    Get.to(() => PropertyDetailView(),arguments: [propertyId,propertyTitle]);
+    Get.to(() => PropertyDetailView(), arguments: [propertyId, propertyTitle])!
+        .then((value) {
+          print("sdldkaslkdsla ${value}");
+      if (value==true) {
+        isRefreshmentRequired.value = true;
+        getPropertyManagementStats();
+      }
+    });
   }
 
   final isPropertyStatsLoading = false.obs;
@@ -44,11 +31,11 @@ class NavBarManagementCntroller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print("dlasklskaasd");
     getPropertyManagementStats();
   }
 
   getPropertyManagementStats() async {
+    print("hhkhkhkhk");
     isPropertyStatsLoading.value = true;
 
     final prefs = await SharedPreferences.getInstance();
@@ -69,7 +56,7 @@ class NavBarManagementCntroller extends GetxController {
         print("dslkdlasdkd ${response.data}");
         totalOccupiedUnits.value = response.data['occupied_units'];
         totalUnOccupiedUnits.value = response.data['available_units'];
-        items.value = response.data['properties'];
+        items.addAll(response.data['properties']);  
       } else if (response.statusCode == 400) {
         // Handle error
       }

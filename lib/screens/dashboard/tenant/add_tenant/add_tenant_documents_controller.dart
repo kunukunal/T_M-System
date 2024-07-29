@@ -21,10 +21,13 @@ class AddTenantDocumentController extends GetxController {
   final documentUploading = false.obs;
 
   final isFromCheckTenat = true.obs;
+  final consentEditMap = {}.obs;
+
   @override
   onInit() {
     kriyederId.value = Get.arguments[0];
     isFromCheckTenat.value = Get.arguments[1];
+    consentEditMap.value = Get.arguments[2];
     getDocumentType();
     super.onInit();
   }
@@ -52,6 +55,13 @@ class AddTenantDocumentController extends GetxController {
     }
   }
 
+
+
+
+
+
+
+
   uploadDocumenById() async {
     documentUploading.value = true;
     List id = [];
@@ -78,6 +88,7 @@ class AddTenantDocumentController extends GetxController {
       if (response.statusCode == 200) {
         documentUploading.value = false;
         customSnackBar(Get.context!, response.data['message'][0]);
+        
         Get.back(result: !isFromCheckTenat.value);
         if (isFromCheckTenat.value) {
         } else {}

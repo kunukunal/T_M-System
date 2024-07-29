@@ -15,176 +15,163 @@ class LandlordDocView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            title:
-                Text('Landlord Documents', style: CustomStyles.otpStyle050505),
-            automaticallyImplyLeading: false,
-            leading: Obx(() {
-              return landlordDocCntrl.isPercentageLoadingStart.value
-                  ? const SizedBox.shrink() // Hide leading widget when loading
-                  : IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-            }),
-          ),
-          body: WillPopScope(
-            onWillPop: () async {
-              return false;
-            },
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: HexColor('#679BF1'),
-                    height: 5.h,
-                    width: Get.width,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 14.w),
-                    child: Column(
-                      children: [
-                        LandlordDocWidget.commomText(
-                            'Submit essential photos/documents for smooth landlord-business relationship.',
-                            fontsize: 16.sp),
-                        Obx(() {
-                          return landlordDocCntrl
-                                      .isDocumentTypeDataLoading.value ==
-                                  true
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : landlordDocCntrl.documentTypeList.isEmpty
-                                  ? const Center(
-                                      child: Text("No Document Found"))
-                                  : ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: landlordDocCntrl
-                                          .documentTypeList.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            LandlordDocWidget.commomText(
-                                              landlordDocCntrl
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Landlord Documents', style: CustomStyles.otpStyle050505),
+          automaticallyImplyLeading: false,
+          leading: Obx(() {
+            return landlordDocCntrl.isPercentageLoadingStart.value
+                ? const SizedBox.shrink() // Hide leading widget when loading
+                : IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
+          }),
+        ),
+        body: WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: HexColor('#679BF1'),
+                  height: 5.h,
+                  width: Get.width,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  child: Column(
+                    children: [
+                      LandlordDocWidget.commomText(
+                          'Submit essential photos/documents for smooth landlord-business relationship.',
+                          fontsize: 16.sp),
+                      Obx(() {
+                        return landlordDocCntrl
+                                    .isDocumentTypeDataLoading.value ==
+                                true
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : landlordDocCntrl.documentTypeList.isEmpty
+                                ? const Center(child: Text("No Document Found"))
+                                : ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: landlordDocCntrl
+                                        .documentTypeList.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          LandlordDocWidget.commomText(
+                                            landlordDocCntrl
+                                                    .documentTypeList[index]
+                                                ['type_title'],
+                                          ),
+                                          LandlordDocWidget.commonDocUpload(
+                                              index: index,
+                                              title:
+                                                  '${landlordDocCntrl.documentTypeList[index]['type_title']}',
+                                              fileImage: landlordDocCntrl
                                                       .documentTypeList[index]
-                                                  ['type_title'],
-                                            ),
-                                            LandlordDocWidget.commonDocUpload(
-                                                index: index,
-                                                title:
-                                                    '${landlordDocCntrl.documentTypeList[index]['type_title']}',
-                                                fileImage: landlordDocCntrl
-                                                        .documentTypeList[index]
-                                                    ['image']),
-                                          ],
-                                        );
-                                      },
-                                    );
-                        }),
+                                                  ['image']),
+                                        ],
+                                      );
+                                    },
+                                  );
+                      }),
 
-                        // ListView(
-                        //   children: [
-                        //     LandlordDocWidget.commomText(
-                        //       'Aadhar Card Id',
-                        //     ),
-                        //     customTextField(
-                        //       controller: landlordDocCntrl.aadharCntrl.value,
-                        //         focusNode: landlordDocCntrl.aadharFocus.value,
-                        //         textInputAction: TextInputAction.next,
+                      // ListView(
+                      //   children: [
+                      //     LandlordDocWidget.commomText(
+                      //       'Aadhar Card Id',
+                      //     ),
+                      //     customTextField(
+                      //       controller: landlordDocCntrl.aadharCntrl.value,
+                      //         focusNode: landlordDocCntrl.aadharFocus.value,
+                      //         textInputAction: TextInputAction.next,
 
-                        //         hintText: 'Type Here...',
-                        //         isBorder: true,
-                        //         color: HexColor('#F7F7F7'),
-                        //         isFilled: false),
-                        //     LandlordDocWidget.commonDocUpload(
-                        //         title: 'Upload Aadhar Card'),
-                        //     // LandlordDocWidget.commomText(
-                        //     //   'Government-issued ID Card Number',
-                        //     // ),
-                        //     // customTextField(
-                        //     //     controller: landlordDocCntrl.govIdCntrl.value,
-                        //     //     focusNode: landlordDocCntrl.govIdFocus.value,
-                        //     //     textInputAction: TextInputAction.next,
+                      //         hintText: 'Type Here...',
+                      //         isBorder: true,
+                      //         color: HexColor('#F7F7F7'),
+                      //         isFilled: false),
+                      //     LandlordDocWidget.commonDocUpload(
+                      //         title: 'Upload Aadhar Card'),
+                      //     // LandlordDocWidget.commomText(
+                      //     //   'Government-issued ID Card Number',
+                      //     // ),
+                      //     // customTextField(
+                      //     //     controller: landlordDocCntrl.govIdCntrl.value,
+                      //     //     focusNode: landlordDocCntrl.govIdFocus.value,
+                      //     //     textInputAction: TextInputAction.next,
 
-                        //     //     hintText: 'Type Here...',
-                        //     //     isBorder: true,
-                        //     //     color: HexColor('#F7F7F7'),
-                        //     //     isFilled: false),
-                        //     // LandlordDocWidget.commonDocUpload(
-                        //     //     title: 'Upload Government Card'),
-                        //     // LandlordDocWidget.commomText(
-                        //     //   'Other Documents',
-                        //     // ),
-                        //     // customTextField(
-                        //     //     controller: landlordDocCntrl.otherDocCntrl.value,
-                        //     //     focusNode: landlordDocCntrl.otherDocFocus.value,
-                        //     //     textInputAction: TextInputAction.done,
-                        //     //     hintText: 'Type Here...',
-                        //     //     isBorder: true,
-                        //     //     color: HexColor('#F7F7F7'),
-                        //     //     isFilled: false),
-                        //     // LandlordDocWidget.commonDocUpload(
-                        //     //     title: 'Upload Government Card'),
-                      ],
-                    ),
-
-                    //  landlordDocCntrl.isPercentageLoadingStart.value
+                      //     //     hintText: 'Type Here...',
+                      //     //     isBorder: true,
+                      //     //     color: HexColor('#F7F7F7'),
+                      //     //     isFilled: false),
+                      //     // LandlordDocWidget.commonDocUpload(
+                      //     //     title: 'Upload Government Card'),
+                      //     // LandlordDocWidget.commomText(
+                      //     //   'Other Documents',
+                      //     // ),
+                      //     // customTextField(
+                      //     //     controller: landlordDocCntrl.otherDocCntrl.value,
+                      //     //     focusNode: landlordDocCntrl.otherDocFocus.value,
+                      //     //     textInputAction: TextInputAction.done,
+                      //     //     hintText: 'Type Here...',
+                      //     //     isBorder: true,
+                      //     //     color: HexColor('#F7F7F7'),
+                      //     //     isFilled: false),
+                      //     // LandlordDocWidget.commonDocUpload(
+                      //     //     title: 'Upload Government Card'),
+                    ],
                   ),
-                ],
-              ),
+
+                  //  landlordDocCntrl.isPercentageLoadingStart.value
+                ),
+              ],
             ),
           ),
-          bottomNavigationBar: Obx(() {
-            return landlordDocCntrl.isPercentageLoadingStart.value
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                            'Uploading... ${landlordDocCntrl.showPercentage.value}%'),
-                        const SizedBox(height: 8),
-                        LinearProgressIndicator(
-                            value: landlordDocCntrl.showPercentage.value / 100),
-                      ],
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      customBorderButton('Previous', () {
-                        landlordDocCntrl.onPreviousTap();
-                      },
-                          verticalPadding: 10.h,
-                          horizontalPadding: 2.w,
-                          btnHeight: 40.h,
-                          width: Get.width / 2.3,
-                          borderColor: HexColor('#679BF1'),
-                          textColor: HexColor('#679BF1')),
-                      customBorderButton('Submit', () {
-                        landlordDocCntrl.onSubmitTap(
-                            isFromRegistered: isFromregister);
-                      },
-                          verticalPadding: 10.h,
-                          horizontalPadding: 2.w,
-                          btnHeight: 40.h,
-                          width: Get.width / 2.3,
-                          color: HexColor('#679BF1'),
-                          textColor: HexColor('#FFFFFF'),
-                          borderColor: Colors.transparent)
-                    ],
-                  );
-          })),
-    );
+        ),
+        bottomNavigationBar: Obx(() {
+          return landlordDocCntrl.isPercentageLoadingStart.value
+              ? const Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CircularProgressIndicator(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    customBorderButton('Previous', () {
+                      landlordDocCntrl.onPreviousTap();
+                    },
+                        verticalPadding: 10.h,
+                        horizontalPadding: 2.w,
+                        btnHeight: 40.h,
+                        width: Get.width / 2.3,
+                        borderColor: HexColor('#679BF1'),
+                        textColor: HexColor('#679BF1')),
+                    customBorderButton('Submit', () {
+                      landlordDocCntrl.onSubmitTap(
+                          isFromRegistered: isFromregister);
+                    },
+                        verticalPadding: 10.h,
+                        horizontalPadding: 2.w,
+                        btnHeight: 40.h,
+                        width: Get.width / 2.3,
+                        color: HexColor('#679BF1'),
+                        textColor: HexColor('#FFFFFF'),
+                        borderColor: Colors.transparent)
+                  ],
+                );
+        }));
   }
 }

@@ -605,14 +605,14 @@ commonText({String? title}) {
   );
 }
 
-appBar({required String title, bool isBack = true, List<Widget>? actions}) {
+appBar({required String title, bool isBack = true, List<Widget>? actions,bool isrefreshReuquired=false}) {
   return AppBar(
     centerTitle: true,
     automaticallyImplyLeading: false,
     leading: isBack
         ? InkWell(
             onTap: () {
-              Get.back();
+              Get.back(result: isrefreshReuquired);
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

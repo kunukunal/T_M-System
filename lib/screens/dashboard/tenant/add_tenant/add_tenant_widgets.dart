@@ -321,7 +321,11 @@ class AddTenantWidgets {
                             authCntrl.otpController4.value.text
                                 .trim()
                                 .isNotEmpty) {
-                          tenantCntrl.verifyTanantOtp();
+                          if (tenantCntrl.isComingForEdit.value) {
+                            tenantCntrl.verifyupdateTenantApi();
+                          } else {
+                            tenantCntrl.verifyTanantOtp();
+                          }
                         } else {
                           customSnackBar(Get.context!, "Please enter the otp.");
                         }
@@ -332,7 +336,11 @@ class AddTenantWidgets {
             ),
             AuthWidget.resendTenantOtp(onPressed: () {
               if (authCntrl.isTimeComplete.value == true) {
-                tenantCntrl.addTenantByLandLordApi(istenantaddfromOtp: false);
+                if (tenantCntrl.isComingForEdit.value) {
+                  tenantCntrl.updateTenantApi(istenantaddfromOtp: false);
+                } else {
+                  tenantCntrl.addTenantByLandLordApi(istenantaddfromOtp: false);
+                }
                 authCntrl.countController.restart();
                 authCntrl.isTimeComplete.value = false;
               } else {

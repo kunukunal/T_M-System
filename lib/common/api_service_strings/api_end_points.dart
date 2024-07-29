@@ -59,3 +59,10 @@ const String tenantDetails = "management/kirayedar-detail/";
 const String getPropertyAndBuildingList = "property/property-list/";
 
 const String getFloorAndUnitList = "building/building-detail/";
+
+const String removeTenantFromUnit = "unit/unassign_unit/";
+
+
+const String updateTenantByLandlord = "accounts/tenant-update/";
+
+const String updateTenantByLandlordVerify = "accounts/tenant-update-verify/";

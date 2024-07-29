@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -38,11 +39,10 @@ class PersonalInfoController extends GetxController {
   final aadharFocus = FocusNode().obs;
   final govIdFocus = FocusNode().obs;
   final otherDocFocus = FocusNode().obs;
-  final showPercentage = 0.obs;
   final isPercentageLoadingStart = false.obs;
   final profileImage = Rxn<dynamic>();
   final documentTypeList = [].obs;
-  final isDocumentTypeDataLoading = true.obs;
+  final isDocumentTypeDataLoading = false.obs;
   final networkImage = "".obs;
 
   //finctions
@@ -64,32 +64,7 @@ class PersonalInfoController extends GetxController {
     if (index != -1) {
       customSnackBar(Get.context!, "Please add all the document");
     } else {
-      isPercentageLoadingStart.value = true;
-      showPercentage.value = 0; // Reset the percentage
-
-      for (int i = 0; i < documentTypeList.length; i++) {
-        await userDocumentUpdate(
-            documentType: documentTypeList[i]['id'],
-            file: documentTypeList[i]['image']);
-
-        // Update the percentage
-        showPercentage.value =
-            ((i + 1) / documentTypeList.length * 100).toInt();
-        showPercentage.refresh();
-        if (i == documentTypeList.length - 1) {
-          // Navigate to next screen based on the registration status
-          if (isFromRegistered == true) {
-            final prefs = await SharedPreferences.getInstance();
-            prefs.setBool('is_personal_info_completed', true);
-            Get.offAll(() => const NavBar(initialPage: 0));
-          } else {
-            final prefs = await SharedPreferences.getInstance();
-            prefs.setBool('is_personal_info_completed', true);
-            Get.offAll(() => SignInScreen(isFromRegister: isFromRegistered));
-          }
-        }
-      }
-      isPercentageLoadingStart.value = false; // Stop loading indicator
+      userDocumentUpdate(isFromRegistered: isFromRegistered);
     }
   }
 
@@ -122,27 +97,43 @@ class PersonalInfoController extends GetxController {
     }
   }
 
-  userDocumentUpdate({
-    required int documentType,
-    required XFile file,
-  }) async {
+  userDocumentUpdate({bool? isFromRegistered}) async {
+    isPercentageLoadingStart.value = true;
+    List id = [];
+    List image = [];
+    for (int i = 0; i < documentTypeList.length; i++) {
+      id.add(documentTypeList[i]['id']);
+      image.add(await DioClientServices.instance
+          .multipartFile(file: documentTypeList[i]['image']));
+    }
+
     final prefs = await SharedPreferences.getInstance();
     String languaeCode = prefs.getString('languae_code') ?? "en";
     String accessToken = prefs.getString('access_token') ?? "";
-    final response = await DioClientServices.instance.dioPostCall(
- 
-        body: {
-          'document_type': documentType,
-          'image': await DioClientServices.instance.multipartFile(file: file)
-        },
-        headers: {
-          "Accept-Language": languaeCode,
-          'Authorization': "Bearer $accessToken",
-        },
-        url: userDocument);
+    final response = await DioClientServices.instance.dioPostCall(body: {
+      'document_type': jsonEncode(id),
+      'image': image
+    }, headers: {
+      "Accept-Language": languaeCode,
+      'Authorization': "Bearer $accessToken",
+    }, url: userDocument);
     if (response != null) {
       if (response.statusCode == 200) {
-      } else if (response.statusCode == 400) {}
+        isPercentageLoadingStart.value = false;
+        if (isFromRegistered == true) {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setBool('is_personal_info_completed', true);
+          Get.offAll(() => const NavBar(initialPage: 0));
+        } else {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setBool('is_personal_info_completed', true);
+          Get.offAll(() => SignInScreen(isFromRegister: isFromRegistered));
+        }
+        customSnackBar(Get.context!, response.data['message'][0]);
+      } else if (response.statusCode == 400) {
+        isPercentageLoadingStart.value = false;
+        customSnackBar(Get.context!, response.data['error'][0]);
+      }
     }
   }
 
@@ -176,7 +167,6 @@ class PersonalInfoController extends GetxController {
     String accessToken = prefs.getString('access_token') ?? "";
 
     final response = await DioClientServices.instance.dioPostCall(
-
         body: imageFile.value != null
             ? {
                 "profile_image": await DioClientServices.instance

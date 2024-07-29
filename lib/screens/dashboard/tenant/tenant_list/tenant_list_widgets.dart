@@ -446,78 +446,82 @@ class TenantListWidgets {
 
   tenantPaymentHistoryContainer() {
     final cntrl = Get.find<TenantDetailsController>();
-    return ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border.all(color: HexColor('#EBEBEB')),
-                borderRadius: BorderRadius.circular(10.r)),
-            child: Padding(
-              padding: EdgeInsets.all(10.r),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 50.h,
-                    width: 50.w,
-                    decoration: BoxDecoration(
-                        color: HexColor('#BCD1F3'),
-                        borderRadius: BorderRadius.circular(10.r)),
-                    child: Center(
-                      child: Text(
-                        cntrl.paymentList[index]['created_at'],
-                        textAlign: TextAlign.center,
-                        style: CustomStyles.black16.copyWith(
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          cntrl.paymentList[index]['unit'],
-                          textAlign: TextAlign.center,
-                          style: CustomStyles.black16.copyWith(
-                            fontSize: 15.sp,
+    return cntrl.paymentList.isEmpty
+        ? const Center(
+            child: Text("No payment history found"),
+          )
+        : ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    border: Border.all(color: HexColor('#EBEBEB')),
+                    borderRadius: BorderRadius.circular(10.r)),
+                child: Padding(
+                  padding: EdgeInsets.all(10.r),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 50.h,
+                        width: 50.w,
+                        decoration: BoxDecoration(
+                            color: HexColor('#BCD1F3'),
+                            borderRadius: BorderRadius.circular(10.r)),
+                        child: Center(
+                          child: Text(
+                            cntrl.paymentList[index]['created_at'],
+                            textAlign: TextAlign.center,
+                            style: CustomStyles.black16.copyWith(
+                              fontSize: 14.sp,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 5.w,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              cntrl.paymentList[index]['unit'],
+                              textAlign: TextAlign.center,
+                              style: CustomStyles.black16.copyWith(
+                                fontSize: 15.sp,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Text(
+                              cntrl.paymentList[index]['unit_address'],
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomStyles.desc606060.copyWith(
+                                  fontSize: 12.sp, fontFamily: 'DM Sans'),
+                            ),
+                          ],
                         ),
-                        Text(
-                          cntrl.paymentList[index]['unit_address'],
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: CustomStyles.desc606060
-                              .copyWith(fontSize: 12.sp, fontFamily: 'DM Sans'),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        "₹${cntrl.paymentList[index]['unit_rent']}",
+                        style: CustomStyles.amountFA4343W500S15,
+                      ),
+                    ],
                   ),
-                  Text(
-                    "₹${cntrl.paymentList[index]['unit_rent']}",
-                    style: CustomStyles.amountFA4343W500S15,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return SizedBox(
-            height: 10.h,
-          );
-        },
-        itemCount: cntrl.paymentList.length);
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return SizedBox(
+                height: 10.h,
+              );
+            },
+            itemCount: cntrl.paymentList.length);
   }
 
   detailInnerWidget(key, value) {

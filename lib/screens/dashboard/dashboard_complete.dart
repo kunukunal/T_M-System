@@ -12,77 +12,161 @@ class CompleteDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SearchWidget().occUnoccContainer(
-                      icon: occupiedIcon,
-                      titleUnit: 'Properties(Units)',
-                      units: '600/1200'),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  SearchWidget().occUnoccContainer(
-                      icon: unOccupiedIcon, titleUnit: 'Tenants', units: '600'),
-                ],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-           
-              filterWidget(title: "Income/Expense"),
-              SizedBox(height: 16.h),
-              OverviewCard(
-                title: 'Income/Expense',
-                chartTitles: const ['Income', 'Expense'],
-                data: const [
-                  [30, 25, 40, 20],
-                  [20, 35, 30, 10]
-                ],
-                colors: const [Colors.blue, Colors.red],
-                xLabels: const ['January', 'February', 'March', 'April'],
-              ),
-              SizedBox(height: 16.h),
-              filterWidget(title: 'Occupancy Trend'),
-              SizedBox(height: 16.h),
-              OverviewCard(
-                title: 'Occupancy Trend',
-                chartTitles: const ['Rent Paid', 'Rent Due'],
-                data: const [
-                  [25, 30, 35, 20],
-                  [15, 20, 25, 10]
-                ],
-                colors: const [Colors.blue, Colors.black],
-                xLabels: const ['January', 'February', 'March', 'April'],
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-                 TenantListWidgets().tenantRentContainer(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SearchWidget().occUnoccContainer(
+                    icon: occupiedIcon,
+                    titleUnit: 'Properties(Units)',
+                    units: '600/1200'),
                 SizedBox(
-                height: 10.h,
+                  width: 5.w,
+                ),
+                SearchWidget().occUnoccContainer(
+                    icon: unOccupiedIcon, titleUnit: 'Tenants', units: '600'),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            filterWidget(title: "Income/Expense"),
+            SizedBox(height: 16.h),
+            OverviewCard(
+              title: 'Income/Expense',
+              chartTitles: const ['Income', 'Expense'],
+              data: const [
+                [30, 25, 40, 20],
+                [20, 35, 30, 10]
+              ],
+              colors: const [Colors.blue, Colors.red],
+              xLabels: const ['January', 'February', 'March', 'April'],
+            ),
+            SizedBox(height: 16.h),
+            filterWidget(title: 'Occupancy Trend'),
+            SizedBox(height: 16.h),
+            OverviewCard(
+              title: 'Occupancy Trend',
+              chartTitles: const ['Rent Paid', 'Rent Due'],
+              data: const [
+                [25, 30, 35, 20],
+                [15, 20, 25, 10]
+              ],
+              colors: const [Colors.blue, Colors.black],
+              xLabels: const ['January', 'February', 'March', 'April'],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            tenantRentContainer(),
+            SizedBox(
+              height: 10.h,
+            ),
+            tenantRentContainer(),
+            SizedBox(
+              height: 10.h,
+            ),
+            filterWidget(title: "Properties List"),
+            SizedBox(
+              height: 10.h,
+            ),
+            propertiesList(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+tenantRentContainer() {
+  int totalRent = 100; // Total rent amount
+  int paidRent = 200; // Amount of rent paid
+  double progress = 0.0;
+
+  if (totalRent > 0) {
+    progress = paidRent / totalRent;
+  }
+  return Container(
+    height: 115.h,
+    width: double.infinity,
+    decoration: BoxDecoration(
+        border: Border.all(color: HexColor('#EBEBEB')),
+        borderRadius: BorderRadius.circular(10.r)),
+    child: Padding(
+      padding: EdgeInsets.all(10.r),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Rent',
+                style: CustomStyles.otpStyle050505W700S16,
               ),
-              TenantListWidgets().tenantRentContainer(),
-              SizedBox(
-                height: 10.h,
-              ),
-              filterWidget(title: "Properties List"),
-              SizedBox(
-                height: 10.h,
-              ),
-              propertiesList(),
+              Row(
+                children: [
+                  Text(
+                    'Month to Month',
+                    style: CustomStyles.desc606060
+                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  filterIcon
+                ],
+              )
             ],
           ),
-        ),
-      );
-   
-   
-  }
+          SizedBox(height: 10.h),
+          LinearProgressIndicator(
+            value: progress,
+            backgroundColor: HexColor('#D9E3F4'),
+            valueColor: AlwaysStoppedAnimation<Color>(HexColor('#679BF1')),
+            minHeight: 5.h,
+          ),
+          SizedBox(height: 15.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Rent paid',
+                    style: CustomStyles.desc606060
+                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                  ),
+                  Text(
+                    '₹${00}',
+                    style: CustomStyles.black16,
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Due',
+                    style: CustomStyles.desc606060
+                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                  ),
+                  Text(
+                    '₹${00}',
+                    style: CustomStyles.black16,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class OverviewCard extends StatelessWidget {

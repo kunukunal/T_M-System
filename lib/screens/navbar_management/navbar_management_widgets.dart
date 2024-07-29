@@ -110,7 +110,7 @@ class NavBarManagementWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
       child: GestureDetector(
         onTap: () {
-          managementCntrl.onItemTap(id!,propertyTitle);
+          managementCntrl.onItemTap(id!, propertyTitle);
         },
         child: Container(
           height: 120.h,

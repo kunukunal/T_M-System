@@ -482,10 +482,6 @@ class ManagementScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      PersonlInfoWidget.commomText('Amenities'),
-                                      Divider(
-                                          color: HexColor('#EBEBEB'),
-                                          height: 1.h),
                                       PersonlInfoWidget.commomText(
                                         'Amenities',
                                       ),

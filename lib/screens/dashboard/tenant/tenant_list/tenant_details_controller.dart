@@ -20,6 +20,16 @@ class TenantDetailsController extends GetxController {
   final profileImage = "".obs;
   final occupiedUnit = 0.obs;
 
+  final city = "".obs;
+  final state = "".obs;
+  final pincode = "".obs;
+
+
+  final tenantDoc=[].obs;
+
+
+  final isRefreshMentRequired=false.obs;
+
   @override
   onInit() {
     super.onInit();
@@ -51,13 +61,17 @@ class TenantDetailsController extends GetxController {
           "rent_paid": data['rent']['rent_paid'],
           "rent_due": data['rent']['rent_due']
         };
-        name.value = data['name']??"";
-        email.value = data['email']??"";
-        phoneCode.value = data['phone_code']??"";
-        phoneNumber.value = data['phone']??"";
-        address.value = data['address']??"";
-        profileImage.value = data['profile_image']??"";
-        occupiedUnit.value = data['occupied_units']??0;
+        name.value = data['name'] ?? "";
+        email.value = data['email'] ?? "";
+        phoneCode.value = data['phone_code'] ?? "";
+        phoneNumber.value = data['phone'] ?? "";
+        address.value = data['address'] ?? "";
+        city.value = data['city'] ?? "";
+        state.value = data['state'] ?? "";
+        pincode.value=data['zip_code']??"";
+        profileImage.value = data['profile_image'] ?? "";
+        occupiedUnit.value = data['occupied_units'] ?? 0;
+        tenantDoc.value=data['documents'];
         tenantUnitList.addAll(data['units']);
         paymentList.addAll(data['payment_history']);
       } else if (response.statusCode == 400) {
