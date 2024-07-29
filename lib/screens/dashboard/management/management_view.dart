@@ -110,8 +110,8 @@ class ManagementScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  manageCntrl.checkTanant.value == true ||
-                          isFromDashboard == true
+                  manageCntrl.checkTanant.value == true &&
+                          isFromDashboard == false
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -297,7 +297,8 @@ class ManagementScreen extends StatelessWidget {
                               ),
 
                             Obx(() => manageCntrl.addTenantLoading.value == true
-                                ? const Center(child:  CircularProgressIndicator())
+                                ? const Center(
+                                    child: CircularProgressIndicator())
                                 : customButton(
                                     onPressed: () {
                                       manageCntrl.onSubmitTap();
@@ -307,12 +308,262 @@ class ManagementScreen extends StatelessWidget {
                                     width: Get.width))
                           ],
                         )
-                      : const SizedBox()
+                      : isFromDashboard == true
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                PersonlInfoWidget.commomText('Tenant Name'),
+                                customTextField(
+                                  controller: manageCntrl.nameCntrl.value,
+                                  maxLength: 10,
+                                  hintStyle: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.sp,
+                                    color: HexColor('#6D6E6F'),
+                                  ),
+                                  hintText: 'Enter Name',
+                                  textInputAction: TextInputAction.done,
+                                  keyboardType: TextInputType.text,
+                                  isBorder: true,
+                                  isFilled: false,
+                                ),
+                                SizedBox(height: 5.h),
+                                PersonlInfoWidget.commomText('Property'),
+                                Obx(() => buildDropdown<Property>(
+                                      manageCntrl.selectedProperty.value,
+                                      manageCntrl.projectsListData,
+                                      'Select Property',
+                                      (value) =>
+                                          manageCntrl.onProjectSelected(value),
+                                    )),
+                                SizedBox(height: 5.h),
+                                PersonlInfoWidget.commomText('Building'),
+                                Obx(() => buildDropdown<Building>(
+                                      manageCntrl.selectedBuilding.value,
+                                      manageCntrl.selectedProperty.value
+                                              ?.buildings ??
+                                          [],
+                                      'Select Building',
+                                      (value) =>
+                                          manageCntrl.onBuildingSelected(value),
+                                    )),
+                                SizedBox(height: 5.h),
+                                PersonlInfoWidget.commomText('Floor'),
+                                Obx(() => buildDropdown<Floor>(
+                                      manageCntrl.selectedFloor.value,
+                                      manageCntrl.floorsList,
+                                      'Select Floor',
+                                      (value) =>
+                                          manageCntrl.onFloorSelected(value),
+                                    )),
+                                SizedBox(height: 5.h),
+                                PersonlInfoWidget.commomText('Unit'),
+                                Obx(() => buildDropdown<Unit>(
+                                      manageCntrl.selectedUnit.value,
+                                      manageCntrl.unitsList,
+                                      'Select Unit',
+                                      (value) =>
+                                          manageCntrl.onUnitSelected(value),
+                                    )),
+                                SizedBox(height: 5.h),
+
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        EditProfileWidget.commomText(
+                                            'Rent (Rs)',
+                                            isMandatory: true),
+                                        customTextField(
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                manageCntrl.amountCntrl.value,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            readOnly: manageCntrl
+                                                .isRentNegiosate.value,
+                                            width: Get.width / 2.3,
+                                            hintText: 'Type Here...',
+                                            isBorder: true,
+                                            isFilled: false),
+                                      ],
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        EditProfileWidget.commomText(
+                                            'Rent Type',
+                                            isMandatory: true),
+                                        bigDropDown(
+                                            width: 160.5.w,
+                                            selectedItem: manageCntrl
+                                                .selectedRentType.value,
+                                            items: manageCntrl.rentTypeList,
+                                            onChange: (value) {
+                                              manageCntrl.selectedRentType
+                                                  .value = value;
+                                            })
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        EditProfileWidget.commomText(
+                                            'Form (Rent)'),
+                                        ManagementWidgets().datePickerContainer(
+                                            manageCntrl.rentFrom.value == null
+                                                ? 'Select'
+                                                : '${manageCntrl.rentFrom.value!.day}-${manageCntrl.rentFrom.value!.month}-${manageCntrl.rentFrom.value!.year}',
+                                            width: 158.w, onTap: () {
+                                          manageCntrl
+                                              .selectDateFrom(Get.context!);
+                                        }),
+                                      ],
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        EditProfileWidget.commomText(
+                                            'To (Rent)'),
+                                        ManagementWidgets().datePickerContainer(
+                                            manageCntrl.rentTo.value == null
+                                                ? 'Select'
+                                                : '${manageCntrl.rentTo.value!.day}-${manageCntrl.rentTo.value!.month}-${manageCntrl.rentTo.value!.year}',
+                                            width: 158.w, onTap: () {
+                                          manageCntrl
+                                              .selectDateTo(Get.context!);
+                                        }),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                // PersonlInfoWidget.commomText('Rent (Rs)'),
+                                // Obx(() => customTextField(
+                                //       keyboardType: TextInputType.number,
+                                //       controller: manageCntrl.amountCntrl.value,
+                                //       inputFormatters: [
+                                //         FilteringTextInputFormatter.digitsOnly
+                                //       ],
+                                //       readOnly:
+                                //           manageCntrl.isRentNegiosate.value,
+                                //       width: Get.width / 2.3,
+                                //       hintText: 'Type Here...',
+                                //       isBorder: true,
+                                //       isFilled: false,
+                                //     )),
+                                SizedBox(height: 5.h),
+                                PersonlInfoWidget.commomText('Remarks'),
+                                customTextField(
+                                  controller: manageCntrl.remarkCntrl.value,
+                                  hintText: 'Type Here...',
+                                  isBorder: true,
+                                  color: HexColor('#FFFFFF'),
+                                  isFilled: false,
+                                ),
+                                SizedBox(height: 5.h),
+                                if (manageCntrl.amenitiesList.isNotEmpty)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      PersonlInfoWidget.commomText('Amenities'),
+                                      Divider(
+                                          color: HexColor('#EBEBEB'),
+                                          height: 1.h),
+                                      PersonlInfoWidget.commomText(
+                                        'Amenities',
+                                      ),
+                                      Divider(
+                                        color: HexColor('#EBEBEB'),
+                                        height: 1.h,
+                                      ),
+                                      ManagementWidgets().amenitiesList(),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      SizedBox(height: 8.h),
+                                    ],
+                                  ),
+                                Obx(() => manageCntrl.addTenantLoading.value
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : customButton(
+                                        onPressed: () {
+                                          manageCntrl.onSubmitTapFromChoose();
+                                        },
+                                        text: 'Submit',
+                                        height: 45.h,
+                                        width: Get.width,
+                                      )),
+                              ],
+                            )
+                          : const SizedBox()
                 ],
               );
             }),
           )
         ],
+      ),
+    );
+  }
+
+  Widget buildDropdown<T>(
+    T? selectedItem,
+    List<T> items,
+    String hintText,
+    ValueChanged<T?> onChanged,
+  ) {
+    return Container(
+      height: 44.h,
+      width: Get.width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: const Color(0xFFEBEBEB), width: 2),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        child: DropdownButton<T>(
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_drop_down),
+          underline: Container(),
+          value: selectedItem,
+          hint: Text(hintText),
+          items: items.map((item) {
+            return DropdownMenuItem<T>(
+              value: item,
+              child: Text(
+                (item is Property)
+                    ? item.title
+                    : (item is Building)
+                        ? item.name
+                        : (item is Floor)
+                            ? item.name
+                            : (item is Unit)
+                                ? item.name
+                                : item.toString(),
+                style: const TextStyle(color: Colors.black),
+              ),
+            );
+          }).toList(),
+          onChanged: onChanged,
+        ),
       ),
     );
   }

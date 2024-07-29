@@ -1,62 +1,14 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_detail_view.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
-import '../../../../common/constants.dart';
 import '../../../../common/widgets.dart';
 
-class TenantListController extends GetxController{
+class TenantListController extends GetxController {
   //variables
-  final tenantList= <Map<String, dynamic>>[
-    {
-      'name':'Darlene Robertson',
-      'address':'4140 Parker Rd. Allentown, New Mexico 31134',
-      'image': profileIconWithWidget
-    },{
-      'name':'Jerome Bell',
-      'address':'2972 Westheimer Rd. Santa Ana, Illinois 85486 ',
-      'image': profileIconWithWidget
-    },{
-      'name':'Jacob Jones',
-      'address':'2118 Thornridge Cir. Syracuse, Connecticut 35624',
-      'image': profileIconWithWidget
-    },{
-      'name':'Devon Lane',
-      'address':'3891 Ranchview Dr. Richardson, California 62639',
-      'image': profileIconWithWidget
-    },
-  ].obs;
-
-  final tenantUnitList = <Map<String, dynamic>>[
-    {
-      'image': apartment1Image,
-      'name':'John Apartments',
-      'address':'Room no-26 (3rd floor), Banani super market, Banani C/A, P.O. Box: 1213',
-      'rate':'₹2500.00',
-      'amenities':['Basement','Rooftop','Drinking Water','Gas']
-    },
-    {
-        'image': apartment2Image,
-        'name':'Trade Winds Tower',
-        'address':'Room no-26 (3rd floor), Banani super market, Banani C/A, P.O. Box: 1213',
-        'rate':'₹1500.00',
-        'amenities':['Basement','Rooftop','Drinking Water']
-      },
-    ].obs;
-
-  final paymentList = <Map<String, dynamic>>[
-    {
-      'date':'21\nJan',
-      'unitName':'John Apartments',
-      'description':'Lorem ipsum is a placeholder text commonly used to demonstrate the visual',
-      'amount':'₹500.00',
-    },
-    {
-      'date':'10\nJan',
-      'unitName':'Trade Winds Tower',
-      'description':'Lorem ipsum is a placeholder text commonly used to demonstrate the visual',
-      'amount':'₹1,800.00',
-    }
-  ].obs;
+  final tenantList = [].obs;
 
   //functions
   Future<bool> onTenantDelete() {
@@ -74,11 +26,43 @@ class TenantListController extends GetxController{
         Get.back();
         return true;
       },
-
     );
   }
 
-  onTenantTap(){
-    Get.to(()=>TenantDetailScreen());
+  @override
+  onInit() {
+    super.onInit();
+    getKireyderList();
+  }
+
+  onTenantTap(int kireyderId) {
+    Get.to(() =>  TenantDetailScreen(), arguments: [kireyderId]);
+  }
+
+  final kireyderListLoading = false.obs;
+  getKireyderList() async {
+    kireyderListLoading.value = true;
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json"
+      },
+      url: kirayedarList,
+    );
+
+    if (response != null) {
+      if (response.statusCode == 200) {
+        kireyderListLoading.value = false;
+        tenantList.clear();
+        tenantList.addAll(response.data);
+      } else if (response.statusCode == 400) {
+        kireyderListLoading.value = false;
+        // Handle error
+      } else {
+        kireyderListLoading.value = false;
+      }
+    }
   }
 }

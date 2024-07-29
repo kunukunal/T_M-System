@@ -15,7 +15,7 @@ class DocumentScreen extends StatelessWidget {
     final docCntrl = Get.put(DocumentController());
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: InkWell(
           onTap: (){
@@ -44,9 +44,9 @@ class DocumentScreen extends StatelessWidget {
               ],
             ),
           )
-
+    
         ],
       ),
-    ));
+    );
   }
 }

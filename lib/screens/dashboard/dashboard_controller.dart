@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/property/property_list/property_list_view.dart';
 import 'package:tanent_management/screens/dashboard/search/search_view.dart';
-import 'package:tanent_management/screens/dashboard/tenant/add_tenant/add_tenant_view.dart';
+import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 import 'package:tanent_management/screens/expense/add_expense/add_expense_view.dart';
 import 'package:tanent_management/screens/notification/notification_view.dart';
 
@@ -27,7 +27,8 @@ class DashBoardController extends GetxController {
 
   onAddTenantTap() {
     isAddTap.value = false;
-    Get.to(() => AddTenantScreen());
+    Get.to(() => TenantListScreen());
+    // Get.to(() => AddTenantScreen());
   }
 
   onAddExpenseTap() {

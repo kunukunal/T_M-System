@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,12 +21,12 @@ class AddTenantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
-      appBar:  AppBar(
+    return Scaffold(
+      appBar: AppBar(
         centerTitle: true,
         leading: InkWell(
-          onTap: (){
-           Get.back();
+          onTap: () {
+            Get.back();
           },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -33,13 +35,15 @@ class AddTenantScreen extends StatelessWidget {
         ),
         // automaticallyImplyLeading: false,
         title: Text('Add Kirayedar', style: CustomStyles.otpStyle050505W700S16),
-
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color:HexColor('#EBEBEB'),height: 1.h,),
+          Divider(
+            color: HexColor('#EBEBEB'),
+            height: 1.h,
+          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 5.h),
@@ -52,31 +56,14 @@ class AddTenantScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Obx(
-                         () {
-                          return InkWell(
-                            onTap: (){
-                              AddTenantWidgets(). showSelectionDialog(Get.context!,true);
-                            },
-                            child:  addTenantCntrl.profileImage.value != null
-                                ?  ClipRRect(
-                              borderRadius: BorderRadius.circular(10.r),
-                              child: Container(
-                                height: 99.h,
-                                width: 110.w,
-                                decoration: BoxDecoration(
-                                  color: HexColor('#444444'),
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image:
-                                      Image.file(addTenantCntrl.profileImage.value!)
-                                          .image,
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                            ):Stack(
-                              children: [
-                                ClipRRect(
+                      Obx(() {
+                        return InkWell(
+                          onTap: () {
+                            AddTenantWidgets()
+                                .showSelectionDialog(Get.context!, true);
+                          },
+                          child: addTenantCntrl.profileImage.value != null
+                              ? ClipRRect(
                                   borderRadius: BorderRadius.circular(10.r),
                                   child: Container(
                                     height: 99.h,
@@ -85,73 +72,98 @@ class AddTenantScreen extends StatelessWidget {
                                       color: HexColor('#444444'),
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
-                                          image:
-                                          Image.asset('assets/icons/profile.png')
+                                          image: Image.file(File(addTenantCntrl
+                                                  .profileImage.value!.path))
                                               .image,
                                           fit: BoxFit.cover),
                                     ),
                                   ),
+                                )
+                              : Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      child: Container(
+                                        height: 99.h,
+                                        width: 110.w,
+                                        decoration: BoxDecoration(
+                                          color: HexColor('#444444'),
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: Image.asset(
+                                                      'assets/icons/profile.png')
+                                                  .image,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                        bottom: 0.h,
+                                        right: 0.w,
+                                        child: Stack(
+                                          children: [
+                                            backgroundCameraIcon,
+                                            Positioned(
+                                                top: 11.h,
+                                                bottom: 11.h,
+                                                right: 10.w,
+                                                left: 10.w,
+                                                child: cameraTenantIcon)
+                                          ],
+                                        ))
+                                  ],
                                 ),
-                                Positioned(
-                                    bottom: 0.h,
-                                    right: 0.w,
-                                    child:Stack(
-                                      children: [
-                                        backgroundCameraIcon,
-                                        Positioned(
-                                          top: 11.h,
-                                          bottom: 11.h,
-                                          right: 10.w,
-                                          left: 10.w,
-                                            child: cameraTenantIcon)
-                                      ],
-                                    ))
-                              ],
-                            ),
-                          );
-                        }
-                      ),
+                        );
+                      }),
                     ],
                   ),
                   SizedBox(
                     height: 5.h,
                   ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          EditProfileWidget.commomText('First Name'),
-                          customTextField(
-                            controller: addTenantCntrl.firstNameCntrl.value,
-                              focusNode: addTenantCntrl.firstNameFocus.value,
-                              keyboardType: TextInputType.name,
-                              width: Get.width / 2.3,
-                              hintText: 'Type Here...',
-                              isBorder: true,
-                              color: HexColor('#F7F7F7'),
-                              isFilled: false),
-                        ],
-                      ),
-                      SizedBox(width: 15.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          EditProfileWidget.commomText('last Name'),
-                          customTextField(
-                              controller: addTenantCntrl.lastNameCntrl.value,
-                              focusNode: addTenantCntrl.lastNameFocus.value,
-                              keyboardType: TextInputType.name,
-                              width: Get.width / 2.3,
-                              hintText: 'Type Here...',
-                              isBorder: true,
-                              color: HexColor('#F7F7F7'),
-                              isFilled: false),
-                        ],
-                      )
-                    ],
-                  ),
+                  EditProfileWidget.commomText('Name'),
+                  customTextField(
+                      controller: addTenantCntrl.name.value,
+                      focusNode: addTenantCntrl.firstNameFocus.value,
+                      keyboardType: TextInputType.name,
+                      hintText: 'Type Here...',
+                      isBorder: true,
+                      color: HexColor('#F7F7F7'),
+                      isFilled: false),
+                  // Row(
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         EditProfileWidget.commomText('Name'),
+                  //         customTextField(
+                  //             controller: addTenantCntrl.name.value,
+                  //             focusNode: addTenantCntrl.firstNameFocus.value,
+                  //             keyboardType: TextInputType.name,
 
+                  //             hintText: 'Type Here...',
+                  //             isBorder: true,
+                  //             color: HexColor('#F7F7F7'),
+                  //             isFilled: false),
+                  //       ],
+                  //     ),
+                  //     // SizedBox(width: 15.w),
+                  //     // Column(
+                  //     //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //     //   children: [
+                  //     //     EditProfileWidget.commomText('last Name'),
+                  //     //     customTextField(
+                  //     //         controller: addTenantCntrl.lastNameCntrl.value,
+                  //     //         focusNode: addTenantCntrl.lastNameFocus.value,
+                  //     //         keyboardType: TextInputType.name,
+                  //     //         width: Get.width / 2.3,
+                  //     //         hintText: 'Type Here...',
+                  //     //         isBorder: true,
+                  //     //         color: HexColor('#F7F7F7'),
+                  //     //         isFilled: false),
+                  //     //   ],
+                  //     // )
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 5.h,
                   ),
@@ -174,6 +186,8 @@ class AddTenantScreen extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       hintText: 'Enter Mobile Number',
                       isBorder: true,
+                      onDropdownChanged: addTenantCntrl.isFromCheckTenat.value,
+                      readOnly: addTenantCntrl.isFromCheckTenat.value,
                       maxLength: 10,
                       color: HexColor('#F7F7F7'),
                       isFilled: false,
@@ -201,8 +215,8 @@ class AddTenantScreen extends StatelessWidget {
                         children: [
                           EditProfileWidget.commomText('Landmark'),
                           customTextField(
-                            controller: addTenantCntrl.streetdCntrl.value,
-                            focusNode: addTenantCntrl.streetdtFocus.value,
+                              controller: addTenantCntrl.streetdCntrl.value,
+                              focusNode: addTenantCntrl.streetdtFocus.value,
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
@@ -214,11 +228,13 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('Pin Code',isMandatory: true),
+                          EditProfileWidget.commomText('Pin Code',
+                              isMandatory: true),
                           customTextField(
+                              maxLength: 6,
                               controller: addTenantCntrl.pinNoCntrl.value,
                               focusNode: addTenantCntrl.pinNoFocus.value,
-
+                              keyboardType: TextInputType.number,
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
@@ -233,10 +249,11 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('City',isMandatory: true),
+                          EditProfileWidget.commomText('City',
+                              isMandatory: true),
                           customTextField(
-                            controller: addTenantCntrl.cityCntrl.value,
-                            focusNode: addTenantCntrl.cityFocus.value,
+                              controller: addTenantCntrl.cityCntrl.value,
+                              focusNode: addTenantCntrl.cityFocus.value,
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
@@ -248,11 +265,11 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('State',isMandatory: true),
+                          EditProfileWidget.commomText('State',
+                              isMandatory: true),
                           customTextField(
                               controller: addTenantCntrl.stateCntrl.value,
                               focusNode: addTenantCntrl.stateFocus.value,
-
                               width: Get.width / 2.3,
                               hintText: 'Type Here...',
                               isBorder: true,
@@ -262,15 +279,12 @@ class AddTenantScreen extends StatelessWidget {
                       )
                     ],
                   ),
-
                   SizedBox(
                     height: 5.h,
                   ),
-
                   customButton(
                       onPressed: () {
-                       addTenantCntrl.onNextTap();
-
+                        addTenantCntrl.onNextTap();
                       },
                       text: 'Next',
                       width: Get.width,
@@ -282,9 +296,8 @@ class AddTenantScreen extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
-    ));
+    );
   }
 }

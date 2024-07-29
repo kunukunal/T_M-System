@@ -44,4 +44,18 @@ const String unitHistory = "unit/unit-history/";
 const String checTenantStatus = "accounts/check-tenant/";
 
 const String addNewTenant = "unit/unit_rental/";
+
 const String verifyTenantOtpapi = "unit/assign_unit/";
+
+const String kirayedarList = "management/kirayedar-list/";
+
+
+const String addTenantByLandlord = "accounts/tenant-register/";
+
+const String addTenantByLandlordOtpVerify = "accounts/tenant-register-verify/";
+
+const String tenantDetails = "management/kirayedar-detail/";
+
+const String getPropertyAndBuildingList = "property/property-list/";
+
+const String getFloorAndUnitList = "building/building-detail/";

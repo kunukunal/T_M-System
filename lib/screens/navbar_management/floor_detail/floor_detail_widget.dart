@@ -140,7 +140,7 @@ class FloorDetailWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Occupied From $availablityTitle',
+                                                '$availablityTitle',
                                                 style: TextStyle(
                                                   color: red,
                                                   fontSize: 12.sp,
@@ -159,7 +159,7 @@ class FloorDetailWidget {
                                         )
                                       : FittedBox(
                                           child: Text(
-                                            'Available From ${availablityTitle ?? ""}',
+                                            availablityTitle ?? "Available",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 12.sp,
