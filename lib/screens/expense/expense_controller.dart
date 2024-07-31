@@ -42,8 +42,12 @@ class ExpenseController extends GetxController {
     isExpenseDataget.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: getAllExpense);
     if (response != null) {
       if (response.statusCode == 200) {
@@ -57,8 +61,12 @@ class ExpenseController extends GetxController {
   deleteExpense(int expenseId) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: "$getAllExpense$expenseId/");
     if (response != null) {
       if (response.statusCode == 200) {

@@ -68,3 +68,8 @@ const String updateTenantByLandlord = "accounts/tenant-update/";
 const String updateTenantByLandlordVerify = "accounts/tenant-update-verify/";
 
 const String getAllExpense = "management/expense/";
+
+
+const String faqQuestion = "faq/";
+
+const String contactUs = "contact-us/";

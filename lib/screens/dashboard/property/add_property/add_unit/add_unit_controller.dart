@@ -167,6 +167,8 @@ class AddUnitController extends GetxController {
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
 
       body: {
@@ -186,7 +188,9 @@ class AddUnitController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: addUnit,
     );
@@ -225,6 +229,8 @@ class AddUnitController extends GetxController {
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPatchCall(
 
       body: {
@@ -245,7 +251,9 @@ class AddUnitController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: "$addUnit${unitId.value}/",
     );

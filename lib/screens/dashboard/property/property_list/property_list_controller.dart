@@ -86,8 +86,12 @@ class PropertyListController extends GetxController {
     isPropertyDataListLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: getOrAddPropertyList);
     if (response != null) {
       if (response.statusCode == 200) {
@@ -105,8 +109,12 @@ class PropertyListController extends GetxController {
   deletePropertyData({required int propertyId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: "$getOrAddPropertyList$propertyId/");
     if (response != null) {
       if (response.statusCode == 200) {

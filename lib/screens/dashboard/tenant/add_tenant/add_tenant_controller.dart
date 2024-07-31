@@ -124,6 +124,8 @@ class AddTenantController extends GetxController {
     addTenantByLandlordLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "user_type": 2,
@@ -140,7 +142,9 @@ class AddTenantController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: addTenantByLandlord,
     );
@@ -174,6 +178,8 @@ class AddTenantController extends GetxController {
     addTenantOtpVerify.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "phone_code": authCntrl.selectedItem.trim(),
@@ -185,7 +191,9 @@ class AddTenantController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: addTenantByLandlordOtpVerify,
     );
@@ -225,6 +233,8 @@ class AddTenantController extends GetxController {
     addTenantByLandlordLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null
           ? {
@@ -254,7 +264,9 @@ class AddTenantController extends GetxController {
             },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: updateTenantByLandlord,
     );
@@ -294,6 +306,8 @@ class AddTenantController extends GetxController {
 
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null
           ? {
@@ -331,7 +345,9 @@ class AddTenantController extends GetxController {
             },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: updateTenantByLandlordVerify,
     );

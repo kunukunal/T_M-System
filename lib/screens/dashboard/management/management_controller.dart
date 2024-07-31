@@ -126,11 +126,15 @@ class ManagementController extends GetxController {
   void getPropertyBuilding() async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: getPropertyAndBuildingList,
     );
@@ -150,10 +154,14 @@ class ManagementController extends GetxController {
   void getFloorsAndUnits(int buildingId) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: "$getFloorAndUnitList$buildingId/",
     );
@@ -345,6 +353,8 @@ class ManagementController extends GetxController {
     tenantCheckLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "phone_code": authCntrl.selectedItem.trim(),
@@ -352,7 +362,9 @@ class ManagementController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: checTenantStatus,
     );
@@ -420,6 +432,8 @@ class ManagementController extends GetxController {
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: isFromHome.value
           ? {
@@ -456,7 +470,9 @@ class ManagementController extends GetxController {
             },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: addNewTenant,
     );
@@ -498,6 +514,7 @@ class ManagementController extends GetxController {
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: isFromHome.value
@@ -544,7 +561,9 @@ class ManagementController extends GetxController {
             },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       isRawData: true,
       url: verifyTenantOtpapi,

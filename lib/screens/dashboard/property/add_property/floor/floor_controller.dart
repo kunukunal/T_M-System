@@ -42,8 +42,12 @@ class FloorCntroller extends GetxController {
     isFloorDataLoaded.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: '$addbuildingData${buildingId.value}/');
     if (response != null) {
       if (response.statusCode == 200) {
@@ -57,8 +61,12 @@ class FloorCntroller extends GetxController {
   deleteFloorData({required int floorId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: '$deleteFloor$floorId/');
     if (response != null) {
       if (response.statusCode == 200) {
@@ -72,6 +80,8 @@ class FloorCntroller extends GetxController {
   updateFloorData({required int noOfUnits, required int floorId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPatchCall(
         body: {
           "name": updateFloorName.value.text,
@@ -80,6 +90,8 @@ class FloorCntroller extends GetxController {
         },
         headers: {
           'Authorization': "Bearer $accessToken",
+                "Accept-Language": languaeCode,
+
         },
         url: '$deleteFloor$floorId/');
     if (response != null) {

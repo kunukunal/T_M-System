@@ -14,9 +14,9 @@ class LanguageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
           padding:  EdgeInsets.symmetric(horizontal:16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class LanguageScreen extends StatelessWidget {
               },width: Get.width,text: 'Continue'),
               SizedBox(height: 20.h,)
             ],
-
+            
           ),
         ),
       ),

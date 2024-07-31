@@ -40,8 +40,14 @@ class MyProfileView extends StatelessWidget {
                   ),
                 ),
                 MyProfileWidget.commonListTile(
-                    title: 'Profile',
-                    onTap: () {},
+                    title: 'Documents',
+                    onTap: () {
+                      Get.to(
+                          () => DocumentScreen(
+                                isFromTenant: false,
+                              ),
+                          arguments: [false, 0]);
+                    },
                     image: 'assets/icons/Group 26.png'),
                 MyProfileWidget.commonListTile(
                     title: 'Tenants Rent',
@@ -50,9 +56,11 @@ class MyProfileView extends StatelessWidget {
                 MyProfileWidget.commonListTile(
                     title: 'Language',
                     onTap: () {
-                      Get.to(() => LanguageScreen(
-                            isFromProfile: true,
-                          ));
+                      Get.to(
+                        () => LanguageScreen(
+                          isFromProfile: true,
+                        ),
+                      );
                     },
                     image: 'assets/icons/language.png'),
                 MyProfileWidget.commonListTile(
@@ -88,14 +96,14 @@ class MyProfileView extends StatelessWidget {
                       Get.to(() => ContactUsScreen());
                     },
                     image: 'assets/icons/ic-support.png'),
-                MyProfileWidget.commonListTile(
-                    title: 'Profile',
-                    onTap: () {
-                      Get.to(() => DocumentScreen(
-                            isFromTenant: false,
-                          ));
-                    },
-                    image: 'assets/icons/Group 26.png'),
+                // MyProfileWidget.commonListTile(
+                //     title: 'Profile',
+                //     onTap: () {
+                //       Get.to(() => DocumentScreen(
+                //             isFromTenant: false,
+                //           ));
+                //     },
+                //     image: 'assets/icons/Group 26.png'),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),

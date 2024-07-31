@@ -67,8 +67,12 @@ class PropertyAbCntroller extends GetxController {
     isBuildingDataListLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: "$getOrAddPropertyList${propertyId.value}/");
     if (response != null) {
       if (response.statusCode == 200) {
@@ -83,8 +87,12 @@ class PropertyAbCntroller extends GetxController {
   deleteBuildingData({required int buildingId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
+            "Accept-Language": languaeCode,
+
     }, url: "$addbuildingData$buildingId/");
     if (response != null) {
       if (response.statusCode == 200) {

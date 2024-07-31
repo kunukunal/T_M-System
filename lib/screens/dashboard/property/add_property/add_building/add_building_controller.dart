@@ -87,6 +87,8 @@ class AddBuildingCntroller extends GetxController {
     }).toList();
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
 
     final response = await DioClientServices.instance.dioPostCall(
  
@@ -94,7 +96,9 @@ class AddBuildingCntroller extends GetxController {
       isRawData: true,
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: addbuildingData,
     );
@@ -124,13 +128,17 @@ class AddBuildingCntroller extends GetxController {
     };
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPatchCall(
 
       body: transformedData,
       isRawData: true,
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: "$addbuildingData${buildingId.value}/",
     );

@@ -81,6 +81,7 @@ class AddPropertyCntroller extends GetxController {
   addPropertyApi() async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     var propertyImage = [];
     for (int i = 0; i < propertyPickedImage.length; i++) {
@@ -88,21 +89,18 @@ class AddPropertyCntroller extends GetxController {
           .multipartFile(file: propertyPickedImage[i]["image"]));
     }
 
-    final response = await DioClientServices.instance.dioPostCall(
- 
-        body: {
-          "title": propertyTitleCntrl.value.text.trim(),
-          "address": addressCntrl.value.text.trim(),
-          "pincode": pinCodeCntrl.value.text.trim(),
-          "landmark": landmarkCntrl.value.text.trim(),
-          "city": cityCntrl.value.text.trim(),
-          "state": stateCntrl.value.text.trim(),
-          "property_images": propertyImage
-        },
-        headers: {
-          'Authorization': "Bearer $accessToken",
-        },
-        url: getOrAddPropertyList);
+    final response = await DioClientServices.instance.dioPostCall(body: {
+      "title": propertyTitleCntrl.value.text.trim(),
+      "address": addressCntrl.value.text.trim(),
+      "pincode": pinCodeCntrl.value.text.trim(),
+      "landmark": landmarkCntrl.value.text.trim(),
+      "city": cityCntrl.value.text.trim(),
+      "state": stateCntrl.value.text.trim(),
+      "property_images": propertyImage
+    }, headers: {
+      'Authorization': "Bearer $accessToken",
+      "Accept-Language": languaeCode,
+    }, url: getOrAddPropertyList);
     if (response != null) {
       if (response.statusCode == 201) {
         isPropertyAdded.value = false;
@@ -128,21 +126,18 @@ class AddPropertyCntroller extends GetxController {
       }
     }
 
-    final response = await DioClientServices.instance.dioPatchCall(
-        body: {
-          "title": propertyTitleCntrl.value.text.trim(),
-          "address": addressCntrl.value.text.trim(),
-          "pincode": pinCodeCntrl.value.text.trim(),
-          "landmark": landmarkCntrl.value.text.trim(),
-          "city": cityCntrl.value.text.trim(),
-          "state": stateCntrl.value.text.trim(),
-          "property_images": propertyImage,
-          "img_deleted": jsonEncode(deletedImage)
-        },
-        headers: {
-          'Authorization': "Bearer $accessToken",
-        },
-        url: "$getOrAddPropertyList${propertyId.value}/");
+    final response = await DioClientServices.instance.dioPatchCall(body: {
+      "title": propertyTitleCntrl.value.text.trim(),
+      "address": addressCntrl.value.text.trim(),
+      "pincode": pinCodeCntrl.value.text.trim(),
+      "landmark": landmarkCntrl.value.text.trim(),
+      "city": cityCntrl.value.text.trim(),
+      "state": stateCntrl.value.text.trim(),
+      "property_images": propertyImage,
+      "img_deleted": jsonEncode(deletedImage)
+    }, headers: {
+      'Authorization': "Bearer $accessToken",
+    }, url: "$getOrAddPropertyList${propertyId.value}/");
     if (response != null) {
       if (response.statusCode == 200) {
         isPropertyAdded.value = false;

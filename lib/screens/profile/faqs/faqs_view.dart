@@ -14,24 +14,26 @@ class FAQsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(child: Scaffold(
+    return  Scaffold(
       appBar: AppBar(title: Text('FAQs', style: CustomStyles.skipBlack)),
-      body: Column(
-        children: [
-          Divider(height: 1.h,color: HexColor('#EBEBEB'),),
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: [
-                SizedBox(height: 10.h,),
-                FaqsWidgets().searchBar(),
-                SizedBox(height: 10.h,),
-                FaqsWidgets().faqsList(),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Divider(height: 1.h,color: HexColor('#EBEBEB'),),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 10.h,),
+                  FaqsWidgets().searchBar(),
+                  SizedBox(height: 10.h,),
+                  FaqsWidgets().faqsList(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

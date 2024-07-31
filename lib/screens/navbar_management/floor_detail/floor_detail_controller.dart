@@ -52,10 +52,14 @@ class FloorDetailController extends GetxController {
 
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: "$floortatistics${floorId.value}/unit-statistics/",
     );
@@ -78,11 +82,15 @@ class FloorDetailController extends GetxController {
   removeTenant(int unitId) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+        String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: {"unit": unitId},
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+              "Accept-Language": languaeCode,
+
       },
       url: removeTenantFromUnit,
     );

@@ -19,7 +19,6 @@ class DocumentController extends GetxController {
     isFromTenant.value = Get.arguments[0];
     if (isFromTenant.value) {
       userId.value = Get.arguments[1];
-      print("sadlasklasd ${userId.value}");
       getDocumentById();
     }
 

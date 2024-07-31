@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,63 +9,71 @@ import 'package:tanent_management/screens/profile/faqs/faqs_controller.dart';
 
 import '../../../common/widgets.dart';
 
-class FaqsWidgets{
-
+class FaqsWidgets {
   //Search bar
-  searchBar(){
+  searchBar() {
     return Container(
       height: 45.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: HexColor('#EBEBEB'))
-      ),
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: HexColor('#EBEBEB'))),
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Row(
           children: [
             searchIcon,
-            SizedBox(width: 10.w,),
-            Text('Search',style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),)
+            SizedBox(
+              width: 10.w,
+            ),
+            Text(
+              'Search',
+              style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
+            )
           ],
         ),
       ),
-
     );
   }
 
   //faqs list widget
-  faqsList(){
+  faqsList() {
     final cntrl = Get.find<FaqsController>();
-    return  Obx(
-       () {
-        return ListView.separated(
-          physics: const PageScrollPhysics(),
-          itemCount: cntrl.quesAnsList.length,
-          shrinkWrap: true,
-          itemBuilder: ((context, index) {
-            return customListTile(
-              color:  cntrl.quesAnsList[index]['isExpanded']
-                  ? HexColor('#EDF2FC')
-                  : HexColor('#F8F8F8'),
-                isDivider: true,
-                elevation: 1,
-                suffixUrl: cntrl.quesAnsList[index]['isExpanded']
-                    ? upwardArrowIcon
-                    : downwardArrowIcon,
-                isExpanded: cntrl.quesAnsList[index]['isExpanded'],
-                name: cntrl.quesAnsList[index]['ques'],
-                description: cntrl.quesAnsList[index]['ans'],
-                onTap: () {
-                  cntrl.quesAnsList[index]['isExpanded'] =
-                  !cntrl.quesAnsList[index]['isExpanded'];
-                  cntrl.quesAnsList.refresh();
-                });
-          }),
-          separatorBuilder: (context, index) => SizedBox(
-            height: 12.h,
-          ),
-        );
-      }
-    );
+    return Obx(() {
+      return cntrl.faqLoading.value
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : cntrl.quesAnsList.isEmpty
+              ? const Center(
+                  child: Text("No FAQ found"),
+                )
+              : ListView.separated(
+                  physics: const PageScrollPhysics(),
+                  itemCount: cntrl.quesAnsList.length,
+                  shrinkWrap: true,
+                  itemBuilder: ((context, index) {
+                    return customListTile(
+                        color: cntrl.quesAnsList[index]['isExpand'] == true
+                            ? HexColor('#EDF2FC')
+                            : HexColor('#F8F8F8'),
+                        isDivider: true,
+                        elevation: 1,
+                        suffixUrl: cntrl.quesAnsList[index]['isExpand'] == true
+                            ? upwardArrowIcon
+                            : downwardArrowIcon,
+                        isExpanded: cntrl.quesAnsList[index]['isExpand'],
+                        name: cntrl.quesAnsList[index]['question'],
+                        description: cntrl.quesAnsList[index]['answer'],
+                        onTap: () {
+                          cntrl.quesAnsList[index]['isExpand'] =
+                              !cntrl.quesAnsList[index]['isExpand'];
+                          cntrl.quesAnsList.refresh();
+                        });
+                  }),
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 12.h,
+                  ),
+                );
+    });
   }
 }

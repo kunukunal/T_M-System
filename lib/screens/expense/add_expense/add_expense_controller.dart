@@ -81,11 +81,13 @@ class AddExpenseController extends GetxController {
   void getPropertyBuilding() async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
       },
       url: getPropertyAndBuildingList,
     );
@@ -97,17 +99,22 @@ class AddExpenseController extends GetxController {
         projrctsList.add(Property.fromJson(item));
       }
       if (isfromEdit.value) {
-        for (int i = 0; i < projrctsList.length; i++) {
-          if (projrctsList[i].id == editMap['project']) {
-            selectedProperty.value = projrctsList[i];
+        if (isfromEdit.value) {
+          for (int i = 0; i < projrctsList.length; i++) {
+            if (projrctsList[i].id == editMap['project']) {
+              selectedProperty.value = projrctsList[i];
 
-            for (int k = 0; k < projrctsList[i].buildings.length; i++) {
-              if (projrctsList[i].buildings[k].id == editMap['building']) {
-                selectedBuilding.value = projrctsList[i].buildings[k];
-                break;
+              for (int k = 0; k < projrctsList[i].buildings.length; k++) {
+                print(
+                    "Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projrctsList[i].buildings.length}, Building ID: ${projrctsList[i].buildings[k].id}");
+
+                if (projrctsList[i].buildings[k].id == editMap['building']) {
+                  selectedBuilding.value = projrctsList[i].buildings[k];
+                  break;
+                }
               }
+              break;
             }
-            break;
           }
         }
       }
@@ -209,6 +216,8 @@ class AddExpenseController extends GetxController {
     addExpenseDatta.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "project": selectedProperty.value!.id,
@@ -223,7 +232,8 @@ class AddExpenseController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
       },
       url: getAllExpense,
     );
@@ -256,6 +266,8 @@ class AddExpenseController extends GetxController {
     addExpenseDatta.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
+
     final response = await DioClientServices.instance.dioPatchCall(
       body: {
         "project": selectedProperty.value!.id,
@@ -271,7 +283,8 @@ class AddExpenseController extends GetxController {
       },
       headers: {
         'Authorization': "Bearer $accessToken",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
       },
       url: "$getAllExpense${editMap['id']}/",
     );
