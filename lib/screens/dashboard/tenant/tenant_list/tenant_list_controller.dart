@@ -35,6 +35,7 @@ class TenantListController extends GetxController {
     getKireyderList();
   }
 
+  final goesForAddConatct = false.obs;
   onTenantTap(int kireyderId) {
     Get.to(() => TenantDetailScreen(), arguments: [kireyderId])!.then((value) {
       if (value) {

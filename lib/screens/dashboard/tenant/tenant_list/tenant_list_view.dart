@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -33,6 +32,7 @@ class TenantListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          tenantCntrl.goesForAddConatct.value = true;
           Get.to(() => AddTenantScreen(), arguments: [
             false,
             {},
@@ -40,6 +40,11 @@ class TenantListScreen extends StatelessWidget {
           ])!
               .then((value) {
             if (value == true) {
+              tenantCntrl.getKireyderList();
+            }
+
+            if (tenantCntrl.goesForAddConatct.value && value == false) {
+              tenantCntrl.goesForAddConatct.value = false;
               tenantCntrl.getKireyderList();
             }
           });

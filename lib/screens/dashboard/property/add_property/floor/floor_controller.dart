@@ -78,7 +78,6 @@ class FloorCntroller extends GetxController {
           "number_of_units": noOfUnits,
           "is_active": activeFloor.value
         },
-        isLoading: true,
         headers: {
           'Authorization': "Bearer $accessToken",
         },

@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:tanent_management/screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/screens/dashboard/search/search_controller.dart';
 import 'package:tanent_management/screens/dashboard/search/search_widget.dart';
 

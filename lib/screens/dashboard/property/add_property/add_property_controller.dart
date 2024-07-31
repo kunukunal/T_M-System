@@ -129,7 +129,6 @@ class AddPropertyCntroller extends GetxController {
     }
 
     final response = await DioClientServices.instance.dioPatchCall(
-        isLoading: true,
         body: {
           "title": propertyTitleCntrl.value.text.trim(),
           "address": addressCntrl.value.text.trim(),

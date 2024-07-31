@@ -125,7 +125,7 @@ class AddBuildingCntroller extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
     final response = await DioClientServices.instance.dioPatchCall(
-      isLoading: true,
+
       body: transformedData,
       isRawData: true,
       headers: {

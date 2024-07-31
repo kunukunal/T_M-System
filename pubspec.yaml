@@ -57,6 +57,7 @@ dependencies:
   flutter_expandable_fab: ^2.1.0
   percent_indicator: ^4.2.3
   url_launcher: ^6.3.0
+  intl: ^0.17.0
 
 
 

@@ -33,7 +33,7 @@ class DashBoardController extends GetxController {
 
   onAddExpenseTap() {
     isAddTap.value = false;
-    Get.to(() => AddExpenseScreen());
+    Get.to(() => AddExpenseScreen(), arguments: [false, {}]);
   }
 
   onSearchTap() {

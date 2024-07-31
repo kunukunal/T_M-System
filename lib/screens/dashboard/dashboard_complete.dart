@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/search/search_widget.dart';
-import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_list_widgets.dart';
 
 class CompleteDashboard extends StatelessWidget {
   const CompleteDashboard({super.key});
