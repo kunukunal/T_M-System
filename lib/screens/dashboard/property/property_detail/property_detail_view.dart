@@ -43,7 +43,7 @@ class PropertyDetailView extends StatelessWidget {
               bigDropDown(
                 selectedItem: propertyDetailCntrl.selectedProperty.value,
                 color: whiteColor,
-                items: propertyDetailCntrl.propertyList.value,
+                items: propertyDetailCntrl.propertyList,
                 onChange: (item) {
                   propertyDetailCntrl.selectedProperty.value = item;
                 },

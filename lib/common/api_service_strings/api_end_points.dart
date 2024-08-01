@@ -73,3 +73,5 @@ const String getAllExpense = "management/expense/";
 const String faqQuestion = "faq/";
 
 const String contactUs = "contact-us/";
+
+const String documentUpdate = "accounts/user-document/update/";

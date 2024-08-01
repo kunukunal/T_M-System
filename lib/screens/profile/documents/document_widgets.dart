@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/profile/documents/document_controller.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 class DocumentWidgets {
-  //Documents List
   documentList() {
     final docCntrl = Get.find<DocumentController>();
     return Obx(() {
@@ -86,7 +86,12 @@ class DocumentWidgets {
                       fontWeight: FontWeight.w400,
                     ),
                   )),
-                  // downloadIcon
+                  if (image != "")
+                    GestureDetector(
+                        onTap: () {
+                          _saveNetworkImage(image);
+                        },
+                        child: downloadIcon)
                 ],
               ),
             ),
@@ -94,5 +99,17 @@ class DocumentWidgets {
         ),
       ],
     );
+  }
+
+  _saveNetworkImage(String url) async {
+    try {
+      await DioClientServices.instance.saveImageToGallery(url).then((value) {
+        if (value['isSuccess'] == true) {
+          customSnackBar(Get.context!, "Document download successfully");
+        }
+      });
+    } on Error {
+      throw 'Error has occured while saving';
+    }
   }
 }

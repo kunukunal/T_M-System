@@ -29,7 +29,7 @@ class TenantDocScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          title: Text('Kirayedar Documents',
+          title: Text(  addTenantDocCntrl.isForDocEdit.value?'Update Documents': 'Kirayedar Documents',
               style: CustomStyles.otpStyle050505W700S16),
         ),
         body: Column(
@@ -157,7 +157,7 @@ class TenantDocScreen extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : customBorderButton('Submit', () {
+              : customBorderButton( addTenantDocCntrl.isForDocEdit.value?'Update': 'Submit', () {
                   addTenantDocCntrl.onSubmitTap();
                 },
                   verticalPadding: 10.h,

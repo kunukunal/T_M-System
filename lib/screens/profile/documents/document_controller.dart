@@ -19,8 +19,8 @@ class DocumentController extends GetxController {
     isFromTenant.value = Get.arguments[0];
     if (isFromTenant.value) {
       userId.value = Get.arguments[1];
-      getDocumentById();
     }
+    getDocumentById();
 
     super.onInit();
   }
@@ -38,7 +38,7 @@ class DocumentController extends GetxController {
         "Accept-Language": languaeCode,
         "Content-Type": "application/json"
       },
-      url: "$userDocument${userId.value}/",
+      url: isFromTenant.value ? "$userDocument${userId.value}/" : userDocument,
     );
 
     if (response != null) {

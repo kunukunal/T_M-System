@@ -245,7 +245,7 @@ class ExpenseWidgets {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   const Text(
-                                                                    "Expanse Image",
+                                                                    "Expense Image",
                                                                     style: TextStyle(
                                                                       fontWeight: FontWeight.bold,
                                                                         fontSize:

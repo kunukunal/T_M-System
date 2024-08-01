@@ -31,23 +31,33 @@ class AddTenantWidgets {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.r),
             child: tenantDocCntrl.documentList[index!]['image'] != null
-                ? Container(
-                    height: 120.h,
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      color: HexColor('#EBEBEB'),
-                      borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                          // image: Image.asset('assets/icons/profile.png').image,
-                          image: FileImage(File(tenantDocCntrl
-                              .documentList[index]['image'].path)),
-
-                          // Image.file(File(tenantDocCntrl
-                          //         .documentList[index!]['image'].path))
-                          //     .image,
-                          fit: BoxFit.cover),
-                    ),
-                  )
+                ? tenantDocCntrl.documentList[index]['isNetworkImage'] == false
+                    ? Container(
+                        height: 120.h,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: HexColor('#EBEBEB'),
+                          border: Border.all(color: HexColor('#EBEBEB')),
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: DecorationImage(
+                              image: FileImage(File(tenantDocCntrl
+                                  .documentList[index]['image'].path)),
+                              fit: BoxFit.cover),
+                        ),
+                      )
+                    : Container(
+                        height: 120.h,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: HexColor('#EBEBEB'),
+                          border: Border.all(color: HexColor('#EBEBEB')),
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  tenantDocCntrl.documentList[index]['image']),
+                              fit: BoxFit.cover),
+                        ),
+                      )
                 : Container(
                     height: 120.h,
                     width: Get.width,
@@ -189,6 +199,8 @@ class AddTenantWidgets {
       } else {
         final tenantCntrl = Get.find<AddTenantDocumentController>();
         tenantCntrl.documentList[index!]['image'] = pickedFile;
+        tenantCntrl.documentList[index]['isNetworkImage'] = false;
+        tenantCntrl.documentList[index]['isUpdated'] = true;
         tenantCntrl.documentList.refresh();
       }
     } else {
@@ -211,6 +223,8 @@ class AddTenantWidgets {
         } else {
           final tenantCntrl = Get.find<AddTenantDocumentController>();
           tenantCntrl.documentList[index!]['image'] = pickedFile;
+          tenantCntrl.documentList[index]['isNetworkImage'] = false;
+          tenantCntrl.documentList[index]['isUpdated'] = true;
           tenantCntrl.documentList.refresh();
         }
       } else {

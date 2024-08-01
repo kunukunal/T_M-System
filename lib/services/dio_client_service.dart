@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tanent_management/common/api_service_strings/base_url.dart';
 
@@ -34,8 +36,6 @@ class DioClientServices {
 
       return response;
     } on DioException catch (e) {
-
-
       log("${e.response?.statusCode}", name: "Exception response null");
       if (e.response == null) {
         log("$e", name: "Exception response null");
@@ -145,7 +145,44 @@ class DioClientServices {
       );
       return response;
     } on DioException catch (e) {
-
+      log("${e.response?.statusCode}", name: "Exception response null");
+      if (e.response == null) {
+        log("$e", name: "Exception response null");
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout) {
+          // showCustomFlushbar(context,
+          //     message: AppLocalizations.of(context)!.internet_check); // connectivity check
+        }
+      } else if (e.response != null) {
+        log('Dio error!', name: "dioGetCall");
+        log('STATUS: ${e.response?.statusCode}', name: "dioGetCall");
+        log('DATA: ${e.response?.data}', name: "dioGetCall");
+        log('HEADERS: ${e.response?.headers}', name: "dioGetCall");
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+      } else {
+        log('Error sending request!', name: "dioGetCall");
+        log("${e.message}", name: "dioGetCall");
+      }
+      return e.response;
+    }
+  }
+  Future dioPutCall(
+      {required dynamic body,
+      required dynamic headers,
+      required String url,
+      bool? isRawData = false}) async {
+    try {
+      FormData? formData;
+      if (isRawData == false) {
+        formData = FormData.fromMap(body);
+      } else {}
+      Response response = await _dio.put(
+        (commonBaseUrl + url),
+        data: isRawData == true ? jsonEncode(body) : formData,
+        options: Options(headers: headers),
+      );
+      return response;
+    } on DioException catch (e) {
       log("${e.response?.statusCode}", name: "Exception response null");
       if (e.response == null) {
         log("$e", name: "Exception response null");
@@ -168,8 +205,20 @@ class DioClientServices {
     }
   }
 
-
   multipartFile({required XFile file}) async {
     return await MultipartFile.fromFile(file.path, filename: file.name);
+  }
+
+  Future saveImageToGallery(String imageUrl) async {
+    try {
+      var response = await _dio.get(imageUrl,
+          options: Options(responseType: ResponseType.bytes));
+      final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.data),
+          quality: 60);
+      return result;
+    } catch (e) {
+      print("Error saving image to gallery: $e");
+    }
   }
 }
