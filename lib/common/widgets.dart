@@ -291,16 +291,20 @@ resgisterPopup({
       titlePadding: EdgeInsets.only(top: 5.h, left: 14.w, right: 14.w),
       contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-                color: black,
-                fontSize: 18.sp,
-                decoration: TextDecoration.none,
-                fontWeight: FontWeight.w700),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                  color: black,
+                  fontSize: 18.sp,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
+            ),
           ),
+          // Spacer(),
           GestureDetector(
             onTap: () {
               Get.back();
@@ -314,7 +318,7 @@ resgisterPopup({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 6.0),
+            padding: const EdgeInsets.only(left: 6.0,top: 12.0),
             child: Text(
               subtitle,
               textAlign: TextAlign.start,

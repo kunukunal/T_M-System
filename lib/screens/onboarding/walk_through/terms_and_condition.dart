@@ -29,53 +29,52 @@ class TermsAndConditionScreen extends StatelessWidget {
           leading: Container(),
         ),
 
-        body: Column(
+        body: ListView(
+          physics: AlwaysScrollableScrollPhysics(),
           children: [
             Divider(
               color: HexColor('#EBEBEB'),
             ),
             Obx(() {
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                  ),
-                  child: cntrl.siteFeatureData.keys.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: cntrl.siteFeatureData.keys.length,
-                          itemBuilder: (context, index) {
-                            String key =
-                                cntrl.siteFeatureData.keys.elementAt(index);
-                            var section = cntrl.siteFeatureData[key];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Text(
-                                  section['feature_type'].toString(),
-                                  style: CustomStyles.otpStyle050505
-                                      .copyWith(fontSize: 16.sp),
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                HtmlWidget(
-                                  section['content'],
-                                  textStyle: CustomStyles.desc606060
-                                      .copyWith(fontSize: 14.sp, height: 1.5.h),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.w,
                 ),
+                child: cntrl.siteFeatureData.keys.isEmpty
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: cntrl.siteFeatureData.keys.length,
+                        itemBuilder: (context, index) {
+                          String key =
+                              cntrl.siteFeatureData.keys.elementAt(index);
+                          var section = cntrl.siteFeatureData[key];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              Text(
+                                section['feature_type'].toString(),
+                                style: CustomStyles.otpStyle050505
+                                    .copyWith(fontSize: 16.sp),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              HtmlWidget(
+                                section['content'],
+                                textStyle: CustomStyles.desc606060
+                                    .copyWith(fontSize: 14.sp, height: 1.5.h),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
               );
             }),
             Row(

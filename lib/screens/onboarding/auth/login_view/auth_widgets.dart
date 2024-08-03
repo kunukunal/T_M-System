@@ -86,11 +86,11 @@ class AuthWidget {
                 customButton(
                     onPressed: () {
                       resgisterPopup(
-                        title: 'Registration',
+                        title: 'Registration as',
                         subtitle:
                             'Join us today and experience the daily benefits of freshness firsthand!',
                         button1: 'Landlord',
-                        button2: 'Tenants',
+                        button2: 'Tenant',
                         onButton1Tap: () {
                           // isFromRegister = true;
                           authCntrl.onButtonTapTenant.value = 1;
@@ -106,7 +106,7 @@ class AuthWidget {
                       );
                     },
                     text: 'Register Now',
-                    height: 40.h)
+                    height: 45.h)
               ],
             ),
           ),
@@ -183,7 +183,18 @@ class AuthWidget {
                   authCntrl.otpController4.value,
                   authCntrl.otpFocus4.value,
                   authCntrl.otpFocus3.value,
-                  authCntrl.otpFocus4.value),
+                  authCntrl.otpFocus4.value,
+                  onChanged: (p0) {
+                   
+                        if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController2.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController3.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController4.value.text.trim().isNotEmpty) {
+                      authCntrl.verifyOtpApi(isFromRegister);
+                   
+                    }
+                  },
+                  ),
             ],
           ),
         ),
@@ -282,7 +293,7 @@ class AuthWidget {
 }
 
 Widget otpTextField(TextEditingController controller, FocusNode focus,
-    FocusNode previousFocus, FocusNode nextFocus) {
+    FocusNode previousFocus, FocusNode nextFocus,{Function(String)? onChanged}) {
   return Container(
     width: 49.w,
     height: 49.h,
@@ -295,12 +306,13 @@ Widget otpTextField(TextEditingController controller, FocusNode focus,
       style: CustomStyles.otpStyle050505,
       keyboardType: TextInputType.number,
       maxLength: 1,
-      onChanged: (value) {
+      onChanged:onChanged?? (value) {
         if (value == '') {
           previousFocus.requestFocus();
         } else {
           nextFocus.requestFocus();
         }
+        
 
         // setState(() {
         //   mergedOtp = (_otpController1.text.trim() +
