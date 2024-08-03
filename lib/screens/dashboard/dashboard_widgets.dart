@@ -9,6 +9,7 @@ import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_view.dart';
+import 'package:tanent_management/screens/dashboard/property/add_property/add_property_view.dart';
 
 import '../../common/text_styles.dart';
 
@@ -239,8 +240,10 @@ class DashBoardWidgets {
             ),
             isTackVisible
                 ? customButton(
-                    onPressed: () {},
-                    text: 'Start Tracking',
+                    onPressed: () {
+                      Get.to(() => AddPropertyView(), arguments: [false, {}]);
+                    },
+                    text: 'Add Property',
                     width: 136.w,
                     height: 45.h)
                 : Text(

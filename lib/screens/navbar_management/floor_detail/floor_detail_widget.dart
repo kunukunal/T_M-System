@@ -4,8 +4,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/screens/dashboard/management/management_widgets.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/floor_detail_controller.dart';
 import 'package:tanent_management/screens/navbar_management/floor_detail/unit_history.dart';
+import 'package:tanent_management/screens/profile/edit_profile/edit_profile_widget.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/text_styles.dart';
@@ -65,36 +67,41 @@ class FloorDetailWidget {
               border: Border.all(color: lightBorderGrey)),
           child: Slidable(
             key: UniqueKey(),
-            endActionPane: 
-            
-            isOccupied==true?
-            ActionPane(
-              motion: const DrawerMotion(),
-              children: [
-                //
+            endActionPane: isOccupied == true
+                ? ActionPane(
+                    motion: const DrawerMotion(),
+                    children: [
+                      //
 
-                SlidableAction(
-                  onPressed: (context) {
-                    exitTenant(
-                        button1: "No",
-                        button2: "Yes",
-                        onButton1Tap: () {
-                          Get.back();
+                      SlidableAction(
+                        onPressed: (context) {
+                          floorCntrl.rentTo.value = null;
+                          exitTenant(
+                              button1: "No",
+                              button2: "Yes",
+                              onButton1Tap: () {
+                                Get.back();
+                              },
+                              onButton2Tap: () {
+                                if (floorCntrl.rentTo.value != null) {
+                                  Get.back();
+                                  floorCntrl.removeTenant(unitId!);
+                                } else {
+                                  customSnackBar(Get.context!,
+                                      "Please choose the unit exit date");
+                                }
+                              },
+                              title:
+                                  "Are you sure you want to remove the tenant?");
                         },
-                        onButton2Tap: () {
-                          Get.back();
-                          floorCntrl.removeTenant(unitId!);
-                          // floorCntrl.deleteFloorData(floorId: floorId!);
-                        },
-                        title: "Are you sure you want to remove the tenant?");
-                  },
-                  backgroundColor: const Color(0xFFFE4A49),
-                  foregroundColor: whiteColor,
-                  icon: Icons.exit_to_app,
-                  label: "Exit Tenant",
-                ),
-              ],
-            ):null,
+                        backgroundColor: const Color(0xFFFE4A49),
+                        foregroundColor: whiteColor,
+                        icon: Icons.exit_to_app,
+                        label: "Exit Tenant",
+                      ),
+                    ],
+                  )
+                : null,
             child: Column(
               children: [
                 Padding(
@@ -284,7 +291,9 @@ class FloorDetailWidget {
     required Function() onButton1Tap,
     required Function() onButton2Tap,
   }) async {
-    return await Get.dialog(
+    final floorCntrl = Get.find<FloorDetailController>();
+
+    Get.dialog(
       Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.r,
@@ -318,6 +327,16 @@ class FloorDetailWidget {
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w700)),
                       ),
+                      EditProfileWidget.commomText('Exit date'),
+                      Obx(() {
+                        return ManagementWidgets().datePickerContainer(
+                            floorCntrl.rentTo.value == null
+                                ? 'Select'
+                                : '${floorCntrl.rentTo.value!.day}-${floorCntrl.rentTo.value!.month}-${floorCntrl.rentTo.value!.year}',
+                            onTap: () {
+                          floorCntrl.selectDateTo(Get.context!);
+                        });
+                      }),
                       SizedBox(
                         height: 10.h,
                       ),

@@ -13,21 +13,21 @@ class UnitCntroller extends GetxController {
 
   final isBackNeeded = false.obs;
 
-  final buildingAmenties={}.obs;
-
+  final buildingAmenties = {}.obs;
 
   @override
   void onInit() {
     floorId.value = Get.arguments[0];
     floorName.value = Get.arguments[1];
-    buildingAmenties.value=Get.arguments[2];
+    buildingAmenties.value = Get.arguments[2];
     isBackNeeded.value = false;
     getAllUnit();
     super.onInit();
   }
 
   onAddTap() {
-    Get.to(() => AddUnitView(), arguments: [floorId.value, false,buildingAmenties])!
+    Get.to(() => AddUnitView(),
+            arguments: [floorId.value, false, buildingAmenties])!
         .then((value) {
       if (value == true) {
         isBackNeeded.value = true;
@@ -53,19 +53,21 @@ class UnitCntroller extends GetxController {
     isUnitLoaded.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: '$deleteFloor${floorId.value}/');
     if (response != null) {
       if (response.statusCode == 200) {
-        print("fdsfds ${response.data}");
-
         unitList.clear();
         unitList.addAll(response.data['units']);
+        if (unitList.isEmpty) {
+          Get.off(() => AddUnitView(),
+              arguments: [floorId.value, false, buildingAmenties]);
+        }
+
         isUnitLoaded.value = false;
       } else if (response.statusCode == 400) {}
     }
@@ -74,12 +76,11 @@ class UnitCntroller extends GetxController {
   deleteUnitData({required int unitId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: "$addUnit$unitId/");
     if (response != null) {
       if (response.statusCode == 200) {

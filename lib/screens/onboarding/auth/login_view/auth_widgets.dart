@@ -106,7 +106,7 @@ class AuthWidget {
                       );
                     },
                     text: 'Register Now',
-                    height: 45.h)
+                    height: 40.h)
               ],
             ),
           ),
@@ -180,21 +180,19 @@ class AuthWidget {
                   authCntrl.otpFocus2.value,
                   authCntrl.otpFocus4.value),
               otpTextField(
-                  authCntrl.otpController4.value,
-                  authCntrl.otpFocus4.value,
-                  authCntrl.otpFocus3.value,
-                  authCntrl.otpFocus4.value,
-                  onChanged: (p0) {
-                   
-                        if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
-                        authCntrl.otpController2.value.text.trim().isNotEmpty &&
-                        authCntrl.otpController3.value.text.trim().isNotEmpty &&
-                        authCntrl.otpController4.value.text.trim().isNotEmpty) {
-                      authCntrl.verifyOtpApi(isFromRegister);
-                   
-                    }
-                  },
-                  ),
+                authCntrl.otpController4.value,
+                authCntrl.otpFocus4.value,
+                authCntrl.otpFocus3.value,
+                authCntrl.otpFocus4.value,
+                onChanged: (p0) {
+                  if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                      authCntrl.otpController2.value.text.trim().isNotEmpty &&
+                      authCntrl.otpController3.value.text.trim().isNotEmpty &&
+                      authCntrl.otpController4.value.text.trim().isNotEmpty) {
+                    authCntrl.verifyOtpApi(isFromRegister);
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -293,7 +291,8 @@ class AuthWidget {
 }
 
 Widget otpTextField(TextEditingController controller, FocusNode focus,
-    FocusNode previousFocus, FocusNode nextFocus,{Function(String)? onChanged}) {
+    FocusNode previousFocus, FocusNode nextFocus,
+    {Function(String)? onChanged}) {
   return Container(
     width: 49.w,
     height: 49.h,
@@ -306,22 +305,22 @@ Widget otpTextField(TextEditingController controller, FocusNode focus,
       style: CustomStyles.otpStyle050505,
       keyboardType: TextInputType.number,
       maxLength: 1,
-      onChanged:onChanged?? (value) {
-        if (value == '') {
-          previousFocus.requestFocus();
-        } else {
-          nextFocus.requestFocus();
-        }
-        
+      onChanged: onChanged ??
+          (value) {
+            if (value == '') {
+              previousFocus.requestFocus();
+            } else {
+              nextFocus.requestFocus();
+            }
 
-        // setState(() {
-        //   mergedOtp = (_otpController1.text.trim() +
-        //       _otpController2.text.trim() +
-        //       _otpController3.text.trim() +
-        //       _otpController4.text.trim())
-        //       .toString();
-        // });
-      },
+            // setState(() {
+            //   mergedOtp = (_otpController1.text.trim() +
+            //       _otpController2.text.trim() +
+            //       _otpController3.text.trim() +
+            //       _otpController4.text.trim())
+            //       .toString();
+            // });
+          },
       decoration: InputDecoration(
         counterText: '',
         disabledBorder: OutlineInputBorder(

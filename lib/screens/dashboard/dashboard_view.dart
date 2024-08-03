@@ -86,12 +86,12 @@ class DashboardScreen extends StatelessWidget {
         DashBoardWidgets().emptyContainer(
             image: occupancyTrendImage,
             height: 300.47.h,
-            isTackVisible: true,
-            title: 'Occupancy Trend'),
+            isTackVisible: false,
+            subTitle: 'Occupancy Trend'),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.h),
           child: Text(
-            'Projects History',
+            'Property History',
             style: CustomStyles.otpStyle050505W700S16,
           ),
         ),

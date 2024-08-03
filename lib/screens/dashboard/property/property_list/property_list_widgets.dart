@@ -11,7 +11,7 @@ import '../../../../common/text_styles.dart';
 
 class PropertyWidget {
   appBar() {
-    final propertyCntrl = Get.find<PropertyListController>();
+    // final propertyCntrl = Get.find<PropertyListController>();
 
     return AppBar(
       leading: InkWell(
@@ -26,14 +26,14 @@ class PropertyWidget {
       centerTitle: true,
       title: Text('Property List', style: CustomStyles.otpStyle050505W700S16),
       actions: [
-        InkWell(
-            onTap: () {
-              propertyCntrl.onAddTap();
-            },
-            child: Padding(
-              padding: EdgeInsets.all(8.r),
-              child: addIcon,
-            )),
+        // InkWell(
+        //     onTap: () {
+        //       propertyCntrl.onAddTap();
+        //     },
+        //     child: Padding(
+        //       padding: EdgeInsets.all(8.r),
+        //       child: addIcon,
+        //     )),
       ],
     );
   }
@@ -66,9 +66,8 @@ class PropertyWidget {
               children: [
                 SlidableAction(
                   onPressed: (context) {
-
-
-                    propertyCntrl.onEditTap(propertyCntrl.propertyList[propertyIndex!]);
+                    propertyCntrl
+                        .onEditTap(propertyCntrl.propertyList[propertyIndex!]);
                   },
                   backgroundColor: Colors.blue,
                   foregroundColor: whiteColor,

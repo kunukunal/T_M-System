@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
@@ -15,7 +16,8 @@ class EditProfileController extends GetxController {
   final permanentAddCntrl = TextEditingController().obs;
   final pinNoCntrl = TextEditingController().obs;
   final cityCntrl = TextEditingController().obs;
-  final stateCntrl = TextEditingController().obs;
+  // final stateCntrl = TextEditingController().obs;
+  final selectedState = "Select".obs;
 
   final nameFocus = FocusNode().obs;
   final emailFocus = FocusNode().obs;
@@ -56,7 +58,8 @@ class EditProfileController extends GetxController {
         permanentAddCntrl.value.text = data['address'] ?? "";
         pinNoCntrl.value.text = data['zip_code'] ?? "";
         cityCntrl.value.text = data['city'] ?? "";
-        stateCntrl.value.text = data['state'] ?? "";
+        checkIsState(data['state'] ?? "");
+        // stateCntrl.value.text = data['state'] ?? "";
         networkImage.value = data['profile_image'] ?? "";
       } else if (response.statusCode == 400) {
         isProfileLoadingGet.value = false;
@@ -64,11 +67,20 @@ class EditProfileController extends GetxController {
     }
   }
 
+  checkIsState(String value) {
+    bool data = state.contains(value);
+    if (data) {
+      selectedState.value = value;
+    } else {
+      selectedState.value = "Select";
+    }
+  }
+
   onSubmit() {
     if (nameCntrl.value.text.trim().isNotEmpty) {
       if (emailCntrl.value.text.trim().isNotEmpty) {
         if (permanentAddCntrl.value.text.trim().isNotEmpty) {
-          if (stateCntrl.value.text.trim().isNotEmpty) {
+          if (selectedState.value != "Select") {
             if (pinNoCntrl.value.text.trim().isNotEmpty) {
               if (cityCntrl.value.text.trim().isNotEmpty) {
                 userProfileUpdate();
@@ -111,7 +123,7 @@ class EditProfileController extends GetxController {
                 "address": permanentAddCntrl.value.text.trim(),
                 "city": cityCntrl.value.text.trim(),
                 "zip_code": pinNoCntrl.value.text,
-                "state": stateCntrl.value.text.trim(),
+                "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
@@ -124,7 +136,7 @@ class EditProfileController extends GetxController {
                 "address": permanentAddCntrl.value.text.trim(),
                 "city": cityCntrl.value.text.trim(),
                 "zip_code": pinNoCntrl.value.text,
-                "state": stateCntrl.value.text.trim(),
+                "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,

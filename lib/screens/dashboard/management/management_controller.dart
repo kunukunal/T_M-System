@@ -126,15 +126,13 @@ class ManagementController extends GetxController {
   void getPropertyBuilding() async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
-
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: getPropertyAndBuildingList,
     );
@@ -154,14 +152,13 @@ class ManagementController extends GetxController {
   void getFloorsAndUnits(int buildingId) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: "$getFloorAndUnitList$buildingId/",
     );
@@ -241,18 +238,23 @@ class ManagementController extends GetxController {
 
   ///'/
   bool setRentDates() {
-    if (rentTo.value!.isAfter(rentFrom.value!)) {
+    print("sdlkasldas ${rentTo.value}");
+    if (rentTo.value != null) {
+      if (rentTo.value!.isAfter(rentFrom.value!)) {
 // sucesss
-      return true;
-    } else if (rentTo.value!.isAtSameMomentAs(rentFrom.value!)) {
-      customSnackBar(
-          Get.context!, "Rent To date cannot be the same as Rent From date.");
-      return false;
-    } else {
-      customSnackBar(
-          Get.context!, "Rent To date cannot be earlier than Rent From date.");
+        return true;
+      } else if (rentTo.value!.isAtSameMomentAs(rentFrom.value!)) {
+        customSnackBar(
+            Get.context!, "Rent To date cannot be the same as Rent From date.");
+        return false;
+      } else {
+        customSnackBar(Get.context!,
+            "Rent To date cannot be earlier than Rent From date.");
 
-      return false;
+        return false;
+      }
+    } else {
+      return true;
     }
   }
 
@@ -291,13 +293,14 @@ class ManagementController extends GetxController {
           if (selectedUnit.value != null) {
             if (amountCntrl.value.text.trim().isNotEmpty) {
               if (rentFrom.value != null) {
-                if (rentTo.value != null) {
-                  if (setRentDates()) {
-                    addTenant();
-                  }
-                } else {
-                  customSnackBar(Get.context!, "Rent To date can not be empty");
+                print("dasaskjdkjasd");
+                // if (rentTo.value != null) {
+                if (setRentDates()) {
+                  addTenant();
                 }
+                // } else {
+                //   customSnackBar(Get.context!, "Rent To date can not be empty");
+                // }
               } else {
                 customSnackBar(Get.context!, "Rent From date can not be empty");
               }
@@ -321,15 +324,11 @@ class ManagementController extends GetxController {
   onSubmitTap() {
     if (amountCntrl.value.text.trim().isNotEmpty) {
       if (rentFrom.value != null) {
-        if (rentTo.value != null) {
-          if (setRentDates()) {
-            addTenant();
-          }
-        } else {
-          customSnackBar(Get.context!, "Rent To date can not be empty");
+        if (setRentDates()) {
+          addTenant();
         }
       } else {
-        customSnackBar(Get.context!, "Rent From date can not be empty");
+        customSnackBar(Get.context!, "Rent To date can not be empty");
       }
     } else {
       customSnackBar(Get.context!, "Rent field can not be empty");
@@ -353,7 +352,7 @@ class ManagementController extends GetxController {
     tenantCheckLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -363,8 +362,7 @@ class ManagementController extends GetxController {
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: checTenantStatus,
     );
@@ -392,8 +390,11 @@ class ManagementController extends GetxController {
           );
         } else if (response.data['tenant'] &&
             response.data['documents'] == false) {
-          Get.off(() => TenantDocScreen(),
-              arguments: [response.data['data']['id'], true,{'isEdit':false,'isConsent':true}]);
+          Get.off(() => TenantDocScreen(), arguments: [
+            response.data['data']['id'],
+            true,
+            {'isEdit': false, 'isConsent': true}
+          ]);
         }
       } else if (response.statusCode == 400) {
         customSnackBar(Get.context!, response.data['message']);
@@ -413,8 +414,11 @@ class ManagementController extends GetxController {
     authCntrl.otpController2.value.clear();
     authCntrl.otpController3.value.clear();
     authCntrl.otpController4.value.clear();
-    String rentToDate =
-        '${rentTo.value!.year}-${rentTo.value!.month}-${rentTo.value!.day}';
+    String rentToDate = "";
+    if (rentTo.value != null) {
+      rentToDate =
+          '${rentTo.value!.year}-${rentTo.value!.month}-${rentTo.value!.day}';
+    }
     String rentFromDate =
         '${rentFrom.value!.year}-${rentFrom.value!.month}-${rentFrom.value!.day}';
     addTenantLoading.value = true;
@@ -432,7 +436,7 @@ class ManagementController extends GetxController {
     }
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: isFromHome.value
@@ -449,7 +453,7 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              "rent_to": rentToDate,
+              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             }
           : {
@@ -465,14 +469,13 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              "rent_to": rentToDate,
+              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: addNewTenant,
     );
@@ -495,8 +498,11 @@ class ManagementController extends GetxController {
 
   verifyOtpTenantApi() async {
     final authCntrl = Get.find<AuthController>();
-    String rentToDate =
-        '${rentTo.value!.year}-${rentTo.value!.month}-${rentTo.value!.day}';
+    String rentToDate = "";
+    if (rentTo.value != null) {
+      rentToDate =
+          '${rentTo.value!.year}-${rentTo.value!.month}-${rentTo.value!.day}';
+    }
     String rentFromDate =
         '${rentFrom.value!.year}-${rentFrom.value!.month}-${rentFrom.value!.day}';
     addTenantOtpVerify.value = true;
@@ -535,7 +541,7 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              "rent_to": rentToDate,
+              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             }
           : {
@@ -556,14 +562,13 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              "rent_to": rentToDate,
+              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       isRawData: true,
       url: verifyTenantOtpapi,

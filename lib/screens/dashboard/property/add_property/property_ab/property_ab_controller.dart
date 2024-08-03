@@ -49,11 +49,10 @@ class PropertyAbCntroller extends GetxController {
     });
   }
 
-  onListTap({
-    required int buildingId,
-    required String buildingName,
-    required Map item
-  }) {
+  onListTap(
+      {required int buildingId,
+      required String buildingName,
+      required Map item}) {
     Get.to(() => FloorView(), arguments: [buildingId, buildingName, item])
         ?.then((value) {
       if (value == true) {
@@ -67,18 +66,20 @@ class PropertyAbCntroller extends GetxController {
     isBuildingDataListLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: "$getOrAddPropertyList${propertyId.value}/");
     if (response != null) {
       if (response.statusCode == 200) {
         buildingList.clear();
         buildingList.addAll(response.data['buildings']);
-
+        if (buildingList.isEmpty) {
+          Get.off(() => AddBuildingView(),
+              arguments: [propertyId.value, false, {}]);
+        }
         isBuildingDataListLoading.value = false;
       } else if (response.statusCode == 400) {}
     }
@@ -87,12 +88,11 @@ class PropertyAbCntroller extends GetxController {
   deleteBuildingData({required int buildingId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: "$addbuildingData$buildingId/");
     if (response != null) {
       if (response.statusCode == 200) {

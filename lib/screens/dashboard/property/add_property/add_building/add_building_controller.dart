@@ -37,7 +37,8 @@ class AddBuildingCntroller extends GetxController {
       buildingId.value = editData['id'];
       (addMultipleBuilding[0]["building_name"] as TextEditingController).text =
           editData['name'];
-      (addMultipleBuilding[0]['floor'] as TextEditingController).text = editData['num_of_floors'].toString()??"0";
+      (addMultipleBuilding[0]['floor'] as TextEditingController).text =
+          editData['num_of_floors'].toString() ?? "0";
       // (addMultipleBuilding[0]['units'] as TextEditingController).text = "2";
       (addMultipleBuilding[0]['amenities'] as List)
           .clear(); // Clear existing amenities before adding new ones
@@ -87,18 +88,15 @@ class AddBuildingCntroller extends GetxController {
     }).toList();
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
-
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
- 
       body: transformedData, // Ensure this is correctly handled as a List
       isRawData: true,
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: addbuildingData,
     );
@@ -128,17 +126,15 @@ class AddBuildingCntroller extends GetxController {
     };
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPatchCall(
-
       body: transformedData,
       isRawData: true,
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: "$addbuildingData${buildingId.value}/",
     );

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_widgets.dart';
 
 class PropertyAb extends StatelessWidget {
-
-   PropertyAb({super.key,});
+  PropertyAb({
+    super.key,
+  });
 
   final propertyAbCntrl = Get.put(PropertyAbCntroller());
 
@@ -14,6 +17,19 @@ class PropertyAb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PropertyAbWidget().appBar(propertyAbCntrl.propertyName.value),
+      floatingActionButton: Obx(() {
+        return propertyAbCntrl.buildingList.isEmpty
+            ? const SizedBox()
+            : FloatingActionButton(
+                onPressed: () {
+                  propertyAbCntrl.onAddTap();
+                },
+                backgroundColor: Colors.white,
+                shape:
+                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+                child: addIcon,
+              );
+      }),
       body: Column(
         children: [
           Expanded(
@@ -33,9 +49,9 @@ class PropertyAb extends StatelessWidget {
                             itemCount: propertyAbCntrl.buildingList.length,
                             itemBuilder: (context, index) {
                               return PropertyAbWidget().propertyList(
-                                itemIndex: index,
-                                buildingId:propertyAbCntrl
-                                      .buildingList[index]['id'] ,
+                                  itemIndex: index,
+                                  buildingId:
+                                      propertyAbCntrl.buildingList[index]['id'],
                                   buildingTitle: propertyAbCntrl
                                       .buildingList[index]['name'],
                                   floor: propertyAbCntrl.buildingList[index]

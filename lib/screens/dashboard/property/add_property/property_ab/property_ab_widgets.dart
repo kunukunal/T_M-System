@@ -10,7 +10,7 @@ import '../../../../../common/text_styles.dart';
 
 class PropertyAbWidget {
   appBar(String title) {
-    final propertyAbCntrl = Get.find<PropertyAbCntroller>();
+    // final propertyAbCntrl = Get.find<PropertyAbCntroller>();
 
     return AppBar(
       leading: InkWell(
@@ -24,16 +24,16 @@ class PropertyAbWidget {
       ),
       centerTitle: true,
       title: Text(title, style: CustomStyles.otpStyle050505W700S16),
-      actions: [
-        InkWell(
-            onTap: () {
-              propertyAbCntrl.onAddTap();
-            },
-            child: Padding(
-              padding: EdgeInsets.all(8.r),
-              child: addIcon,
-            )),
-      ],
+      // actions: [
+      //   InkWell(
+      //       onTap: () {
+      //         propertyAbCntrl.onAddTap();
+      //       },
+      //       child: Padding(
+      //         padding: EdgeInsets.all(8.r),
+      //         child: addIcon,
+      //       )),
+      // ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
         child: Divider(

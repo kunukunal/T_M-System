@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
 
 import '../../../../common/constants.dart';
@@ -276,6 +278,33 @@ class AddTenantScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      Obx(() {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            EditProfileWidget.commomText('State',
+                                isMandatory: true),
+                            bigDropDown(
+                                // width: 150.5.w,
+                                width: Get.width / 2.3,
+                                selectedItem:
+                                    addTenantCntrl.selectedState.value,
+                                items: state,
+                                onChange: (item) {
+                                  addTenantCntrl.selectedState.value = item;
+                                }),
+                            // customTextField(
+                            //     controller: addTenantCntrl.stateCntrl.value,
+                            //     focusNode: addTenantCntrl.stateFocus.value,
+                            //     width: Get.width / 2.3,
+                            //     hintText: 'Type Here...',
+                            //     isBorder: true,
+                            //     color: HexColor('#F7F7F7'),
+                            //     isFilled: false),
+                          ],
+                        );
+                      }),
+                      SizedBox(width: 15.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -291,22 +320,6 @@ class AddTenantScreen extends StatelessWidget {
                               isFilled: false),
                         ],
                       ),
-                      SizedBox(width: 15.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          EditProfileWidget.commomText('State',
-                              isMandatory: true),
-                          customTextField(
-                              controller: addTenantCntrl.stateCntrl.value,
-                              focusNode: addTenantCntrl.stateFocus.value,
-                              width: Get.width / 2.3,
-                              hintText: 'Type Here...',
-                              isBorder: true,
-                              color: HexColor('#F7F7F7'),
-                              isFilled: false),
-                        ],
-                      )
                     ],
                   ),
                   SizedBox(

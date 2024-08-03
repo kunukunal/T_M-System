@@ -15,7 +15,6 @@ import 'management_controller.dart';
 class ManagementWidgets {
   //Date picker
   datePickerContainer(String date, {double? width, required Function() onTap}) {
-    final addExCntrl = Get.find<ManagementController>();
     return InkWell(
       onTap: onTap,
       child: Container(

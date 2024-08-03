@@ -86,17 +86,19 @@ class PropertyListController extends GetxController {
     isPropertyDataListLoading.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: getOrAddPropertyList);
     if (response != null) {
       if (response.statusCode == 200) {
         propertyList.clear();
         propertyList.addAll(response.data);
+        if (propertyList.isEmpty) {
+          Get.off(() => AddPropertyView(), arguments: [false, {}]);
+        }
         isPropertyDataListLoading.value = false;
       } else if (response.statusCode == 400) {
         // if (response.data.toString().contains("email")) {
@@ -109,12 +111,11 @@ class PropertyListController extends GetxController {
   deletePropertyData({required int propertyId}) async {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
-            "Accept-Language": languaeCode,
-
+      "Accept-Language": languaeCode,
     }, url: "$getOrAddPropertyList$propertyId/");
     if (response != null) {
       if (response.statusCode == 200) {

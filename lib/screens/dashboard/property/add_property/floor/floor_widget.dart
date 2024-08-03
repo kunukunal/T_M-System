@@ -25,16 +25,16 @@ class FloorWidget {
       ),
       centerTitle: true,
       title: Text(title, style: CustomStyles.otpStyle050505W700S16),
-      actions: [
-        InkWell(
-            onTap: () {
-              addFloor(button1: "Cancel", button2: "Add", title: "Add Floor");
-            },
-            child: Padding(
-              padding: EdgeInsets.all(8.r),
-              child: addIcon,
-            )),
-      ],
+      // actions: [
+      //   InkWell(
+      //       onTap: () {
+      //         addFloor(button1: "Cancel", button2: "Add", title: "Add Floor");
+      //       },
+      //       child: Padding(
+      //         padding: EdgeInsets.all(8.r),
+      //         child: addIcon,
+      //       )),
+      // ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
         child: Divider(

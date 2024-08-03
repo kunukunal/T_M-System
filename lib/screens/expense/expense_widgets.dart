@@ -30,7 +30,7 @@ class ExpenseWidgets {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 15.h),
       child: Container(
-        height: 134.h,
+        // height: 134.h,
         width: Get.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
@@ -49,19 +49,19 @@ class ExpenseWidgets {
                 'Total Expense this month',
                 style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(6.r)),
-                child: LinearProgressIndicator(
-                  backgroundColor: HexColor('#D9D9D9'),
-                  color: HexColor('#FA4343'),
-                  value: 0.5,
-                  minHeight: 8.0,
-                ),
-              ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Container(
+              //   decoration:
+              //       BoxDecoration(borderRadius: BorderRadius.circular(6.r)),
+              //   child: LinearProgressIndicator(
+              //     backgroundColor: HexColor('#D9D9D9'),
+              //     color: HexColor('#FA4343'),
+              //     value: 0.5,
+              //     minHeight: 8.0,
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -247,7 +247,9 @@ class ExpenseWidgets {
                                                                   const Text(
                                                                     "Expense Image",
                                                                     style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
                                                                         fontSize:
                                                                             18),
                                                                   ),

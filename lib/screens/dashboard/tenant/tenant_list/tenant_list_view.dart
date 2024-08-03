@@ -30,29 +30,34 @@ class TenantListScreen extends StatelessWidget {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          tenantCntrl.goesForAddConatct.value = true;
-          Get.to(() => AddTenantScreen(), arguments: [
-            false,
-            {},
-            {'isEdit': false}
-          ])!
-              .then((value) {
-            if (value == true) {
-              tenantCntrl.getKireyderList();
-            }
+      floatingActionButton: Obx(() {
+        return tenantCntrl.tenantList.isEmpty
+            ? const SizedBox()
+            : FloatingActionButton(
+                onPressed: () {
+                  tenantCntrl.goesForAddConatct.value = true;
+                  Get.to(() => AddTenantScreen(), arguments: [
+                    false,
+                    {},
+                    {'isEdit': false}
+                  ])!
+                      .then((value) {
+                    if (value == true) {
+                      tenantCntrl.getKireyderList();
+                    }
 
-            if (tenantCntrl.goesForAddConatct.value && value == false) {
-              tenantCntrl.goesForAddConatct.value = false;
-              tenantCntrl.getKireyderList();
-            }
-          });
-        },
-        backgroundColor: Colors.white,
-        shape: CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
-        child: addIcon,
-      ),
+                    if (tenantCntrl.goesForAddConatct.value && value == false) {
+                      tenantCntrl.goesForAddConatct.value = false;
+                      tenantCntrl.getKireyderList();
+                    }
+                  });
+                },
+                backgroundColor: Colors.white,
+                shape:
+                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+                child: addIcon,
+              );
+      }),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

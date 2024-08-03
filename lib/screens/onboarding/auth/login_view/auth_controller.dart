@@ -54,17 +54,18 @@ class AuthController extends GetxController {
   }
 
   onOtpSubmitPressed({required bool isProfileUpdated}) async {
-    if (isProfileUpdated) {
-      Get.offAll(() => const NavBar(initialPage: 0));
-    } else {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setBool('is_personal_info_completed', false);
-      Get.offAll(() => PersonalInfo(
-          isFromRegister: true,
-          isprofileDetailsRequired: true,
-          mobileContrl: mobileNumberController.value.text,
-          phoneCode: selectedItem.value));
-    }
+          Get.offAll(() => const NavBar(initialPage: 0));
+    // if (isProfileUpdated) {
+    //   Get.offAll(() => const NavBar(initialPage: 0));
+    // } else {
+    //   final prefs = await SharedPreferences.getInstance();
+    //   prefs.setBool('is_personal_info_completed', false);
+    //   Get.offAll(() => PersonalInfo(
+    //       isFromRegister: true,
+    //       isprofileDetailsRequired: true,
+    //       mobileContrl: mobileNumberController.value.text,
+    //       phoneCode: selectedItem.value));
+    // }
   }
 
   // void startTimer() {

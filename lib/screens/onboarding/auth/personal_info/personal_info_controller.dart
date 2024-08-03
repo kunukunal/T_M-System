@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/navbar/navbar_view.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
@@ -44,6 +45,8 @@ class PersonalInfoController extends GetxController {
   final documentTypeList = [].obs;
   final isDocumentTypeDataLoading = false.obs;
   final networkImage = "".obs;
+
+  final selectedState = "Select".obs;
 
   //finctions
   onPreviousTap() {
@@ -138,23 +141,57 @@ class PersonalInfoController extends GetxController {
   }
 
   //functions
-  onSkipTap({required bool? isFromRegister}) {
-    Get.to(() => LandlordDocView(
-          isFromregister: isFromRegister,
-        ));
+  onSkipTap({required bool? isFromRegister, bool isFromApi = false}) {
+    if (isFromApi) {
+      Get.to(() => LandlordDocView(
+            isFromregister: isFromRegister,
+          ));
+    } else {
+      Get.offAll(() => const NavBar(initialPage: 0));
+    }
+    // Get.to(() => LandlordDocView(
+    //       isFromregister: isFromRegister,
+    //     ));
   }
 
   onNextTap({required bool? isFromRegister}) {
-    if (nameCntrl.value.text.trim().isNotEmpty &&
-        emailCntrl.value.text.trim().isNotEmpty &&
-        permanentAddCntrl.value.text.trim().isNotEmpty &&
-        cityCntrl.value.text.trim().isNotEmpty &&
-        pinNoCntrl.value.text.trim().isNotEmpty &&
-        stateCntrl.value.text.trim().isNotEmpty) {
-      userProfileUpdate(isFromRegister: isFromRegister);
+    if (nameCntrl.value.text.trim().isNotEmpty) {
+      // if (emailCntrl.value.text.trim().isNotEmpty) {
+      if (permanentAddCntrl.value.text.trim().isNotEmpty) {
+        if (pinNoCntrl.value.text.trim().isNotEmpty) {
+          if (selectedState.value != "Select") {
+            if (cityCntrl.value.text.trim().isNotEmpty) {
+              print("dsadsk ${emailCntrl.value.text.trim()}");
+              userProfileUpdate(isFromRegister: isFromRegister);
+            } else {
+              customSnackBar(Get.context!, "Please Enter your City");
+            }
+          } else {
+            customSnackBar(Get.context!, "Please Enter your State");
+          }
+        } else {
+          customSnackBar(Get.context!, "Please Enter your Pin code");
+        }
+      } else {
+        customSnackBar(Get.context!, "Please Enter your Permanent Address");
+      }
+      // } else {
+      //   customSnackBar(Get.context!, "Please Enter your Email");
+      // }
     } else {
-      customSnackBar(Get.context!, "Please fill the data correctly");
+      customSnackBar(Get.context!, "Please Enter your name");
     }
+
+    // if (nameCntrl.value.text.trim().isNotEmpty &&
+    //     // emailCntrl.value.text.trim().isNotEmpty &&
+    //     permanentAddCntrl.value.text.trim().isNotEmpty &&
+    //     cityCntrl.value.text.trim().isNotEmpty &&
+    //     pinNoCntrl.value.text.trim().isNotEmpty &&
+    //     stateCntrl.value.text.trim().isNotEmpty) {
+    //   userProfileUpdate(isFromRegister: isFromRegister);
+    // } else {
+    //   customSnackBar(Get.context!, "Please fill the data correctly");
+    // }
   }
 
   onSubmitPressed() {
@@ -172,26 +209,32 @@ class PersonalInfoController extends GetxController {
                 "profile_image": await DioClientServices.instance
                     .multipartFile(file: imageFile.value!),
                 "name": nameCntrl.value.text.trim(),
-                "email": emailCntrl.value.text.trim(),
+                if (emailCntrl.value.text.isNotEmpty)
+                  "email": emailCntrl.value.text.trim(),
+
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),
                 "city": cityCntrl.value.text.trim(),
                 "zip_code": pinNoCntrl.value.text,
-                "state": stateCntrl.value.text.trim(),
+                // "state": stateCntrl.value.text.trim(),
+                "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
               }
             : {
                 "name": nameCntrl.value.text.trim(),
-                "email": emailCntrl.value.text.trim(),
+                if (emailCntrl.value.text.isNotEmpty)
+                  "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),
                 "city": cityCntrl.value.text.trim(),
                 "zip_code": pinNoCntrl.value.text,
-                "state": stateCntrl.value.text.trim(),
+                // "state": stateCntrl.value.text.trim(),
+                "state": selectedState.value,
+
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
@@ -204,7 +247,7 @@ class PersonalInfoController extends GetxController {
     if (response != null) {
       if (response.statusCode == 200) {
         customSnackBar(Get.context!, "Profile update Successfully");
-        onSkipTap(isFromRegister: isFromRegister);
+        onSkipTap(isFromRegister: isFromRegister, isFromApi: true);
         log("Profile update Successfully.");
       } else if (response.statusCode == 400) {
         if (response.data.toString().contains("email")) {
@@ -234,13 +277,23 @@ class PersonalInfoController extends GetxController {
         permanentAddCntrl.value.text = data['address'] ?? "";
         pinNoCntrl.value.text = data['zip_code'] ?? "";
         cityCntrl.value.text = data['city'] ?? "";
-        stateCntrl.value.text = data['state'] ?? "";
+        // stateCntrl.value.text = data['state'] ?? "";
+        checkIsState(data['state'] ?? "");
         networkImage.value = data['profile_image'] ?? "";
       } else if (response.statusCode == 400) {
         // if (response.data.toString().contains("email")) {
         //   customSnackBar(Get.context!, response.data['email'][0].toString());
         // }
       }
+    }
+  }
+
+  checkIsState(String value) {
+    bool data = state.contains(value);
+    if (data) {
+      selectedState.value = value;
+    } else {
+      selectedState.value = "Select";
     }
   }
 }

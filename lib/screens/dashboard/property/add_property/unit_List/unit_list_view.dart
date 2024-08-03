@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/unit_List/unit_list_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/unit_List/unit_list_widgets.dart';
 
@@ -12,9 +14,21 @@ class UnitView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UnitWidget().appBar(unitCntrl.floorName.value),
+      floatingActionButton: Obx(() {
+        return unitCntrl.unitList.isEmpty
+            ? const SizedBox()
+            : FloatingActionButton(
+                onPressed: () {
+                  unitCntrl.onAddTap();
+                },
+                backgroundColor: Colors.white,
+                shape:
+                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+                child: addIcon,
+              );
+      }),
       body: WillPopScope(
         onWillPop: () async {
-          print("ffkalskfsad ${unitCntrl.isBackNeeded.value}");
           Get.back(result: unitCntrl.isBackNeeded.value);
           return true;
         },

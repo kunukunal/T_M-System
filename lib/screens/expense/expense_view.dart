@@ -20,17 +20,25 @@ class ExpenseScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
-        actions: [
-          InkWell(
-              onTap: () {
-                expenseCntrl.onAddTap();
-              },
-              child: addIcon),
-          Container(
-            width: 5.w,
-          ),
-        ],
+        // actions: [
+        //   InkWell(
+        //       onTap: () {
+        //         expenseCntrl.onAddTap();
+        //       },
+        //       child: addIcon),
+        //   Container(
+        //     width: 5.w,
+        //   ),
+        // ],
         title: Text('Expense', style: CustomStyles.otpStyle050505),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          expenseCntrl.onAddTap();
+        },
+        backgroundColor: Colors.white,
+        shape: CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+        child: addIcon,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

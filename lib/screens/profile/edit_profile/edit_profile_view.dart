@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/screens/profile/edit_profile/edit_profile_controller.dart';
@@ -31,7 +32,7 @@ class EditProfileVew extends StatelessWidget {
       body: Obx(() {
         return editCntrl.isProfileLoadingGet.value
             ? const Center(
-                child:  CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -164,19 +165,30 @@ class EditProfileVew extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  EditProfileWidget.commomText('State'),
-                                  customTextField(
-                                      controller: editCntrl.stateCntrl.value,
-                                      width: Get.width / 2.3,
-                                      hintText: 'Type Here...',
-                                      isBorder: true,
-                                      color: HexColor('#F7F7F7'),
-                                      isFilled: false),
-                                ],
-                              ),
+                              Obx(() {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    EditProfileWidget.commomText('State'),
+                                    // customTextField(
+                                    //     controller: editCntrl.stateCntrl.value,
+                                    //     width: Get.width / 2.3,
+                                    //     hintText: 'Type Here...',
+                                    //     isBorder: true,
+                                    //     color: HexColor('#F7F7F7'),
+                                    //     isFilled: false),
+                                    bigDropDown(
+                                        // width: 150.5.w,
+                                        width: Get.width / 2.3,
+                                        selectedItem:
+                                            editCntrl.selectedState.value,
+                                        items: state,
+                                        onChange: (item) {
+                                          editCntrl.selectedState.value = item;
+                                        }),
+                                  ],
+                                );
+                              }),
                               SizedBox(width: 15.w),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,8 +224,7 @@ class EditProfileVew extends StatelessWidget {
                                 )
                               : customButton(
                                   onPressed: () {
-                                    // Get.to(() => LandlordDocView());
-                                    editCntrl.userProfileUpdate();
+                                    editCntrl.onSubmit();
                                   },
                                   text: 'Update',
                                   width: Get.width,

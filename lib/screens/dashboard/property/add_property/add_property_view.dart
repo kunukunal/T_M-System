@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_property_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_property_widgets.dart';
 
@@ -80,6 +81,37 @@ class AddPropertyView extends StatelessWidget {
                   ),
                   Row(
                     children: [
+                      Obx(
+                        () {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AddPropertyWidget()
+                                  .commomText('State', isMandatory: true),
+                              // customTextField(
+                              //   controller: addPropertyCntrl.stateCntrl.value,
+                              //   textInputAction: TextInputAction.done,
+                              //   // keyboardType: TextInputType.number,
+                              //   hintText: 'Type Here...',
+                              //   isBorder: true,
+                              //   // color: HexColor('#F7F7F7'),
+                              //   isFilled: false,
+                              //   width: Get.width / 2.3,
+                              // ),
+                              bigDropDown(
+                                  // width: 150.5.w,
+                                  width: Get.width / 2.3,
+                                  selectedItem:
+                                      addPropertyCntrl.selectedState.value,
+                                  items: state,
+                                  onChange: (item) {
+                                    addPropertyCntrl.selectedState.value = item;
+                                  }),
+                            ],
+                          );
+                        }
+                      ),
+                      SizedBox(width: 15.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -97,24 +129,6 @@ class AddPropertyView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(width: 15.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AddPropertyWidget()
-                              .commomText('State', isMandatory: true),
-                          customTextField(
-                            controller: addPropertyCntrl.stateCntrl.value,
-                            textInputAction: TextInputAction.done,
-                            // keyboardType: TextInputType.number,
-                            hintText: 'Type Here...',
-                            isBorder: true,
-                            // color: HexColor('#F7F7F7'),
-                            isFilled: false,
-                            width: Get.width / 2.3,
-                          ),
-                        ],
-                      )
                     ],
                   ),
                   AddPropertyWidget()

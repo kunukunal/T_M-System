@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/screens/dashboard/property/property_list/property_list_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/property_list/property_list_widgets.dart';
@@ -13,6 +14,20 @@ class PropertyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PropertyWidget().appBar(),
+      floatingActionButton: Obx(() {
+        return propertyCntrl.propertyList.isEmpty
+            ? const SizedBox()
+            : FloatingActionButton(
+                onPressed: () {
+                  // expenseCntrl.onAddTap();
+                  propertyCntrl.onAddTap();
+                },
+                backgroundColor: Colors.white,
+                shape:
+                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+                child: addIcon,
+              );
+      }),
       body: Column(
         children: [
           Divider(
@@ -38,8 +53,7 @@ class PropertyListView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return PropertyWidget().unitList(
                                 propertyIndex: index,
-                                id: propertyCntrl.propertyList[index]
-                                    ['id'],
+                                id: propertyCntrl.propertyList[index]['id'],
                                 propertyTitle: propertyCntrl.propertyList[index]
                                     ['title'],
                                 location: propertyCntrl.propertyList[index]

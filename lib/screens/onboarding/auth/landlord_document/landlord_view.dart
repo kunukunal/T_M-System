@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/screens/navbar/navbar_view.dart';
 import 'package:tanent_management/screens/onboarding/auth/landlord_document/landlord_widget.dart';
 import 'package:tanent_management/screens/onboarding/auth/personal_info/personal_info_controller.dart';
 
@@ -29,6 +30,16 @@ class LandlordDocView extends StatelessWidget {
                     },
                   );
           }),
+          actions: [
+            Padding(
+              padding: EdgeInsets.all(8.r),
+              child: InkWell(
+                  onTap: () {
+                    Get.offAll(() => const NavBar(initialPage: 0));
+                  },
+                  child: Text('Skip', style: CustomStyles.skipBlack)),
+            )
+          ],
         ),
         body: WillPopScope(
           onWillPop: () async {

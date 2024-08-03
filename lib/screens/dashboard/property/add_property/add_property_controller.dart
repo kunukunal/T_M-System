@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
@@ -14,7 +15,8 @@ class AddPropertyCntroller extends GetxController {
   final landmarkCntrl = TextEditingController().obs;
   final pinCodeCntrl = TextEditingController().obs;
   final cityCntrl = TextEditingController().obs;
-  final stateCntrl = TextEditingController().obs;
+  // final stateCntrl = TextEditingController().obs;
+  final selectedState = "Select".obs;
 
   final isPropertyAdded = false.obs;
 
@@ -32,8 +34,8 @@ class AddPropertyCntroller extends GetxController {
       landmarkCntrl.value.text = item['landmark'];
       pinCodeCntrl.value.text = item['pincode'].toString();
       cityCntrl.value.text = item['city'];
-      stateCntrl.value.text = item['state'];
-
+      // stateCntrl.value.text = item['state'];
+      checkIsState(item['state']);
       for (int i = 0; i < item['images'].length; i++) {
         propertyPickedImage.add({
           "id": item['images'][i]['id'],
@@ -46,12 +48,21 @@ class AddPropertyCntroller extends GetxController {
     super.onInit();
   }
 
+  checkIsState(String value) {
+    bool data = state.contains(value);
+    if (data) {
+      selectedState.value = value;
+    } else {
+      selectedState.value = "Select";
+    }
+  }
+
   onSaveTap() {
     if (propertyTitleCntrl.value.text.trim().isNotEmpty) {
       if (addressCntrl.value.text.trim().isNotEmpty) {
         if (pinCodeCntrl.value.text.trim().isNotEmpty) {
           if (cityCntrl.value.text.trim().isNotEmpty) {
-            if (stateCntrl.value.text.trim().isNotEmpty) {
+            if (selectedState.value != "Select") {
               isPropertyAdded.value = true;
 
               if (isForEdit.value == true) {
@@ -95,7 +106,7 @@ class AddPropertyCntroller extends GetxController {
       "pincode": pinCodeCntrl.value.text.trim(),
       "landmark": landmarkCntrl.value.text.trim(),
       "city": cityCntrl.value.text.trim(),
-      "state": stateCntrl.value.text.trim(),
+      "state": selectedState.value,
       "property_images": propertyImage
     }, headers: {
       'Authorization': "Bearer $accessToken",
@@ -132,7 +143,7 @@ class AddPropertyCntroller extends GetxController {
       "pincode": pinCodeCntrl.value.text.trim(),
       "landmark": landmarkCntrl.value.text.trim(),
       "city": cityCntrl.value.text.trim(),
-      "state": stateCntrl.value.text.trim(),
+      "state": selectedState.value,
       "property_images": propertyImage,
       "img_deleted": jsonEncode(deletedImage)
     }, headers: {

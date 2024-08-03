@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
 import 'package:tanent_management/screens/dashboard/tenant/add_tenant/tenant_documents.dart';
@@ -18,7 +19,8 @@ class AddTenantController extends GetxController {
   final streetdCntrl = TextEditingController().obs;
   final pinNoCntrl = TextEditingController().obs;
   final cityCntrl = TextEditingController().obs;
-  final stateCntrl = TextEditingController().obs;
+  // final stateCntrl = TextEditingController().obs;
+  final selectedState = "Select".obs;
 
   final aadharCntrl = TextEditingController().obs;
   final policeVerificationCntrl = TextEditingController().obs;
@@ -66,10 +68,20 @@ class AddTenantController extends GetxController {
       streetdCntrl.value.text = editData['landmark'];
       pinNoCntrl.value.text = editData['pincode'];
       cityCntrl.value.text = editData['city'];
-      stateCntrl.value.text = editData['state'];
+      // stateCntrl.value.text = editData['state'];
+      checkIsState(editData['state']);
       profileImageEdit.value = editData['profile_pic'];
     }
     super.onInit();
+  }
+
+  checkIsState(String value) {
+    bool data = state.contains(value);
+    if (data) {
+      selectedState.value = value;
+    } else {
+      selectedState.value = "Select";
+    }
   }
 
   //functions
@@ -79,7 +91,7 @@ class AddTenantController extends GetxController {
         if (phoneCntrl.value.text.trim().isNotEmpty) {
           if (pinNoCntrl.value.text.trim().isNotEmpty) {
             if (cityCntrl.value.text.trim().isNotEmpty) {
-              if (stateCntrl.value.text.trim().isNotEmpty) {
+              if (selectedState.value != "Select") {
                 if (isForEdit) {
                   updateTenantApi();
                 } else {
@@ -124,7 +136,7 @@ class AddTenantController extends GetxController {
     addTenantByLandlordLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -138,13 +150,12 @@ class AddTenantController extends GetxController {
         "address": permanentAddCntrl.value.text.trim(),
         "city": cityCntrl.value.text.trim(),
         "zip_code": pinNoCntrl.value.text.trim(),
-        "state": stateCntrl.value.text.trim(),
+        "state": selectedState.value,
       },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: addTenantByLandlord,
     );
@@ -178,7 +189,7 @@ class AddTenantController extends GetxController {
     addTenantOtpVerify.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -192,8 +203,7 @@ class AddTenantController extends GetxController {
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: addTenantByLandlordOtpVerify,
     );
@@ -203,8 +213,11 @@ class AddTenantController extends GetxController {
         addTenantOtpVerify.value = false;
         Get.back();
         customSnackBar(Get.context!, response.data['message']);
-        Get.off(() => TenantDocScreen(),
-            arguments: [response.data['data']['id'], isFromCheckTenat.value,{'isEdit':false,'isConsent':true}]);
+        Get.off(() => TenantDocScreen(), arguments: [
+          response.data['data']['id'],
+          isFromCheckTenat.value,
+          {'isEdit': false, 'isConsent': true}
+        ]);
       } else if (response.statusCode == 400) {
         addTenantOtpVerify.value = false;
         if (response.data.toString().contains("otp")) {
@@ -233,7 +246,7 @@ class AddTenantController extends GetxController {
     addTenantByLandlordLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null
@@ -248,7 +261,7 @@ class AddTenantController extends GetxController {
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
-              "state": stateCntrl.value.text.trim(),
+              "state": selectedState.value,
             }
           : {
               "id": kireyderId.value,
@@ -260,17 +273,16 @@ class AddTenantController extends GetxController {
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
-              "state": stateCntrl.value.text.trim(),
+              "state": selectedState.value,
             },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: updateTenantByLandlord,
     );
-      print("kjkjkjkjk ${response.data} ${response.statusCode}");
+    print("kjkjkjkjk ${response.data} ${response.statusCode}");
 
     if (response != null) {
       if (response.statusCode == 200) {
@@ -306,7 +318,7 @@ class AddTenantController extends GetxController {
 
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null
@@ -325,7 +337,7 @@ class AddTenantController extends GetxController {
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
-              "state": stateCntrl.value.text.trim(),
+              "state": selectedState.value,
             }
           : {
               "id": kireyderId.value,
@@ -341,13 +353,12 @@ class AddTenantController extends GetxController {
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
-              "state": stateCntrl.value.text.trim(),
+              "state": selectedState.value,
             },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: updateTenantByLandlordVerify,
     );
@@ -360,7 +371,7 @@ class AddTenantController extends GetxController {
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {
         addTenantOtpVerify.value = false;
-        if (response.data['success']==false) {
+        if (response.data['success'] == false) {
           customSnackBar(Get.context!, response.data['message']);
         }
       } else {
