@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tanent_management/common/text_styles.dart';
 
 class  ReportWidget{
 
@@ -53,7 +54,7 @@ class Indicator extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 4.w),
-        Text(text, style: TextStyle(fontSize: 10.sp)),
+        Text(text, style: TextStyle(fontSize: 10.sp - commonFontSize)),
       ],
     );
   }
@@ -129,7 +130,7 @@ class Indicator extends StatelessWidget {
                     showTitles: true,
                     getTextStyles: (context, value) => TextStyle(
                       color: Colors.black,
-                      fontSize: 12.sp,
+                      fontSize: 12.sp - commonFontSize,
                     ),
                     margin: 16.h,
                     getTitles: (double value) {

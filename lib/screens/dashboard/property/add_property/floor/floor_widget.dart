@@ -56,7 +56,7 @@ class FloorWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-          floorCntrl.onFloorTap(floorId: floorId!, floorName: buildingTitle);
+          floorCntrl.onFloorTap(floorId: floorId!, floorName: buildingTitle.capitalize.toString());
         },
         child: Container(
           height: 84.h,
@@ -128,10 +128,10 @@ class FloorWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        buildingTitle!,
+                        buildingTitle!.capitalize.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: black),
                       ),
                       Expanded(
@@ -147,7 +147,7 @@ class FloorWidget {
                                 '$floor  Unit',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp,
+                                    fontSize: 14.sp - commonFontSize,
                                     color: black),
                               ),
                             ),
@@ -179,7 +179,7 @@ class FloorWidget {
             child: Text(
           title!,
           style: TextStyle(
-              fontSize: 12.sp, color: black, fontWeight: FontWeight.w500),
+              fontSize: 12.sp - commonFontSize, color: black, fontWeight: FontWeight.w500),
         )),
       ),
     );
@@ -225,7 +225,7 @@ class FloorWidget {
                           title,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18.sp,
+                              fontSize: 18.sp - commonFontSize,
                               decoration: TextDecoration.none,
                               fontWeight: FontWeight.w700),
                         ),
@@ -339,7 +339,7 @@ class FloorWidget {
                           title,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18.sp,
+                              fontSize: 18.sp - commonFontSize,
                               decoration: TextDecoration.none,
                               fontWeight: FontWeight.w700),
                         ),

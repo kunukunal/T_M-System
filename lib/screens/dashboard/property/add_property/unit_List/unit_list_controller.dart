@@ -10,6 +10,7 @@ class UnitCntroller extends GetxController {
   final isUnitLoaded = false.obs;
   final floorId = 0.obs;
   final floorName = "".obs;
+  final buildingName = "".obs;
 
   final isBackNeeded = false.obs;
 
@@ -21,6 +22,7 @@ class UnitCntroller extends GetxController {
     floorId.value = Get.arguments[0];
     floorName.value = Get.arguments[1];
     buildingAmenties.value=Get.arguments[2];
+    buildingName.value=Get.arguments[3];
     isBackNeeded.value = false;
     getAllUnit();
     super.onInit();

@@ -60,7 +60,7 @@ class NavBarManagementWidget {
                 ),
                 Text(
                   titleUnit!,
-                  style: TextStyle(fontSize: 14.sp, color: black),
+                  style: TextStyle(fontSize: 14.sp - commonFontSize, color: black),
                 ),
               ],
             ),
@@ -74,7 +74,7 @@ class NavBarManagementWidget {
             child: Text(
               units!,
               style: TextStyle(
-                  fontSize: 20.sp, color: black, fontWeight: FontWeight.w700),
+                  fontSize: 20.sp - commonFontSize, color: black, fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -92,7 +92,7 @@ class NavBarManagementWidget {
         child: Text(
           title!,
           style: TextStyle(
-              fontWeight: FontWeight.w700, fontSize: 16.sp, color: black),
+              fontWeight: FontWeight.w700, fontSize: 16.sp - commonFontSize, color: black),
         ));
   }
 
@@ -147,7 +147,7 @@ class NavBarManagementWidget {
                             propertyTitle,
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 16.sp,
+                                fontSize: 16.sp - commonFontSize,
                                 color: black),
                           ),
                           SizedBox(
@@ -159,7 +159,7 @@ class NavBarManagementWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13.sp,
+                                fontSize: 13.sp - commonFontSize,
                                 color: grey),
                           ),
                         ],
@@ -196,7 +196,7 @@ class NavBarManagementWidget {
                               "$unitsAvailable Units(Available)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
+                                  fontSize: 13.sp - commonFontSize,
                                   color: black),
                             ),
                           ),
@@ -216,7 +216,7 @@ class NavBarManagementWidget {
                               "$unitsOccupied Units(Occupied)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
+                                  fontSize: 13.sp - commonFontSize,
                                   color: black),
                             ),
                           ),

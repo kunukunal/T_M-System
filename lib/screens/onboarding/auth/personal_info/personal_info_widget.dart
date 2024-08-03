@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/onboarding/auth/personal_info/personal_info_controller.dart';
 
 class PersonlInfoWidget {
@@ -22,13 +23,13 @@ class PersonlInfoWidget {
                                 TextStyle(
                                     fontFamily: 'Inter',
                                     color: HexColor('#111111'),
-                                    fontSize: 16.sp)),
+                                    fontSize: 16.sp - commonFontSize)),
                         Text('*',
                             style: style ??
                                 TextStyle(
                                     fontFamily: 'Inter',
                                     color: HexColor('#EF5E4E'),
-                                    fontSize: 16.sp)),
+                                    fontSize: 16.sp - commonFontSize)),
                       ],
                     ),
                     icon
@@ -42,7 +43,7 @@ class PersonlInfoWidget {
                             TextStyle(
                                 fontFamily: 'Inter',
                                 color: HexColor('#111111'),
-                                fontSize: 16.sp)),
+                                fontSize: 16.sp - commonFontSize)),
                     icon
                   ],
                 )
@@ -51,7 +52,7 @@ class PersonlInfoWidget {
                   TextStyle(
                       fontFamily: 'Inter',
                       color: HexColor('#111111'),
-                      fontSize: 16.sp)),
+                      fontSize: 16.sp - commonFontSize)),
     );
   }
 
@@ -71,7 +72,7 @@ class PersonlInfoWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -110,7 +111,7 @@ class PersonlInfoWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),

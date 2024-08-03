@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/sign_in.dart';
 import 'package:tanent_management/screens/onboarding/language/language.dart';
@@ -36,7 +37,7 @@ class MyProfileView extends StatelessWidget {
                   child: Text(
                     'Settings',
                     style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
@@ -75,7 +76,7 @@ class MyProfileView extends StatelessWidget {
                   child: Text(
                     'About Us',
                     style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
@@ -110,7 +111,7 @@ class MyProfileView extends StatelessWidget {
                   child: Text(
                     'Other',
                     style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(

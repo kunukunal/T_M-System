@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/profile/edit_profile/edit_profile_controller.dart';
 
 class EditProfileWidget {
@@ -18,19 +19,19 @@ class EditProfileWidget {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#111111'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
                 Text('*',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#EF5E4E'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
               ],
             )
           : Text(title,
               style: TextStyle(
                   fontFamily: 'Inter',
                   color: HexColor('#111111'),
-                  fontSize: 16.sp)),
+                  fontSize: 16.sp - commonFontSize)),
     );
   }
 
@@ -50,7 +51,7 @@ class EditProfileWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -89,7 +90,7 @@ class EditProfileWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),

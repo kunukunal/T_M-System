@@ -71,9 +71,9 @@ class ManagementWidgets {
                               style: manageCntrl.amenitiesList[index]
                                       ['isSelected']
                                   ? CustomStyles.otpStyle050505W400S14
-                                      .copyWith(fontSize: 14.sp)
+                                      .copyWith(fontSize: 14.sp - commonFontSize)
                                   : CustomStyles.desc606060.copyWith(
-                                      fontFamily: 'DM Sans', fontSize: 14.sp),
+                                      fontFamily: 'DM Sans', fontSize: 14.sp - commonFontSize),
                             ),
                             InkWell(
                                 onTap: () {
@@ -85,12 +85,12 @@ class ManagementWidgets {
                                           ['isSelected']
                                       ? CustomStyles.otpStyle050505W400S14
                                           .copyWith(
-                                              fontSize: 14.sp,
+                                              fontSize: 14.sp - commonFontSize,
                                               decoration:
                                                   TextDecoration.underline)
                                       : CustomStyles.desc606060.copyWith(
                                           fontFamily: 'DM Sans',
-                                          fontSize: 14.sp,
+                                          fontSize: 14.sp - commonFontSize,
                                           decoration: TextDecoration.underline),
                                 ))
                           ],
@@ -117,7 +117,7 @@ class ManagementWidgets {
           "Update Amount",
           style: TextStyle(
               color: black,
-              fontSize: 18.sp,
+              fontSize: 18.sp - commonFontSize,
               decoration: TextDecoration.none,
               fontWeight: FontWeight.w700),
         ),
@@ -201,10 +201,10 @@ class ManagementWidgets {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Enter the otp",
+              "Enter otp",
               style: TextStyle(
                   color: black,
-                  fontSize: 18.sp,
+                  fontSize: 18.sp - commonFontSize,
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.w700),
             ),
@@ -234,21 +234,41 @@ class ManagementWidgets {
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus2.value),
+                      SizedBox(width: 5.w,),
                   otpTextField(
                       authCntrl.otpController2.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus3.value),
+                      SizedBox(width: 5.w,),
                   otpTextField(
                       authCntrl.otpController3.value,
                       authCntrl.otpFocus3.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus4.value),
+                      SizedBox(width: 5.w,),
                   otpTextField(
                       authCntrl.otpController4.value,
                       authCntrl.otpFocus4.value,
                       authCntrl.otpFocus3.value,
-                      authCntrl.otpFocus4.value),
+                      authCntrl.otpFocus4.value,
+                      onChanged: (value){
+                          if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                            authCntrl.otpController2.value.text
+                                .trim()
+                                .isNotEmpty &&
+                            authCntrl.otpController3.value.text
+                                .trim()
+                                .isNotEmpty &&
+                            authCntrl.otpController4.value.text
+                                .trim()
+                                .isNotEmpty) {
+                          manageCntrl.verifyOtpTenantApi();
+                        } else {
+                          customSnackBar(Get.context!, "Please enter the otp.");
+                        }
+                      }
+                      ),
                 ],
               ),
             ),

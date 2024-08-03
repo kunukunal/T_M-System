@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/notification/notification_receive/notification_receive_controller.dart';
 
 import '../../../common/constants.dart';
@@ -34,10 +35,10 @@ class NotifReceiveWidget{
               Text(
                 'Transaction ID',
                 style:
-                TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: black),
+                TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
               ),
 
-              Text(transactionId!,style: TextStyle(fontSize: 12.sp,fontWeight: FontWeight.w400,color: grey),),
+              Text(transactionId!,style: TextStyle(fontSize: 12.sp - commonFontSize,fontWeight: FontWeight.w400,color: grey),),
               SizedBox(
                 height: 5.h,
               ),
@@ -65,7 +66,7 @@ class NotifReceiveWidget{
                                 child: Text(
                                   title!,
                                   style:
-                                  TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: black),
+                                  TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
                                 ),
                               ),
                               Text(
@@ -73,7 +74,7 @@ class NotifReceiveWidget{
 
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 12.sp,
+                                    fontSize: 12.sp - commonFontSize,
                                     color: red),
                               ),
                             ],
@@ -85,7 +86,7 @@ class NotifReceiveWidget{
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
+                                fontSize: 12.sp - commonFontSize,
                                 color: grey),
                           ),
 
@@ -112,7 +113,7 @@ class NotifReceiveWidget{
 
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
@@ -120,7 +121,7 @@ class NotifReceiveWidget{
 
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                     ],
@@ -132,7 +133,7 @@ class NotifReceiveWidget{
 
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
@@ -140,7 +141,7 @@ class NotifReceiveWidget{
 
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                     ],

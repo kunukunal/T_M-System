@@ -129,7 +129,7 @@ class AuthWidget {
             : Text('Welcome back',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 20.sp,
+                  fontSize: 20.sp - commonFontSize,
                   color: HexColor('#111111'),
                 )),
         SizedBox(
@@ -257,36 +257,32 @@ class AuthWidget {
     VoidCallback? onPressed,
   }) {
     final authCntrl = Get.find<AuthController>();
-    return Flexible(
-      child: Padding(
-        padding: EdgeInsets.only(top: 10.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-                flex: 1,
-                child: Text('Didn’t receive the code? ',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: CustomStyles.lightHint16)),
-            Obx(() {
-              return Flexible(
-                flex: 2,
-                child: TextButton(
-                  onPressed: onPressed,
-                  child: Text(
-                    'Resend',
-                    style: CustomStyles.titleText.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: authCntrl.isTimeComplete.value == false
-                            ? Colors.grey
-                            : Colors.black),
-                  ),
+    return Padding(
+      padding: EdgeInsets.only(top: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+              child: Text('Didn’t receive? ',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: CustomStyles.lightHint16)),
+          Obx(() {
+            return Flexible(
+              child: TextButton(
+                onPressed: onPressed,
+                child: Text(
+                  'Resend',
+                  style: CustomStyles.titleText.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: authCntrl.isTimeComplete.value == false
+                          ? Colors.grey
+                          : Colors.black),
                 ),
-              );
-            })
-          ],
-        ),
+              ),
+            );
+          })
+        ],
       ),
     );
   }

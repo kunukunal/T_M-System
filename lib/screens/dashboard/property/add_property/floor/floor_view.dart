@@ -11,7 +11,7 @@ class FloorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FloorWidget().appBar(floorCntrl.buildingName.value),
+      appBar: FloorWidget().appBar(floorCntrl.buildingName.value.capitalize.toString()),
       body: WillPopScope(
         onWillPop: ()async {
           Get.back(result:    floorCntrl.isApiNeeded.value);

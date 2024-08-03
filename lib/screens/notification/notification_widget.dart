@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/notification/notification_controller.dart';
 
@@ -34,10 +35,10 @@ notifReceiveList(
           Text(
          'Transaction ID',
           style:
-          TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: black),
+          TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
         ),
 
-            Text(transactionId!,style: TextStyle(fontSize: 12.sp,fontWeight: FontWeight.w400,color: grey),),
+            Text(transactionId!,style: TextStyle(fontSize: 12.sp - commonFontSize,fontWeight: FontWeight.w400,color: grey),),
             SizedBox(
               height: 5.h,
             ),
@@ -65,7 +66,7 @@ notifReceiveList(
                               child: Text(
                                 title!,
                                 style:
-                                TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp, color: black),
+                                TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
                               ),
                             ),
                             Text(
@@ -73,7 +74,7 @@ notifReceiveList(
 
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
+                                  fontSize: 12.sp - commonFontSize,
                                   color: red),
                             ),
                           ],
@@ -85,7 +86,7 @@ notifReceiveList(
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12.sp,
+                              fontSize: 12.sp - commonFontSize,
                               color: grey),
                         ),
 
@@ -112,7 +113,7 @@ notifReceiveList(
 
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: 14.sp - commonFontSize,
                           color: grey),
                     ),
                     Text(
@@ -120,7 +121,7 @@ notifReceiveList(
 
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: 14.sp - commonFontSize,
                           color: grey),
                     ),
                   ],
@@ -132,7 +133,7 @@ notifReceiveList(
 
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: 14.sp - commonFontSize,
                           color: grey),
                     ),
                     Text(
@@ -140,7 +141,7 @@ notifReceiveList(
 
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: 14.sp - commonFontSize,
                           color: grey),
                     ),
                   ],
@@ -220,14 +221,14 @@ notifRequestList(
                         Text(
                           title!,
                           style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 14.sp, color: black),
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 14.sp - commonFontSize, color: black),
                         ),
                         Text(
                           name!,
 
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 16.sp,
+                              fontSize: 16.sp - commonFontSize,
                               color: black),
                         ),
 
@@ -237,7 +238,7 @@ notifRequestList(
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontSize: 14.sp,
+                              fontSize: 14.sp - commonFontSize,
                               color: grey),
                         ),
 
@@ -311,7 +312,7 @@ notifRegularList(
                               title!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp - commonFontSize,
                                   color: black),         ),
 
 
@@ -321,7 +322,7 @@ notifRegularList(
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
+                                  fontSize: 14.sp - commonFontSize,
                                   color: grey),
                             ),
 
@@ -382,7 +383,7 @@ notifPaidList(
                               title!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp - commonFontSize,
                                   color: black),         ),
 
 
@@ -397,7 +398,7 @@ notifPaidList(
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp - commonFontSize,
                                         color: green),
                                   ),
                                 ),
@@ -406,7 +407,7 @@ notifPaidList(
 
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 13.sp,
+                                      fontSize: 13.sp - commonFontSize,
                                       color: black),
                                 ),
                               ],

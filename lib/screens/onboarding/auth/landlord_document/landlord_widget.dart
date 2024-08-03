@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tanent_management/common/constants.dart';
+import 'package:tanent_management/common/text_styles.dart';
 
 import 'package:tanent_management/screens/onboarding/auth/personal_info/personal_info_controller.dart';
 
@@ -18,7 +19,7 @@ class LandlordDocWidget {
       padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
       child: Text(title,
           style: TextStyle(
-              color: HexColor('#111111'), fontSize: fontsize ?? 14.sp)),
+              color: HexColor('#111111'), fontSize: fontsize ?? 14.sp - commonFontSize)),
     );
   }
 
@@ -61,7 +62,7 @@ class LandlordDocWidget {
                       cameraIcon,
                       Text(title!,
                           style: TextStyle(
-                              color: HexColor('#606060'), fontSize: 14.sp)),
+                              color: HexColor('#606060'), fontSize: 14.sp - commonFontSize)),
                     ],
                   ),
                 ),
@@ -85,7 +86,7 @@ class LandlordDocWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -118,7 +119,7 @@ class LandlordDocWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),

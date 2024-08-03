@@ -30,7 +30,7 @@ class FloorCntroller extends GetxController {
   onAddTap() {}
 
   onFloorTap({required int floorId, required String floorName}) {
-    Get.to(() => UnitView(), arguments: [floorId, floorName,buildingitemAmenties])!.then((value) {
+    Get.to(() => UnitView(), arguments: [floorId, floorName,buildingitemAmenties,buildingName.value])!.then((value) {
       if (value) {
          isApiNeeded.value=true;
         getFloorData();

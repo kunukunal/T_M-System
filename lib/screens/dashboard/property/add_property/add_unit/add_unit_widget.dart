@@ -46,19 +46,19 @@ class AddUnitWidget {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#111111'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
                 Text('*',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#EF5E4E'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
               ],
             )
           : Text(title,
               style: TextStyle(
                   fontFamily: 'Inter',
                   color: HexColor('#111111'),
-                  fontSize: 16.sp)),
+                  fontSize: 16.sp - commonFontSize)),
     );
   }
 
@@ -78,7 +78,7 @@ class AddUnitWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -117,7 +117,7 @@ class AddUnitWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),
@@ -248,7 +248,7 @@ class AddUnitWidget {
                           title,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18.sp,
+                              fontSize: 18.sp - commonFontSize,
                               decoration: TextDecoration.none,
                               fontWeight: FontWeight.w700),
                         ),

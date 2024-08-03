@@ -101,12 +101,13 @@ class PropertyWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
                     child: Container(
-                      height: 94.h,
-                      width: 90.w,
+                      height: 60.h,
+                      width: 60.w,
                       decoration: BoxDecoration(
                         color: HexColor('#444444'),
                         borderRadius: BorderRadius.circular(10.r),
@@ -127,30 +128,30 @@ class PropertyWidget {
                   ),
                   Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           propertyTitle!,
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
+                              fontSize: 14.sp - commonFontSize,
                               color: black),
                         ),
                         SizedBox(
                           height: 10.w,
                         ),
-                        Row(
-                          children: [
-                            featureRentContainer(
-                                isFeatured: true, title: 'Featured'),
-                            featureRentContainer(
-                                isFeatured: false, title: 'For Rent'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.w,
-                        ),
+                        // Row(
+                        //   children: [
+                        //     featureRentContainer(
+                        //         isFeatured: true, title: 'Featured'),
+                        //     featureRentContainer(
+                        //         isFeatured: false, title: 'For Rent'),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: 10.w,
+                        // ),
                         Row(
                           children: [
                             Image.asset(
@@ -168,7 +169,7 @@ class PropertyWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12.sp,
+                                    fontSize: 12.sp - commonFontSize,
                                     color: black),
                               ),
                             ),
@@ -200,7 +201,7 @@ class PropertyWidget {
             child: Text(
           title!,
           style: TextStyle(
-              fontSize: 12.sp, color: black, fontWeight: FontWeight.w500),
+              fontSize: 12.sp - commonFontSize, color: black, fontWeight: FontWeight.w500),
         )),
       ),
     );

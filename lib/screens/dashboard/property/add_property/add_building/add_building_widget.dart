@@ -42,19 +42,19 @@ class AddBuildingWidgets {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#111111'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
                 Text('*',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#EF5E4E'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
               ],
             )
           : Text(title,
               style: TextStyle(
                   fontFamily: 'Inter',
                   color: HexColor('#111111'),
-                  fontSize: 16.sp)),
+                  fontSize: 16.sp - commonFontSize)),
     );
   }
 
@@ -185,7 +185,7 @@ class AddBuildingWidgets {
                             Text(
                               'Add Amenities(s)',
                               style: TextStyle(
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp - commonFontSize,
                                   fontWeight: FontWeight.w500,
                                   color: black),
                             ),

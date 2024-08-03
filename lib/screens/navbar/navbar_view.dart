@@ -95,7 +95,7 @@ class _NavBarState extends State<NavBar> {
                       dashboardCntrl.selectedIndex.value == 4
                           ? profileActiveIcon
                           : profileIcon
-                      , 'Profile'),
+                      , 'Tenants'),
                 ],
               )
             ],

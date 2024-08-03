@@ -102,7 +102,7 @@ class PropertyDetailWidget {
                                       propertyTitle,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 16.sp,
+                                          fontSize: 16.sp - commonFontSize,
                                           color: black),
                                     ),
                                   ),
@@ -124,7 +124,7 @@ class PropertyDetailWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 13.sp,
+                                    fontSize: 13.sp - commonFontSize,
                                     color: grey),
                               ),
                             ],
@@ -161,7 +161,7 @@ class PropertyDetailWidget {
                               "$unitsAvailable Units(Available)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
+                                  fontSize: 13.sp - commonFontSize,
                                   color: black),
                             ),
                           ),
@@ -181,7 +181,7 @@ class PropertyDetailWidget {
                               "$unitsOccupied Units(Occupied)",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
+                                  fontSize: 13.sp - commonFontSize,
                                   color: black),
                             ),
                           ),
@@ -210,44 +210,47 @@ class PropertyDetailWidget {
                             shrinkWrap: true,
                             itemCount: floor!.length,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
+                              return InkWell(
                                 onTap: () {
                                   propertyCntrl.onBuildingTap(
                                       floor[index]['id'],
                                       "$propertyTitle - " +
                                           floor[index]['name']);
                                 },
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 5.h),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "${floor[index]['name']}",
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w700,
-                                                color: black),
-                                          ),
-                                          // const Spacer(),
-                                          Text(
-                                              "${floor[index]['available_units']}/${floor[index]['total_units']}",
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${floor[index]['name']}",
                                               style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: lightBlue)),
-                                        ],
+                                                  fontSize: 14.sp - commonFontSize,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: black),
+                                            ),
+                                            // const Spacer(),
+                                            Text(
+                                                "${floor[index]['available_units']}/${floor[index]['total_units']}",
+                                                style: TextStyle(
+                                                    fontSize: 14.sp - commonFontSize,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: lightBlue)),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Divider(
-                                      color: HexColor('#EBEBEB'),
-                                      height: 1.h,
-                                    ),
-                                  ],
+                                      Divider(
+                                        color: HexColor('#EBEBEB'),
+                                        height: 1.h,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

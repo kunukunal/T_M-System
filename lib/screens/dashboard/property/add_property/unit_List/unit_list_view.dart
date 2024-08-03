@@ -11,7 +11,7 @@ class UnitView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UnitWidget().appBar(unitCntrl.floorName.value),
+      appBar: UnitWidget().appBar('${unitCntrl.buildingName.value.capitalize}-${unitCntrl.floorName.value}'),
       body: WillPopScope(
         onWillPop: () async {
           print("ffkalskfsad ${unitCntrl.isBackNeeded.value}");

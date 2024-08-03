@@ -67,7 +67,7 @@ class ManagementScreen extends StatelessWidget {
                                       readOnly: manageCntrl.checkTanant.value,
                                       hintStyle: TextStyle(
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp,
+                                        fontSize: 14.sp - commonFontSize,
                                         color: HexColor('#6D6E6F'),
                                       ),
                                       hintText: 'Enter Mobile No.',
@@ -124,7 +124,7 @@ class ManagementScreen extends StatelessWidget {
 
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 14.sp,
+                                  fontSize: 14.sp - commonFontSize,
                                   color: HexColor('#6D6E6F'),
                                 ),
                                 hintText: 'Enter Name',
@@ -319,7 +319,7 @@ class ManagementScreen extends StatelessWidget {
                                   maxLength: 10,
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp,
+                                    fontSize: 14.sp - commonFontSize,
                                     color: HexColor('#6D6E6F'),
                                   ),
                                   hintText: 'Enter Name',

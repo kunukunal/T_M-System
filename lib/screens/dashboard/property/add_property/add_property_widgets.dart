@@ -42,19 +42,19 @@ class AddPropertyWidget {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#111111'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
                 Text('*',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#EF5E4E'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
               ],
             )
           : Text(title,
               style: TextStyle(
                   fontFamily: 'Inter',
                   color: HexColor('#111111'),
-                  fontSize: 16.sp)),
+                  fontSize: 16.sp - commonFontSize)),
     );
   }
 
@@ -74,7 +74,7 @@ class AddPropertyWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -113,7 +113,7 @@ class AddPropertyWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),

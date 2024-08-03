@@ -74,7 +74,7 @@ customTextField({
                 padding: EdgeInsets.all(8.r),
                 child: suffixIcon,
               ),
-              hintStyle: hintStyle ?? CustomStyles.lightHint16,
+              hintStyle: hintStyle ?? CustomStyles.hintText,
               filled: isFilled ?? true,
               counterText: '',
               fillColor: HexColor('#EBF1F6'),
@@ -298,7 +298,7 @@ resgisterPopup({
               title,
               style: TextStyle(
                   color: black,
-                  fontSize: 18.sp,
+                  fontSize: 18.sp - commonFontSize,
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.w700),
                   textAlign: TextAlign.center,
@@ -325,7 +325,7 @@ resgisterPopup({
               style: title == 'Logout'
                   ? CustomStyles.otpStyle050505.copyWith(
                       fontFamily: 'DM Sans',
-                      fontSize: 16.sp,
+                      fontSize: 16.sp - commonFontSize,
                       fontWeight: FontWeight.w400,
                       decoration: TextDecoration.none)
                   : TextStyle(
@@ -333,7 +333,7 @@ resgisterPopup({
                       decoration: TextDecoration.none,
                       height: 1.4,
                       color: HexColor('#6C6C6C'),
-                      fontSize: 16.sp,
+                      fontSize: 16.sp - commonFontSize - commonFontSize,
                       fontWeight: FontWeight.w500),
             ),
           ),
@@ -347,7 +347,7 @@ resgisterPopup({
                   onButton1Tap,
                   verticalPadding: 5.h,
                   horizontalPadding: 2.w,
-                  btnHeight: 35.h,
+                  btnHeight: title == 'Logout'?42.h: 35.h,
                   width: 140.w,
                   borderColor: HexColor('#679BF1'),
                   textColor: HexColor('#679BF1'),
@@ -357,6 +357,7 @@ resgisterPopup({
                   ? customButton(
                       onPressed: onButton2Tap,
                       text: button2,
+
                       width: 140.w,
                     )
                   : customBorderButton(
@@ -389,7 +390,7 @@ resgisterPopup({
               "Registration",
               style: TextStyle(
                 // color: textColor,
-                  fontSize: 16.sp,
+                  fontSize: 16.sp - commonFontSize,
                   fontWeight: FontWeight.w700),
             ),
             IconButton(onPressed: (){}, icon:const Icon(Icons.highlight_remove) )
@@ -397,7 +398,7 @@ resgisterPopup({
         ),
         content: Text(
           "Join us today and experience the daily benefits of freshness firsthand!",
-          style: TextStyle(fontSize: 13.sp),
+          style: TextStyle(fontSize: 13.sp - commonFontSize),
         ),
         actions: [
           ElevatedButton(
@@ -452,7 +453,7 @@ Widget customBorderButton(
             style: TextStyle(
                 color: textColor ?? HexColor('#606060'),
                 decoration: TextDecoration.none,
-                fontSize: fontSize ?? 16.sp,
+                fontSize: fontSize ?? 16.sp - commonFontSize,
                 fontWeight: fontweight ?? FontWeight.w600),
           ),
         ),
@@ -504,7 +505,7 @@ customListTile(
                         name,
                         maxLines: 2,
                         style: CustomStyles.otpStyle050505
-                            .copyWith(fontSize: 16.sp, fontFamily: 'DM Sans'),
+                            .copyWith(fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans'),
                       ),
                       subTitle == null
                           ? Container()
@@ -548,7 +549,7 @@ customListTile(
                         maxLines: 5,
                         textAlign: TextAlign.start,
                         style: CustomStyles.otpStyle050505.copyWith(
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             fontFamily: 'DM Sans',
                             fontWeight: FontWeight.w400),
                       ),
@@ -573,7 +574,7 @@ willPopScope() async {
             "Please Confirm",
             style: TextStyle(
                 // color: textColor,
-                fontSize: 16.sp,
+                fontSize: 16.sp - commonFontSize,
                 fontWeight: FontWeight.w700),
           ),
         ),
@@ -581,7 +582,7 @@ willPopScope() async {
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Text(
             "Are you sure you want to exit?",
-            style: TextStyle(fontSize: 13.sp),
+            style: TextStyle(fontSize: 13.sp - commonFontSize),
           ),
         ),
         actions: [
@@ -605,7 +606,7 @@ commonText({String? title}) {
   return Text(
     title!,
     style:
-        TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp, color: black),
+        TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp - commonFontSize, color: black),
   );
 }
 
@@ -670,7 +671,7 @@ commonDeclinePopup({
                               title,
                               style: TextStyle(
                                   color: HexColor('#111111'),
-                                  fontSize: 20.sp,
+                                  fontSize: 20.sp - commonFontSize,
                                   decoration: TextDecoration.none,
                                   fontWeight: FontWeight.w700),
                             ),
@@ -695,7 +696,7 @@ commonDeclinePopup({
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
+                          fontSize: 18.sp - commonFontSize,
                           color: black)),
                 ),
                 SizedBox(
@@ -769,7 +770,7 @@ deleteFloorPopup({
                       child: Text(title,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18.sp,
+                              fontSize: 18.sp - commonFontSize,
                               fontWeight: FontWeight.w700)),
                     ),
                     SizedBox(
