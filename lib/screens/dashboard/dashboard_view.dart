@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_widgets.dart';
@@ -19,17 +21,8 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-            floatingActionButtonLocation: ExpandableFab.location,
-
+      floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: DashBoardWidgets().expandedFloatButton(_key),
-      
-      
-      // Obx(() {
-      //   return dashCntrl.isAddTap.value
-      //       ? DashBoardWidgets().expandedFloatButton(_key)
-      //       : DashBoardWidgets().floatingActionButton();
-      // }),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,26 +31,39 @@ class DashboardScreen extends StatelessWidget {
             color: HexColor('#EBEBEB'),
             height: 1.h,
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    child: Text(
-                      'Welcome, Nayan',
-                      textAlign: TextAlign.start,
-                      style: CustomStyles.blue679BF1w700s20,
-                    ),
-                  ),
-                  isFromMain ? emptyView() : CompleteDashboard()
-                ],
+          Obx(() {
+            return Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  dashCntrl.getDashboardData();
+                },
+                child: dashCntrl.isDashboardDataLaoding.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              child: Text(
+                                'Welcome, ${userData['name'] ?? "User"}',
+                                textAlign: TextAlign.start,
+                                style: CustomStyles.blue679BF1w700s20,
+                              ),
+                            ),
+                            dashCntrl.proprtyList.isEmpty
+                                ? emptyView()
+                                : CompleteDashboard()
+                          ],
+                        ),
+                      ),
               ),
-            ),
-          )
+            );
+          })
         ],
       ),
     ));

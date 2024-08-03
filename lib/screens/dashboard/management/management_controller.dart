@@ -393,7 +393,8 @@ class ManagementController extends GetxController {
           Get.off(() => TenantDocScreen(), arguments: [
             response.data['data']['id'],
             true,
-            {'isEdit': false, 'isConsent': true}
+            {'isEdit': false, 'isConsent': true},
+            true
           ]);
         }
       } else if (response.statusCode == 400) {

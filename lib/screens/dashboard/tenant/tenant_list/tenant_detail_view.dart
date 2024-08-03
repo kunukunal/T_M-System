@@ -101,7 +101,8 @@ class TenantDetailScreen extends StatelessWidget {
                   Get.to(() => TenantDocScreen(), arguments: [
                     tenantDetailsCntrl.kireyderId.value,
                     false,
-                    {'isEdit': false, 'isConsent': true}
+                    {'isEdit': false, 'isConsent': true},
+                    true
                   ])!
                       .then((value) {
                     if (value == true) {

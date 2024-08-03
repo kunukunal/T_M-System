@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -30,87 +32,84 @@ class TenantListScreen extends StatelessWidget {
           )
         ],
       ),
-      floatingActionButton: Obx(() {
-        return tenantCntrl.tenantList.isEmpty
-            ? const SizedBox()
-            : FloatingActionButton(
-                onPressed: () {
-                  tenantCntrl.goesForAddConatct.value = true;
-                  Get.to(() => AddTenantScreen(), arguments: [
-                    false,
-                    {},
-                    {'isEdit': false}
-                  ])!
-                      .then((value) {
-                    if (value == true) {
-                      tenantCntrl.getKireyderList();
-                    }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          tenantCntrl.goesForAddConatct.value = true;
+          Get.to(() => AddTenantScreen(), arguments: [
+            false,
+            {},
+            {'isEdit': false}
+          ])!
+              .then((value) {
+                tenantCntrl.getKireyderList();
+            // if (value == true) {
+            //   tenantCntrl.getKireyderList();
+            // }
 
-                    if (tenantCntrl.goesForAddConatct.value && value == false) {
-                      tenantCntrl.goesForAddConatct.value = false;
-                      tenantCntrl.getKireyderList();
-                    }
-                  });
-                },
-                backgroundColor: Colors.white,
-                shape:
-                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
-                child: addIcon,
-              );
-      }),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(
-            color: HexColor('#EBEBEB'),
-            height: 1.h,
-          ),
-          Expanded(
-            child: Obx(() {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  tenantCntrl.getKireyderList();
-                },
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: tenantCntrl.kireyderListLoading.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+            // if (tenantCntrl.goesForAddConatct.value && value == false) {
+            //   tenantCntrl.goesForAddConatct.value = false;
+            //   tenantCntrl.getKireyderList();
+            // }
+          });
+        },
+        backgroundColor: Colors.white,
+        shape: CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+        child: addIcon,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await tenantCntrl.getKireyderList();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Divider(
+              color: HexColor('#EBEBEB'),
+              height: 1.h,
+            ),
+            Obx(() {
+              return Expanded(
+                child: tenantCntrl.kireyderListLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : tenantCntrl.tenantList.isEmpty
+                        ? SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 100.h,
+                                ),
+                                emptyTenantImage,
+                                Text(
+                                  'Empty Tenant',
+                                  style: CustomStyles.otpStyle050505,
+                                )
+                              ],
+                            ),
                           )
-                        : tenantCntrl.tenantList.isEmpty
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 100.h,
-                                  ),
-                                  emptyTenantImage,
-                                  Text(
-                                    'Empty Tenant',
-                                    style: CustomStyles.otpStyle050505,
-                                  )
-                                ],
-                              )
-                            : Padding(
-                                padding: EdgeInsets.only(top: 10.h),
-                                child: ListView.separated(
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return TenantListWidgets()
-                                          .containerWidget(index);
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        height: 10.h,
-                                      );
-                                    },
-                                    itemCount: tenantCntrl.tenantList.length),
-                              )),
+                        : Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 10.h),
+                            child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  return TenantListWidgets()
+                                      .containerWidget(index);
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(
+                                    height: 10.h,
+                                  );
+                                },
+                                itemCount: tenantCntrl.tenantList.length),
+                          ),
               );
-            }),
-          )
-        ],
+            })
+          ],
+        ),
       ),
     );
   }

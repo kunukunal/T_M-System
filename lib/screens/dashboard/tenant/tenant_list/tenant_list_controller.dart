@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
-import 'package:tanent_management/screens/dashboard/tenant/add_tenant/add_tenant_view.dart';
 import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_detail_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
@@ -30,9 +29,12 @@ class TenantListController extends GetxController {
     );
   }
 
+  final isFromDashbordFloating = false.obs;
   @override
   onInit() {
     super.onInit();
+    // isFromDashbordFloating.value =
+    //     Get.arguments != null ? Get.arguments[0] : false;
     getKireyderList();
   }
 
@@ -66,13 +68,15 @@ class TenantListController extends GetxController {
         kireyderListLoading.value = false;
         tenantList.clear();
         tenantList.addAll(response.data);
-        if (tenantList.isEmpty) {
-          Get.off(() => AddTenantScreen(), arguments: [
-            false,
-            {},
-            {'isEdit': false}
-          ]);
-        }
+        // if (isFromDashbordFloating.value) {
+        // if (tenantList.isEmpty) {
+        //   Get.off(() => AddTenantScreen(), arguments: [
+        //     false,
+        //     {},
+        //     {'isEdit': false}
+        //   ]);
+        // }
+        // }
       } else if (response.statusCode == 400) {
         kireyderListLoading.value = false;
         // Handle error

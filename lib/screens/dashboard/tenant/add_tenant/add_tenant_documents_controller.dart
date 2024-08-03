@@ -23,11 +23,16 @@ class AddTenantDocumentController extends GetxController {
   final consentEditMap = {}.obs;
   final isFromTenantDoc = true.obs;
   final isForDocEdit = false.obs;
+
+  final isProfileNotCome = true.obs;
+
   @override
   onInit() {
     kriyederId.value = Get.arguments[0];
     isFromCheckTenat.value = Get.arguments[1];
     consentEditMap.value = Get.arguments[2];
+    print("hkjkk ${Get.arguments[3]}");
+    isProfileNotCome.value = Get.arguments[3];
     isForDocEdit.value = consentEditMap['isEdit'];
     if (isForDocEdit.value == true) {
       isFromTenantDoc.value = consentEditMap['isFromTenantDoc'];
@@ -77,15 +82,23 @@ class AddTenantDocumentController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     String languaeCode = prefs.getString('languae_code') ?? "en";
     String accessToken = prefs.getString('access_token') ?? "";
-    final response = await DioClientServices.instance.dioPostCall(body: {
-      'document_type': jsonEncode(id),
-      'image': image,
-      'user': kriyederId.value
-    }, headers: {
-      "Accept-Language": languaeCode,
-      'Authorization': "Bearer $accessToken",
-      "Content-Type": "application/json"
-    }, url: userDocument);
+    final response = await DioClientServices.instance.dioPostCall(
+        body: isProfileNotCome.value
+            ? {
+                'document_type': jsonEncode(id),
+                'image': image,
+                'user': kriyederId.value
+              }
+            : {
+                'document_type': jsonEncode(id),
+                'image': image,
+              },
+        headers: {
+          "Accept-Language": languaeCode,
+          'Authorization': "Bearer $accessToken",
+          "Content-Type": "application/json"
+        },
+        url: userDocument);
     if (response != null) {
       if (response.statusCode == 200) {
         documentUploading.value = false;
@@ -103,11 +116,12 @@ class AddTenantDocumentController extends GetxController {
 
   getDocumentType() async {
     doumentLoading.value = true;
+    print("jhjhj ${"$userDocumentType?limit=100&${isProfileNotCome.value ? "for_tenant=true" : "for_landlord=true"}"}");
     final prefs = await SharedPreferences.getInstance();
     String languaeCode = prefs.getString('languae_code') ?? "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
-    }, url: "$userDocumentType?limit=100&${isFromTenantDoc.value ? "for_tenant=true" : "for_landlord=true"}");
+    }, url: "$userDocumentType?limit=100&${isProfileNotCome.value ? "for_tenant=true" : "for_landlord=true"}");
     if (response != null) {
       if (response.statusCode == 200) {
         doumentLoading.value = false;

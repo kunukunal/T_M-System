@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/profile/my_profile/my_profile_controller.dart';
 
@@ -21,17 +22,18 @@ class MyProfileWidget {
                 fit: BoxFit.cover),
           ),
         ),
-       
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
           child: Row(
             children: [
-               InkWell(
-          onTap: (){
-            Get.back();
-          },
-          child: backArrowImageWhite),
-          SizedBox(width: 10.w,),
+              InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: backArrowImageWhite),
+              SizedBox(
+                width: 10.w,
+              ),
               Text(
                 'My Profile',
                 style: TextStyle(
@@ -43,7 +45,7 @@ class MyProfileWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 120.h, left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(top: 120.h, left: 10.w, right: 10.w),
           child: Row(
             children: [
               ClipRRect(
@@ -54,10 +56,13 @@ class MyProfileWidget {
                   decoration: BoxDecoration(
                     color: HexColor('#444444'),
                     shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: Image.asset(image ?? 'assets/icons/profile.png')
-                            .image,
-                        fit: BoxFit.cover),
+                    image: image != ""
+                        ? DecorationImage(
+                            image: NetworkImage(image!), fit: BoxFit.cover)
+                        : DecorationImage(
+                            image:
+                                Image.asset('assets/icons/profile.png').image,
+                            fit: BoxFit.cover),
                   ),
                 ),
               ),
@@ -91,9 +96,9 @@ class MyProfileWidget {
                 ),
               ),
               InkWell(
-                onTap:() {
+                onTap: () {
                   profileCntrl.onEditProfileTap(true);
-                  },
+                },
                 child: Container(
                   height: 30.h,
                   width: 100.w,
@@ -104,10 +109,9 @@ class MyProfileWidget {
                     child: Text(
                       'Edit Profile',
                       style: TextStyle(
-                        color: whiteColor,
-                        fontSize: 14.sp - commonFontSize,
-                        fontFamily: 'Inter'
-                      ),
+                          color: whiteColor,
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'Inter'),
                     ),
                   ),
                 ),
@@ -119,21 +123,28 @@ class MyProfileWidget {
     );
   }
 
-  static commonListTile({String? title,void Function()? onTap,String? image}){
-    return  Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.w,horizontal: 10.w),
+  static commonListTile(
+      {String? title, void Function()? onTap, String? image}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 10.w),
       child: ListTile(
-        tileColor: whiteColor,
-        leading: Image.asset(image!,height: 24.h,width: 24.w,),
-        shape: RoundedRectangleBorder(
-
-          borderRadius: BorderRadius.circular(12.r),
-          side: BorderSide(color: borderGrey)
-        ),
-
-        title: Text(title!,style: TextStyle(fontSize: 14.sp - commonFontSize,fontWeight: FontWeight.w500,color: HexColor('#050505')),),
-        onTap: onTap
-      ),
+          tileColor: whiteColor,
+          leading: Image.asset(
+            image!,
+            height: 24.h,
+            width: 24.w,
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: borderGrey)),
+          title: Text(
+            title!,
+            style: TextStyle(
+                fontSize: 14.sp - commonFontSize,
+                fontWeight: FontWeight.w500,
+                color: HexColor('#050505')),
+          ),
+          onTap: onTap),
     );
   }
 }

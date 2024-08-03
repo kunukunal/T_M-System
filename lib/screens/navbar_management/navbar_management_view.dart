@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:tanent_management/screens/navbar_management/navbar_management_controller.dart';
 import 'package:tanent_management/screens/navbar_management/navbar_management_widgets.dart';
 
@@ -13,16 +12,15 @@ class NavbarManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: NavBarManagementWidget().appBar(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          navBarManagementCntrl.getPropertyManagementStats();
+      body: WillPopScope(
+        onWillPop: () async {
+          return true;
         },
-        child: WillPopScope(
-          onWillPop: () async {
-            return true;
+        child: RefreshIndicator(
+          onRefresh: () async {
+            navBarManagementCntrl.getPropertyManagementStats();
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +67,8 @@ class NavbarManagementScreen extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         )
                       : navBarManagementCntrl.items.isEmpty
-                          ? const Center(
+                          ? const SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
                               child: Text("No Property Found"),
                             )
                           : ListView.builder(
@@ -97,6 +96,6 @@ class NavbarManagementScreen extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 }

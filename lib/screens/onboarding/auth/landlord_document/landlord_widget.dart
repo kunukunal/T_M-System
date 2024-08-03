@@ -19,13 +19,14 @@ class LandlordDocWidget {
       padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
       child: Text(title,
           style: TextStyle(
-              color: HexColor('#111111'), fontSize: fontsize ?? 14.sp - commonFontSize)),
+              color: HexColor('#111111'),
+              fontSize: fontsize ?? 14.sp - commonFontSize)),
     );
   }
 
   //Doc Add
   static commonDocUpload({dynamic fileImage, String? title, int? index}) {
-  final landlordCntrl = Get.find<PersonalInfoController>();
+    final landlordCntrl = Get.find<PersonalInfoController>();
     return InkWell(
       onTap: () {
         LandlordDocWidget().showSelectionDialog(Get.context!, index: index);
@@ -62,7 +63,8 @@ class LandlordDocWidget {
                       cameraIcon,
                       Text(title!,
                           style: TextStyle(
-                              color: HexColor('#606060'), fontSize: 14.sp - commonFontSize)),
+                              color: HexColor('#606060'),
+                              fontSize: 14.sp - commonFontSize)),
                     ],
                   ),
                 ),
@@ -86,7 +88,8 @@ class LandlordDocWidget {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -119,7 +122,8 @@ class LandlordDocWidget {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),
@@ -174,7 +178,7 @@ class LandlordDocWidget {
 
 //get from gallery
   static getFromGallery(int index) async {
-  final landlordCntrl = Get.find<PersonalInfoController>();
+    final landlordCntrl = Get.find<PersonalInfoController>();
     dynamic pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
@@ -189,7 +193,7 @@ class LandlordDocWidget {
 
   /// Get from Camera
   static getFromCamera(int index) async {
-  final landlordCntrl = Get.find<PersonalInfoController>();
+    final landlordCntrl = Get.find<PersonalInfoController>();
     dynamic pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
     );
@@ -201,5 +205,4 @@ class LandlordDocWidget {
       return null;
     }
   }
-
 }

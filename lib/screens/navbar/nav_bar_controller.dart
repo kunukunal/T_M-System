@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 import 'package:tanent_management/screens/navbar_management/navbar_management_view.dart';
-import 'package:tanent_management/screens/profile/my_profile/my_profile_view.dart';
 
 import '../dashboard/dashboard_view.dart';
 import '../expense/expense_view.dart';

@@ -30,19 +30,15 @@ class AddExpenseController extends GetxController {
   final projrctsList = <Property>[].obs;
   final expenseList = [
     'Select',
-    'Electricity',
-    'Expense 2',
-    'Expense 3',
-    'Expense 4',
-    'Expense 5',
   ].obs;
   final paymentTypeList = <Map>[
-    {'name': 'Cash', 'isSelected': true},
+    {'name': 'UPI', 'isSelected': false},
+    {'name': 'Bank Transfer', 'isSelected': false},
+    {'name': 'Net Banking', 'isSelected': false},
     {'name': 'Credit Card', 'isSelected': false},
-    // {'name': 'Credit Card', 'isSelected': false},
-    {'name': 'UPI/Other', 'isSelected': false},
+    {'name': 'Cheque', 'isSelected': false},
   ].obs;
-  final paymentTypeSelected = "Cash".obs;
+  final paymentTypeSelected = "".obs;
 
   final isfromEdit = false.obs;
   final editMap = {}.obs;
@@ -50,12 +46,11 @@ class AddExpenseController extends GetxController {
   onInit() {
     super.onInit();
     getPropertyBuilding();
+    getExpenseTypeListApi();
     isfromEdit.value = Get.arguments[0];
 
     if (isfromEdit.value) {
       editMap.value = Get.arguments[1];
-      selectedExpenseItem.value = editMap['expense_type'];
-      print("kjkj ${editMap}");
       amountCntrl.value.text = editMap['expense_amount'];
       date.value = DateTime.parse(editMap['expense_date']);
       remarkCntrl.value.text = editMap['remarks'];
@@ -123,6 +118,33 @@ class AddExpenseController extends GetxController {
     }
   }
 
+  void getExpenseTypeListApi() async {
+    final prefs = await SharedPreferences.getInstance();
+    String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: getExpenseTypeList,
+    );
+    if (response.statusCode == 200) {
+      final data = response.data;
+      for (int i = 0; i < data.length; i++) {
+        expenseList.add(data[i]['name']);
+      }
+
+      if (isfromEdit.value) {
+        if (expenseList.contains(editMap['expense_type'])) {
+          selectedExpenseItem.value = editMap['expense_type'];
+        }
+      }
+    } else {}
+  }
+
   void onProjectSelected(Property? project) {
     selectedProperty.value = project;
     selectedBuilding.value = null;
@@ -182,10 +204,14 @@ class AddExpenseController extends GetxController {
         if (selectedExpenseItem.value != "Select") {
           if (date.value != null) {
             if (amountCntrl.value.text.isNotEmpty) {
-              if (isfromEdit.value) {
-                updateExpense();
+              if (paymentTypeSelected.value != "") {
+                if (isfromEdit.value) {
+                  updateExpense();
+                } else {
+                  addExpense();
+                }
               } else {
-                addExpense();
+                customSnackBar(Get.context!, "Please select the payment type");
               }
             } else {
               customSnackBar(Get.context!, "Please Fill the amount");

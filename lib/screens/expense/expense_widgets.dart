@@ -9,6 +9,7 @@ import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/expense/expense_controller.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 class ExpenseWidgets {
   dateRangePicker() {
@@ -16,8 +17,8 @@ class ExpenseWidgets {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text('21 Jan 2024 - 24 Feb 2024',
-            style: CustomStyles.otpStyle050505
-                .copyWith(fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans')),
+            style: CustomStyles.otpStyle050505.copyWith(
+                fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans')),
         SizedBox(
           width: 10.w,
         ),
@@ -42,8 +43,9 @@ class ExpenseWidgets {
             children: [
               Text(
                 '₹1,550.00',
-                style: CustomStyles.black16
-                    .copyWith(fontSize: 28.sp - commonFontSize, fontWeight: FontWeight.w700),
+                style: CustomStyles.black16.copyWith(
+                    fontSize: 28.sp - commonFontSize,
+                    fontWeight: FontWeight.w700),
               ),
               Text(
                 'Total Expense this month',
@@ -143,7 +145,8 @@ class ExpenseWidgets {
                                               textAlign: TextAlign.center,
                                               style:
                                                   CustomStyles.black16.copyWith(
-                                                fontSize: 15.sp - commonFontSize,
+                                                fontSize:
+                                                    15.sp - commonFontSize,
                                               ),
                                             ),
                                             SizedBox(
@@ -185,7 +188,8 @@ class ExpenseWidgets {
                                                   ['remarks'],
                                               style: CustomStyles.desc606060
                                                   .copyWith(
-                                                      fontSize: 12.sp - commonFontSize,
+                                                      fontSize: 12.sp -
+                                                          commonFontSize,
                                                       fontFamily: 'DM Sans'),
                                             ),
                                           ],
@@ -284,6 +288,23 @@ class ExpenseWidgets {
                                                                             expenseCntrl.expenseList[index]['images'][ind]['image_url'],
                                                                           ),
                                                                         ),
+                                                                        ElevatedButton.icon(
+                                                                            icon: const Icon(
+                                                                              Icons.download,
+                                                                              color: Colors.white,
+                                                                            ),
+                                                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                                                                            onPressed: () async {
+                                                                              await DioClientServices.instance.saveImageToGallery(expenseCntrl.expenseList[index]['images'][ind]['image_url']).then((value) {
+                                                                                if (value['isSuccess'] == true) {
+                                                                                  customSnackBar(Get.context!, "Document download successfully");
+                                                                                }
+                                                                              });
+                                                                            },
+                                                                            label: const Text(
+                                                                              "Download",
+                                                                              style: TextStyle(color: Colors.white),
+                                                                            )),
                                                                         const Divider()
                                                                       ],
                                                                     );

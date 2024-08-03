@@ -77,12 +77,15 @@ class AddExpenseScreen extends StatelessWidget {
                   ),
                   PersonlInfoWidget.commomText('Expense Type',
                       isMandatory: true),
-                  bigDropDown(
-                      selectedItem: addExpCntrl.selectedExpenseItem.value,
-                      items: addExpCntrl.expenseList,
-                      onChange: (item) {
-                        addExpCntrl.selectedExpenseItem.value = item;
-                      }),
+                  Obx(
+                    () => bigDropDown(
+                        selectedItem: addExpCntrl.selectedExpenseItem.value,
+                        items: addExpCntrl.expenseList,
+                        onChange: (item) {
+                          addExpCntrl.selectedExpenseItem.value = item;
+                        }),
+                  ),
+
                   SizedBox(
                     height: 5.h,
                   ),

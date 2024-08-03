@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/screens/dashboard/tenant/add_tenant/tenant_documents.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
 class DocumentController extends GetxController {
@@ -17,9 +18,8 @@ class DocumentController extends GetxController {
   @override
   void onInit() {
     isFromTenant.value = Get.arguments[0];
-    if (isFromTenant.value) {
-      userId.value = Get.arguments[1];
-    }
+    userId.value = Get.arguments[1];
+
     getDocumentById();
 
     super.onInit();
@@ -45,7 +45,17 @@ class DocumentController extends GetxController {
       if (response.statusCode == 200) {
         documentList.clear();
         documentList.addAll(response.data);
-        print("dkdjsakldas ${response.data}");
+        if (isFromTenant.value == false) {
+          if (documentList.isEmpty) {
+            Get.off(() => TenantDocScreen(), arguments: [
+              userId.value,
+              false,
+              {'isEdit': false, 'isConsent': true},
+              isFromTenant.value
+            ]);
+          }
+        }
+
         kiryederDocumentLoading.value = false;
       } else if (response.statusCode == 400) {
         kiryederDocumentLoading.value = false;

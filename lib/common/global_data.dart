@@ -37,3 +37,26 @@ List state = [
   "Uttarakhand",
   "West Bengal"
 ];
+Map userData = {
+  "id": 0,
+  "name": "",
+  "phone_code": "",
+  "phone": "",
+  "email": "",
+  "profile_image": "",
+  "user_type": 0,
+  "user_type_value": ""
+};
+
+clearAll() {
+  userData = {
+    "id": 0,
+    "name": "",
+    "phone_code": "",
+    "phone": "",
+    "email": "",
+    "profile_image": "",
+    "user_type": 0,
+    "user_type_value": ""
+  };
+}

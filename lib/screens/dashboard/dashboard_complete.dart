@@ -1,14 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
+import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/screens/dashboard/search/search_widget.dart';
 
 class CompleteDashboard extends StatelessWidget {
-  const CompleteDashboard({super.key});
-
+  CompleteDashboard({super.key});
+  final dashCntrl = Get.find<DashBoardController>();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,12 +24,15 @@ class CompleteDashboard extends StatelessWidget {
                 SearchWidget().occUnoccContainer(
                     icon: occupiedIcon,
                     titleUnit: 'Properties(Units)',
-                    units: '600/1200'),
+                    units:
+                        '${dashCntrl.propertyStats['occupied_units']}/${dashCntrl.propertyStats['total_units']}'),
                 SizedBox(
                   width: 5.w,
                 ),
                 SearchWidget().occUnoccContainer(
-                    icon: unOccupiedIcon, titleUnit: 'Tenants', units: '600'),
+                    icon: unOccupiedIcon,
+                    titleUnit: 'Tenants',
+                    units: '${dashCntrl.propertyStats['tenants']}'),
               ],
             ),
             SizedBox(
@@ -38,12 +43,9 @@ class CompleteDashboard extends StatelessWidget {
             OverviewCard(
               title: 'Income/Expense',
               chartTitles: const ['Income', 'Expense'],
-              data: const [
-                [30, 25, 40, 20],
-                [20, 35, 30, 10]
-              ],
+              data: [dashCntrl.income, dashCntrl.expense],
               colors: const [Colors.blue, Colors.red],
-              xLabels: const ['January', 'February', 'March', 'April'],
+              xLabels: dashCntrl.xIncomeExpenseLabels,
             ),
             SizedBox(height: 16.h),
             filterWidget(title: 'Occupancy Trend'),
@@ -51,12 +53,9 @@ class CompleteDashboard extends StatelessWidget {
             OverviewCard(
               title: 'Occupancy Trend',
               chartTitles: const ['Rent Paid', 'Rent Due'],
-              data: const [
-                [25, 30, 35, 20],
-                [15, 20, 25, 10]
-              ],
+              data: [dashCntrl.rentPaid, dashCntrl.rentDue],
               colors: const [Colors.blue, Colors.black],
-              xLabels: const ['January', 'February', 'March', 'April'],
+              xLabels: dashCntrl.xOccupancyTrendLabels,
             ),
             SizedBox(
               height: 10.h,
@@ -65,7 +64,7 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            tenantRentContainer(),
+            tenantRentContainer(isForRent: false),
             SizedBox(
               height: 10.h,
             ),
@@ -81,9 +80,16 @@ class CompleteDashboard extends StatelessWidget {
   }
 }
 
-tenantRentContainer() {
-  int totalRent = 100; // Total rent amount
-  int paidRent = 200; // Amount of rent paid
+tenantRentContainer({bool isForRent = true}) {
+  final dashCntrl = Get.find<DashBoardController>();
+
+  int totalRent = isForRent
+      ? dashCntrl.rentBox['total_rent']
+      : dashCntrl.expenseBox['upcoming'] +
+          dashCntrl.expenseBox['overdue']; // Total rent amount
+  int paidRent = isForRent
+      ? dashCntrl.rentBox['rent_paid']
+      : dashCntrl.expenseBox['upcoming']; // Amount of rent paid
   double progress = 0.0;
 
   if (totalRent > 0) {
@@ -103,15 +109,16 @@ tenantRentContainer() {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Rent',
+                isForRent ? 'Rent' : 'Expense',
                 style: CustomStyles.otpStyle050505W700S16,
               ),
               Row(
                 children: [
                   Text(
                     'Month to Month',
-                    style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                    style: CustomStyles.desc606060.copyWith(
+                        fontSize: 14.sp - commonFontSize,
+                        fontFamily: 'DM Sans'),
                   ),
                   SizedBox(
                     width: 10.w,
@@ -136,12 +143,13 @@ tenantRentContainer() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rent paid',
-                    style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                    isForRent ? 'Rent paid' : "Upcoming",
+                    style: CustomStyles.desc606060.copyWith(
+                        fontSize: 14.sp - commonFontSize,
+                        fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${00}',
+                    '₹${isForRent ? dashCntrl.rentBox['rent_paid'] : dashCntrl.expenseBox['upcoming']}',
                     style: CustomStyles.black16,
                   ),
                 ],
@@ -150,12 +158,13 @@ tenantRentContainer() {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Due',
-                    style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                    isForRent ? 'Due' : 'Overdue',
+                    style: CustomStyles.desc606060.copyWith(
+                        fontSize: 14.sp - commonFontSize,
+                        fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${00}',
+                    '₹${isForRent ? dashCntrl.rentBox['rent_due'] : dashCntrl.expenseBox['overdue']}',
                     style: CustomStyles.black16,
                   ),
                 ],
@@ -175,7 +184,8 @@ class OverviewCard extends StatelessWidget {
   final List<Color> colors;
   final List<String> xLabels;
 
-  OverviewCard({
+  const OverviewCard({
+    super.key,
     required this.title,
     required this.chartTitles,
     required this.data,
@@ -183,13 +193,27 @@ class OverviewCard extends StatelessWidget {
     required this.xLabels,
   });
 
+  bool _isAllDataZero() {
+    for (var dataList in data) {
+      for (var value in dataList) {
+        if (value != 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isDataZero = _isAllDataZero();
+
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.w),
-          border: Border.all(color: Colors.grey.shade200)),
+        borderRadius: BorderRadius.circular(16.w),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -210,7 +234,9 @@ class OverviewCard extends StatelessWidget {
                       (entry) => Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: Indicator(
-                            color: colors[entry.key], text: entry.value),
+                          color: colors[entry.key],
+                          text: entry.value,
+                        ),
                       ),
                     )
                     .toList(),
@@ -220,34 +246,45 @@ class OverviewCard extends StatelessWidget {
           SizedBox(height: 16.h),
           SizedBox(
             height: 200.h,
-            child: BarChart(
-              BarChartData(
-                borderData: FlBorderData(
-                  show: false,
-                ),
-                gridData: FlGridData(
-                  drawVerticalLine: false,
-                ),
-                alignment: BarChartAlignment.spaceAround,
-                barGroups: _buildBarGroups(),
-                titlesData: FlTitlesData(
-                  topTitles: SideTitles(showTitles: false),
-                  leftTitles: SideTitles(showTitles: true),
-                  rightTitles: SideTitles(showTitles: false),
-                  bottomTitles: SideTitles(
-                    showTitles: true,
-                    getTextStyles: (context, value) => TextStyle(
-                      color: Colors.black,
-                      fontSize: 12.sp - commonFontSize,
+            child: isDataZero
+                ? Center(
+                    child: Text(
+                      'No data found',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16.sp,
+                      ),
                     ),
-                    margin: 16.h,
-                    getTitles: (double value) {
-                      return xLabels[value.toInt()];
-                    },
+                  )
+                : BarChart(
+                    BarChartData(
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      gridData: FlGridData(
+                        drawVerticalLine: false,
+                      ),
+                      alignment: BarChartAlignment.spaceAround,
+                      barGroups: _buildBarGroups(),
+                      titlesData: FlTitlesData(
+                        topTitles: SideTitles(showTitles: false),
+                        leftTitles: SideTitles(showTitles: true),
+                        rightTitles: SideTitles(showTitles: false),
+                        bottomTitles: SideTitles(
+                          showTitles: true,
+                          getTextStyles: (context, value) => TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.sp - commonFontSize,
+                          ),
+                          margin: 16.h,
+                          getTitles: (double value) {
+                            return xLabels[value.toInt()];
+                          },
+                        ),
+                      ),
+                      minY: 0, // Ensure the minimum Y value is 0
+                    ),
                   ),
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -259,10 +296,15 @@ class OverviewCard extends StatelessWidget {
     for (int i = 0; i < data[0].length; i++) {
       List<BarChartRodData> rods = [];
       for (int j = 0; j < data.length; j++) {
+        double value = data[j][i].toDouble();
+        // Ensure the value is not NaN or Infinity
+        if (value.isNaN || value.isInfinite) {
+          value = 0.0;
+        }
         rods.add(
           BarChartRodData(
             width: 18,
-            y: data[j][i].toDouble(),
+            y: value,
             colors: [colors[j]],
           ),
         );
@@ -301,89 +343,108 @@ class Indicator extends StatelessWidget {
 }
 
 propertiesList() {
+  final dashCntrl = Get.find<DashBoardController>();
+
   return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              border: Border.all(color: HexColor('#EBEBEB')),
-              borderRadius: BorderRadius.circular(10.r)),
-          child: Padding(
-            padding: EdgeInsets.all(10.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRect(
-                      child: Container(
-                        height: 90.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            image: DecorationImage(
-                                image: profileIconWithWidget.image)),
-                      ),
+    physics: const NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    itemCount: dashCntrl.proprtyList.length,
+    itemBuilder: (context, index) {
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            border: Border.all(color: HexColor('#EBEBEB')),
+            borderRadius: BorderRadius.circular(10.r)),
+        child: Padding(
+          padding: EdgeInsets.all(10.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRect(
+                    child: Container(
+                      height: 90.h,
+                      width: 90.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          image:
+                              dashCntrl.proprtyList[index]['images'].isNotEmpty
+                                  ? DecorationImage(
+                                      image: NetworkImage(
+                                          dashCntrl.proprtyList[index]['images']
+                                              [0]["image"]),
+                                      fit: BoxFit.cover)
+                                  : DecorationImage(
+                                      image: profileIconWithWidget.image)),
                     ),
-                    SizedBox(
-                      width: 10.w,
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              dashCntrl.proprtyList[index]['title'] ?? "",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomStyles.black14,
+                            )),
+                            Text(
+                              dashCntrl.proprtyList[index]['status'] ?? "",
+                              style: CustomStyles.amountFA4343W700S12.copyWith(
+                                  color: dashCntrl.proprtyList[index]
+                                              ['status'] ==
+                                          "Available"
+                                      ? Colors.green
+                                      : Colors.red),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 25.r,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Expanded(
+                                child: Text(
+                              dashCntrl.proprtyList[index]['address'] ?? "",
+                              style: CustomStyles.address050505w400s12,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                            ))
+                          ],
+                        )
+                      ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                "Darlene Robertson",
-                                style: CustomStyles.black14,
-                              )),
-                              Text(
-                                "Occupied",
-                                style: CustomStyles.amountFA4343W700S12,
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.location_on_outlined,
-                                size: 25.r,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                "4140 Parker Rd. Allentown, New Mexico 31134",
-                                style: CustomStyles.address050505w400s12,
-                              ))
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                  )
+                ],
+              ),
+            ],
           ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return SizedBox(
-          height: 10.h,
-        );
-      },
-      itemCount: 5);
+        ),
+      );
+    },
+    separatorBuilder: (context, index) {
+      return SizedBox(
+        height: 10.h,
+      );
+    },
+  );
 }
 
 Widget filterWidget({required String title}) {

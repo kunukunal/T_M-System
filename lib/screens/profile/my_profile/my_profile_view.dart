@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/onboarding/auth/login_view/sign_in.dart';
@@ -30,14 +31,18 @@ class MyProfileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyProfileWidget.myProfileContainer(
-                    name: 'Bessie Cooper', phoneNo: '+91 7123456891'),
+                    name: userData['name'] ?? "User",
+                    phoneNo:
+                        '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
+                    image: userData['profile_image'] ?? ""),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
                     'Settings',
-                    style:
-                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        fontSize: 16.sp - commonFontSize,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
@@ -47,7 +52,7 @@ class MyProfileView extends StatelessWidget {
                           () => DocumentScreen(
                                 isFromTenant: false,
                               ),
-                          arguments: [false, 0]);
+                          arguments: [false, userData['id']]);
                     },
                     image: 'assets/icons/Group 26.png'),
                 MyProfileWidget.commonListTile(
@@ -75,8 +80,9 @@ class MyProfileView extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
                     'About Us',
-                    style:
-                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        fontSize: 16.sp - commonFontSize,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
@@ -110,8 +116,9 @@ class MyProfileView extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
                     'Other',
-                    style:
-                        TextStyle(fontSize: 16.sp - commonFontSize, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        fontSize: 16.sp - commonFontSize,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
@@ -133,6 +140,7 @@ class MyProfileView extends StatelessWidget {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.remove("access_token");
                           Get.deleteAll();
+                          clearAll();
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

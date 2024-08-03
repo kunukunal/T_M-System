@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,16 +19,6 @@ class ExpenseScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
-        // actions: [
-        //   InkWell(
-        //       onTap: () {
-        //         expenseCntrl.onAddTap();
-        //       },
-        //       child: addIcon),
-        //   Container(
-        //     width: 5.w,
-        //   ),
-        // ],
         title: Text('Expense', style: CustomStyles.otpStyle050505),
       ),
       floatingActionButton: FloatingActionButton(

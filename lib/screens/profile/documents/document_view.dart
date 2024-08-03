@@ -43,7 +43,8 @@ class DocumentScreen extends StatelessWidget {
                           'isConsent': true,
                           'isFromTenantDoc': docCntrl.isFromTenant.value,
                           'docList': docCntrl.documentList
-                        }
+                        },
+                        docCntrl.isFromTenant.value
                       ])!
                           .then((value) {
                         if (value == true) {

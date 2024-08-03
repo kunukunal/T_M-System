@@ -216,7 +216,8 @@ class AddTenantController extends GetxController {
         Get.off(() => TenantDocScreen(), arguments: [
           response.data['data']['id'],
           isFromCheckTenat.value,
-          {'isEdit': false, 'isConsent': true}
+          {'isEdit': false, 'isConsent': true},
+          true,
         ]);
       } else if (response.statusCode == 400) {
         addTenantOtpVerify.value = false;
