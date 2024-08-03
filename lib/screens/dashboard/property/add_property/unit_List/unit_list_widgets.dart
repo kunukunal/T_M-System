@@ -107,22 +107,23 @@ class UnitWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Unit ${index! + 1}',
-                          style: TextStyle(
+                          floorName!,
+                          style:TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 14.sp,
+                              fontSize: 14.sp - commonFontSize,
                               color: black),
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(
-                          floorName!,
-                          style: TextStyle(
+                         Text(
+                          'Unit ${index! + 1}',
+                          style:  TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontSize: 12.sp,
+                              fontSize: 12.sp - commonFontSize,
                               color: grey),
                         ),
+                       
                       ],
                     ),
                   ),
@@ -130,7 +131,7 @@ class UnitWidget {
                     isOccupied! ? 'Occupied' : 'Available',
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
+                        fontSize: 14.sp - commonFontSize,
                         color: isOccupied ? red : green),
                   ),
                 ],

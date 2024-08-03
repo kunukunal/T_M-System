@@ -59,7 +59,7 @@ class TenantListWidgets {
                     Text(
                       tenantCntrl.tenantList[index]['name'] ?? "",
                       style:
-                          CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
+                          CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp - commonFontSize),
                     ),
                     SizedBox(
                       height: 2.h,
@@ -72,7 +72,7 @@ class TenantListWidgets {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              CustomStyles.desc606060.copyWith(fontSize: 14.sp),
+                              CustomStyles.desc606060.copyWith(fontSize: 14.sp - commonFontSize),
                         ))
                   ],
                 ),
@@ -224,7 +224,7 @@ class TenantListWidgets {
                     Text(
                       'Month to Month',
                       style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -251,7 +251,7 @@ class TenantListWidgets {
                     Text(
                       'Rent paid',
                       style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
                     Text(
                       '₹${cntrl.rentData['rent_paid']}',
@@ -265,7 +265,7 @@ class TenantListWidgets {
                     Text(
                       'Due',
                       style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
                     Text(
                       '₹${cntrl.rentData['rent_due']}',
@@ -385,7 +385,7 @@ class TenantListWidgets {
                           Text(
                             'Amenities',
                             style: CustomStyles.otpStyle050505.copyWith(
-                                fontSize: 14.sp, fontFamily: 'DM Sans'),
+                                fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                           ),
                           SizedBox(
                             height: 5.h,
@@ -475,7 +475,7 @@ class TenantListWidgets {
                             cntrl.paymentList[index]['created_at'],
                             textAlign: TextAlign.center,
                             style: CustomStyles.black16.copyWith(
-                              fontSize: 14.sp,
+                              fontSize: 14.sp - commonFontSize,
                             ),
                           ),
                         ),
@@ -491,7 +491,7 @@ class TenantListWidgets {
                               cntrl.paymentList[index]['unit'],
                               textAlign: TextAlign.center,
                               style: CustomStyles.black16.copyWith(
-                                fontSize: 15.sp,
+                                fontSize: 15.sp - commonFontSize,
                               ),
                             ),
                             SizedBox(
@@ -502,7 +502,7 @@ class TenantListWidgets {
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: CustomStyles.desc606060.copyWith(
-                                  fontSize: 12.sp, fontFamily: 'DM Sans'),
+                                  fontSize: 12.sp - commonFontSize, fontFamily: 'DM Sans'),
                             ),
                           ],
                         ),
@@ -544,7 +544,7 @@ class TenantListWidgets {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: CustomStyles.desc606060
-              .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+              .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
         )),
       ],
     );

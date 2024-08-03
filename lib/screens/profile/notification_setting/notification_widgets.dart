@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/profile/notification_setting/notification_controller.dart';
 
 import '../../../common/constants.dart';
@@ -25,7 +26,7 @@ class NotifWidget{
           value: switchValueForNotification!,
           onChanged: onChanged
         ),
-        title: Text(title!,style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.w500,color: HexColor('#050505')),),
+        title: Text(title!,style: TextStyle(fontSize: 16.sp - commonFontSize,fontWeight: FontWeight.w500,color: HexColor('#050505')),),
         onTap: onTap
     );}
 }

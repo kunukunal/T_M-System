@@ -72,14 +72,14 @@ class WalkThroughWidget {
           ),
           Text(
             'Let’s Find Your Sweet & Dream Place',
-            style: CustomStyles.otpStyle050505.copyWith(fontSize: 20.sp),
+            style: CustomStyles.otpStyle050505.copyWith(fontSize: 20.sp - commonFontSize),
           ),
           SizedBox(
             height: 5.h,
           ),
           Text(
             'Find Your Dream Place Just a Few Clicks.',
-            style: CustomStyles.desc606060.copyWith(fontSize: 14.sp),
+            style: CustomStyles.desc606060.copyWith(fontSize: 14.sp - commonFontSize),
           ),
           SizedBox(
             height: 10.h,

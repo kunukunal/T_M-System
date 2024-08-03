@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/profile/my_profile/my_profile_controller.dart';
 
 import '../../../common/constants.dart';
@@ -20,14 +21,25 @@ class MyProfileWidget {
                 fit: BoxFit.cover),
           ),
         ),
+       
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 40.h),
-          child: Text(
-            'My Profile',
-            style: TextStyle(
-                color: whiteColor,
-                fontWeight: FontWeight.w700,
-                fontSize: 24.sp),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+          child: Row(
+            children: [
+               InkWell(
+          onTap: (){
+            Get.back();
+          },
+          child: backArrowImageWhite),
+          SizedBox(width: 10.w,),
+              Text(
+                'My Profile',
+                style: TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24.sp - commonFontSize),
+              ),
+            ],
           ),
         ),
         Padding(
@@ -61,7 +73,7 @@ class MyProfileWidget {
                       style: TextStyle(
                           color: whiteColor,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
+                          fontSize: 16.sp - commonFontSize,
                           fontFamily: 'Inter'),
                     ),
                     SizedBox(
@@ -72,7 +84,7 @@ class MyProfileWidget {
                       style: TextStyle(
                           color: whiteColor,
                           fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
+                          fontSize: 14.sp - commonFontSize,
                           fontFamily: 'Inter'),
                     ),
                   ],
@@ -93,7 +105,7 @@ class MyProfileWidget {
                       'Edit Profile',
                       style: TextStyle(
                         color: whiteColor,
-                        fontSize: 14.sp,
+                        fontSize: 14.sp - commonFontSize,
                         fontFamily: 'Inter'
                       ),
                     ),
@@ -119,7 +131,7 @@ class MyProfileWidget {
           side: BorderSide(color: borderGrey)
         ),
 
-        title: Text(title!,style: TextStyle(fontSize: 14.sp,fontWeight: FontWeight.w500,color: HexColor('#050505')),),
+        title: Text(title!,style: TextStyle(fontSize: 14.sp - commonFontSize,fontWeight: FontWeight.w500,color: HexColor('#050505')),),
         onTap: onTap
       ),
     );

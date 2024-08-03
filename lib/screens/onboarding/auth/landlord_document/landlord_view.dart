@@ -61,7 +61,7 @@ class LandlordDocView extends StatelessWidget {
                     children: [
                       LandlordDocWidget.commomText(
                           'Submit essential photos/documents for smooth landlord-business relationship.',
-                          fontsize: 16.sp),
+                          fontsize: 16.sp - commonFontSize),
                       Obx(() {
                         return landlordDocCntrl
                                     .isDocumentTypeDataLoading.value ==

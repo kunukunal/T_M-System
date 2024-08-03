@@ -111,7 +111,7 @@ tenantRentContainer() {
                   Text(
                     'Month to Month',
                     style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                   ),
                   SizedBox(
                     width: 10.w,
@@ -138,7 +138,7 @@ tenantRentContainer() {
                   Text(
                     'Rent paid',
                     style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                   ),
                   Text(
                     '₹${00}',
@@ -152,7 +152,7 @@ tenantRentContainer() {
                   Text(
                     'Due',
                     style: CustomStyles.desc606060
-                        .copyWith(fontSize: 14.sp, fontFamily: 'DM Sans'),
+                        .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                   ),
                   Text(
                     '₹${00}',
@@ -238,7 +238,7 @@ class OverviewCard extends StatelessWidget {
                     showTitles: true,
                     getTextStyles: (context, value) => TextStyle(
                       color: Colors.black,
-                      fontSize: 12.sp,
+                      fontSize: 12.sp - commonFontSize,
                     ),
                     margin: 16.h,
                     getTitles: (double value) {
@@ -294,7 +294,7 @@ class Indicator extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 4.w),
-        Text(text, style: TextStyle(fontSize: 10.sp)),
+        Text(text, style: TextStyle(fontSize: 10.sp - commonFontSize)),
       ],
     );
   }

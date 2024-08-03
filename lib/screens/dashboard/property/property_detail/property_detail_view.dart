@@ -38,7 +38,7 @@ class PropertyDetailView extends StatelessWidget {
             children: [
               Text(
                 'Select Properties',
-                style: TextStyle(fontSize: 16.sp, color: grey),
+                style: TextStyle(fontSize: 16.sp - commonFontSize, color: grey),
               ),
               bigDropDown(
                 selectedItem: propertyDetailCntrl.selectedProperty.value,

@@ -72,7 +72,7 @@ class AddTenantWidgets {
                         cameraIcon,
                         Text(title!,
                             style: TextStyle(
-                                color: HexColor('#606060'), fontSize: 14.sp)),
+                                color: HexColor('#606060'), fontSize: 14.sp - commonFontSize)),
                       ],
                     ),
                   ),
@@ -98,7 +98,7 @@ class AddTenantWidgets {
             child: Text(
               "Choose one to upload a picture",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -133,7 +133,7 @@ class AddTenantWidgets {
               child: Text(
                 "Cancel",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),
@@ -252,10 +252,10 @@ class AddTenantWidgets {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Enter the otp",
+              "Enter otp",
               style: TextStyle(
                   color: black,
-                  fontSize: 18.sp,
+                  fontSize: 18.sp - commonFontSize,
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.w700),
             ),
@@ -285,21 +285,48 @@ class AddTenantWidgets {
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus2.value),
+                      SizedBox(width: 5.w,),
+
                   otpTextField(
                       authCntrl.otpController2.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus3.value),
+                      SizedBox(width: 5.w,),
+
                   otpTextField(
                       authCntrl.otpController3.value,
                       authCntrl.otpFocus3.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus4.value),
+                      SizedBox(width: 5.w,),
+
                   otpTextField(
                       authCntrl.otpController4.value,
                       authCntrl.otpFocus4.value,
                       authCntrl.otpFocus3.value,
-                      authCntrl.otpFocus4.value),
+                      authCntrl.otpFocus4.value,
+                      onChanged: (value){
+                         if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                            authCntrl.otpController2.value.text
+                                .trim()
+                                .isNotEmpty &&
+                            authCntrl.otpController3.value.text
+                                .trim()
+                                .isNotEmpty &&
+                            authCntrl.otpController4.value.text
+                                .trim()
+                                .isNotEmpty) {
+                          if (tenantCntrl.isComingForEdit.value) {
+                            tenantCntrl.verifyupdateTenantApi();
+                          } else {
+                            tenantCntrl.verifyTanantOtp();
+                          }
+                        } else {
+                          customSnackBar(Get.context!, "Please enter the otp.");
+                        }
+                      }
+                      ),
                 ],
               ),
             ),

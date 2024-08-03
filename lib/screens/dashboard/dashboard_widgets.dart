@@ -40,6 +40,14 @@ class DashBoardWidgets {
                     dashCntrl.onNotifTap();
                   },
                   child: notifIcon),
+                  SizedBox(
+                width: 20.w,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    dashCntrl.onProfileTap();
+                  },
+                  child: Image.asset(profileIcon,height: 24.h,width: 24.w,color: Colors.black87,)),
             ],
           )
         ],
@@ -112,7 +120,7 @@ class DashBoardWidgets {
             children: [
               Text(
                 'Add Expense',
-                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp - commonFontSize),
               ),
               const SizedBox(
                 width: 20,
@@ -142,7 +150,7 @@ class DashBoardWidgets {
             children: [
               Text(
                 'Add Tenant',
-                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp - commonFontSize),
               ),
               const SizedBox(
                 width: 20,
@@ -172,7 +180,7 @@ class DashBoardWidgets {
             children: [
               Text(
                 'Add Properties',
-                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp),
+                style: CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp - commonFontSize),
               ),
               const SizedBox(width: 20),
               FloatingActionButton(
@@ -273,7 +281,7 @@ class DashBoardWidgets {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             'Track Your',
-            style: CustomStyles.desc606060.copyWith(fontSize: 12.sp),
+            style: CustomStyles.desc606060.copyWith(fontSize: 12.sp - commonFontSize),
           ),
         ),
         // Second Divider

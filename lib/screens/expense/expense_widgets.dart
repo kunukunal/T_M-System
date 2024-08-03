@@ -17,7 +17,7 @@ class ExpenseWidgets {
       children: [
         Text('21 Jan 2024 - 24 Feb 2024',
             style: CustomStyles.otpStyle050505
-                .copyWith(fontSize: 16.sp, fontFamily: 'DM Sans')),
+                .copyWith(fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans')),
         SizedBox(
           width: 10.w,
         ),
@@ -43,7 +43,7 @@ class ExpenseWidgets {
               Text(
                 '₹1,550.00',
                 style: CustomStyles.black16
-                    .copyWith(fontSize: 28.sp, fontWeight: FontWeight.w700),
+                    .copyWith(fontSize: 28.sp - commonFontSize, fontWeight: FontWeight.w700),
               ),
               Text(
                 'Total Expense this month',
@@ -124,7 +124,7 @@ class ExpenseWidgets {
                                             textAlign: TextAlign.center,
                                             style:
                                                 CustomStyles.black16.copyWith(
-                                              fontSize: 14.sp,
+                                              fontSize: 14.sp - commonFontSize,
                                             ),
                                           ),
                                         ),
@@ -143,7 +143,7 @@ class ExpenseWidgets {
                                               textAlign: TextAlign.center,
                                               style:
                                                   CustomStyles.black16.copyWith(
-                                                fontSize: 15.sp,
+                                                fontSize: 15.sp - commonFontSize,
                                               ),
                                             ),
                                             SizedBox(
@@ -185,7 +185,7 @@ class ExpenseWidgets {
                                                   ['remarks'],
                                               style: CustomStyles.desc606060
                                                   .copyWith(
-                                                      fontSize: 12.sp,
+                                                      fontSize: 12.sp - commonFontSize,
                                                       fontFamily: 'DM Sans'),
                                             ),
                                           ],
@@ -381,7 +381,7 @@ class ExpenseWidgets {
                         child: Text(title,
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 18.sp,
+                                fontSize: 18.sp - commonFontSize,
                                 fontWeight: FontWeight.w700)),
                       ),
                       SizedBox(

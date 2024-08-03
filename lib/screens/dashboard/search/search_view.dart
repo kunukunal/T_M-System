@@ -67,7 +67,7 @@ class SearchView extends StatelessWidget {
 
             child: Text(
               "Units",
-              style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.w700, color: black),
+              style: TextStyle(fontSize: 16.sp - commonFontSize,fontWeight: FontWeight.w700, color: black),
             ),
           ),
           Expanded(

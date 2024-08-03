@@ -39,7 +39,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                             privacyCntrl.siteFeatureData['feature_type']
                                 .toString(),
                             style: CustomStyles.otpStyle050505
-                                .copyWith(fontSize: 16.sp),
+                                .copyWith(fontSize: 16.sp - commonFontSize),
                           ),
                           SizedBox(
                             height: 10.h,
@@ -47,7 +47,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                           HtmlWidget(
                             privacyCntrl.siteFeatureData['content'],
                             textStyle: CustomStyles.desc606060
-                                .copyWith(fontSize: 14.sp, height: 1.5.h),
+                                .copyWith(fontSize: 14.sp - commonFontSize, height: 1.5.h),
                           ),
                         ],
                       ),

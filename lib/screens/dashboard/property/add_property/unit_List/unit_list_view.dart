@@ -13,7 +13,7 @@ class UnitView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UnitWidget().appBar(unitCntrl.floorName.value),
+      appBar: UnitWidget().appBar('${unitCntrl.buildingName.value.capitalize}-${unitCntrl.floorName.value}'),
       floatingActionButton: Obx(() {
         return unitCntrl.unitList.isEmpty
             ? const SizedBox()

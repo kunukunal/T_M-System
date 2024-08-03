@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/widgets.dart';
@@ -16,19 +17,19 @@ class AddAmenitiesWidget {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#111111'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
                 Text('*',
                     style: TextStyle(
                         fontFamily: 'Inter',
                         color: HexColor('#EF5E4E'),
-                        fontSize: 16.sp)),
+                        fontSize: 16.sp - commonFontSize)),
               ],
             )
           : Text(title,
               style: TextStyle(
                   fontFamily: 'Inter',
                   color: HexColor('#111111'),
-                  fontSize: 16.sp)),
+                  fontSize: 16.sp - commonFontSize)),
     );
   }
 

@@ -57,7 +57,7 @@ class PropertyAbWidget {
       child: GestureDetector(
         onTap: () {
           propertyAbCntrl.onListTap(
-              buildingId: buildingId!, buildingName: buildingTitle,item: propertyAbCntrl.buildingList[itemIndex!]);
+              buildingId: buildingId!, buildingName: buildingTitle.capitalize.toString(),item: propertyAbCntrl.buildingList[itemIndex!]);
         },
         child: Container(
           height: 84.h,
@@ -112,10 +112,10 @@ class PropertyAbWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        buildingTitle!,
+                        buildingTitle!.capitalize.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: black),
                       ),
                       Expanded(
@@ -131,7 +131,7 @@ class PropertyAbWidget {
                                 '$floor  Floor',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp,
+                                    fontSize: 14.sp - commonFontSize,
                                     color: black),
                               ),
                             ),
@@ -163,7 +163,7 @@ class PropertyAbWidget {
             child: Text(
           title!,
           style: TextStyle(
-              fontSize: 12.sp, color: black, fontWeight: FontWeight.w500),
+              fontSize: 12.sp - commonFontSize, color: black, fontWeight: FontWeight.w500),
         )),
       ),
     );

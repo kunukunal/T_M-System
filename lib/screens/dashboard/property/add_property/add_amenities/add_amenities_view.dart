@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_amenities/add_amentities_widget.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_building/add_building_controller.dart';
@@ -30,7 +31,7 @@ class AddAmentiesView extends StatelessWidget {
                       'Amenities Details',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
+                          fontSize: 16.sp - commonFontSize,
                           color: black),
                     ),
                   ),
@@ -76,7 +77,7 @@ class AddAmentiesView extends StatelessWidget {
                           Text(
                             'Add Amenities(s)',
                             style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w700,
                                 color: black),
                           ),

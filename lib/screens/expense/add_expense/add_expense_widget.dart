@@ -77,7 +77,7 @@ class AddExpenseWidgets {
                       addExCntrl.paymentTypeList[index]['name'],
                       style: addExCntrl.paymentTypeList[index]['isSelected']
                           ? CustomStyles.otpStyle050505W400S14
-                              .copyWith(fontSize: 16.sp)
+                              .copyWith(fontSize: 16.sp - commonFontSize)
                           : CustomStyles.desc606060
                               .copyWith(fontFamily: 'DM Sans'),
                     )

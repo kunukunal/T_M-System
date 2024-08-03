@@ -86,7 +86,7 @@ class DocumentScreen extends StatelessWidget {
           //             Text(
           //               'Add Document(s)',
           //               style: CustomStyles.black16.copyWith(
-          //                   fontSize: 16.sp,
+          //                   fontSize: 16.sp - commonFontSize,
           //                   fontWeight: FontWeight.w500,
           //                   fontFamily: 'Inter'),
           //             ),

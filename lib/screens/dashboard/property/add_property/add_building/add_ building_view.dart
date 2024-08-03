@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/constants.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_building/add_building_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_building/add_building_widget.dart';
 
@@ -41,7 +42,7 @@ class AddBuildingView extends StatelessWidget {
                       'Building Details',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
+                          fontSize: 16.sp - commonFontSize,
                           color: black),
                     ),
                   ),
@@ -89,7 +90,7 @@ class AddBuildingView extends StatelessWidget {
                                 Text(
                                   'Add New Building',
                                   style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 16.sp - commonFontSize,
                                       fontWeight: FontWeight.w700,
                                       color: black),
                                 ),

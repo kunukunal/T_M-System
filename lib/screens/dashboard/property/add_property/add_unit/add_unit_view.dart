@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_unit/add_unit_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/add_property/add_unit/add_unit_widget.dart';
 
@@ -33,7 +34,7 @@ class AddUnitView extends StatelessWidget {
                       'Unit Details',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
+                          fontSize: 16.sp - commonFontSize,
                           color: black),
                     ),
                   ),
@@ -45,7 +46,7 @@ class AddUnitView extends StatelessWidget {
                   customTextField(
                     controller: addUnitCntrl.unitNameCntrl.value,
                     textInputAction: TextInputAction.done,
-                    hintText: 'Flat 101',
+                    hintText: 'Flat Number',
                     isBorder: true,
                     isFilled: false,
                   ),
@@ -102,9 +103,9 @@ class AddUnitView extends StatelessWidget {
                             addUnitCntrl.isNegosiateSelected.value = value!;
                           },
                           title: Text(
-                            "Is Rent Negotiable",
+                            "Rent Negotiable",
                             style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: black),
                           ),
@@ -118,29 +119,29 @@ class AddUnitView extends StatelessWidget {
                             addUnitCntrl.isActiveSelected.value = value!;
                           },
                           title: Text(
-                            "Is Active",
+                            "Active",
                             style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: black),
                           ),
                         ),
-                        CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          enableFeedback: false,
-                          contentPadding: EdgeInsets.zero,
-                          value: addUnitCntrl.isOccupiedSelected.value,
-                          onChanged: (value) {
-                            addUnitCntrl.isOccupiedSelected.value = value!;
-                          },
-                          title: Text(
-                            "Is Available",
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w500,
-                                color: black),
-                          ),
-                        ),
+                        // CheckboxListTile(
+                        //   controlAffinity: ListTileControlAffinity.leading,
+                        //   enableFeedback: false,
+                        //   contentPadding: EdgeInsets.zero,
+                        //   value: addUnitCntrl.isOccupiedSelected.value,
+                        //   onChanged: (value) {
+                        //     addUnitCntrl.isOccupiedSelected.value = value!;
+                        //   },
+                        //   title: Text(
+                        //     "Is Available",
+                        //     style: TextStyle(
+                        //         fontSize: 16.sp - commonFontSize,
+                        //         fontWeight: FontWeight.w500,
+                        //         color: black),
+                        //   ),
+                        // ),
                       ],
                     );
                   }),
@@ -222,7 +223,7 @@ class AddUnitView extends StatelessWidget {
                           Text(
                             'Add Amenities(s)',
                             style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: black),
                           ),

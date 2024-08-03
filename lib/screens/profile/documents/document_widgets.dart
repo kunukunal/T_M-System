@@ -82,7 +82,7 @@ class DocumentWidgets {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: CustomStyles.skipBlack.copyWith(
-                      fontSize: 16.sp,
+                      fontSize: 16.sp - commonFontSize,
                       fontWeight: FontWeight.w400,
                     ),
                   )),

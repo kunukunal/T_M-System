@@ -4,6 +4,7 @@ import 'package:tanent_management/screens/dashboard/search/search_view.dart';
 import 'package:tanent_management/screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 import 'package:tanent_management/screens/expense/add_expense/add_expense_view.dart';
 import 'package:tanent_management/screens/notification/notification_view.dart';
+import 'package:tanent_management/screens/profile/my_profile/my_profile_view.dart';
 
 class DashBoardController extends GetxController {
   //variables
@@ -42,5 +43,9 @@ class DashBoardController extends GetxController {
 
   onNotifTap() {
     Get.to(() => NotificationView());
+  }
+
+  onProfileTap() {
+    Get.to(() => MyProfileView());
   }
 }

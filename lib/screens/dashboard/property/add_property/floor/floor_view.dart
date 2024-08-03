@@ -13,7 +13,7 @@ class FloorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FloorWidget().appBar(floorCntrl.buildingName.value),
+      appBar: FloorWidget().appBar(floorCntrl.buildingName.value.capitalize.toString()),
       floatingActionButton: Obx(() {
         return floorCntrl.floorList.isEmpty
             ? const SizedBox()

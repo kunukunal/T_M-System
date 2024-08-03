@@ -135,7 +135,11 @@ class PersonalInfoController extends GetxController {
         customSnackBar(Get.context!, response.data['message'][0]);
       } else if (response.statusCode == 400) {
         isPercentageLoadingStart.value = false;
-        customSnackBar(Get.context!, response.data['error'][0]);
+        if (response.data['error']!=null) {
+  customSnackBar(Get.context!, response.data['error'][0]);
+}else{
+  customSnackBar(Get.context!, response.data['document_type'][0]);
+}
       }
     }
   }

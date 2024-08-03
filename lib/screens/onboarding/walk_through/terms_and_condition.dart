@@ -61,7 +61,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                               Text(
                                 section['feature_type'].toString(),
                                 style: CustomStyles.otpStyle050505
-                                    .copyWith(fontSize: 16.sp),
+                                    .copyWith(fontSize: 16.sp - commonFontSize),
                               ),
                               SizedBox(
                                 height: 10.h,
@@ -69,7 +69,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                               HtmlWidget(
                                 section['content'],
                                 textStyle: CustomStyles.desc606060
-                                    .copyWith(fontSize: 14.sp, height: 1.5.h),
+                                    .copyWith(fontSize: 14.sp - commonFontSize, height: 1.5.h),
                               ),
                             ],
                           );
@@ -88,7 +88,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                 }),
                 Text(
                   'I agree and Continue',
-                  style: CustomStyles.desc606060.copyWith(fontSize: 16.sp),
+                  style: CustomStyles.desc606060.copyWith(fontSize: 16.sp - commonFontSize),
                 ),
               ],
             ),

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 //all common images path
 Image splashImage = Image.asset("assets/images/splash_image.png",width: 220.w,);
 Image backArrowImage = Image.asset("assets/icons/back_arrow_icon.png",height: 10.h,width: 3.w,);
+Image backArrowImageWhite = Image.asset("assets/icons/back_arrow_icon.png",height: 20.h,width: 20.w,color: Colors.white,);
 Image hindiFlagIcon = Image.asset("assets/icons/hindi_flag.png",height: 20.h,width: 30.w,);
 Image engFlagIcon = Image.asset("assets/icons/english_flag.png",height: 20.h,width: 30.w,);
 Image crossIcon = Image.asset("assets/icons/cross_icon.png",height: 24.h,width: 24.w,);

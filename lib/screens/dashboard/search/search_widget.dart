@@ -52,7 +52,7 @@ class SearchWidget {
                   Expanded(
                     child: Text(
                       titleUnit!,
-                      style: TextStyle(fontSize: 14.sp, color: black),
+                      style: TextStyle(fontSize: 14.sp - commonFontSize, color: black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -69,7 +69,7 @@ class SearchWidget {
               child: Text(
                 units!,
                 style: TextStyle(
-                    fontSize: 20.sp, color: black, fontWeight: FontWeight.w700),
+                    fontSize: 20.sp - commonFontSize, color: black, fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -133,7 +133,7 @@ class SearchWidget {
                               unitTitle!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp,
+                                  fontSize: 14.sp - commonFontSize,
                                   color: black),
                             ),
                             SizedBox(
@@ -143,7 +143,7 @@ class SearchWidget {
                               price!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp,
+                                  fontSize: 14.sp - commonFontSize,
                                   color: black),
                             )
                           ],
@@ -169,13 +169,13 @@ class SearchWidget {
                                           text: 'Occupied From July/2024 ',
                                           style: TextStyle(
                                             color: red,
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp - commonFontSize,
                                           ),
                                         ),
                                         TextSpan(
                                           text: '\n John Wick',
                                           style: TextStyle(
-                                              color: black, fontSize: 12.sp),
+                                              color: black, fontSize: 12.sp - commonFontSize),
                                         ),
                                       ],
                                     ),
@@ -184,7 +184,7 @@ class SearchWidget {
                                     availablityTitle!,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.sp,
+                                        fontSize: 14.sp - commonFontSize,
                                         color: green),
                                   ),
                             SizedBox(
@@ -215,21 +215,21 @@ class SearchWidget {
                         'Property $property    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
                         'Building $building    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
                         'Floor $floor    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
+                            fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                     ],

@@ -144,7 +144,7 @@ class FloorDetailWidget {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.sp,
+                                        fontSize: 14.sp - commonFontSize,
                                         color: black),
                                   ),
                                 ),
@@ -153,7 +153,7 @@ class FloorDetailWidget {
                                     price!,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.sp,
+                                        fontSize: 14.sp - commonFontSize,
                                         color: black),
                                   ),
                                 )
@@ -184,7 +184,7 @@ class FloorDetailWidget {
                                                   '$availablityTitle',
                                                   style: TextStyle(
                                                     color: red,
-                                                    fontSize: 12.sp,
+                                                    fontSize: 12.sp - commonFontSize,
                                                   ),
                                                   maxLines: 1,
                                                   overflow:
@@ -194,7 +194,7 @@ class FloorDetailWidget {
                                                   tenantName ?? "",
                                                   style: TextStyle(
                                                       color: black,
-                                                      fontSize: 12.sp),
+                                                      fontSize: 12.sp - commonFontSize),
                                                 )
                                               ],
                                             ),
@@ -204,7 +204,7 @@ class FloorDetailWidget {
                                               availablityTitle ?? "Available",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
-                                                  fontSize: 12.sp,
+                                                  fontSize: 12.sp - commonFontSize,
                                                   color: green),
                                             ),
                                           ),
@@ -255,21 +255,21 @@ class FloorDetailWidget {
                 //           'Property $property    ',
                 //           style: TextStyle(
                 //               fontWeight: FontWeight.w700,
-                //               fontSize: 14.sp,
+                //               fontSize: 14.sp - commonFontSize,
                 //               color: grey),
                 //         ),
                 //         Text(
                 //           'Building $building    ',
                 //           style: TextStyle(
                 //               fontWeight: FontWeight.w700,
-                //               fontSize: 14.sp,
+                //               fontSize: 14.sp - commonFontSize,
                 //               color: grey),
                 //         ),
                 //         Text(
                 //           'Floor $floor    ',
                 //           style: TextStyle(
                 //               fontWeight: FontWeight.w700,
-                //               fontSize: 14.sp,
+                //               fontSize: 14.sp - commonFontSize,
                 //               color: grey),
                 //         ),
                 //       ],
@@ -324,7 +324,7 @@ class FloorDetailWidget {
                         child: Text(title,
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 18.sp,
+                                fontSize: 18.sp - commonFontSize,
                                 fontWeight: FontWeight.w700)),
                       ),
                       EditProfileWidget.commomText('Exit date'),
