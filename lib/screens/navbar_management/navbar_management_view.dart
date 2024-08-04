@@ -69,7 +69,7 @@ class NavbarManagementScreen extends StatelessWidget {
                       : navBarManagementCntrl.items.isEmpty
                           ? const SingleChildScrollView(
                               physics: AlwaysScrollableScrollPhysics(),
-                              child: Text("No Property Found"),
+                              child: Center(child: Text("No Property Found")),
                             )
                           : ListView.builder(
                               shrinkWrap: true,

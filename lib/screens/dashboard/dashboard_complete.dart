@@ -6,6 +6,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
+import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
+import 'package:tanent_management/screens/dashboard/property/property_list/property_list_controller.dart';
 import 'package:tanent_management/screens/dashboard/search/search_widget.dart';
 
 class CompleteDashboard extends StatelessWidget {
@@ -15,7 +17,7 @@ class CompleteDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(0.w),
         child: Column(
           children: [
             Row(
@@ -96,7 +98,7 @@ tenantRentContainer({bool isForRent = true}) {
     progress = paidRent / totalRent;
   }
   return Container(
-    height: 115.h,
+    height: 122.h,
     width: double.infinity,
     decoration: BoxDecoration(
         border: Border.all(color: HexColor('#EBEBEB')),
@@ -344,97 +346,103 @@ class Indicator extends StatelessWidget {
 
 propertiesList() {
   final dashCntrl = Get.find<DashBoardController>();
+  final propertyCntrl = Get.put(PropertyListController());
 
   return ListView.separated(
     physics: const NeverScrollableScrollPhysics(),
     shrinkWrap: true,
     itemCount: dashCntrl.proprtyList.length,
     itemBuilder: (context, index) {
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            border: Border.all(color: HexColor('#EBEBEB')),
-            borderRadius: BorderRadius.circular(10.r)),
-        child: Padding(
-          padding: EdgeInsets.all(10.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRect(
-                    child: Container(
-                      height: 90.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          image:
-                              dashCntrl.proprtyList[index]['images'].isNotEmpty
-                                  ? DecorationImage(
-                                      image: NetworkImage(
-                                          dashCntrl.proprtyList[index]['images']
-                                              [0]["image"]),
-                                      fit: BoxFit.cover)
-                                  : DecorationImage(
-                                      image: profileIconWithWidget.image)),
+      return InkWell(
+        onTap: (){
+           propertyCntrl.onItemTap(id:  dashCntrl.proprtyList[index]['id'], propertyTitle: dashCntrl.proprtyList[index]['title']);
+        },
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              border: Border.all(color: HexColor('#EBEBEB')),
+              borderRadius: BorderRadius.circular(10.r)),
+          child: Padding(
+            padding: EdgeInsets.all(10.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRect(
+                      child: Container(
+                        height: 60.h,
+                        width: 60.w,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            image:
+                                dashCntrl.proprtyList[index]['images'].isNotEmpty
+                                    ? DecorationImage(
+                                        image: NetworkImage(
+                                            dashCntrl.proprtyList[index]['images']
+                                                [0]["image"]),
+                                        fit: BoxFit.cover)
+                                    : DecorationImage(
+                                        image: profileIconWithWidget.image)),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Text(
-                              dashCntrl.proprtyList[index]['title'] ?? "",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: CustomStyles.black14,
-                            )),
-                            Text(
-                              dashCntrl.proprtyList[index]['status'] ?? "",
-                              style: CustomStyles.amountFA4343W700S12.copyWith(
-                                  color: dashCntrl.proprtyList[index]
-                                              ['status'] ==
-                                          "Available"
-                                      ? Colors.green
-                                      : Colors.red),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              size: 25.r,
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Expanded(
-                                child: Text(
-                              dashCntrl.proprtyList[index]['address'] ?? "",
-                              style: CustomStyles.address050505w400s12,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                            ))
-                          ],
-                        )
-                      ],
+                    SizedBox(
+                      width: 10.w,
                     ),
-                  )
-                ],
-              ),
-            ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                dashCntrl.proprtyList[index]['title'] ?? "",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: CustomStyles.black14,
+                              )),
+                              Text(
+                                dashCntrl.proprtyList[index]['status'] ?? "",
+                                style: CustomStyles.amountFA4343W700S12.copyWith(
+                                    color: dashCntrl.proprtyList[index]
+                                                ['status'] ==
+                                            "Available"
+                                        ? Colors.green
+                                        : Colors.red),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: 25.r,
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Expanded(
+                                  child: Text(
+                                dashCntrl.proprtyList[index]['address'] ?? "",
+                                style: CustomStyles.address050505w400s12,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ))
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );

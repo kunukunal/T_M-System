@@ -70,6 +70,9 @@ class DashBoardController extends GetxController {
   List<String> xOccupancyTrendLabels = [];
   List<int> rentPaid = [];
   List<int> rentDue = [];
+
+
+  
   getDashboardData() async {
     isDashboardDataLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();

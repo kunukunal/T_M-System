@@ -57,11 +57,12 @@ class ManagementScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  PersonlInfoWidget.commomText('Mobile',
+                                  PersonlInfoWidget.commomText('Tenant mobile number',
                                       isMandatory: true),
                                   customTextField(
                                       controller: manageCntrl.mobileCntrl.value,
                                       maxLength: 10,
+
                                       // width: 200.w,
                                       isForCountryCode: true,
                                       readOnly: manageCntrl.checkTanant.value,
@@ -70,6 +71,7 @@ class ManagementScreen extends StatelessWidget {
                                         fontSize: 14.sp - commonFontSize,
                                         color: HexColor('#6D6E6F'),
                                       ),
+                                      autofocus: true,
                                       hintText: 'Enter Mobile No.',
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
@@ -84,9 +86,12 @@ class ManagementScreen extends StatelessWidget {
                                           alignment: Alignment.center,
                                           child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.blue,
+                                                
+                                                  backgroundColor:Color.fromARGB(255, 33, 194, 243),
                                                   shape:
-                                                      const RoundedRectangleBorder()),
+                                                       RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12.r)
+                                                      )),
                                               onPressed: manageCntrl
                                                       .tenantCheckLoading.value
                                                   ? null

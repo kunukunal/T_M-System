@@ -193,7 +193,7 @@ class EditProfileVew extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  EditProfileWidget.commomText('Postalcode'),
+                                  EditProfileWidget.commomText('Pin code'),
                                   customTextField(
                                       controller: editCntrl.pinNoCntrl.value,
                                       keyboardType: TextInputType.phone,

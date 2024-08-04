@@ -17,6 +17,7 @@ customTextField({
   bool isForCountryCode = false,
   FocusNode? focusNode,
   Color? color,
+  bool autofocus = false,
   String? hintText,
   Widget? suffixIcon,
   Widget? prefixIcon,
@@ -59,7 +60,7 @@ customTextField({
             readOnly: readOnly ?? false,
             keyboardType: keyboardType ?? TextInputType.name,
             textInputAction: textInputAction ?? TextInputAction.next,
-
+autofocus: autofocus,
             inputFormatters: inputFormatters,
             strutStyle: StrutStyle.fromTextStyle(CustomStyles.lightHint16),
             onTap: onTap ?? () {},

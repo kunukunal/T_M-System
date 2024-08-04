@@ -39,7 +39,7 @@ class NavBarManagementWidget {
   occUnoccContainer({String? icon, String? titleUnit, String? units}) {
     return Container(
       width: Get.width / 2.2,
-      height: 90.h,
+      height: 95.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: lightBorderGrey)),

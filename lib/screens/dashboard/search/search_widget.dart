@@ -30,7 +30,7 @@ class SearchWidget {
       child: Container(
         // width: Get.width / 2.9,
         // constraints: BoxConstraints(minWidth:150.w, ),
-        height: 90.h,
+        height: 95.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: lightBorderGrey)),

@@ -88,7 +88,7 @@ class EditProfileController extends GetxController {
                 customSnackBar(Get.context!, "Please enter your city");
               }
             } else {
-              customSnackBar(Get.context!, "Please enter your PostalCode");
+              customSnackBar(Get.context!, "Please enter your Pincode");
             }
           } else {
             customSnackBar(Get.context!, "Please enter your state");

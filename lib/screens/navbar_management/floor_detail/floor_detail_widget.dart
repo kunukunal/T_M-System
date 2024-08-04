@@ -225,13 +225,15 @@ class FloorDetailWidget {
                           Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
+                              
                                 style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(120.w, 25.h),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     backgroundColor: isOccupied == true
-                                        ? Colors.red
-                                        : Colors.blue),
+                                        ?HexColor("#ed6d6d")
+                                        : Color.fromARGB(255, 33, 194, 243)),
                                 onPressed: () {
                                   if (isOccupied == false) {
                                     floorCntrl.onBuildingTap(
