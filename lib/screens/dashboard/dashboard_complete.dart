@@ -6,9 +6,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
-import 'package:tanent_management/screens/dashboard/property/add_property/property_ab/property_ab_controller.dart';
 import 'package:tanent_management/screens/dashboard/property/property_list/property_list_controller.dart';
 import 'package:tanent_management/screens/dashboard/search/search_widget.dart';
+import 'package:tanent_management/screens/expense/expense_widgets.dart';
 
 class CompleteDashboard extends StatelessWidget {
   CompleteDashboard({super.key});
@@ -62,11 +62,12 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            tenantRentContainer(),
+             ExpenseWidgets().totalExpenseContainer(),
             SizedBox(
               height: 10.h,
             ),
-            tenantRentContainer(isForRent: false),
+            tenantRentContainer(),
+          
             SizedBox(
               height: 10.h,
             ),
@@ -84,14 +85,12 @@ class CompleteDashboard extends StatelessWidget {
 
 tenantRentContainer({bool isForRent = true}) {
   final dashCntrl = Get.find<DashBoardController>();
+  num tRent =  dashCntrl.rentBox['total_rent'];
 
-  int totalRent = isForRent
-      ? dashCntrl.rentBox['total_rent']
-      : dashCntrl.expenseBox['upcoming'] +
-          dashCntrl.expenseBox['overdue']; // Total rent amount
-  int paidRent = isForRent
-      ? dashCntrl.rentBox['rent_paid']
-      : dashCntrl.expenseBox['upcoming']; // Amount of rent paid
+  int totalRent =  tRent.toInt() ; // Total rent amount
+  num pRent =  dashCntrl.rentBox['rent_paid'];
+  int paidRent = pRent.toInt();
+     ; // Amount of rent paid
   double progress = 0.0;
 
   if (totalRent > 0) {
@@ -151,7 +150,7 @@ tenantRentContainer({bool isForRent = true}) {
                         fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${isForRent ? dashCntrl.rentBox['rent_paid'] : dashCntrl.expenseBox['upcoming']}',
+                    '₹${ dashCntrl.rentBox['rent_paid']}',
                     style: CustomStyles.black16,
                   ),
                 ],
@@ -166,7 +165,7 @@ tenantRentContainer({bool isForRent = true}) {
                         fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${isForRent ? dashCntrl.rentBox['rent_due'] : dashCntrl.expenseBox['overdue']}',
+                    '₹${ dashCntrl.rentBox['rent_due'] }',
                     style: CustomStyles.black16,
                   ),
                 ],

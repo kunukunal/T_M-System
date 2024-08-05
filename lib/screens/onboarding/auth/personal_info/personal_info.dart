@@ -93,6 +93,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       PersonlInfoWidget().showSelectionDialog(context);
                     },
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
@@ -100,10 +101,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             return Container(
                               height: 99.h,
                               width: 110.w,
+                              margin: EdgeInsets.all(15.r),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: HexColor('#444444'),
-                                  borderRadius: BorderRadius.circular(10.r),
+                                  shape: BoxShape.circle,
+                                  // borderRadius: BorderRadius.circular(10.r),
                                   image: personalInfoCntrl.imageFile.value ==
                                               null &&
                                           personalInfoCntrl
@@ -135,12 +138,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             );
                           }),
                         ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Text('Add Profile',
-                            style: CustomStyles.skipBlack
-                                .copyWith(fontWeight: FontWeight.w400)),
+                        // SizedBox(
+                        //   width: 10.w,
+                        // ),
+                        // Text('Add Profile',
+                        //     style: CustomStyles.skipBlack
+                        //         .copyWith(fontWeight: FontWeight.w400)),
                         // Padding(
                         //   padding: EdgeInsets.symmetric(horizontal: 10.w),
                         //   child: TextButton(

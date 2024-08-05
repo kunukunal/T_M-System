@@ -125,6 +125,7 @@ class MyProfileView extends StatelessWidget {
                     title: 'Share',
                     onTap: () {},
                     image: 'assets/icons/ic-share.png'),
+               
                 MyProfileWidget.commonListTile(
                     title: 'Logout',
                     onTap: () {
@@ -153,6 +154,10 @@ class MyProfileView extends StatelessWidget {
                       );
                     },
                     image: 'assets/icons/ic-logout.png'),
+                 MyProfileWidget.commonListTile(
+                    title: 'Delete account',
+                    onTap: () {},
+                    image: null),
                 SizedBox(
                   height: 10.h,
                 )

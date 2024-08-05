@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/screens/expense/expense_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
@@ -28,6 +29,7 @@ class ExpenseWidgets {
   }
 
   totalExpenseContainer() {
+    final cntrl = Get.find<DashBoardController>();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 15.h),
       child: Container(
@@ -42,7 +44,7 @@ class ExpenseWidgets {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                '₹1,550.00',
+                '₹${cntrl.expenseBox.value}',
                 style: CustomStyles.black16.copyWith(
                     fontSize: 28.sp - commonFontSize,
                     fontWeight: FontWeight.w700),

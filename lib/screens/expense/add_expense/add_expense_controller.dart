@@ -191,7 +191,7 @@ class AddExpenseController extends GetxController {
           "isDeleted": false,
         });
       }
-      log(selectedImages.first.name.toString(), name: 'Images');
+      // log(selectedImages.first.name.toString(), name: 'Images');
       selectedImages.refresh();
     } else {
       customSnackBar(Get.context!, 'Nothing is selected');

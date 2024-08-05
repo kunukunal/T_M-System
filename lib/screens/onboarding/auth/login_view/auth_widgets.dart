@@ -83,7 +83,31 @@ class AuthWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                customButton(
+                // customButton(
+                //     onPressed: () {
+                //       resgisterPopup(
+                //         title: 'Registration as',
+                //         subtitle:
+                //             'Join us today and experience the daily benefits of freshness firsthand!',
+                //         button1: 'Landlord',
+                //         button2: 'Tenant',
+                //         onButton1Tap: () {
+                //           // isFromRegister = true;
+                //           authCntrl.onButtonTapTenant.value = 1;
+                //           Get.back();
+                //           Get.to(() => SignInScreen(isFromRegister: true));
+                //         },
+                //         onButton2Tap: () {
+                //           // isFromRegister = true;
+                //           authCntrl.onButtonTapTenant.value = 2;
+                //           Get.back();
+                //           Get.to(() => SignInScreen(isFromRegister: true));
+                //         },
+                //       );
+                //     },
+                //     text: 'Register Now',
+                //     height: 40.h)
+                TextButton(
                     onPressed: () {
                       resgisterPopup(
                         title: 'Registration as',
@@ -104,9 +128,8 @@ class AuthWidget {
                           Get.to(() => SignInScreen(isFromRegister: true));
                         },
                       );
-                    },
-                    text: 'Register Now',
-                    height: 40.h)
+                    }
+                  , child: Text('Register Now',style: TextStyle(decoration: TextDecoration.underline,fontSize: 16.sp),))
               ],
             ),
           ),

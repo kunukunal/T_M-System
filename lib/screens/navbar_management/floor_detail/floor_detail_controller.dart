@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/screens/dashboard/management/management_view.dart';
+import 'package:tanent_management/screens/profile/documents/document_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
 class FloorDetailController extends GetxController {
@@ -31,23 +33,28 @@ class FloorDetailController extends GetxController {
 
   final isUnitsStatsLoading = false.obs;
   onBuildingTap(Map unitNameData, List amenities, Map rentData) {
-    Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
-      false,
-      [
-        unitPropertyNameData,
-        unitBuildingNameData,
-        unitFloorNameData,
-        unitNameData
-      ],
-      amenities,
-      rentData
-    ])!
-        .then((value) {
-      if (value == true) {
-        isRefreshmentRequired.value = true;
-        getUnitsStats();
-      }
-    });
+    // if (userData['user_documents']) {
+  Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
+    false,
+    [
+      unitPropertyNameData,
+      unitBuildingNameData,
+      unitFloorNameData,
+      unitNameData
+    ],
+    amenities,
+    rentData
+  ])!
+      .then((value) {
+    if (value == true) {
+      isRefreshmentRequired.value = true;
+      getUnitsStats();
+    }
+  });
+// }
+// else{
+//   Get.to(()=>DocumentScreen(isFromTenant: false),arguments: [false, userData['id']]);
+// }
   }
 
   getUnitsStats() async {

@@ -85,7 +85,7 @@ class AddUnitView extends StatelessWidget {
                   customTextField(
                     controller: addUnitCntrl.areaSizeCntrl.value,
                     textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.name,
                     hintText: 'Type Here... Sq.ft',
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
@@ -119,7 +119,7 @@ class AddUnitView extends StatelessWidget {
                             addUnitCntrl.isActiveSelected.value = value!;
                           },
                           title: Text(
-                            "Active",
+                            "Available for rent",
                             style: TextStyle(
                                 fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,

@@ -63,7 +63,7 @@ class DashBoardController extends GetxController {
   final isDashboardDataLaoding = false.obs;
   Map propertyStats = {"total_units": 0, "occupied_units": 0, "tenants": 0};
   Map rentBox = {"total_rent": 0, "rent_paid": 0, "rent_due": 0};
-  Map expenseBox = {"total_rent": 0, "rent_paid": 0, "rent_due": 0};
+  final expenseBox = 0.0.obs;
   List<String> xIncomeExpenseLabels = [];
   List<int> income = [];
   List<int> expense = [];
@@ -93,12 +93,18 @@ class DashBoardController extends GetxController {
       userData = data['user_data'];
       propertyStats = data['property_stats'];
       rentBox = data['rent'];
-      expenseBox = data['expense'];
+      expenseBox.value = data['expense']??0.0;
       Map<String, dynamic> incomeData = data['income_data'];
       xIncomeExpenseLabels =
           incomeData.keys.map((key) => capitalize(key)).toList();
-      income = incomeData.values.map((values) => values[0] as int).toList();
-      expense = incomeData.values.map((values) => values[1] as int).toList();
+      income = incomeData.values.map((values) {
+          num value = values[0];
+          return value.toInt();
+      }   ).toList();
+      expense = incomeData.values.map((values){
+  num value = values[1];
+          return value.toInt();
+      }).toList();
       Map<String, dynamic> occupancyTrend = data['occupancy_trend'];
       xOccupancyTrendLabels =
           occupancyTrend.keys.map((key) => capitalize(key)).toList();

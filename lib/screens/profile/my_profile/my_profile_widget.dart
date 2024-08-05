@@ -128,8 +128,8 @@ class MyProfileWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 10.w),
       child: ListTile(
-          tileColor: whiteColor,
-          leading: Image.asset(
+          tileColor:title == 'Delete account'? red: whiteColor,
+          leading: title == 'Delete account'? Icon(Icons.delete_forever_outlined, color: Colors.white,):Image.asset(
             image!,
             height: 24.h,
             width: 24.w,
@@ -142,7 +142,7 @@ class MyProfileWidget {
             style: TextStyle(
                 fontSize: 14.sp - commonFontSize,
                 fontWeight: FontWeight.w500,
-                color: HexColor('#050505')),
+                color:title == 'Delete account'? whiteColor: HexColor('#050505')),
           ),
           onTap: onTap),
     );

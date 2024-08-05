@@ -210,7 +210,7 @@ class ManagementScreen extends StatelessWidget {
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
                                         readOnly:
-                                            manageCntrl.isRentNegiosate.value,
+                                            !manageCntrl.isRentNegiosate.value,
                                         width: Get.width / 2.3,
                                         hintText: 'Type Here...',
                                         isBorder: true,

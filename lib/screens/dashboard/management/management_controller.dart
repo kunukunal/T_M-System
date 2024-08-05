@@ -99,7 +99,7 @@ class ManagementController extends GetxController {
           'id': amenities[i]['id'],
           'name': amenities[i]['name'],
           'amount': TextEditingController(text: amenities[i]['price']),
-          'isSelected': false,
+          'isSelected': true,
         });
       }
     } else {
@@ -227,7 +227,7 @@ class ManagementController extends GetxController {
           'id': amenity.id,
           'name': amenity.name,
           'amount': TextEditingController(text: amenity.price.toString()),
-          'isSelected': false,
+          'isSelected': true,
         });
       }
     } else {
@@ -267,6 +267,7 @@ class ManagementController extends GetxController {
         lastDate: DateTime(2101));
     if (picked != null && picked != rentFrom.value) {
       rentFrom.value = picked;
+      rentTo.value=addMonths(picked, 11);
     }
   }
 
@@ -598,6 +599,19 @@ class ManagementController extends GetxController {
         addTenantOtpVerify.value = false;
       }
     }
+  }
+
+  DateTime addMonths(DateTime date, int months) {
+    int newYear = date.year;
+    int newMonth = date.month + months;
+
+    // Handle year change
+    while (newMonth > 12) {
+      newMonth -= 12;
+      newYear++;
+    }
+
+    return DateTime(newYear, newMonth, date.day);
   }
 }
 
