@@ -45,7 +45,8 @@ Map userData = {
   "email": "",
   "profile_image": "",
   "user_type": 0,
-  "user_type_value": ""
+  "user_type_value": "",
+  "user_documents": false
 };
 
 clearAll() {
@@ -57,6 +58,7 @@ clearAll() {
     "email": "",
     "profile_image": "",
     "user_type": 0,
-    "user_type_value": ""
+    "user_type_value": "",
+    "user_documents": false
   };
 }

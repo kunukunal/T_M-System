@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -43,6 +44,7 @@ Image profileIconWithWidget = Image.asset("assets/icons/profile.png",height: 50.
 
 Image incomeExpenseImage  = Image.asset("assets/images/income_expense_image.png",height: 134.86.h,width: 196.4.w,fit: BoxFit.fill,);
 Image totalPropertyImage  = Image.asset("assets/images/total_property_image.png",height: 80.h,width: 126.83.w,fit: BoxFit.fill,);
+Image rentTotalImage  = Image.asset("assets/images/rent_image.png",height: 80.h,width: 126.83.w,fit: BoxFit.fill,);
 Image occupancyTrendImage  = Image.asset("assets/images/occupancy_trend_image.png",height: 136.47.h,width: 195.w,fit: BoxFit.fill,);
 Image availableOccupiedImage  = Image.asset("assets/images/available_occupied_image.png",height: 100.h,width: 131.07.w,fit: BoxFit.fill,);
 
@@ -63,6 +65,8 @@ Image addIcon = Image.asset("assets/icons/add_icon.png",height: 24.h,width: 24.w
 Image addExpenseIcon = Image.asset("assets/icons/add_expense_icon.png",height: 24.h,width: 24.w,);
 Image addTanantIcon = Image.asset("assets/icons/add_tanent_icon.png",height: 24.h,width: 24.w,);
 Image addPropertyIcon = Image.asset("assets/icons/add_property_icon.png",height: 24.h,width: 24.w,);
+SvgPicture creditCardIcon = SvgPicture.asset("assets/icons/credit_card.svg",height: 24.h,width: 24.w,);
+SvgPicture noteIcon = SvgPicture.asset("assets/icons/note_icon.svg",height: 24.h,width: 24.w,);
 
 Image apartment1Image  = Image.asset("assets/images/apartment1_image.png",height: 100.h,width: 131.07.w,fit: BoxFit.fill,);
 Image apartment2Image  = Image.asset("assets/images/apartment2_image.png",height: 100.h,width: 131.07.w,fit: BoxFit.fill,);
@@ -91,6 +95,10 @@ String expenseActiveIcon = "assets/icons/expensee_active_icon.png";
 String expenseIcon = "assets/icons/expense_icon.png";
 String profileActiveIcon = "assets/icons/profile_active_icon.png";
 String profileIcon = "assets/icons/profile_icon.png";
+String exploreActiveIcon = "assets/icons/explore_selected.png";
+String exploreIcon = "assets/icons/explore_unselected.png";
+
+
 String occupiedIcon = "assets/icons/occupied.png";
 String unOccupiedIcon = "assets/icons/unoccupied.png";
 

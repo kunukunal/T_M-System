@@ -49,7 +49,6 @@ const String verifyTenantOtpapi = "unit/assign_unit/";
 
 const String kirayedarList = "management/kirayedar-list/";
 
-
 const String addTenantByLandlord = "accounts/tenant-register/";
 
 const String addTenantByLandlordOtpVerify = "accounts/tenant-register-verify/";
@@ -62,7 +61,6 @@ const String getFloorAndUnitList = "building/building-detail/";
 
 const String removeTenantFromUnit = "unit/unassign_unit/";
 
-
 const String updateTenantByLandlord = "accounts/tenant-update/";
 
 const String updateTenantByLandlordVerify = "accounts/tenant-update-verify/";
@@ -71,12 +69,20 @@ const String getAllExpense = "management/expense/";
 
 const String getExpenseTypeList = "management/expense-type/";
 
-
 const String faqQuestion = "faq/";
 
 const String contactUs = "contact-us/";
 
 const String documentUpdate = "accounts/user-document/update/";
 
-
 const String landlordDashboard = "landlord/dashboard/";
+
+// Tenant
+
+const String tenantDashboard = "tenant/dashboard/";
+
+const String getExplore = "tenant/properties/?search=";
+const String getUnitByPropertySearch = "tenant/units/?property=";
+const String makeUnitFavourite = "tenant/favorite-properties/";
+const String getUnitDetailsData = "tenant/unit-details/";
+const String sendTenantPaymentRequest = "tenant/payment-request/";

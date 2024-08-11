@@ -6,7 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
-import 'package:tanent_management/screens/onboarding/auth/login_view/auth_controller.dart';
+import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 
 //**********************Common Text Field****************************
 customTextField({
@@ -31,7 +31,6 @@ customTextField({
   TextInputAction? textInputAction,
   TextInputType? keyboardType,
   List<TextInputFormatter>? inputFormatters,
-
   bool? obscureText,
   bool onDropdownChanged = true,
 }) {
@@ -45,7 +44,6 @@ customTextField({
         borderRadius: BorderRadius.circular(8.r)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      
       children: [
         isForCountryCode
             ? dropDownMenu(onDropdownChanged: onDropdownChanged)
@@ -60,7 +58,7 @@ customTextField({
             readOnly: readOnly ?? false,
             keyboardType: keyboardType ?? TextInputType.name,
             textInputAction: textInputAction ?? TextInputAction.next,
-autofocus: autofocus,
+            autofocus: autofocus,
             inputFormatters: inputFormatters,
             strutStyle: StrutStyle.fromTextStyle(CustomStyles.lightHint16),
             onTap: onTap ?? () {},
@@ -302,7 +300,7 @@ resgisterPopup({
                   fontSize: 18.sp - commonFontSize,
                   decoration: TextDecoration.none,
                   fontWeight: FontWeight.w700),
-                  textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
             ),
           ),
           // Spacer(),
@@ -319,7 +317,7 @@ resgisterPopup({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 6.0,top: 12.0),
+            padding: const EdgeInsets.only(left: 6.0, top: 12.0),
             child: Text(
               subtitle,
               textAlign: TextAlign.start,
@@ -348,7 +346,7 @@ resgisterPopup({
                   onButton1Tap,
                   verticalPadding: 5.h,
                   horizontalPadding: 2.w,
-                  btnHeight: title == 'Logout'?42.h: 35.h,
+                  btnHeight: title == 'Logout' ? 42.h : 35.h,
                   width: 140.w,
                   borderColor: HexColor('#679BF1'),
                   textColor: HexColor('#679BF1'),
@@ -358,7 +356,6 @@ resgisterPopup({
                   ? customButton(
                       onPressed: onButton2Tap,
                       text: button2,
-
                       width: 140.w,
                     )
                   : customBorderButton(
@@ -463,6 +460,59 @@ Widget customBorderButton(
   );
 }
 
+Widget customBorderWithIconButton(
+  String btnName,
+  VoidCallback onTap, {
+  double? verticalPadding,
+  Color? borderColor,
+  Color? textColor,
+  Color? color,
+  double? btnHeight,
+  double? width,
+  double? fontSize,
+  double? horizontalPadding,
+  FontWeight? fontweight,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding ?? 10.w,
+          vertical: verticalPadding ?? 40.h),
+      child: Container(
+        height: btnHeight ?? 45.h,
+        width: width ?? double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(
+              color: borderColor ?? HexColor('#606060'),
+            ),
+            color: color ?? HexColor('#FFFFFF')),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              btnName,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: textColor ?? HexColor('#606060'),
+                  decoration: TextDecoration.none,
+                  fontSize: fontSize ?? 16.sp - commonFontSize,
+                  fontWeight: fontweight ?? FontWeight.w600),
+            ),
+            Image.asset(
+              "assets/icons/get_started_button_icon.png",
+              color: textColor,
+              height: 25.h,
+              width: 25.w,
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 customListTile(
     {required bool isExpanded,
     Color? color,
@@ -505,8 +555,9 @@ customListTile(
                       Text(
                         name,
                         maxLines: 2,
-                        style: CustomStyles.otpStyle050505
-                            .copyWith(fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans'),
+                        style: CustomStyles.otpStyle050505.copyWith(
+                            fontSize: 16.sp - commonFontSize,
+                            fontFamily: 'DM Sans'),
                       ),
                       subTitle == null
                           ? Container()
@@ -606,12 +657,18 @@ willPopScope() async {
 commonText({String? title}) {
   return Text(
     title!,
-    style:
-        TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp - commonFontSize, color: black),
+    style: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 16.sp - commonFontSize,
+        color: black),
   );
 }
 
-appBar({required String title, bool isBack = true, List<Widget>? actions,bool isrefreshReuquired=false}) {
+appBar(
+    {required String title,
+    bool isBack = true,
+    List<Widget>? actions,
+    bool isrefreshReuquired = false}) {
   return AppBar(
     centerTitle: true,
     automaticallyImplyLeading: false,
