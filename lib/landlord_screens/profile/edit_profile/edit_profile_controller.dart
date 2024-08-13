@@ -78,27 +78,27 @@ class EditProfileController extends GetxController {
 
   onSubmit() {
     if (nameCntrl.value.text.trim().isNotEmpty) {
-      if (emailCntrl.value.text.trim().isNotEmpty) {
-        if (permanentAddCntrl.value.text.trim().isNotEmpty) {
-          if (selectedState.value != "Select") {
-            if (pinNoCntrl.value.text.trim().isNotEmpty) {
-              if (cityCntrl.value.text.trim().isNotEmpty) {
-                userProfileUpdate();
-              } else {
-                customSnackBar(Get.context!, "Please enter your city");
-              }
+      // if (emailCntrl.value.text.trim().isNotEmpty) {
+      if (permanentAddCntrl.value.text.trim().isNotEmpty) {
+        if (selectedState.value != "Select") {
+          if (pinNoCntrl.value.text.trim().isNotEmpty) {
+            if (cityCntrl.value.text.trim().isNotEmpty) {
+              userProfileUpdate();
             } else {
-              customSnackBar(Get.context!, "Please enter your Pincode");
+              customSnackBar(Get.context!, "Please enter your city");
             }
           } else {
-            customSnackBar(Get.context!, "Please enter your state");
+            customSnackBar(Get.context!, "Please enter your Pincode");
           }
         } else {
-          customSnackBar(Get.context!, "Please enter your address");
+          customSnackBar(Get.context!, "Please enter your state");
         }
       } else {
-        customSnackBar(Get.context!, "Please enter your email");
+        customSnackBar(Get.context!, "Please enter your address");
       }
+      // } else {
+      //   customSnackBar(Get.context!, "Please enter your email");
+      // }
     } else {
       customSnackBar(Get.context!, "Please enter your name");
     }
@@ -117,7 +117,8 @@ class EditProfileController extends GetxController {
                 "profile_image": await DioClientServices.instance
                     .multipartFile(file: selectedImage.value!),
                 "name": nameCntrl.value.text.trim(),
-                "email": emailCntrl.value.text.trim(),
+                if (emailCntrl.value.text.isNotEmpty)
+                  "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),
@@ -130,7 +131,8 @@ class EditProfileController extends GetxController {
               }
             : {
                 "name": nameCntrl.value.text.trim(),
-                "email": emailCntrl.value.text.trim(),
+                if (emailCntrl.value.text.isNotEmpty)
+                  "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),

@@ -163,7 +163,10 @@ class MyProfileView extends StatelessWidget {
                     },
                     image: 'assets/icons/ic-logout.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Delete account', onTap: () {}, image: null),
+                    isDelete: true,
+                    title: 'Delete Account',
+                    onTap: () {},
+                    image: null),
                 SizedBox(
                   height: 10.h,
                 )

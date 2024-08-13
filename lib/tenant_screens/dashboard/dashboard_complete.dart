@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -7,6 +8,7 @@ import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_widgets.dart';
+import 'package:tanent_management/tenant_screens/explore/unit_details/unit_detail_view.dart';
 import '../../landlord_screens/dashboard/search/search_widget.dart';
 
 class CompleteDashboard extends StatelessWidget {
@@ -86,19 +88,24 @@ unitList() {
     shrinkWrap: true,
     itemCount: dashCntrl.unitList.length,
     itemBuilder: (context, index) {
-      return InkWell(
-        onTap: () {},
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              border: Border.all(color: HexColor('#EBEBEB')),
-              borderRadius: BorderRadius.circular(10.r)),
-          child: Padding(
-            padding: EdgeInsets.all(10.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            border: Border.all(color: HexColor('#EBEBEB')),
+            borderRadius: BorderRadius.circular(10.r)),
+        child: Padding(
+          padding: EdgeInsets.all(10.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => UnitDetailView(), arguments: [
+                    dashCntrl.unitList[index]['id'],
+                    true,
+                  ]);
+                },
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRect(
@@ -168,23 +175,23 @@ unitList() {
                     )
                   ],
                 ),
-                Divider(
-                  color: lightBorderGrey,
-                  // height: 1.h,
-                ),
-                customBorderWithIconButton(
-                  "Pay Your Rent",
-                  () {
-                    // dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
-                  },
-                  verticalPadding: 5.h,
-                  horizontalPadding: 2.w,
-                  btnHeight: 35.h,
-                  borderColor: HexColor('#679BF1'),
-                  textColor: HexColor('#679BF1'),
-                ),
-              ],
-            ),
+              ),
+              Divider(
+                color: lightBorderGrey,
+                // height: 1.h,
+              ),
+              customBorderWithIconButton(
+                "Pay Your Rent",
+                () {
+                  dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
+                },
+                verticalPadding: 5.h,
+                horizontalPadding: 2.w,
+                btnHeight: 35.h,
+                borderColor: HexColor('#679BF1'),
+                textColor: HexColor('#679BF1'),
+              ),
+            ],
           ),
         ),
       );

@@ -15,7 +15,7 @@ import 'package:tanent_management/tenant_screens/explore/unit_details/unit_detai
 class ExploreWidget {
   exploreSearch({String? icon, String? titleUnit, String? units}) {
     final exploreCntrl = Get.find<ExploreController>();
-    Timer? _debounce;
+    // Timer? _debounce;
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
@@ -34,7 +34,20 @@ class ExploreWidget {
                     "assets/icons/location.png",
                   ),
                 ),
-                hintText: "Noida,Delhi",
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      if (exploreCntrl.serachPropertyController.value.text
+                          .trim()
+                          .isNotEmpty) {
+                        print(
+                            "dskfldslfkldskflsdflk ${exploreCntrl.serachPropertyController.value.text.trim()}");
+                        exploreCntrl.getPropertyBySearchLocation(exploreCntrl
+                            .serachPropertyController.value.text
+                            .trim());
+                      }
+                    },
+                    icon: const Icon(Icons.search)),
+                hintText: "Enter the location",
                 prefixIconConstraints: BoxConstraints.loose(Size(35.w, 35.h)),
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(color: lightBorderGrey),
@@ -47,12 +60,12 @@ class ExploreWidget {
                 ),
               ),
               onChanged: (value) {
-                if (_debounce?.isActive ?? false) _debounce?.cancel();
-                _debounce = Timer(const Duration(milliseconds: 100), () {
-                  if (value.isNotEmpty) {
-                    exploreCntrl.getPropertyBySearchLocation(value);
-                  }
-                });
+                // if (_debounce?.isActive ?? false) _debounce?.cancel();
+                // _debounce = Timer(const Duration(milliseconds: 100), () {
+                //   if (value.isNotEmpty) {
+                //     exploreCntrl.getPropertyBySearchLocation(value);
+                //   }
+                // });
               },
             ),
           ),
@@ -74,7 +87,7 @@ class ExploreWidget {
             child: Obx(() {
               return exploreCntrl.getUnitByPropertySearchLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : customBorderButton("Search", () {
+                  : customBorderButton("Get Units", () {
                       exploreCntrl.onTapSearchProperty();
                     },
                       fontweight: FontWeight.w500,
@@ -160,8 +173,10 @@ class ExploreWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Get.to(() => UnitDetailView(),
-                        arguments: [exploreCntrl.getUnitResult[index]['id']]);
+                    Get.to(() => UnitDetailView(), arguments: [
+                      exploreCntrl.getUnitResult[index]['id'],
+                      false
+                    ]);
                   },
                   child: Container(
                     width: double.infinity,
@@ -315,7 +330,9 @@ class ExploreWidget {
                                             children: [
                                               Flexible(
                                                   child: SvgPicture.asset(
-                                                      "assets/icons/squareftratio.svg",height: 20,)),
+                                                "assets/icons/squareftratio.svg",
+                                                height: 20,
+                                              )),
                                               const SizedBox(
                                                 width: 5,
                                               ),

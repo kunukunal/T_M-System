@@ -91,6 +91,7 @@ class UnitDetailView extends StatelessWidget {
                   ),
                 );
         }),
+  
       ),
     );
   }

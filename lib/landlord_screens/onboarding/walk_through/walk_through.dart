@@ -28,12 +28,13 @@ class WalkThroughScreen extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: customButton(
-                    onPressed: () {
-                      cntrl.onGetStartedTap();
-                    },
-                    text: 'Get Started',
-                    width: Get.width,
-                    suffix: getStartedButtonIcon)),
+                  onPressed: () {
+                    cntrl.onGetStartedTap();
+                  },
+                  text: 'Get Started',
+                  width: Get.width,
+                  // suffix: getStartedButtonIcon
+                )),
           ],
         ),
       ),

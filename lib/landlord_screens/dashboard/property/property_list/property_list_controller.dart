@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_property_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/property_ab/property_ab_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
@@ -96,8 +97,16 @@ class PropertyListController extends GetxController {
       if (response.statusCode == 200) {
         propertyList.clear();
         propertyList.addAll(response.data);
+        print("sdaldksadasdsada");
         if (propertyList.isEmpty) {
-          Get.off(() => AddPropertyView(), arguments: [false, {}]);
+          Get.off(() => AddPropertyView(), arguments: [false, {}])!
+              .then((value) {
+            if (value == true) {
+              final dashCntrl = Get.find<DashBoardController>();
+              dashCntrl.getDashboardData();
+            }
+            print("asdsadldksaldkasld ${value}");
+          });
         }
         isPropertyDataListLoading.value = false;
       } else if (response.statusCode == 400) {

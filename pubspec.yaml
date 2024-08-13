@@ -59,6 +59,7 @@ dependencies:
   url_launcher: ^6.3.0
   intl: ^0.17.0
   image_gallery_saver: ^2.0.3
+  flutter_pannable_rating_bar: ^2.7.2+1
 
 
 

@@ -86,3 +86,9 @@ const String getUnitByPropertySearch = "tenant/units/?property=";
 const String makeUnitFavourite = "tenant/favorite-properties/";
 const String getUnitDetailsData = "tenant/unit-details/";
 const String sendTenantPaymentRequest = "tenant/payment-request/";
+
+const String teantUnitRequest = "tenant/unit-request/";
+
+const String tenantUnitExit = "tenant/exit-request/";
+
+const String submitRating = "tenant/unit-rating/";

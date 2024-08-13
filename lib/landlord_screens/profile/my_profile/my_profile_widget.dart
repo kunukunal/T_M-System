@@ -123,18 +123,26 @@ class MyProfileWidget {
   }
 
   static commonListTile(
-      {String? title, void Function()? onTap, String? image}) {
+      {String? title,
+      void Function()? onTap,
+      String? image,
+      bool isDelete = false}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 10.w),
       child: ListTile(
-          tileColor: whiteColor,
-          leading: image != null
-              ? Image.asset(
-                  image,
-                  height: 24.h,
-                  width: 24.w,
+          tileColor: isDelete ? Colors.red : whiteColor,
+          leading: isDelete
+              ? const Icon(
+                  Icons.delete,
+                  color: Colors.white,
                 )
-              : const SizedBox(),
+              : image != null
+                  ? Image.asset(
+                      image,
+                      height: 24.h,
+                      width: 24.w,
+                    )
+                  : const SizedBox(),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.r),
               side: BorderSide(color: borderGrey)),
@@ -142,8 +150,8 @@ class MyProfileWidget {
             title!,
             style: TextStyle(
                 fontSize: 14.sp - commonFontSize,
-                fontWeight: FontWeight.w500,
-                color: HexColor('#050505')),
+                fontWeight: isDelete ? FontWeight.w700 : FontWeight.w500,
+                color: isDelete ? whiteColor : HexColor('#050505')),
           ),
           onTap: onTap),
     );

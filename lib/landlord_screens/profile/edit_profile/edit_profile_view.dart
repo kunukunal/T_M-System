@@ -128,7 +128,7 @@ class EditProfileVew extends StatelessWidget {
                               keyboardType: TextInputType.emailAddress,
                               hintText: 'Type Here...',
                               isBorder: true,
-                              readOnly: true,
+                              readOnly: false,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
                           SizedBox(

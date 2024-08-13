@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/generated/assets.dart';
@@ -235,13 +237,49 @@ class UnitDetailViewWidget {
         SizedBox(
           height: 10.h,
         ),
-        customBorderWithIconButton("Place booking request", () {},
-            fontweight: FontWeight.w500,
-            verticalPadding: 5.h,
-            horizontalPadding: 2.w,
-            color: HexColor('#679BF1'),
-            textColor: HexColor('#FFFFFF'),
-            borderColor: Colors.transparent),
+        Obx(() {
+          return unitCntrl.isRequestUnitPlaceOrExit.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : customBorderWithIconButton(
+                  unitCntrl.isFromDashboard.value
+                      ? unitCntrl.isExitRequest.value
+                          ? "Request Submitted"
+                          : "Exit Unit"
+                      : unitCntrl.isPalceRequest.value
+                          ? "Request Submitted"
+                          : "Request Unit", () {
+                  if (unitCntrl.isFromDashboard.value) {
+                    if (unitCntrl.isExitRequest.value == false) {
+                      unitCntrl.sendUnitExitRequest();
+                      // dasds
+                    } else {
+                      customSnackBar(Get.context!, "Request already submitted");
+                    }
+                  } else {
+                    if (unitCntrl.isPalceRequest.value == false) {
+                      unitCntrl.sendUnitRequest();
+
+                      //fdsa
+                    } else {
+                      customSnackBar(Get.context!, "Request already submitted");
+                    }
+                  }
+                },
+                  fontweight: FontWeight.w500,
+                  verticalPadding: 5.h,
+                  horizontalPadding: 2.w,
+                  color: unitCntrl.isFromDashboard.value
+                      ? unitCntrl.isExitRequest.value
+                          ? red.withOpacity(0.5)
+                          : red
+                      : unitCntrl.isPalceRequest.value
+                          ? Colors.grey
+                          : HexColor('#679BF1'),
+                  textColor: HexColor('#FFFFFF'),
+                  borderColor: Colors.transparent);
+        }),
       ],
     );
   }
@@ -254,15 +292,34 @@ class UnitDetailViewWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SvgPicture.asset("assets/icons/star.svg"),
-              SizedBox(
-                width: 5.w,
+              Row(
+                children: [
+                  SvgPicture.asset("assets/icons/star.svg"),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    "${unitCntrl.unitRating['overall_average'].toString()} (${unitCntrl.unitRating['total_reviews'].toString()} Reviews)",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
-              Text(
-                "${unitCntrl.unitRating['overall_average'].toString()} (${unitCntrl.unitRating['total_reviews'].toString()} Reviews)",
-                style: const TextStyle(fontSize: 16),
-              ),
+              if (unitCntrl.isFromDashboard.value &&
+                  unitCntrl.isRatingDone.value == false)
+                TextButton(
+                  child: const Text("Add Review",
+                      style: TextStyle(fontSize: 16, color: Colors.blue)),
+                  onPressed: () {
+                    // add review
+                    for (var unit in unitCntrl.rateUnit) {
+                      unit['rating'] = 0.0;
+                    }
+                    unitCntrl.reviewController.value.clear();
+                    showReviewDialog();
+                  },
+                )
             ],
           ),
           SizedBox(height: 10.h),
@@ -304,6 +361,7 @@ class UnitDetailViewWidget {
             itemCount: unitCntrl.reviewList.length,
             itemBuilder: (context, index) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -336,6 +394,139 @@ class UnitDetailViewWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showReviewDialog() {
+    final UnitDetailViewController unitCntrl =
+        Get.find<UnitDetailViewController>();
+
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.r),
+        ),
+        titlePadding: EdgeInsets.only(top: 15.h, left: 14.w, right: 14.w),
+        contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
+        title: Text(
+          "Rate Unit",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.sp - commonFontSize,
+            decoration: TextDecoration.none,
+            fontWeight: FontWeight.w700,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: SingleChildScrollView(
+          child: Obx(() {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...List.generate(unitCntrl.rateUnit.length, (index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          unitCntrl.rateUnit[index]['name'].toString(),
+                          style: TextStyle(fontSize: 15.sp),
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      PannableRatingBar(
+                        rate: unitCntrl.rateUnit[index]['rating'] as double,
+                        items: List.generate(
+                          5,
+                          (index) => const RatingWidget(
+                            selectedColor: Colors.yellow,
+                            unSelectedColor: Colors.grey,
+                            child: Icon(
+                              Icons.star,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          unitCntrl.rateUnit[index]['rating'] = value;
+                          unitCntrl.rateUnit.refresh();
+                        },
+                      ),
+                    ],
+                  );
+                }),
+                SizedBox(height: 10.h),
+                Text(
+                  "Write Review",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.sp - commonFontSize,
+                    decoration: TextDecoration.none,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                customTextField(
+                    controller: unitCntrl.reviewController.value,
+                    hintText: 'Type Here...',
+                    isBorder: true,
+                    isFilled: false,
+                    maxLines: 4),
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: customBorderButton(
+                        "Cancel",
+                        () {
+                          Get.back();
+                        },
+                        verticalPadding: 5.h,
+                        horizontalPadding: 2.w,
+                        btnHeight: 35.h,
+                        width: 140.w,
+                        borderColor: HexColor('#679BF1'),
+                        textColor: HexColor('#679BF1'),
+                      ),
+                    ),
+                    Flexible(
+                      child: unitCntrl.isReviewSubmitted.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : customBorderButton(
+                              "Send Review",
+                              () {
+                                if (unitCntrl.reviewController.value.text
+                                    .trim()
+                                    .isNotEmpty) {
+                                  unitCntrl.sendReview();
+                                } else {
+                                  customSnackBar(
+                                      Get.context!, "Please write the review");
+                                }
+                                // Handle the update logic here.
+                              },
+                              verticalPadding: 5.h,
+                              horizontalPadding: 2.w,
+                              btnHeight: 35.h,
+                              width: 140.w,
+                              color: HexColor('#679BF1'),
+                              borderColor: HexColor('#679BF1'),
+                              textColor: whiteColor,
+                            ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }),
+        ),
+      ),
+      barrierDismissible: false,
     );
   }
 }

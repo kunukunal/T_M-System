@@ -500,12 +500,12 @@ Widget customBorderWithIconButton(
                   fontSize: fontSize ?? 16.sp - commonFontSize,
                   fontWeight: fontweight ?? FontWeight.w600),
             ),
-            Image.asset(
-              "assets/icons/get_started_button_icon.png",
-              color: textColor,
-              height: 25.h,
-              width: 25.w,
-            )
+            // Image.asset(
+            //   "assets/icons/get_started_button_icon.png",
+            //   color: textColor,
+            //   height: 25.h,
+            //   width: 25.w,
+            // )
           ],
         ),
       ),

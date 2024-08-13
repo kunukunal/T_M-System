@@ -38,7 +38,7 @@ class DashBoardController extends GetxController {
 
   onAddTenantTap() {
     isAddTap.value = false;
-    Get.to(() => TenantListScreen(),arguments: [true]);
+    Get.to(() => TenantListScreen(), arguments: [true]);
     // Get.to(() => AddTenantScreen());
   }
 
@@ -71,8 +71,6 @@ class DashBoardController extends GetxController {
   List<int> rentPaid = [];
   List<int> rentDue = [];
 
-
-  
   getDashboardData() async {
     isDashboardDataLaoding.value = true;
     final prefs = await SharedPreferences.getInstance();
@@ -93,17 +91,17 @@ class DashBoardController extends GetxController {
       userData = data['user_data'];
       propertyStats = data['property_stats'];
       rentBox = data['rent'];
-      expenseBox.value = data['expense']??0.0;
+      expenseBox.value = data['expense'] ?? 0.0;
       Map<String, dynamic> incomeData = data['income_data'];
       xIncomeExpenseLabels =
           incomeData.keys.map((key) => capitalize(key)).toList();
       income = incomeData.values.map((values) {
-          num value = values[0];
-          return value.toInt();
-      }   ).toList();
-      expense = incomeData.values.map((values){
-  num value = values[1];
-          return value.toInt();
+        num value = values[0];
+        return value.toInt();
+      }).toList();
+      expense = incomeData.values.map((values) {
+        num value = values[1];
+        return value.toInt();
       }).toList();
       Map<String, dynamic> occupancyTrend = data['occupancy_trend'];
       xOccupancyTrendLabels =
