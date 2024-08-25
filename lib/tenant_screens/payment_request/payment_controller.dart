@@ -40,7 +40,9 @@ class PaymentController extends GetxController {
 
   ontapRequest() {
     if (ammountController.value.text.trim().isNotEmpty) {
-      submitPaymentRequest();
+      // submitPaymentRequest();
+            isPaymentRequest.value = 3;
+
     } else {
       customSnackBar(Get.context!, "Please enter the amount");
     }

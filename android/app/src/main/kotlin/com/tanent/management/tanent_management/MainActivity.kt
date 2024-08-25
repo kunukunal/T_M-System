@@ -1,4 +1,4 @@
-package com.tanent.management.tanent_management
+package com.daq.orbit
 
 import io.flutter.embedding.android.FlutterActivity
 

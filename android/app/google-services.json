@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4141829403",
+    "project_id": "tm-system-f58e6",
+    "storage_bucket": "tm-system-f58e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4141829403:android:b2958fa79249961fb117be",
+        "android_client_info": {
+          "package_name": "com.daq.orbit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy7U-F7YQtR1rin9vkoJUSJOCFy8iT31Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
