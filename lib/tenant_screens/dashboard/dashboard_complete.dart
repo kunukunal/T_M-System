@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -9,6 +8,7 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/tenant_screens/explore/unit_details/unit_detail_view.dart';
+
 import '../../landlord_screens/dashboard/search/search_widget.dart';
 
 class CompleteDashboard extends StatelessWidget {
@@ -28,14 +28,14 @@ class CompleteDashboard extends StatelessWidget {
                 children: [
                   SearchWidget().occUnoccContainer(
                       icon: occupiedIcon,
-                      titleUnit: 'Rent Due',
+                      titleUnit: 'rent_due'.tr,
                       units: "₹${dashCntrl.rentData['rent_due']}"),
                   SizedBox(
                     width: 5.w,
                   ),
                   SearchWidget().occUnoccContainer(
                       icon: unOccupiedIcon,
-                      titleUnit: 'Next Due Date',
+                      titleUnit: 'next_due_date'.tr,
                       units: dashCntrl.rentData['next_due_date'].toString()),
                 ],
               ),
@@ -43,7 +43,7 @@ class CompleteDashboard extends StatelessWidget {
                 height: 10.h,
               ),
               Text(
-                "Units",
+                "units".tr,
                 style: CustomStyles.titleText
                     .copyWith(fontWeight: FontWeight.w700, fontFamily: 'Inter'),
               ),
@@ -58,12 +58,12 @@ class CompleteDashboard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Payment History",
+                    "payment_history".tr,
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w700, fontFamily: 'Inter'),
                   ),
                   Text(
-                    "See All",
+                    "see_all".tr,
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w700,
                         fontFamily: 'Inter',
@@ -181,7 +181,7 @@ unitList() {
                 // height: 1.h,
               ),
               customBorderWithIconButton(
-                "Pay Your Rent",
+                "pay_your_rent".tr,
                 () {
                   dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
                 },

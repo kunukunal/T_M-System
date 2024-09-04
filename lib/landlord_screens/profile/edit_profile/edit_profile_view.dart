@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -27,7 +25,7 @@ class EditProfileVew extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Edit Profile', style: CustomStyles.otpStyle050505),
+        title: Text('edit_profile'.tr, style: CustomStyles.otpStyle050505),
       ),
       body: Obx(() {
         return editCntrl.isProfileLoadingGet.value
@@ -110,23 +108,23 @@ class EditProfileVew extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          EditProfileWidget.commomText('Full Name'),
+                          EditProfileWidget.commomText('full_name'.tr),
                           customTextField(
                               controller: editCntrl.nameCntrl.value,
                               focusNode: editCntrl.nameFocus.value,
-                              hintText: 'Type Here...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
                           SizedBox(
                             height: 5.h,
                           ),
-                          EditProfileWidget.commomText('Email Id'),
+                          EditProfileWidget.commomText('email_id'.tr),
                           customTextField(
                               controller: editCntrl.emailCntrl.value,
                               focusNode: editCntrl.emailFocus.value,
                               keyboardType: TextInputType.emailAddress,
-                              hintText: 'Type Here...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               readOnly: false,
                               color: HexColor('#F7F7F7'),
@@ -134,12 +132,12 @@ class EditProfileVew extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          EditProfileWidget.commomText('Mobile Number'),
+                          EditProfileWidget.commomText('enter_mobile'.tr),
                           customTextField(
                               controller: editCntrl.phoneCntrl.value,
                               focusNode: editCntrl.phoneFocus.value,
                               keyboardType: TextInputType.number,
-                              hintText: 'Enter Mobile Number',
+                              hintText: 'enter_mobile_number'.tr,
                               isBorder: true,
                               readOnly: true,
                               onDropdownChanged: false,
@@ -150,12 +148,12 @@ class EditProfileVew extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          EditProfileWidget.commomText('Permanent Address'),
+                          EditProfileWidget.commomText('permanent_address'.tr),
                           customTextField(
                               controller: editCntrl.permanentAddCntrl.value,
                               focusNode: editCntrl.permanentFocus.value,
                               keyboardType: TextInputType.streetAddress,
-                              hintText: 'Type Here...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false,
@@ -169,7 +167,7 @@ class EditProfileVew extends StatelessWidget {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('State'),
+                                    EditProfileWidget.commomText('state'.tr),
                                     // customTextField(
                                     //     controller: editCntrl.stateCntrl.value,
                                     //     width: Get.width / 2.3,
@@ -193,12 +191,12 @@ class EditProfileVew extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  EditProfileWidget.commomText('Pin code'),
+                                  EditProfileWidget.commomText('pincode'.tr),
                                   customTextField(
                                       controller: editCntrl.pinNoCntrl.value,
                                       keyboardType: TextInputType.phone,
                                       width: Get.width / 2.3,
-                                      hintText: 'Type Here...',
+                              hintText: '${'type_here'.tr}...',
                                       isBorder: true,
                                       color: HexColor('#F7F7F7'),
                                       isFilled: false),
@@ -209,11 +207,11 @@ class EditProfileVew extends StatelessWidget {
                           SizedBox(
                             height: 5.h,
                           ),
-                          EditProfileWidget.commomText('City'),
+                          EditProfileWidget.commomText('city'.tr),
                           customTextField(
                               controller: editCntrl.cityCntrl.value,
                               focusNode: editCntrl.pinNoFocus.value,
-                              hintText: 'Select',
+                              hintText: 'select'.tr,
                               // suffixIcon: dropDownArrowIcon,
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
@@ -226,7 +224,7 @@ class EditProfileVew extends StatelessWidget {
                                   onPressed: () {
                                     editCntrl.onSubmit();
                                   },
-                                  text: 'Update',
+                                  text: 'update'.tr,
                                   width: Get.width,
                                   verticalPadding: 10.h),
                           SizedBox(

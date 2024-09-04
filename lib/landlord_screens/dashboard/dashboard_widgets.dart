@@ -121,7 +121,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                'Add Expense',
+                'add_expense'.tr,
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -152,7 +152,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                'Add Tenant',
+                'add_tenant'.tr,
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -183,7 +183,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                'Add Properties',
+                'add_properties'.tr,
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -250,7 +250,7 @@ class DashBoardWidgets {
                   onPressed: () {
                     Get.to(() => AddPropertyView(), arguments: [false, {}]);
                   },
-                  text: 'Add Property',
+                  text: 'add_property'.tr,
                   width: 136.w,
                   height: 45.h)
               : Text(
@@ -278,7 +278,7 @@ class DashBoardWidgets {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
-            'Track Your',
+            'track_your'.tr,
             style: CustomStyles.desc606060
                 .copyWith(fontSize: 12.sp - commonFontSize),
           ),

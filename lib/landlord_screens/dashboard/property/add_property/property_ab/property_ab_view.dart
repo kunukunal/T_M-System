@@ -41,8 +41,8 @@ class PropertyAb extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : propertyAbCntrl.buildingList.isEmpty
-                        ? const Center(
-                            child: Text("No Building data Found"),
+                        ?  Center(
+                            child: Text("no_building_data_found".tr),
                           )
                         : ListView.builder(
                             shrinkWrap: true,

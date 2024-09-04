@@ -92,3 +92,9 @@ const String teantUnitRequest = "tenant/unit-request/";
 const String tenantUnitExit = "tenant/exit-request/";
 
 const String submitRating = "tenant/unit-rating/";
+
+const String notificationSetting = "accounts/notification-setting/";
+
+const String emailOtp = "accounts/email-otp/";
+
+const String emailOtpVerify = "accounts/email-otp-verify/";

@@ -45,8 +45,8 @@ class ManagementWidgets {
     final manageCntrl = Get.find<ManagementController>();
 
     return manageCntrl.amenitiesList.isEmpty
-        ? const Center(
-            child: const Text("No Amenities"),
+        ?  Center(
+            child:  Text("no_amenities".tr),
           )
         : Wrap(children: [
             ...List.generate(
@@ -113,7 +113,7 @@ class ManagementWidgets {
         titlePadding: EdgeInsets.only(top: 5.h, left: 14.w, right: 14.w),
         contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
         title: Text(
-          "Update Amount",
+          "update_amount".tr,
           style: TextStyle(
               color: black,
               fontSize: 18.sp - commonFontSize,
@@ -125,7 +125,7 @@ class ManagementWidgets {
           mainAxisSize: MainAxisSize.min,
           children: [
             EditProfileWidget.commomText(
-              'Name',
+              'name'.tr,
             ),
             Text(manageCntrl.amenitiesList[index]['name'],
                 style: CustomStyles.titleText.copyWith(
@@ -133,12 +133,12 @@ class ManagementWidgets {
             SizedBox(
               height: 10.h,
             ),
-            EditProfileWidget.commomText('Rent (Rs)', isMandatory: true),
+            EditProfileWidget.commomText('rent_rs'.tr, isMandatory: true),
             customTextField(
                 keyboardType: TextInputType.number,
                 controller: priceController,
                 // width: Get.width / 2.3,
-                hintText: 'Type Here...',
+                hintText: '${'type_here'.tr}...',
                 isBorder: true,
                 isFilled: false),
             SizedBox(
@@ -149,7 +149,7 @@ class ManagementWidgets {
               children: [
                 Flexible(
                   child: customBorderButton(
-                    "Cancel",
+                    "cancel".tr,
                     () {
                       Get.back();
                     },
@@ -162,7 +162,7 @@ class ManagementWidgets {
                   ),
                 ),
                 customBorderButton(
-                  "Update",
+                  "update".tr,
                   () {
                     Get.back();
                     manageCntrl.amenitiesList[index]['amount'].text =
@@ -200,7 +200,7 @@ class ManagementWidgets {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Enter otp",
+              "enter_otp".tr,
               style: TextStyle(
                   color: black,
                   fontSize: 18.sp - commonFontSize,
@@ -264,7 +264,7 @@ class ManagementWidgets {
                                 .isNotEmpty) {
                           manageCntrl.verifyOtpTenantApi();
                         } else {
-                          customSnackBar(Get.context!, "Please enter the otp.");
+                          customSnackBar(Get.context!, "please_enter_otp".tr);
                         }
                       }
                       ),
@@ -305,10 +305,10 @@ class ManagementWidgets {
                                 .isNotEmpty) {
                           manageCntrl.verifyOtpTenantApi();
                         } else {
-                          customSnackBar(Get.context!, "Please enter the otp.");
+                          customSnackBar(Get.context!, "please_enter_otp".tr);
                         }
                       },
-                      text: 'Submit',
+                      text: 'submit'.tr,
                       width: Get.width)
                   : const Center(child: CircularProgressIndicator()),
             ),
@@ -319,7 +319,7 @@ class ManagementWidgets {
                 authCntrl.isTimeComplete.value = false;
               } else {
                 customSnackBar(
-                    Get.context!, "Please wait until the timer completes.");
+                    Get.context!, "please_wait_until_timer_completes".tr);
               }
             })
           ],

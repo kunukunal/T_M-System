@@ -17,8 +17,8 @@ class AddBuildingView extends StatelessWidget {
     return Scaffold(
       appBar: AddBuildingWidgets().appBar(
           addBuildingCntrl.fromEdit.value == true
-              ? "Update Building"
-              : 'Add Building'),
+              ? "update_building".tr
+              : 'add_building'.tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -78,7 +78,7 @@ class AddBuildingView extends StatelessWidget {
                                 );
                               } else {
                                 customSnackBar(
-                                    context, "You can 10 building at a time");
+                                    context, "you_can_add_10_buildings".tr);
                               }
                             },
                             child: Row(
@@ -88,7 +88,7 @@ class AddBuildingView extends StatelessWidget {
                                   width: 10.w,
                                 ),
                                 Text(
-                                  'Add New Building',
+                                  'add_new_building'.tr,
                                   style: TextStyle(
                                       fontSize: 16.sp - commonFontSize,
                                       fontWeight: FontWeight.w700,
@@ -135,18 +135,18 @@ class AddBuildingView extends StatelessWidget {
                           }
                         } else {
                           customSnackBar(context,
-                              "Please check all field are filled correctly");
+                              "please_check_all_fields_filled_correctly".tr);
                         }
                       } else {
                         customSnackBar(
-                            context, "No building data aavailable for add");
+                            context, "no_building_data_available_for_add".tr);
                       }
 
                       // Get.back();
                     },
                     text: addBuildingCntrl.fromEdit.value == true
-                        ? "Update"
-                        : 'Save',
+                        ? "update".tr
+                        : 'save'.tr,
                     width: Get.width,
                     verticalPadding: 10.h),
           ],

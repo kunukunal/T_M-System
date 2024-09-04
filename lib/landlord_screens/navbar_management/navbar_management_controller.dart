@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_view.dart';
 import 'package:tanent_management/landlord_screens/navbar_management/property_detail/property_detail_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class NavBarManagementCntroller extends GetxController {
   final items = [].obs;
@@ -11,6 +13,7 @@ class NavBarManagementCntroller extends GetxController {
     Get.to(() => SearchView());
   }
 
+final managmentSearchController=TextEditingController().obs;
   final isRefreshmentRequired = false.obs;
 
   onItemTap(int propertyId, String propertyTitle) {
@@ -38,9 +41,12 @@ class NavBarManagementCntroller extends GetxController {
     print("hhkhkhkhk");
     isPropertyStatsLoading.value = true;
 
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";            String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {

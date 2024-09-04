@@ -3,13 +3,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/navbar/navbar_view.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/otp_screen.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/personal_info/personal_info.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 import 'package:tanent_management/tenant_screens/navbar/navbar_view.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
@@ -46,9 +47,13 @@ class AuthController extends GetxController {
   }
 
   onSubmitTapfromRegister(bool isFromRegister) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('is_personal_info_completed', false);
-    prefs.setBool('is_landlord', onButtonTapTenant.value == 1 ? true : false);
+    await SharedPreferencesServices.setBoolData(
+        key: SharedPreferencesKeysEnum.ispersonalinfocompleted.value,
+        value: false);
+    await SharedPreferencesServices.setBoolData(
+        key: SharedPreferencesKeysEnum.islandlord.value,
+        value: onButtonTapTenant.value == 1 ? true : false);
+
     Get.offAll(() => PersonalInfo(
         isFromRegister: isFromRegister,
         mobileContrl: mobileNumberController.value.text,
@@ -57,14 +62,13 @@ class AuthController extends GetxController {
 
   onOtpSubmitPressed(
       {required bool isProfileUpdated, required int userType}) async {
-    final prefs = await SharedPreferences.getInstance();
-
     if (userType == 1) {
-      prefs.setBool('is_landlord', true);
-
+      await SharedPreferencesServices.setBoolData(
+          key: SharedPreferencesKeysEnum.islandlord.value, value: true);
       Get.offAll(() => const NavBar(initialPage: 0));
     } else {
-      prefs.setBool('is_landlord', false);
+      await SharedPreferencesServices.setBoolData(
+          key: SharedPreferencesKeysEnum.islandlord.value, value: false);
       Get.offAll(() => const NavBarTenant(
             initialPage: 0,
           ));
@@ -121,8 +125,9 @@ class AuthController extends GetxController {
   phoneOtpApi({required bool isFromRegister}) async {
     if (mobileNumberController.value.text.trim().isNotEmpty) {
       if (mobileNumberController.value.text.trim().length == 10) {
-        final prefs = await SharedPreferences.getInstance();
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+        String languaeCode = await SharedPreferencesServices.getStringData(
+                key: SharedPreferencesKeysEnum.languaecode.value) ??
+            "en";
         final response = await DioClientServices.instance.dioPostCall(body: {
           'phone_code': selectedItem.value.toString().trim(),
           'phone': mobileNumberController.value.text
@@ -141,18 +146,19 @@ class AuthController extends GetxController {
           }
         }
       } else {
-        customSnackBar(Get.context!, "Please Enter the correct mobile number");
+        customSnackBar(Get.context!, "please_enter_correct_phone_number".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please Enter the correct mobile number");
+      customSnackBar(Get.context!, "please_enter_phone_number".tr);
     }
   }
 
   signUpApi({required bool isFromRegister}) async {
     if (mobileNumberController.value.text.trim().isNotEmpty) {
       if (mobileNumberController.value.text.trim().length == 10) {
-        final prefs = await SharedPreferences.getInstance();
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+        String languaeCode = await SharedPreferencesServices.getStringData(
+                key: SharedPreferencesKeysEnum.languaecode.value) ??
+            "en";
         print("fsdlkfsd ${onButtonTapTenant.value}");
         final response = await DioClientServices.instance.dioPostCall(body: {
           'user_type': onButtonTapTenant.value,
@@ -173,16 +179,17 @@ class AuthController extends GetxController {
           }
         }
       } else {
-        customSnackBar(Get.context!, "Please Enter the correct mobile number");
+        customSnackBar(Get.context!, "please_enter_correct_phone_number".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please Enter the mobile number");
+      customSnackBar(Get.context!, "please_enter_phone_number".tr);
     }
   }
 
   verifyOtpApi(bool isFromRegister) async {
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
     final response = await DioClientServices.instance.dioPostCall(body: {
       'phone_code': selectedItem.value.toString().trim(),
       'phone': mobileNumberController.value.text,
@@ -194,8 +201,13 @@ class AuthController extends GetxController {
     if (response != null) {
       // here api send 202 on success
       if (response.statusCode == 202) {
-        prefs.setString('access_token', response.data['token']['access']);
-        prefs.setString('refresh_token', response.data['token']['refresh']);
+        await SharedPreferencesServices.setStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value,
+            value: response.data['token']['access']);
+        await SharedPreferencesServices.setStringData(
+            key: SharedPreferencesKeysEnum.refreshToken.value,
+            value: response.data['token']['refresh']);
+
         print("dasdlas ${response.data}");
 
         isFromRegister

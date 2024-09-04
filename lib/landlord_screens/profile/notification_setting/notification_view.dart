@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/landlord_screens/profile/notification_setting/notification_controller.dart';
 import 'package:tanent_management/landlord_screens/profile/notification_setting/notification_widgets.dart';
 
@@ -8,86 +9,101 @@ import '../../../common/constants.dart';
 import '../../../common/text_styles.dart';
 
 class NotificationView extends StatelessWidget {
-   NotificationView({super.key});
+  NotificationView({super.key});
 
-   final notifCntrl = Get.put(NotificationController());
+  final notifCntrl = Get.put(NotificationController());
 
-   @override
+  @override
   Widget build(BuildContext context) {
-    return  SafeArea(child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Notification Settings', style: CustomStyles.otpStyle050505),
+        title:
+            Text('notification_settings'.tr, style: CustomStyles.otpStyle050505),
         actions: [
-          Padding(
-            padding: EdgeInsets.all(8.r),
-            child:tick ,
+          GestureDetector(
+            onTap: () {
+              notifCntrl.updateNotificationSetting();
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8.r),
+              child: tick,
+            ),
           ),
-
         ],
       ),
-      body: Column(children: [
-        NotifWidget.commonListTile(
-            title: 'General Notification',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForGenNotif.value=value;
-            }
-        ),
-        NotifWidget.commonListTile(
-            title: 'Sounds',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForSound.value=value;
-            }
-
-        ),
-
-        NotifWidget.commonListTile(
-            title: 'Payments',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForPayment.value=value;
-            }
-
-        ),
-        NotifWidget.commonListTile(
-            title: 'Any Updates',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForAnyUpdate.value=value;
-            }
-
-        ),
-        NotifWidget.commonListTile(
-            title: 'Email Notification',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForEmailNotif.value=value;
-            }
-
-        ),
-        NotifWidget.commonListTile(
-            title: 'New Services Available',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForNewService.value=value;
-            }
-
-        ),
-        NotifWidget.commonListTile(
-            title: 'New Tips Available',
-            onTap: () {},
-            onChanged: (value){
-              notifCntrl.switchForNewTip.value=value;
-            }
-
-        ),
-
-
-
-
-
-      ],),
-    ));
+      body: Obx(() {
+        return notifCntrl.notificationSettingLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+              child: Column(
+                  children: [
+                    NotifWidget.commonListTile(
+                        title: 'general_notification'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForGenNotif.value,
+                        onChanged: (value) {
+                          notifCntrl.switchForGenNotif.value = value;
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'sounds'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForSound.value,
+                        onChanged: (value) {
+                          notifCntrl.switchForSound.value = value;
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'payments'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForPayment.value,
+                        onChanged: (value) {
+                          notifCntrl.switchForPayment.value = value;
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'any_updates'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForAnyUpdate.value,
+                        onChanged: (value) {
+                          notifCntrl.switchForAnyUpdate.value = value;
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'email_notification'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForEmailNotif.value,
+                        onChanged: (value) {
+                          if (userData['email_verified'] == true) {
+                            notifCntrl.switchForEmailNotif.value = value;
+                          } else {
+                            NotifWidget().showEmailDialoge(
+                                title: "email_notification".tr,
+                                button1: "cancel".tr,
+                                button2: "send_via_otp".tr);
+                          }
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'new_services_available'.tr,
+                        onTap: () {},
+                        switchValueForNotification:
+                            notifCntrl.switchForNewService.value,
+                        onChanged: (value) {
+                          notifCntrl.switchForNewService.value = value;
+                        }),
+                    NotifWidget.commonListTile(
+                        title: 'new_tips_available'.tr,
+                        switchValueForNotification:
+                            notifCntrl.switchForNewTip.value,
+                        onTap: () {},
+                        onChanged: (value) {
+                          notifCntrl.switchForNewTip.value = value;
+                        }),
+                  ],
+                ),
+            );
+      }),
+    );
   }
 }

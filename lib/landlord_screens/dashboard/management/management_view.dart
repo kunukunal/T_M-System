@@ -33,7 +33,7 @@ class ManagementScreen extends StatelessWidget {
             child: backArrowImage,
           ),
         ),
-        title: Text('Management', style: CustomStyles.otpStyle050505W700S16),
+        title: Text('management'.tr, style: CustomStyles.otpStyle050505W700S16),
       ),
       body: ListView(
         shrinkWrap: true,
@@ -57,7 +57,8 @@ class ManagementScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  PersonlInfoWidget.commomText('Tenant mobile number',
+                                  PersonlInfoWidget.commomText(
+                                      'tenant_mobile_number'.tr,
                                       isMandatory: true),
                                   customTextField(
                                       controller: manageCntrl.mobileCntrl.value,
@@ -72,7 +73,7 @@ class ManagementScreen extends StatelessWidget {
                                         color: HexColor('#6D6E6F'),
                                       ),
                                       autofocus: true,
-                                      hintText: 'Enter Mobile No.',
+                                      hintText: 'enter_mobile_no'.tr,
                                       textInputAction: TextInputAction.done,
                                       keyboardType: TextInputType.number,
                                       isBorder: true,
@@ -86,12 +87,13 @@ class ManagementScreen extends StatelessWidget {
                                           alignment: Alignment.center,
                                           child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                
-                                                  backgroundColor:Color.fromARGB(255, 33, 194, 243),
-                                                  shape:
-                                                       RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(12.r)
-                                                      )),
+                                                  backgroundColor:
+                                                      Color.fromARGB(
+                                                          255, 33, 194, 243),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.r))),
                                               onPressed: manageCntrl
                                                       .tenantCheckLoading.value
                                                   ? null
@@ -102,8 +104,8 @@ class ManagementScreen extends StatelessWidget {
                                               child: manageCntrl
                                                       .tenantCheckLoading.value
                                                   ? const CircularProgressIndicator()
-                                                  : const Text(
-                                                      "Check Tenant",
+                                                  : Text(
+                                                      "check_tenant".tr,
                                                       style: TextStyle(
                                                           color: Colors.white),
                                                     )),
@@ -121,7 +123,7 @@ class ManagementScreen extends StatelessWidget {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            PersonlInfoWidget.commomText('Tenant Name'),
+                            PersonlInfoWidget.commomText('tenant_name'.tr),
                             customTextField(
                                 controller: manageCntrl.nameCntrl.value,
                                 maxLength: 10,
@@ -132,7 +134,7 @@ class ManagementScreen extends StatelessWidget {
                                   fontSize: 14.sp - commonFontSize,
                                   color: HexColor('#6D6E6F'),
                                 ),
-                                hintText: 'Enter Name',
+                                hintText: 'enter_name'.tr,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.text,
                                 isBorder: true,
@@ -147,7 +149,7 @@ class ManagementScreen extends StatelessWidget {
                             SizedBox(
                               height: 5.h,
                             ),
-                            PersonlInfoWidget.commomText('Property'),
+                            PersonlInfoWidget.commomText('property'.tr),
                             bigDropDown(
                                 selectedItem:
                                     manageCntrl.selectedProjectName.value,
@@ -159,7 +161,7 @@ class ManagementScreen extends StatelessWidget {
                             SizedBox(
                               height: 5.h,
                             ),
-                            PersonlInfoWidget.commomText('Building'),
+                            PersonlInfoWidget.commomText('building'.tr),
                             bigDropDown(
                                 selectedItem:
                                     manageCntrl.selectedTowerName.value,
@@ -171,7 +173,7 @@ class ManagementScreen extends StatelessWidget {
                             SizedBox(
                               height: 5.h,
                             ),
-                            PersonlInfoWidget.commomText('Floor'),
+                            PersonlInfoWidget.commomText('floor'.tr),
                             bigDropDown(
                                 selectedItem:
                                     manageCntrl.selectedFloorName.value,
@@ -183,7 +185,7 @@ class ManagementScreen extends StatelessWidget {
                             SizedBox(
                               height: 5.h,
                             ),
-                            PersonlInfoWidget.commomText('Unit'),
+                            PersonlInfoWidget.commomText('unit'.tr),
                             bigDropDown(
                                 selectedItem:
                                     manageCntrl.selectedUnitName.value,
@@ -200,7 +202,7 @@ class ManagementScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('Rent (Rs)',
+                                    EditProfileWidget.commomText('rent_rs'.tr,
                                         isMandatory: true),
                                     customTextField(
                                         keyboardType: TextInputType.number,
@@ -212,7 +214,7 @@ class ManagementScreen extends StatelessWidget {
                                         readOnly:
                                             !manageCntrl.isRentNegiosate.value,
                                         width: Get.width / 2.3,
-                                        hintText: 'Type Here...',
+                                        hintText: '${'type_here'.tr}...',
                                         isBorder: true,
                                         isFilled: false),
                                   ],
@@ -221,7 +223,7 @@ class ManagementScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('Rent Type',
+                                    EditProfileWidget.commomText('rent_type'.tr,
                                         isMandatory: true),
                                     bigDropDown(
                                         width: 160.5.w,
@@ -244,7 +246,7 @@ class ManagementScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('Form (Rent)'),
+                                    EditProfileWidget.commomText('from_rent'.tr),
                                     ManagementWidgets().datePickerContainer(
                                         manageCntrl.rentFrom.value == null
                                             ? 'Select'
@@ -258,7 +260,7 @@ class ManagementScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('To (Rent)'),
+                                    EditProfileWidget.commomText('to_rent'.tr),
                                     ManagementWidgets().datePickerContainer(
                                         manageCntrl.rentTo.value == null
                                             ? 'Select'
@@ -273,11 +275,11 @@ class ManagementScreen extends StatelessWidget {
                             SizedBox(
                               height: 5.h,
                             ),
-                            PersonlInfoWidget.commomText('Remarks'),
+                            PersonlInfoWidget.commomText('remarks'.tr),
                             customTextField(
                                 controller: manageCntrl.remarkCntrl.value,
                                 focusNode: manageCntrl.remarkFocus.value,
-                                hintText: 'Type Here...',
+                                hintText: '${'type_here'.tr}...',
                                 isBorder: true,
                                 color: HexColor('#FFFFFF'),
                                 isFilled: false),
@@ -289,7 +291,7 @@ class ManagementScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   PersonlInfoWidget.commomText(
-                                    'Amenities',
+                                    'amenities'.tr,
                                   ),
                                   Divider(
                                     color: HexColor('#EBEBEB'),
@@ -309,7 +311,7 @@ class ManagementScreen extends StatelessWidget {
                                     onPressed: () {
                                       manageCntrl.onSubmitTap();
                                     },
-                                    text: 'Submit',
+                                    text: 'submit'.tr,
                                     height: 45.h,
                                     width: Get.width))
                           ],
@@ -318,7 +320,7 @@ class ManagementScreen extends StatelessWidget {
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PersonlInfoWidget.commomText('Tenant Name'),
+                                PersonlInfoWidget.commomText('tenant_name'.tr),
                                 customTextField(
                                   controller: manageCntrl.nameCntrl.value,
                                   maxLength: 10,
@@ -327,47 +329,47 @@ class ManagementScreen extends StatelessWidget {
                                     fontSize: 14.sp - commonFontSize,
                                     color: HexColor('#6D6E6F'),
                                   ),
-                                  hintText: 'Enter Name',
+                                  hintText: 'enter_name'.tr,
                                   textInputAction: TextInputAction.done,
                                   keyboardType: TextInputType.text,
                                   isBorder: true,
                                   isFilled: false,
                                 ),
                                 SizedBox(height: 5.h),
-                                PersonlInfoWidget.commomText('Property'),
+                                PersonlInfoWidget.commomText('property'.tr),
                                 Obx(() => buildDropdown<Property>(
                                       manageCntrl.selectedProperty.value,
                                       manageCntrl.projectsListData,
-                                      'Select Property',
+                                      'select_property'.tr,
                                       (value) =>
                                           manageCntrl.onProjectSelected(value),
                                     )),
                                 SizedBox(height: 5.h),
-                                PersonlInfoWidget.commomText('Building'),
+                                PersonlInfoWidget.commomText('building'.tr),
                                 Obx(() => buildDropdown<Building>(
                                       manageCntrl.selectedBuilding.value,
                                       manageCntrl.selectedProperty.value
                                               ?.buildings ??
                                           [],
-                                      'Select Building',
+                                      'select_building'.tr,
                                       (value) =>
                                           manageCntrl.onBuildingSelected(value),
                                     )),
                                 SizedBox(height: 5.h),
-                                PersonlInfoWidget.commomText('Floor'),
+                                PersonlInfoWidget.commomText('floor'.tr),
                                 Obx(() => buildDropdown<Floor>(
                                       manageCntrl.selectedFloor.value,
                                       manageCntrl.floorsList,
-                                      'Select Floor',
+                                      'select_floor'.tr,
                                       (value) =>
                                           manageCntrl.onFloorSelected(value),
                                     )),
                                 SizedBox(height: 5.h),
-                                PersonlInfoWidget.commomText('Unit'),
+                                PersonlInfoWidget.commomText('unit'.tr),
                                 Obx(() => buildDropdown<Unit>(
                                       manageCntrl.selectedUnit.value,
                                       manageCntrl.unitsList,
-                                      'Select Unit',
+                                      'select_unit'.tr,
                                       (value) =>
                                           manageCntrl.onUnitSelected(value),
                                     )),
@@ -380,7 +382,7 @@ class ManagementScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         EditProfileWidget.commomText(
-                                            'Rent (Rs)',
+                                            'rent_rs'.tr,
                                             isMandatory: true),
                                         customTextField(
                                             keyboardType: TextInputType.number,
@@ -393,7 +395,7 @@ class ManagementScreen extends StatelessWidget {
                                             readOnly: manageCntrl
                                                 .isRentNegiosate.value,
                                             width: Get.width / 2.3,
-                                            hintText: 'Type Here...',
+                                            hintText: '${'type_here'.tr}...',
                                             isBorder: true,
                                             isFilled: false),
                                       ],
@@ -404,7 +406,7 @@ class ManagementScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         EditProfileWidget.commomText(
-                                            'Rent Type',
+                                            'rent_type'.tr,
                                             isMandatory: true),
                                         bigDropDown(
                                             width: 160.5.w,
@@ -429,7 +431,7 @@ class ManagementScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         EditProfileWidget.commomText(
-                                            'Form (Rent)'),
+                                            'from_rent'.tr),
                                         ManagementWidgets().datePickerContainer(
                                             manageCntrl.rentFrom.value == null
                                                 ? 'Select'
@@ -446,7 +448,7 @@ class ManagementScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         EditProfileWidget.commomText(
-                                            'To (Rent)'),
+                                            'to_rent'.tr),
                                         ManagementWidgets().datePickerContainer(
                                             manageCntrl.rentTo.value == null
                                                 ? 'Select'
@@ -474,10 +476,10 @@ class ManagementScreen extends StatelessWidget {
                                 //       isFilled: false,
                                 //     )),
                                 SizedBox(height: 5.h),
-                                PersonlInfoWidget.commomText('Remarks'),
+                                PersonlInfoWidget.commomText('remarks'.tr),
                                 customTextField(
                                   controller: manageCntrl.remarkCntrl.value,
-                                  hintText: 'Type Here...',
+                                  hintText: '${'type_here'.tr}...',
                                   isBorder: true,
                                   color: HexColor('#FFFFFF'),
                                   isFilled: false,
@@ -489,7 +491,7 @@ class ManagementScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       PersonlInfoWidget.commomText(
-                                        'Amenities',
+                                        'amenities'.tr,
                                       ),
                                       Divider(
                                         color: HexColor('#EBEBEB'),
@@ -509,7 +511,7 @@ class ManagementScreen extends StatelessWidget {
                                         onPressed: () {
                                           manageCntrl.onSubmitTapFromChoose();
                                         },
-                                        text: 'Submit',
+                                        text: 'submit'.tr,
                                         height: 45.h,
                                         width: Get.width,
                                       )),

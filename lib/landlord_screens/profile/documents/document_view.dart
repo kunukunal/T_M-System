@@ -27,7 +27,7 @@ class DocumentScreen extends StatelessWidget {
             child: backArrowImage,
           ),
         ),
-        title: Text(isFromTenant ? 'Kirayedar Documents' : 'Document',
+        title: Text(isFromTenant ? 'kirayedar_documents'.tr : 'documents'.tr,
             style: CustomStyles.skipBlack),
         centerTitle: true,
         actions: [

@@ -73,19 +73,19 @@ class _NavBarState extends State<NavBarTenant> {
                       dashboardCntrl.selectedIndex.value == 0
                           ? dashboardActiveIcon
                           : dashboardIcon,
-                      'Dashboard'),
+                      'dashboard'.tr),
                   NavBarWidgets.buildNavItem(
                       1,
                       dashboardCntrl.selectedIndex.value == 1
                           ? exploreActiveIcon
                           : exploreIcon,
-                      'Explore'),
+                      'explore'.tr),
                   NavBarWidgets.buildNavItem(
                       2,
                       dashboardCntrl.selectedIndex.value == 2
                           ? reportActiveIcon
                           : reportIcon,
-                      'Reports'),
+                      'reports'.tr),
                   // NavBarWidgets.buildNavItem(
                   //     2,
                   //     dashboardCntrl.selectedIndex.value == 2
@@ -103,7 +103,7 @@ class _NavBarState extends State<NavBarTenant> {
                       dashboardCntrl.selectedIndex.value == 3
                           ? profileActiveIcon
                           : profileIcon,
-                      'Profile'),
+                      'profile'.toUpperCase()),
                 ],
               )
             ],

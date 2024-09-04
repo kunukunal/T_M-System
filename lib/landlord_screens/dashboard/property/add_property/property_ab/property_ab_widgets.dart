@@ -84,8 +84,8 @@ class PropertyAbWidget {
                 SlidableAction(
                   onPressed: (context) {
                     deleteFloorPopup(
-                        button1: "No",
-                        button2: "Yes",
+                        button1: "no".tr,
+                        button2: "yes".tr,
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -95,7 +95,7 @@ class PropertyAbWidget {
                               buildingId: buildingId!);
                         },
                         title:
-                            "Are you sure you want to Permanent remove $buildingTitle");
+                            "${'are_you_sure_permanent_remove'.tr} $buildingTitle");
                   },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: whiteColor,
@@ -122,13 +122,13 @@ class PropertyAbWidget {
                         child: Row(
                           children: [
                             featureRentContainer(
-                                isFeatured: true, title: 'Featured'),
+                                isFeatured: true, title: 'featured'.tr),
                             featureRentContainer(
-                                isFeatured: false, title: 'For Rent'),
+                                isFeatured: false, title: 'for_rent'.tr),
                             Padding(
                               padding: EdgeInsets.only(left: 60.w),
                               child: Text(
-                                '$floor  Floor',
+                                '$floor  ${'floor'.tr}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 14.sp - commonFontSize,

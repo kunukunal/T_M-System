@@ -18,7 +18,7 @@ class AuthWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Mobile Number',
+            'enter_mobile'.tr,
             style: CustomStyles.titleText,
           ),
           SizedBox(
@@ -29,7 +29,7 @@ class AuthWidget {
               controller: authCntrl.mobileNumberController.value,
               isForCountryCode: true,
               hintStyle: CustomStyles.hintText,
-              hintText: 'Enter Mobile Number',
+              hintText: 'enter_mobile_number'.tr,
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               isBorder: true,
@@ -45,7 +45,7 @@ class AuthWidget {
                   authCntrl.phoneOtpApi(isFromRegister: isFromRegister);
                 }
               },
-              text: isFromRegister ? 'Proceed' : 'Login',
+              text: isFromRegister ? 'proceed'.tr : 'login'.tr,
               width: Get.width)
         ],
       ),
@@ -70,7 +70,7 @@ class AuthWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Registration',
+                  'registration'.tr,
                   style: CustomStyles.titleText.copyWith(
                       fontWeight: FontWeight.w600, fontFamily: 'Inter'),
                 ),
@@ -78,7 +78,7 @@ class AuthWidget {
                   height: 5.h,
                 ),
                 Text(
-                    'Join us today and experience the daily benefits of freshness firsthand!',
+                    'join_us_today'.tr,
                     style: CustomStyles.descriptionText6c6c6c),
                 SizedBox(
                   height: 5.h,
@@ -110,9 +110,9 @@ class AuthWidget {
                 TextButton(
                     onPressed: () {
                       resgisterPopup(
-                        title: 'Registration as',
+                        title: 'registration_as'.tr,
                         subtitle:
-                            'Join us today and experience the daily benefits of freshness firsthand!',
+                            'join_us_today'.tr,
                         button1: 'Landlord',
                         button2: 'Tenant',
                         onButton1Tap: () {
@@ -129,7 +129,7 @@ class AuthWidget {
                         },
                       );
                     }
-                  , child: Text('Register Now',style: TextStyle(decoration: TextDecoration.underline,fontSize: 16.sp),))
+                  , child: Text('register_now'.tr,style: TextStyle(decoration: TextDecoration.underline,fontSize: 16.sp),))
               ],
             ),
           ),
@@ -149,7 +149,7 @@ class AuthWidget {
         ),
         isFromRegister
             ? const SizedBox()
-            : Text('Welcome back',
+            : Text('welcome_back'.tr,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20.sp - commonFontSize,
@@ -158,13 +158,13 @@ class AuthWidget {
         SizedBox(
           height: 5.h,
         ),
-        Text('Please enter the OTP sent to your registered mobile number.',
+        Text('please_enter_otp_sent_to_registered_mobile'.tr,
             style: CustomStyles.descriptionText6c6c6c),
         SizedBox(
           height: 15.h,
         ),
         Text(
-          'Mobile Number',
+          'enter_mobile'.tr,
           style: CustomStyles.titleText,
         ),
         SizedBox(
@@ -255,12 +255,12 @@ class AuthWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Didn’t receive the code? ', style: CustomStyles.lightHint16),
+          Text('did_not_receive_code'.tr, style: CustomStyles.lightHint16),
           Obx(() {
             return TextButton(
               onPressed: onPressed,
               child: Text(
-                'Resend',
+                'resend'.tr,
                 style: CustomStyles.titleText.copyWith(
                     fontWeight: FontWeight.w700,
                     color: authCntrl.isTimeComplete.value == false
@@ -284,7 +284,7 @@ class AuthWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-              child: Text('Didn’t receive? ',
+              child: Text('did_not_receive'.tr,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: CustomStyles.lightHint16)),
@@ -293,7 +293,7 @@ class AuthWidget {
               child: TextButton(
                 onPressed: onPressed,
                 child: Text(
-                  'Resend',
+                  'resend'.tr,
                   style: CustomStyles.titleText.copyWith(
                       fontWeight: FontWeight.w700,
                       color: authCntrl.isTimeComplete.value == false

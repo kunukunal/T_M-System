@@ -19,7 +19,7 @@ class TermsAndConditionScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Terms and Conditions',
+            'terms_and_conditions'.tr,
             style: CustomStyles.otpStyle050505,
           ),
           backgroundColor: Colors.transparent,
@@ -30,7 +30,7 @@ class TermsAndConditionScreen extends StatelessWidget {
         ),
 
         body: ListView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           children: [
             Divider(
               color: HexColor('#EBEBEB'),
@@ -87,7 +87,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                       });
                 }),
                 Text(
-                  'I agree and Continue',
+                  'i_agree_and_continue'.tr,
                   style: CustomStyles.desc606060.copyWith(fontSize: 16.sp - commonFontSize),
                 ),
               ],
@@ -102,7 +102,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                     cntrl.onNextClicked();
                   },
                   width: Get.width,
-                  text: 'Next'),
+                  text: 'next'.tr),
             ),
             SizedBox(
               height: 15.h,

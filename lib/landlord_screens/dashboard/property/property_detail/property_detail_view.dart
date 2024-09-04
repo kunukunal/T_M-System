@@ -29,7 +29,7 @@ class PropertyDetailView extends StatelessWidget {
               child: backArrowImage,
             ),
           ),
-          title: Text("Details", style: CustomStyles.otpStyle050505W700S16),
+          title: Text("details".tr, style: CustomStyles.otpStyle050505W700S16),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -37,7 +37,7 @@ class PropertyDetailView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Select Properties',
+                'select_property'.tr,
                 style: TextStyle(fontSize: 16.sp - commonFontSize, color: grey),
               ),
               bigDropDown(
@@ -65,8 +65,8 @@ class PropertyDetailView extends StatelessWidget {
                   indicatorColor: Colors.transparent,
                   splashFactory: NoSplash.splashFactory,
                   tabs: [
-                    PropertyDetailViewWidget().tabContent('Overview'),
-                    PropertyDetailViewWidget().tabContent('Reviews'),
+                    PropertyDetailViewWidget().tabContent('overview'.tr),
+                    PropertyDetailViewWidget().tabContent('reviews'.tr),
                   ],
                 ),
               ),

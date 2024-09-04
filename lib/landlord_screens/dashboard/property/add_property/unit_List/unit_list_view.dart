@@ -43,8 +43,8 @@ class UnitView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         )
                       : unitCntrl.unitList.isEmpty
-                          ? const Center(
-                              child: Text('No Data Found'),
+                          ?  Center(
+                              child: Text('no_data_found'.tr),
                             )
                           : ListView.builder(
                               shrinkWrap: true,

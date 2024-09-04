@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/management/management_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/management/managment_modal.dart';
@@ -9,6 +9,7 @@ import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/a
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/tenant_documents.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class ManagementController extends GetxController {
   //variable
@@ -124,9 +125,12 @@ class ManagementController extends GetxController {
   final unitsList = <Unit>[].obs;
 
   void getPropertyBuilding() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -150,9 +154,12 @@ class ManagementController extends GetxController {
   }
 
   void getFloorsAndUnits(int buildingId) async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -245,11 +252,11 @@ class ManagementController extends GetxController {
         return true;
       } else if (rentTo.value!.isAtSameMomentAs(rentFrom.value!)) {
         customSnackBar(
-            Get.context!, "Rent To date cannot be the same as Rent From date.");
+            Get.context!, "rent_to_date_same_as_rent_from_date".tr);
         return false;
       } else {
         customSnackBar(Get.context!,
-            "Rent To date cannot be earlier than Rent From date.");
+            "rent_to_date_earlier_than_rent_from_date".tr);
 
         return false;
       }
@@ -303,22 +310,22 @@ class ManagementController extends GetxController {
                 //   customSnackBar(Get.context!, "Rent To date can not be empty");
                 // }
               } else {
-                customSnackBar(Get.context!, "Rent From date can not be empty");
+                customSnackBar(Get.context!, "rent_from_date_empty".tr);
               }
             } else {
-              customSnackBar(Get.context!, "Rent field can not be empty");
+              customSnackBar(Get.context!, "rent_field_empty".tr);
             }
           } else {
-            customSnackBar(Get.context!, "Please Select the Unit");
+            customSnackBar(Get.context!, "unit_not_selected".tr);
           }
         } else {
-          customSnackBar(Get.context!, "Please Select the Floor");
+          customSnackBar(Get.context!, "floor_not_selected".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please Select the Building");
+        customSnackBar(Get.context!, "please_select_building".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please Select the property");
+      customSnackBar(Get.context!, "please_select_property".tr);
     }
   }
 
@@ -329,10 +336,10 @@ class ManagementController extends GetxController {
           addTenant();
         }
       } else {
-        customSnackBar(Get.context!, "Rent To date can not be empty");
+        customSnackBar(Get.context!, "rent_to_date_empty".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Rent field can not be empty");
+      customSnackBar(Get.context!, "rent_field_empty".tr);
     }
   }
 
@@ -340,7 +347,7 @@ class ManagementController extends GetxController {
     if (mobileCntrl.value.text.isNotEmpty) {
       getTenenatCheck();
     } else {
-      customSnackBar(Get.context!, "Mobile Number field can not be empty");
+      customSnackBar(Get.context!, "mobile_number_empty".tr);
     }
   }
 
@@ -351,10 +358,12 @@ class ManagementController extends GetxController {
   getTenenatCheck() async {
     final authCntrl = Get.find<AuthController>();
     tenantCheckLoading.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "phone_code": authCntrl.selectedItem.trim(),
@@ -436,9 +445,12 @@ class ManagementController extends GetxController {
         );
       }
     }
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: isFromHome.value
@@ -520,9 +532,12 @@ class ManagementController extends GetxController {
         );
       }
     }
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+     String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: isFromHome.value

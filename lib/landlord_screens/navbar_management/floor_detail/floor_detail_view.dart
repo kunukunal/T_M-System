@@ -46,7 +46,7 @@ class FloorDetailView extends StatelessWidget {
           children: [
             Padding(
                 padding: EdgeInsets.only(left: 10.w, bottom: 10.h, top: 10.h),
-                child: commonText(title: 'Units')),
+                child: commonText(title: 'units'.tr)),
             Obx(() {
               return Expanded(
                 child: floorDetailCntrl.isUnitsStatsLoading.value
@@ -54,8 +54,8 @@ class FloorDetailView extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : floorDetailCntrl.items.isEmpty
-                        ? const Center(
-                            child: Text("No units found"),
+                        ?  Center(
+                            child: Text("no_units_found".tr),
                           )
                         : ListView.builder(
                             shrinkWrap: true,

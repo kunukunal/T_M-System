@@ -24,7 +24,7 @@ class PropertyWidget {
         ),
       ),
       centerTitle: true,
-      title: Text('Property List', style: CustomStyles.otpStyle050505W700S16),
+      title: Text('property_list'.tr, style: CustomStyles.otpStyle050505W700S16),
       actions: [
         // InkWell(
         //     onTap: () {
@@ -79,8 +79,8 @@ class PropertyWidget {
                 SlidableAction(
                   onPressed: (context) {
                     deleteFloorPopup(
-                        button1: "No",
-                        button2: "Yes",
+                        button1: "no".tr,
+                        button2: "yes".tr,
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -89,7 +89,7 @@ class PropertyWidget {
                           propertyCntrl.deletePropertyData(propertyId: id!);
                         },
                         title:
-                            "Are you sure you want to Permanent remove $propertyTitle");
+                            "${'are_you_sure_permanent_remove'.tr} $propertyTitle");
                   },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: whiteColor,

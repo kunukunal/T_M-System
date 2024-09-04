@@ -30,7 +30,7 @@ class TenantDetailScreen extends StatelessWidget {
           ),
         ),
         // automaticallyImplyLeading: false,
-        title: Text('Kirayedar Details',
+        title: Text('kirayedar_details'.tr,
             style: CustomStyles.otpStyle050505W700S16),
         actions: [
           InkWell(
@@ -162,7 +162,7 @@ class TenantDetailScreen extends StatelessWidget {
                             height: 20.h,
                           ),
                           Text(
-                            'Units',
+                            'units'.tr,
                             style: CustomStyles.otpStyle050505W700S16,
                           ),
                           SizedBox(
@@ -173,7 +173,7 @@ class TenantDetailScreen extends StatelessWidget {
                             height: 20.h,
                           ),
                           Text(
-                            'Payment History',
+                            'payment_history'.tr,
                             style: CustomStyles.otpStyle050505W700S16,
                           ),
                           SizedBox(

@@ -1,6 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 import '../../../common/functions.dart';
 import '../../../modals/user_modal.dart';
@@ -24,11 +26,16 @@ class SplashController extends GetxController {
   }
 
   _getUserLogin() async {
-    final prefs = await SharedPreferences.getInstance();
+    String token = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "en";
+    isProfileSetup.value = await SharedPreferencesServices.getBoolData(
+            key: SharedPreferencesKeysEnum.ispersonalinfocompleted.value) ??
+        true;
+    isUserlandlord.value = await SharedPreferencesServices.getBoolData(
+            key: SharedPreferencesKeysEnum.islandlord.value) ??
+        false;
 
-    isProfileSetup.value = prefs.getBool('is_personal_info_completed') ?? true;
-    isUserlandlord.value = prefs.getBool('is_landlord') ?? false;
-    String token = prefs.getString('access_token') ?? "";
     isUserLogin = token.isNotEmpty;
   }
 

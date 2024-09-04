@@ -15,7 +15,7 @@ class ContactUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Contact Us', style: CustomStyles.skipBlack)),
+      appBar: AppBar(title: Text('contact_us'.tr, style: CustomStyles.skipBlack)),
       body: SingleChildScrollView(
         child: Column(
           children: [

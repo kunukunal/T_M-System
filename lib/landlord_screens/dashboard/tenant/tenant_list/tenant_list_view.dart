@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/add_tenant_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/tenant_list/tenant_list_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/tenant_list/tenant_list_widgets.dart';
@@ -23,14 +24,14 @@ class TenantListScreen extends StatelessWidget {
         centerTitle: true,
         // automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
-        title: Text('Kirayedar Management',
+        title: Text('kirayedar_management'.tr,
             style: CustomStyles.otpStyle050505W700S16),
-        actions: [
-          searchIcon,
-          SizedBox(
-            width: 10.w,
-          )
-        ],
+        // actions: [
+        //   searchIcon,
+        //   SizedBox(
+        //     width: 10.w,
+        //   )
+        // ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -41,7 +42,7 @@ class TenantListScreen extends StatelessWidget {
             {'isEdit': false}
           ])!
               .then((value) {
-                tenantCntrl.getKireyderList();
+            tenantCntrl.getKireyderList();
             // if (value == true) {
             //   tenantCntrl.getKireyderList();
             // }
@@ -64,10 +65,11 @@ class TenantListScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(
-              color: HexColor('#EBEBEB'),
-              height: 1.h,
-            ),
+            // Divider(
+            //   color: HexColor('#EBEBEB'),
+            //   height: 1.h,
+            // ),
+
             Obx(() {
               return Expanded(
                 child: tenantCntrl.kireyderListLoading.value
@@ -76,7 +78,7 @@ class TenantListScreen extends StatelessWidget {
                       )
                     : tenantCntrl.tenantList.isEmpty
                         ? SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -85,7 +87,7 @@ class TenantListScreen extends StatelessWidget {
                                 ),
                                 emptyTenantImage,
                                 Text(
-                                  'Empty Tenant',
+                                  'empty_tenant'.tr,
                                   style: CustomStyles.otpStyle050505,
                                 )
                               ],
@@ -94,17 +96,75 @@ class TenantListScreen extends StatelessWidget {
                         : Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.w, vertical: 10.h),
-                            child: ListView.separated(
-                                itemBuilder: (context, index) {
-                                  return TenantListWidgets()
-                                      .containerWidget(index);
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(
-                                    height: 10.h,
-                                  );
-                                },
-                                itemCount: tenantCntrl.tenantList.length),
+                            child: Column(
+                              children: [
+                                customTextField(
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(10.r),
+                                      child: searchIcon,
+                                    ),
+                                    hintStyle: CustomStyles.hintText,
+                                    hintText: 'search_kirayedar'.tr,
+                                    controller: tenantCntrl
+                                        .kiryedarSearchController.value,
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType: TextInputType.emailAddress,
+                                    onChange: (value) {
+                                      tenantCntrl.tenantList.refresh();
+                                    },
+                                    isBorder: true,
+                                    isFilled: false),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Expanded(
+                                  child: ListView.separated(
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        String tenantName =
+                                            (tenantCntrl.tenantList[index]
+                                                        ['name'] ??
+                                                    "")
+                                                .toString()
+                                                .trim();
+                                        String searchQuery = tenantCntrl
+                                            .kiryedarSearchController.value.text
+                                            .trim()
+                                            .toLowerCase();
+
+                                        if (tenantName
+                                            .toLowerCase()
+                                            .contains(searchQuery)) {
+                                          return TenantListWidgets()
+                                              .containerWidget(index);
+                                        }
+                                        return const SizedBox();
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        String tenantName =
+                                            (tenantCntrl.tenantList[index]
+                                                        ['name'] ??
+                                                    "")
+                                                .toString()
+                                                .trim();
+                                        String searchQuery = tenantCntrl
+                                            .kiryedarSearchController.value.text
+                                            .trim()
+                                            .toLowerCase();
+
+                                        if (tenantName
+                                            .toLowerCase()
+                                            .contains(searchQuery)) {
+                                          return SizedBox(
+                                            height: 10.h,
+                                          );
+                                        }
+                                        return const SizedBox();
+                                      },
+                                      itemCount: tenantCntrl.tenantList.length),
+                                ),
+                              ],
+                            ),
                           ),
               );
             })

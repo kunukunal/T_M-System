@@ -1,8 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tanent_management/common/text_styles.dart';
@@ -49,7 +47,7 @@ class EditProfileWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
@@ -61,7 +59,7 @@ class EditProfileWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 selectionCont(
-                  'Gallery',
+                  'gallery'.tr,
                   'assets/icons/pictures.png',
                   1,
                 ),
@@ -69,7 +67,7 @@ class EditProfileWidget {
                   width: 25.w,
                 ),
                 selectionCont(
-                  'Camera',
+                  'camera'.tr,
                   'assets/icons/camera.png',
                   2,
                 ),
@@ -88,7 +86,7 @@ class EditProfileWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),

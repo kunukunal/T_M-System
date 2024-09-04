@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_unit/add_unit_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class UnitCntroller extends GetxController {
   final unitList = [].obs;
@@ -53,9 +54,13 @@ class UnitCntroller extends GetxController {
 
   getAllUnit() async {
     isUnitLoaded.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
@@ -76,9 +81,13 @@ class UnitCntroller extends GetxController {
   }
 
   deleteUnitData({required int unitId}) async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
 
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",

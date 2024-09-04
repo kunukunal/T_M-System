@@ -26,11 +26,11 @@ class LanguageScreen extends StatelessWidget {
               ),
               backArrowIcon(),
               SizedBox(height: 15.h,),
-              Text('Choose a Preferred Language',style: CustomStyles.otpStyle050505.copyWith(fontWeight: FontWeight.w600),),
+              Text('choose_a_preferred_language'.tr,style: CustomStyles.otpStyle050505.copyWith(fontWeight: FontWeight.w600),),
               LanguageWidget.languageSelectionWidget(),
               customButton(onPressed: (){
                 langCntrl.onContinueTap(isFromProfile:isFromProfile);
-              },width: Get.width,text: 'Continue'),
+              },width: Get.width,text: 'continue'.tr),
               SizedBox(height: 20.h,)
             ],
             

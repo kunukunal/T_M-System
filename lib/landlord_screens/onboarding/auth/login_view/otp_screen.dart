@@ -34,10 +34,10 @@ class OtpScreen extends StatelessWidget {
                         authCntrl.otpController4.value.text.trim().isNotEmpty) {
                       authCntrl.verifyOtpApi(isFromRegister!);
                     } else {
-                      customSnackBar(Get.context!, "Please enter the otp.");
+                      customSnackBar(Get.context!, "please_enter_otp".tr);
                     }
                   },
-                  text: 'Submit',
+                  text: 'submit'.tr,
                   width: Get.width),
               AuthWidget.resendButtonWidget(onPressed: () {
                 if (authCntrl.isTimeComplete.value == true) {
@@ -50,7 +50,7 @@ class OtpScreen extends StatelessWidget {
                   authCntrl.isTimeComplete.value = false;
                 } else {
                   customSnackBar(
-                      Get.context!, "Please wait until the timer completes.");
+                      Get.context!, "please_wait_until_timer_completes".tr);
                 }
               })
             ],

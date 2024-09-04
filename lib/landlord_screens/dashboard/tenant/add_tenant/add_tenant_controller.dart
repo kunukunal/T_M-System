@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/global_data.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/tenant_documents.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class AddTenantController extends GetxController {
   final name = TextEditingController().obs;
@@ -98,22 +99,22 @@ class AddTenantController extends GetxController {
                   addTenantByLandLordApi();
                 }
               } else {
-                customSnackBar(Get.context!, "Please enter the State");
+                customSnackBar(Get.context!, "please_enter_state".tr);
               }
             } else {
-              customSnackBar(Get.context!, "Please enter the city");
+              customSnackBar(Get.context!, "please_enter_city".tr);
             }
           } else {
-            customSnackBar(Get.context!, "Please enter the pincode");
+            customSnackBar(Get.context!, "please_enter_pincode".tr);
           }
         } else {
-          customSnackBar(Get.context!, "Please enter the phone number");
+          customSnackBar(Get.context!, "please_enter_phone_number".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please enter the email");
+        customSnackBar(Get.context!, "please_enter_email".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please enter the name");
+      customSnackBar(Get.context!, "please_enter_name".tr);
     }
 
     // Get.to(() => TenantDocScreen());
@@ -134,9 +135,12 @@ class AddTenantController extends GetxController {
             .multipartFile(file: profileImage.value!)
         : null;
     addTenantByLandlordLaoding.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -187,9 +191,12 @@ class AddTenantController extends GetxController {
   verifyTanantOtp() async {
     final authCntrl = Get.find<AuthController>();
     addTenantOtpVerify.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -245,9 +252,12 @@ class AddTenantController extends GetxController {
             .multipartFile(file: profileImage.value!)
         : null;
     addTenantByLandlordLaoding.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null
@@ -317,9 +327,12 @@ class AddTenantController extends GetxController {
         : null;
     addTenantOtpVerify.value = true;
 
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: profileImage.value != null

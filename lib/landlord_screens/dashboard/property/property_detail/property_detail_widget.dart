@@ -138,7 +138,7 @@ class PropertyDetailViewWidget {
             height: 5.h,
           ),
           Text(
-            "Amenities",
+            "amenities".tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
           ),
@@ -188,7 +188,8 @@ class PropertyDetailViewWidget {
                 style: CustomStyles.titleText
                     .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
               ),
-              subtitle: const Text("Landlord"),
+              subtitle: 
+               Text("landlord".tr),
             ),
           ),
           SizedBox(

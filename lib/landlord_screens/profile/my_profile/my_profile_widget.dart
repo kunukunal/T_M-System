@@ -34,7 +34,7 @@ class MyProfileWidget {
                 width: 10.w,
               ),
               Text(
-                'My Profile',
+                'my_profile'.tr,
                 style: TextStyle(
                     color: whiteColor,
                     fontWeight: FontWeight.w700,
@@ -100,13 +100,13 @@ class MyProfileWidget {
                 },
                 child: Container(
                   height: 30.h,
-                  width: 100.w,
+                  width: 120.w,
                   decoration: BoxDecoration(
                       color: HexColor('#FFFFFF').withOpacity(.15),
                       borderRadius: BorderRadius.circular(25.r)),
                   child: Center(
                     child: Text(
-                      'Edit Profile',
+                      'edit_profile'.tr,
                       style: TextStyle(
                           color: whiteColor,
                           fontSize: 14.sp - commonFontSize,

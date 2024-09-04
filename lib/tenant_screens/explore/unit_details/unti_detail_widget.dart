@@ -145,7 +145,7 @@ class UnitDetailViewWidget {
           height: 10.h,
         ),
         Text(
-          "Amenities",
+          "amenities".tr,
           style: CustomStyles.titleText
               .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
         ),
@@ -202,7 +202,7 @@ class UnitDetailViewWidget {
               style: CustomStyles.titleText
                   .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
             ),
-            subtitle: const Text("Landlord"),
+            subtitle: Text("landlord".tr),
           ),
         ),
         SizedBox(
@@ -245,17 +245,18 @@ class UnitDetailViewWidget {
               : customBorderWithIconButton(
                   unitCntrl.isFromDashboard.value
                       ? unitCntrl.isExitRequest.value
-                          ? "Request Submitted"
-                          : "Exit Unit"
+                          ? "request_submitted".tr
+                          : "exit_unit".tr
                       : unitCntrl.isPalceRequest.value
-                          ? "Request Submitted"
-                          : "Request Unit", () {
+                          ? "request_submitted".tr
+                          : "request_unit".tr, () {
                   if (unitCntrl.isFromDashboard.value) {
                     if (unitCntrl.isExitRequest.value == false) {
                       unitCntrl.sendUnitExitRequest();
                       // dasds
                     } else {
-                      customSnackBar(Get.context!, "Request already submitted");
+                      customSnackBar(
+                          Get.context!, "request_already_submitted".tr);
                     }
                   } else {
                     if (unitCntrl.isPalceRequest.value == false) {
@@ -263,7 +264,8 @@ class UnitDetailViewWidget {
 
                       //fdsa
                     } else {
-                      customSnackBar(Get.context!, "Request already submitted");
+                      customSnackBar(
+                          Get.context!, "request_already_submitted".tr);
                     }
                   }
                 },
@@ -301,7 +303,7 @@ class UnitDetailViewWidget {
                     width: 5.w,
                   ),
                   Text(
-                    "${unitCntrl.unitRating['overall_average'].toString()} (${unitCntrl.unitRating['total_reviews'].toString()} Reviews)",
+                    "${unitCntrl.unitRating['overall_average'].toString()} (${unitCntrl.unitRating['total_reviews'].toString()} ${'reviews'.tr})",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
@@ -309,7 +311,7 @@ class UnitDetailViewWidget {
               if (unitCntrl.isFromDashboard.value &&
                   unitCntrl.isRatingDone.value == false)
                 TextButton(
-                  child: const Text("Add Review",
+                  child: Text("${'add_review'.tr}",
                       style: TextStyle(fontSize: 16, color: Colors.blue)),
                   onPressed: () {
                     // add review
@@ -411,7 +413,7 @@ class UnitDetailViewWidget {
         titlePadding: EdgeInsets.only(top: 15.h, left: 14.w, right: 14.w),
         contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
         title: Text(
-          "Rate Unit",
+          "rate_unit".tr,
           style: TextStyle(
             color: Colors.black,
             fontSize: 18.sp - commonFontSize,
@@ -459,7 +461,7 @@ class UnitDetailViewWidget {
                 }),
                 SizedBox(height: 10.h),
                 Text(
-                  "Write Review",
+                  "write_review".tr,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 15.sp - commonFontSize,
@@ -470,7 +472,7 @@ class UnitDetailViewWidget {
                 SizedBox(height: 5.h),
                 customTextField(
                     controller: unitCntrl.reviewController.value,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     isBorder: true,
                     isFilled: false,
                     maxLines: 4),
@@ -480,7 +482,7 @@ class UnitDetailViewWidget {
                   children: [
                     Flexible(
                       child: customBorderButton(
-                        "Cancel",
+                        "cancel".tr,
                         () {
                           Get.back();
                         },
@@ -498,7 +500,7 @@ class UnitDetailViewWidget {
                               child: CircularProgressIndicator(),
                             )
                           : customBorderButton(
-                              "Send Review",
+                              "send_review".tr,
                               () {
                                 if (unitCntrl.reviewController.value.text
                                     .trim()
@@ -506,7 +508,7 @@ class UnitDetailViewWidget {
                                   unitCntrl.sendReview();
                                 } else {
                                   customSnackBar(
-                                      Get.context!, "Please write the review");
+                                      Get.context!, "please_write_review".tr);
                                 }
                                 // Handle the update logic here.
                               },

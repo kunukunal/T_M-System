@@ -19,7 +19,7 @@ class ExpenseScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
-        title: Text('Expense', style: CustomStyles.otpStyle050505),
+        title: Text('expense'.tr, style: CustomStyles.otpStyle050505),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/text_styles.dart';
 
@@ -51,17 +52,17 @@ class AddAmenitiesWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    commomText('Amenities', isMandatory: true),
+                    commomText('amenities'.tr, isMandatory: true),
                     customTextField(
                       textInputAction: TextInputAction.done,
                       controller: amenitiesElement['amenity_name']
                           as TextEditingController,
-                      hintText: 'Drinking Water',
+                      hintText: 'drinking_water'.tr,
                       isBorder: true,
                       // color: HexColor('#F7F7F7'),
                       isFilled: false,
                     ),
-                    commomText('Amount', isMandatory: true),
+                    commomText('amount'.tr, isMandatory: true),
                     customTextField(
                       controller:
                           amenitiesElement['ammount'] as TextEditingController,

@@ -25,7 +25,7 @@ class CompleteDashboard extends StatelessWidget {
               children: [
                 SearchWidget().occUnoccContainer(
                     icon: occupiedIcon,
-                    titleUnit: 'Properties(Units)',
+                    titleUnit: 'properties_units'.tr,
                     units:
                         '${dashCntrl.propertyStats['occupied_units']}/${dashCntrl.propertyStats['total_units']}'),
                 SizedBox(
@@ -33,27 +33,27 @@ class CompleteDashboard extends StatelessWidget {
                 ),
                 SearchWidget().occUnoccContainer(
                     icon: unOccupiedIcon,
-                    titleUnit: 'Tenants',
+                    titleUnit: 'tenants'.tr,
                     units: '${dashCntrl.propertyStats['tenants']}'),
               ],
             ),
             SizedBox(
               height: 10.h,
             ),
-            filterWidget(title: "Income/Expense"),
+            filterWidget(title: "income_expense".tr),
             SizedBox(height: 16.h),
             OverviewCard(
-              title: 'Income/Expense',
+              title: 'income_expense'.tr,
               chartTitles: const ['Income', 'Expense'],
               data: [dashCntrl.income, dashCntrl.expense],
               colors: const [Colors.blue, Colors.red],
               xLabels: dashCntrl.xIncomeExpenseLabels,
             ),
             SizedBox(height: 16.h),
-            filterWidget(title: 'Occupancy Trend'),
+            filterWidget(title: 'occupancy_trend'.tr),
             SizedBox(height: 16.h),
             OverviewCard(
-              title: 'Occupancy Trend',
+              title: 'occupancy_trend'.tr,
               chartTitles: const ['Rent Paid', 'Rent Due'],
               data: [dashCntrl.rentPaid, dashCntrl.rentDue],
               colors: const [Colors.blue, Colors.black],
@@ -71,7 +71,7 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            filterWidget(title: "Properties List"),
+            filterWidget(title: "property_list".tr),
             SizedBox(
               height: 10.h,
             ),
@@ -110,13 +110,13 @@ tenantRentContainer({bool isForRent = true}) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                isForRent ? 'Rent' : 'Expense',
+                isForRent ? 'rent'.tr : 'expense'.tr,
                 style: CustomStyles.otpStyle050505W700S16,
               ),
               Row(
                 children: [
                   Text(
-                    'Month to Month',
+                    'month_to_month'.tr,
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -144,7 +144,7 @@ tenantRentContainer({bool isForRent = true}) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isForRent ? 'Rent paid' : "Upcoming",
+                    isForRent ? 'rent_paid'.tr : "upcoming".tr,
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -159,7 +159,7 @@ tenantRentContainer({bool isForRent = true}) {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    isForRent ? 'Due' : 'Overdue',
+                    isForRent ? 'due'.tr : 'overdue'.tr,
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -221,8 +221,8 @@ class OverviewCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Statistics',
+               Text(
+                'statistics'.tr,
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -250,7 +250,7 @@ class OverviewCard extends StatelessWidget {
             child: isDataZero
                 ? Center(
                     child: Text(
-                      'No data found',
+                      'no_data_found'.tr,
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 16.sp,
@@ -466,7 +466,7 @@ Widget filterWidget({required String title}) {
       Row(
         children: [
           Text(
-            'Month',
+            'month'.tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
           ),

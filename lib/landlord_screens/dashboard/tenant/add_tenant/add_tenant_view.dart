@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
@@ -38,8 +37,8 @@ class AddTenantScreen extends StatelessWidget {
         // automaticallyImplyLeading: false,
         title: Text(
             addTenantCntrl.isComingForEdit.value
-                ? 'Update Kirayedar'
-                : 'Add Kirayedar',
+                ? 'update_kirayedar'.tr
+                : 'add_kirayedar'.tr,
             style: CustomStyles.otpStyle050505W700S16),
       ),
       body: Column(
@@ -152,12 +151,12 @@ class AddTenantScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  EditProfileWidget.commomText('Name'),
+                  EditProfileWidget.commomText('name'.tr),
                   customTextField(
                       controller: addTenantCntrl.name.value,
                       focusNode: addTenantCntrl.firstNameFocus.value,
                       keyboardType: TextInputType.name,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false),
@@ -199,24 +198,24 @@ class AddTenantScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  EditProfileWidget.commomText('Email Address'),
+                  EditProfileWidget.commomText('email_address'.tr),
                   customTextField(
                       controller: addTenantCntrl.emailCntrl.value,
                       focusNode: addTenantCntrl.emailFocus.value,
                       keyboardType: TextInputType.emailAddress,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
                   ),
-                  EditProfileWidget.commomText('Mobile Number'),
+                  EditProfileWidget.commomText('enter_mobile'.tr),
                   customTextField(
                       controller: addTenantCntrl.phoneCntrl.value,
                       focusNode: addTenantCntrl.phoneFocus.value,
                       keyboardType: TextInputType.number,
-                      hintText: 'Enter Mobile Number',
+                      hintText: 'enter_mobile_number'.tr,
                       isBorder: true,
                       onDropdownChanged: !addTenantCntrl.isFromCheckTenat.value,
                       readOnly: addTenantCntrl.isFromCheckTenat.value,
@@ -227,12 +226,12 @@ class AddTenantScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  EditProfileWidget.commomText('Address'),
+                  EditProfileWidget.commomText('address'.tr),
                   customTextField(
                       controller: addTenantCntrl.permanentAddCntrl.value,
                       focusNode: addTenantCntrl.permanentFocus.value,
                       keyboardType: TextInputType.streetAddress,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false,
@@ -245,12 +244,12 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('Landmark'),
+                          EditProfileWidget.commomText('landmark'.tr),
                           customTextField(
                               controller: addTenantCntrl.streetdCntrl.value,
                               focusNode: addTenantCntrl.streetdtFocus.value,
                               width: Get.width / 2.3,
-                              hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
@@ -260,7 +259,7 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('Pin Code',
+                          EditProfileWidget.commomText('pincode'.tr,
                               isMandatory: true),
                           customTextField(
                               maxLength: 6,
@@ -268,7 +267,7 @@ class AddTenantScreen extends StatelessWidget {
                               focusNode: addTenantCntrl.pinNoFocus.value,
                               keyboardType: TextInputType.number,
                               width: Get.width / 2.3,
-                              hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
@@ -282,7 +281,7 @@ class AddTenantScreen extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            EditProfileWidget.commomText('State',
+                            EditProfileWidget.commomText('state'.tr,
                                 isMandatory: true),
                             bigDropDown(
                                 // width: 150.5.w,
@@ -308,13 +307,13 @@ class AddTenantScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          EditProfileWidget.commomText('City',
+                          EditProfileWidget.commomText('city'.tr,
                               isMandatory: true),
                           customTextField(
                               controller: addTenantCntrl.cityCntrl.value,
                               focusNode: addTenantCntrl.cityFocus.value,
                               width: Get.width / 2.3,
-                              hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
@@ -331,8 +330,8 @@ class AddTenantScreen extends StatelessWidget {
                             .onNextTap(addTenantCntrl.isComingForEdit.value);
                       },
                       text: addTenantCntrl.isComingForEdit.value
-                          ? 'Update'
-                          : 'Next',
+                          ? 'update'.tr
+                          : 'next'.tr,
                       width: Get.width,
                       verticalPadding: 10.h),
                   SizedBox(

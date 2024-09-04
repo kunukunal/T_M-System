@@ -31,7 +31,7 @@ class WalkThroughScreen extends StatelessWidget {
                   onPressed: () {
                     cntrl.onGetStartedTap();
                   },
-                  text: 'Get Started',
+                  text: 'get_started'.tr,
                   width: Get.width,
                   // suffix: getStartedButtonIcon
                 )),

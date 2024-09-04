@@ -26,7 +26,7 @@ class AddPropertyView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  Text('Property Details', style: CustomStyles.skipBlack),
+                  Text('property_details'.tr, style: CustomStyles.skipBlack),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Divider(
@@ -35,44 +35,44 @@ class AddPropertyView extends StatelessWidget {
                     ),
                   ),
                   AddPropertyWidget()
-                      .commomText('Property Title', isMandatory: true),
+                      .commomText('property_title'.tr, isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.propertyTitleCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('Address', isMandatory: true),
+                  AddPropertyWidget().commomText('address'.tr, isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.addressCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     isBorder: true,
                     maxLines: 2,
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
                   AddPropertyWidget()
-                      .commomText('Landmark', isMandatory: false),
+                      .commomText('landmark'.tr, isMandatory: false),
                   customTextField(
                     controller: addPropertyCntrl.landmarkCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('Pin Code', isMandatory: true),
+                  AddPropertyWidget().commomText('pincode'.tr, isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.pinCodeCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     maxLength: 6,
 
                     isBorder: true,
@@ -87,7 +87,7 @@ class AddPropertyView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AddPropertyWidget()
-                                  .commomText('State', isMandatory: true),
+                                  .commomText('state'.tr, isMandatory: true),
                               // customTextField(
                               //   controller: addPropertyCntrl.stateCntrl.value,
                               //   textInputAction: TextInputAction.done,
@@ -116,12 +116,12 @@ class AddPropertyView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AddPropertyWidget()
-                              .commomText('City', isMandatory: true),
+                              .commomText('city'.tr, isMandatory: true),
                           customTextField(
                             controller: addPropertyCntrl.cityCntrl.value,
                             textInputAction: TextInputAction.done,
                             // keyboardType: TextInputType.number,
-                            hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             // color: HexColor('#F7F7F7'),
                             isFilled: false,
@@ -132,7 +132,7 @@ class AddPropertyView extends StatelessWidget {
                     ],
                   ),
                   AddPropertyWidget()
-                      .commomText('Upload Picture', isMandatory: false),
+                      .commomText('upload_picture'.tr, isMandatory: false),
                   Obx(() {
                     return addPropertyCntrl.propertyPickedImage.isEmpty
                         ? const SizedBox()
@@ -173,7 +173,7 @@ class AddPropertyView extends StatelessWidget {
                                                   fit: BoxFit.cover)),
                                     ),
                                     titleAlignment: ListTileTitleAlignment.top,
-                                    title: Text("Image ${index + 1}"),
+                                    title: Text("${'image'.tr} ${index + 1}"),
                                     trailing: IconButton(
                                         onPressed: () {
                                           if (addPropertyCntrl
@@ -223,8 +223,8 @@ class AddPropertyView extends StatelessWidget {
                         addPropertyCntrl.onSaveTap();
                       },
                       text: addPropertyCntrl.isForEdit.value == true
-                          ? "Update"
-                          : 'Save',
+                          ? "update".tr
+                          : 'save'.tr,
                       width: Get.width,
                       verticalPadding: 10.h),
             )

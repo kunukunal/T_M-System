@@ -21,7 +21,7 @@ class AddPropertyWidget {
         ),
       ),
       centerTitle: true,
-      title: Text('Add Property', style: CustomStyles.otpStyle050505W700S16),
+      title: Text('add_property'.tr, style: CustomStyles.otpStyle050505W700S16),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
         child: Divider(
@@ -72,7 +72,7 @@ class AddPropertyWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
@@ -84,7 +84,7 @@ class AddPropertyWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 selectionCont(
-                  'Gallery',
+                  'gallery'.tr,
                   'assets/icons/pictures.png',
                   1,
                 ),
@@ -92,7 +92,7 @@ class AddPropertyWidget {
                   width: 25.w,
                 ),
                 selectionCont(
-                  'Camera',
+                  'camera'.tr,
                   'assets/icons/camera.png',
                   2,
                 ),
@@ -111,7 +111,7 @@ class AddPropertyWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),

@@ -70,7 +70,7 @@ class PersonlInfoWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
@@ -82,7 +82,7 @@ class PersonlInfoWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 selectionCont(
-                  'Gallery',
+                  'gallery'.tr,
                   'assets/icons/pictures.png',
                   1,
                 ),
@@ -90,7 +90,7 @@ class PersonlInfoWidget {
                   width: 25.w,
                 ),
                 selectionCont(
-                  'Camera',
+                  'camera'.tr,
                   'assets/icons/camera.png',
                   2,
                 ),
@@ -109,7 +109,7 @@ class PersonlInfoWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),

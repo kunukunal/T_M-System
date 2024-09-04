@@ -61,6 +61,11 @@ dependencies:
   image_gallery_saver: ^2.0.3
   flutter_pannable_rating_bar: ^2.7.2+1
   firebase_core: ^3.3.0
+  phonepe_payment_sdk: ^2.0.3
+  crypto: ^3.0.3
+  uuid: ^4.4.2
+  firebase_messaging: ^15.1.0
+  googleapis_auth: ^1.6.0
 
 
 

@@ -19,7 +19,7 @@ class AddUnitView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AddUnitWidget().appBar(addUnitCntrl.isEdit.value?"Update Unit":"Add Unit"),
+      appBar: AddUnitWidget().appBar(addUnitCntrl.isEdit.value?"update_unit".tr:"add_unit".tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -31,7 +31,7 @@ class AddUnitView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Text(
-                      'Unit Details',
+                      'unit_details'.tr,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16.sp - commonFontSize,
@@ -42,15 +42,15 @@ class AddUnitView extends StatelessWidget {
                     color: lightBorderGrey,
                     height: 1.h,
                   ),
-                  AddUnitWidget().commomText('Unit Name', isMandatory: true),
+                  AddUnitWidget().commomText('unit_name'.tr, isMandatory: true),
                   customTextField(
                     controller: addUnitCntrl.unitNameCntrl.value,
                     textInputAction: TextInputAction.done,
-                    hintText: 'Flat Number',
+                    hintText: 'flat_number'.tr,
                     isBorder: true,
                     isFilled: false,
                   ),
-                  AddUnitWidget().commomText('Unit Type', isMandatory: true),
+                  AddUnitWidget().commomText('unit_type'.tr, isMandatory: true),
                   Obx(() {
                     return bigDropDown(
                         selectedItem: addUnitCntrl.selectedUnitType.value,
@@ -61,7 +61,7 @@ class AddUnitView extends StatelessWidget {
                         });
                   }),
                   AddUnitWidget()
-                      .commomText('Unit Features', isMandatory: true),
+                      .commomText('unit_features'.tr, isMandatory: true),
                   Obx(() {
                     return bigDropDown(
                         selectedItem: addUnitCntrl.selectedUnitFeature.value,
@@ -71,7 +71,7 @@ class AddUnitView extends StatelessWidget {
                           addUnitCntrl.selectedUnitFeature.value = item;
                         });
                   }),
-                  AddUnitWidget().commomText('Unit Rent', isMandatory: true),
+                  AddUnitWidget().commomText('unit_rent'.tr, isMandatory: true),
                   customTextField(
                     controller: addUnitCntrl.unitRentCntrl.value,
                     textInputAction: TextInputAction.done,
@@ -81,12 +81,12 @@ class AddUnitView extends StatelessWidget {
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
-                  AddUnitWidget().commomText('Area Size', isMandatory: true),
+                  AddUnitWidget().commomText('area_size'.tr, isMandatory: true),
                   customTextField(
                     controller: addUnitCntrl.areaSizeCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.name,
-                    hintText: 'Type Here... Sq.ft',
+                    hintText: '${'type_here'.tr}... ${'sqft'.tr}',
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
@@ -103,7 +103,7 @@ class AddUnitView extends StatelessWidget {
                             addUnitCntrl.isNegosiateSelected.value = value!;
                           },
                           title: Text(
-                            "Rent Negotiable",
+                            "rent_negotiable".tr,
                             style: TextStyle(
                                 fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
@@ -119,7 +119,7 @@ class AddUnitView extends StatelessWidget {
                             addUnitCntrl.isActiveSelected.value = value!;
                           },
                           title: Text(
-                            "Available for rent",
+                            "available_for_rent".tr,
                             style: TextStyle(
                                 fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
@@ -146,12 +146,12 @@ class AddUnitView extends StatelessWidget {
                     );
                   }),
                   AddUnitWidget().commomText(
-                    'Note',
+                    'note'.tr,
                   ),
                   customTextField(
                     controller: addUnitCntrl.noteCntrl.value,
                     textInputAction: TextInputAction.done,
-                    hintText: 'Type Here...',
+                    hintText: '${'type_here'.tr}...',
                     isBorder: true,
                     maxLines: 3,
                     // color: HexColor('#F7F7F7'),
@@ -221,7 +221,7 @@ class AddUnitView extends StatelessWidget {
                             width: 10.w,
                           ),
                           Text(
-                            'Add Amenities(s)',
+                            'add_amenities'.tr,
                             style: TextStyle(
                                 fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w500,
@@ -232,7 +232,7 @@ class AddUnitView extends StatelessWidget {
                     ),
                   ),
                   AddUnitWidget().commomText(
-                    'Upload Picture/Video',
+                    'upload_picture_video'.tr,
                   ),
                   Obx(() {
                     return addUnitCntrl.unitPickedImage.isEmpty
@@ -317,7 +317,7 @@ class AddUnitView extends StatelessWidget {
             Obx(() {
               return addUnitCntrl.isAddUnitdataUploaded.value == true
                   ? const Center(child: CircularProgressIndicator())
-                  : customBorderButton(  addUnitCntrl.isEdit.value?"Update": 'Save', () {
+                  : customBorderButton(  addUnitCntrl.isEdit.value?"update".tr: 'save'.tr, () {
                       addUnitCntrl.onSaveTap();
                     },
                       verticalPadding: 10.h,

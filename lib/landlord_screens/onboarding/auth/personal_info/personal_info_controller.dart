@@ -4,14 +4,15 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/global_data.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/navbar/navbar_view.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/sign_in.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 import 'package:tanent_management/tenant_screens/navbar/navbar_view.dart';
 
 import '../landlord_document/landlord_view.dart';
@@ -66,7 +67,7 @@ class PersonalInfoController extends GetxController {
     int index =
         documentTypeList.indexWhere((element) => element['image'] == null);
     if (index != -1) {
-      customSnackBar(Get.context!, "Please add all the document");
+      customSnackBar(Get.context!, "please_add_all_documents".tr);
     } else {
       userDocumentUpdate(isFromRegistered: isFromRegistered);
     }
@@ -75,8 +76,10 @@ class PersonalInfoController extends GetxController {
   getDocumentType() async {
     isDocumentTypeDataLoading.value = true;
     final authCntrl = Get.put(AuthController());
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
     }, url: "$userDocumentType?limit=100&${authCntrl.onButtonTapTenant.value == 2 ? "for_tenant=true" : "for_landlord=true"}");
@@ -113,9 +116,12 @@ class PersonalInfoController extends GetxController {
           .multipartFile(file: documentTypeList[i]['image']));
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    String accessToken = prefs.getString('access_token') ?? "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
     final response = await DioClientServices.instance.dioPostCall(body: {
       'document_type': jsonEncode(id),
       'image': image
@@ -127,8 +133,10 @@ class PersonalInfoController extends GetxController {
       if (response.statusCode == 200) {
         isPercentageLoadingStart.value = false;
         if (isFromRegistered == true) {
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setBool('is_personal_info_completed', true);
+          await SharedPreferencesServices.setBoolData(
+              key: SharedPreferencesKeysEnum.ispersonalinfocompleted.value,
+              value: true);
+
           // Get.offAll(() => const NavBar(initialPage: 0));
           if (authCntrl.onButtonTapTenant.value == 1) {
             Get.offAll(() => const NavBar(initialPage: 0));
@@ -136,8 +144,10 @@ class PersonalInfoController extends GetxController {
             Get.offAll(() => const NavBarTenant(initialPage: 0));
           }
         } else {
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setBool('is_personal_info_completed', true);
+          await SharedPreferencesServices.setBoolData(
+              key: SharedPreferencesKeysEnum.ispersonalinfocompleted.value,
+              value: true);
+
           Get.offAll(() => SignInScreen(isFromRegister: isFromRegistered));
         }
         customSnackBar(Get.context!, response.data['message'][0]);
@@ -181,22 +191,22 @@ class PersonalInfoController extends GetxController {
             if (cityCntrl.value.text.trim().isNotEmpty) {
               userProfileUpdate(isFromRegister: isFromRegister);
             } else {
-              customSnackBar(Get.context!, "Please Enter your City");
+              customSnackBar(Get.context!, "please_enter_city".tr);
             }
           } else {
-            customSnackBar(Get.context!, "Please Enter your State");
+            customSnackBar(Get.context!, "please_enter_state".tr);
           }
         } else {
-          customSnackBar(Get.context!, "Please Enter your Pin code");
+          customSnackBar(Get.context!, "please_enter_pincode".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please Enter your Permanent Address");
+        customSnackBar(Get.context!, "please_enter_permanent_address".tr);
       }
       // } else {
       //   customSnackBar(Get.context!, "Please Enter your Email");
       // }
     } else {
-      customSnackBar(Get.context!, "Please Enter your name");
+      customSnackBar(Get.context!, "please_enter_name".tr);
     }
 
     // if (nameCntrl.value.text.trim().isNotEmpty &&
@@ -222,10 +232,12 @@ class PersonalInfoController extends GetxController {
   }
 
   userProfileUpdate({required bool? isFromRegister}) async {
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    String accessToken = prefs.getString('access_token') ?? "";
-
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
     final response = await DioClientServices.instance.dioPostCall(
         body: imageFile.value != null
             ? {
@@ -269,7 +281,7 @@ class PersonalInfoController extends GetxController {
         url: userProfile);
     if (response != null) {
       if (response.statusCode == 200) {
-        customSnackBar(Get.context!, "Profile update Successfully");
+        customSnackBar(Get.context!, "profile_update_successfully".tr);
         onSkipTap(isFromRegister: isFromRegister, isFromApi: true);
         log("Profile update Successfully.");
       } else if (response.statusCode == 400) {
@@ -282,9 +294,13 @@ class PersonalInfoController extends GetxController {
 
   getPersonalDetails() async {
     final authCntrl = Get.find<AuthController>();
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    String accessToken = prefs.getString('access_token') ?? "";
+
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
     final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
       'Authorization': "Bearer $accessToken",

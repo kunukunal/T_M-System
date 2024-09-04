@@ -10,21 +10,21 @@ import '../../common/text_styles.dart';
 
 class NavBarManagementWidget {
   appBar() {
-    final managementCntrl = Get.find<NavBarManagementCntroller>();
+    // final managementCntrl = Get.find<NavBarManagementCntroller>();
     return AppBar(
       centerTitle: true,
       automaticallyImplyLeading: false,
-      title: Text('Management', style: CustomStyles.otpStyle050505W700S16),
-      actions: [
-        InkWell(
-            onTap: () {
-              managementCntrl.onSearchTap();
-            },
-            child: Padding(
-              padding: EdgeInsets.all(8.r),
-              child: searchIcon,
-            )),
-      ],
+      title: Text('management'.tr, style: CustomStyles.otpStyle050505W700S16),
+      // actions: [
+      //   InkWell(
+      //       onTap: () {
+      //         managementCntrl.onSearchTap();
+      //       },
+      //       child: Padding(
+      //         padding: EdgeInsets.all(8.r),
+      //         child: searchIcon,
+      //       )),
+      // ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.h),
         child: Divider(
@@ -60,7 +60,8 @@ class NavBarManagementWidget {
                 ),
                 Text(
                   titleUnit!,
-                  style: TextStyle(fontSize: 14.sp - commonFontSize, color: black),
+                  style:
+                      TextStyle(fontSize: 14.sp - commonFontSize, color: black),
                 ),
               ],
             ),
@@ -74,7 +75,9 @@ class NavBarManagementWidget {
             child: Text(
               units!,
               style: TextStyle(
-                  fontSize: 20.sp - commonFontSize, color: black, fontWeight: FontWeight.w700),
+                  fontSize: 20.sp - commonFontSize,
+                  color: black,
+                  fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -92,7 +95,9 @@ class NavBarManagementWidget {
         child: Text(
           title!,
           style: TextStyle(
-              fontWeight: FontWeight.w700, fontSize: 16.sp - commonFontSize, color: black),
+              fontWeight: FontWeight.w700,
+              fontSize: 16.sp - commonFontSize,
+              color: black),
         ));
   }
 
@@ -193,7 +198,7 @@ class NavBarManagementWidget {
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              "$unitsAvailable Units(Available)",
+                              "$unitsAvailable ${'units_available'.tr}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp - commonFontSize,
@@ -213,7 +218,7 @@ class NavBarManagementWidget {
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              "$unitsOccupied Units(Occupied)",
+                              "$unitsOccupied ${'units_occupied'.tr}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp - commonFontSize,

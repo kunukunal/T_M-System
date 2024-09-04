@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_unit/add_unit_amenities_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_unit/add_unit_widget.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class AddUnitController extends GetxController {
   final unitNameCntrl = TextEditingController().obs;
@@ -109,9 +110,9 @@ class AddUnitController extends GetxController {
         if (areaSizeCntrl.value.text.trim().isNotEmpty) {
           if (isEdit.value == false) {
             AddUnitWidget().addMultipleUnits(
-              title: "How Many Unit are With Same Configuration",
-              button1: "Cancel",
-              button2: "Submit",
+              title: "how_many_units_with_same_configuration".tr,
+              button1: "cancel".tr,
+              button2: "submit".tr,
               onButton1Tap: () {
                 Get.back();
               },
@@ -123,10 +124,10 @@ class AddUnitController extends GetxController {
                     addUnitApi();
                   } else {
                     customSnackBar(
-                        Get.context!, "You can create max 10 units at a time");
+                        Get.context!, "you_can_create_max_10_units".tr);
                   }
                 } else {
-                  customSnackBar(Get.context!, "Unit count can not be zero");
+                  customSnackBar(Get.context!, "unit_count_cannot_be_zero".tr);
                 }
               },
             );
@@ -134,13 +135,13 @@ class AddUnitController extends GetxController {
             updateUnitAPi();
           }
         } else {
-          customSnackBar(Get.context!, "Please fill the Area Size");
+          customSnackBar(Get.context!, "please_fill_area_size".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please fill the Rent");
+        customSnackBar(Get.context!, "please_fill_rent".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please fill the unit name");
+      customSnackBar(Get.context!, "please_fill_unit_name".tr);
     }
   }
 
@@ -165,9 +166,13 @@ class AddUnitController extends GetxController {
       unitImage.add(await DioClientServices.instance
           .multipartFile(file: unitPickedImage[i]['image']));
     }
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
 
     final response = await DioClientServices.instance.dioPostCall(
 
@@ -199,7 +204,7 @@ class AddUnitController extends GetxController {
       if (response.statusCode == 201) {
         isAddUnitdataUploaded.value = false;
         customSnackBar(Get.context!,
-            "${unitNameCntrl.value.text.trim()} created Successfully");
+            "${unitNameCntrl.value.text.trim()} ${'created_successfully'.tr}");
         Get.back(result: true);
       } else if (response.statusCode == 400) {
         // Handle error
@@ -227,9 +232,13 @@ class AddUnitController extends GetxController {
         }
       }
     }
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-        String languaeCode = prefs.getString('languae_code') ?? "en";
+       String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
 
     final response = await DioClientServices.instance.dioPatchCall(
 
@@ -263,7 +272,7 @@ class AddUnitController extends GetxController {
       if (response.statusCode == 200) {
         isAddUnitdataUploaded.value = false;
         customSnackBar(Get.context!,
-            "${unitNameCntrl.value.text.trim()} updated Successfully");
+            "${unitNameCntrl.value.text.trim()} ${'updated_successfully'.tr}");
         Get.back(result: true);
       } else if (response.statusCode == 400) {
         // Handle error

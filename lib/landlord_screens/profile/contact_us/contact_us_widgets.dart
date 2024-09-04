@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/profile/contact_us/contact_us_controller.dart';
@@ -21,7 +20,7 @@ class ContactUsWidgets {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Text(
-                  'Contact us for Ride share Address',
+                  'contact_us_for_ride_share_address'.tr,
                   textAlign: TextAlign.center,
                   style: CustomStyles.title414141,
                 ),
@@ -43,7 +42,7 @@ class ContactUsWidgets {
             height: 20.h,
           ),
           Text(
-            'Send Message',
+            'send_message'.tr,
             style: CustomStyles.title414141,
           ),
           SizedBox(
@@ -61,36 +60,36 @@ class ContactUsWidgets {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PersonlInfoWidget.commomText('Full Name'),
+          PersonlInfoWidget.commomText('full_name'.tr),
           customTextField(
               controller: contactCntrl.nameCntrl.value,
               focusNode: contactCntrl.nameFocus.value,
               keyboardType: TextInputType.name,
-              hintText: 'Type Here...',
+              hintText: '${'type_here'.tr}...',
               isBorder: true,
               color: HexColor('#F7F7F7'),
               isFilled: false),
           SizedBox(
             height: 10.h,
           ),
-          PersonlInfoWidget.commomText('Email Id'),
+          PersonlInfoWidget.commomText('email_id'.tr),
           customTextField(
               controller: contactCntrl.emailCntrl.value,
               focusNode: contactCntrl.emailFocus.value,
               keyboardType: TextInputType.emailAddress,
-              hintText: 'Type Here...',
+              hintText: '${'type_here'.tr}...',
               isBorder: true,
               color: HexColor('#F7F7F7'),
               isFilled: false),
           SizedBox(
             height: 10.h,
           ),
-          PersonlInfoWidget.commomText('Description'),
+          PersonlInfoWidget.commomText('description'.tr),
           customTextField(
               maxLines: 4,
               controller: contactCntrl.descCntrl.value,
               focusNode: contactCntrl.descFocus.value,
-              hintText: 'Type Here...',
+              hintText: '${'type_here'.tr}...',
               isBorder: true,
               color: HexColor('#F7F7F7'),
               isFilled: false),
@@ -101,7 +100,7 @@ class ContactUsWidgets {
               onPressed: () {
                 contactCntrl.onSubmitMessage();
               },
-              text: 'Send Message',
+              text: 'send_message'.tr,
               width: Get.width)
         ],
       ),

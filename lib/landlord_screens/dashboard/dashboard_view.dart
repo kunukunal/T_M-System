@@ -50,7 +50,7 @@ class DashboardScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 16.h),
                               child: Text(
-                                'Welcome, ${userData['name'] ?? "User"}',
+                                '${'welcome'.tr}, ${userData['name'] ?? "User"}',
                                 textAlign: TextAlign.start,
                                 style: CustomStyles.blue679BF1w700s20,
                               ),
@@ -77,7 +77,7 @@ class DashboardScreen extends StatelessWidget {
             image: totalPropertyImage,
             height: 159.h,
             isTackVisible: false,
-            subTitle: 'Total Properties/Tenants'),
+            subTitle: 'total_properties_tenants'.tr),
         SizedBox(
           height: 16.h,
         ),
@@ -85,7 +85,7 @@ class DashboardScreen extends StatelessWidget {
             image: incomeExpenseImage,
             height: 300.86.h,
             isTackVisible: true,
-            title: 'Income/Expense'),
+            title: 'income_expense'.tr),
         SizedBox(
           height: 16.h,
         ),
@@ -93,11 +93,11 @@ class DashboardScreen extends StatelessWidget {
             image: occupancyTrendImage,
             height: 300.47.h,
             isTackVisible: false,
-            subTitle: 'Occupancy Trend'),
+            subTitle: 'occupancy_trend'.tr),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.h),
           child: Text(
-            'Property History',
+            'property_history'.tr,
             style: CustomStyles.otpStyle050505W700S16,
           ),
         ),
@@ -105,7 +105,7 @@ class DashboardScreen extends StatelessWidget {
             image: availableOccupiedImage,
             height: 179.h,
             isTackVisible: false,
-            subTitle: 'Available/Occupied Unit List'),
+            subTitle: 'available_occupied_unit_list'.tr),
       ],
     );
   }

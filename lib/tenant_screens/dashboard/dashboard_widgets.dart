@@ -9,6 +9,7 @@ import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/rental_information.dart';
+import 'package:tanent_management/tenant_screens/explore/explore_view.dart';
 
 import '../../common/text_styles.dart';
 
@@ -88,8 +89,10 @@ class DashBoardTenantWidgets {
           ),
           isTackVisible
               ? customButton(
-                  onPressed: () {},
-                  text: 'Start Tracking',
+                  onPressed: () {
+                    Get.to(() => ExploreScreen());
+                  },
+                  text: 'explore'.tr,
                   width: 136.w,
                   height: 45.h)
               : Text(
@@ -117,7 +120,7 @@ class DashBoardTenantWidgets {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
-            'Track Your',
+            'track_your'.tr,
             style: CustomStyles.desc606060
                 .copyWith(fontSize: 12.sp - commonFontSize),
           ),
@@ -156,7 +159,7 @@ class DashBoardTenantWidgets {
         Row(
           children: [
             Text(
-              'Month',
+              'month'.tr,
               style: CustomStyles.titleText
                   .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
             ),
@@ -258,7 +261,7 @@ class DashBoardTenantWidgets {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: 'Transaction: ',
+                    text: '${'transaction'.tr}: ',
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 16.sp - commonFontSize,

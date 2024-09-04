@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_widget.dart';
@@ -16,7 +17,7 @@ class RentalInformation extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           title: Text(
-            'Rental Information',
+            'rental_information'.tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
           ),
@@ -33,21 +34,21 @@ class RentalInformation extends StatelessWidget {
                   children: [
                     SearchWidget().occUnoccContainer(
                         icon: occupiedIcon,
-                        titleUnit: 'Rent Due',
+                        titleUnit: 'rent_due'.tr,
                         units: '20/40'),
                     SizedBox(
                       width: 5.w,
                     ),
                     SearchWidget().occUnoccContainer(
                         icon: unOccupiedIcon,
-                        titleUnit: 'Next Due Date',
+                        titleUnit: 'next_due_date'.tr,
                         units: '10 Apr 2024'),
                   ],
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
-                DashBoardTenantWidgets().filterWidget(title: "Payment Due"),
+                DashBoardTenantWidgets().filterWidget(title: "payment_due".tr),
                 ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,

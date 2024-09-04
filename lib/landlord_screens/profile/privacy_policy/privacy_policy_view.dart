@@ -14,7 +14,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppBar(title: Text('Privacy Policy', style: CustomStyles.skipBlack)),
+          AppBar(title: Text('privacy_policy'.tr, style: CustomStyles.skipBlack)),
       body: SingleChildScrollView(
         child: Obx(() {
           return Padding(
@@ -26,8 +26,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   )
                 : privacyCntrl.siteFeatureData.keys.isEmpty
-                    ? const Center(
-                        child: Text("No Privacy Policy data found"),
+                    ?  Center(
+                        child: Text("privacy_policy_data_not_found".tr),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

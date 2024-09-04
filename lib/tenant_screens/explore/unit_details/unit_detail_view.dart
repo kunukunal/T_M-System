@@ -29,7 +29,7 @@ class UnitDetailView extends StatelessWidget {
               child: backArrowImage,
             ),
           ),
-          title: Text("Details", style: CustomStyles.otpStyle050505W700S16),
+          title: Text("details".tr, style: CustomStyles.otpStyle050505W700S16),
         ),
         body: Obx(() {
           return unitDetailCntrl.unitDetailsLoading.value

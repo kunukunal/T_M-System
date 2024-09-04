@@ -37,7 +37,7 @@ class SearchView extends StatelessWidget {
                       child: searchIcon,
                     ),
                     hintStyle: CustomStyles.hintText,
-                    hintText: 'Unit',
+                    hintText: 'unit'.tr,
                     controller: searchCntrl.searchCntrl.value,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.emailAddress,
@@ -50,11 +50,11 @@ class SearchView extends StatelessWidget {
                  children: [
                  SearchWidget().occUnoccContainer(
                      icon: occupiedIcon,
-                     titleUnit: 'Occupied Units',
+                     titleUnit: 'occupied_units'.tr,
                      units: '300'),
                  SearchWidget().occUnoccContainer(
                      icon: unOccupiedIcon,
-                     titleUnit: 'Unoccupied Units',
+                     titleUnit: 'unoccupied_units'.tr,
                      units: '200'),
                ],),
              ),
@@ -66,7 +66,7 @@ class SearchView extends StatelessWidget {
             padding:  EdgeInsets.only(left: 10.w,bottom: 10.w),
 
             child: Text(
-              "Units",
+              "units".tr,
               style: TextStyle(fontSize: 16.sp - commonFontSize,fontWeight: FontWeight.w700, color: black),
             ),
           ),

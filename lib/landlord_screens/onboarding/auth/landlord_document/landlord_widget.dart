@@ -86,7 +86,7 @@ class LandlordDocWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14.sp - commonFontSize, color: Colors.white),
@@ -98,12 +98,12 @@ class LandlordDocWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                selectionCont('Gallery', 'assets/icons/pictures.png', 1,
+                selectionCont('gallery'.tr, 'assets/icons/pictures.png', 1,
                     index: index),
                 SizedBox(
                   width: 25.w,
                 ),
-                selectionCont('Camera', 'assets/icons/camera.png', 2,
+                selectionCont('camera'.tr, 'assets/icons/camera.png', 2,
                     index: index),
               ],
             ),
@@ -120,7 +120,7 @@ class LandlordDocWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 14.sp - commonFontSize, color: Colors.white),

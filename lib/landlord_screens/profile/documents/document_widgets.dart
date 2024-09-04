@@ -17,8 +17,8 @@ class DocumentWidgets {
               child: CircularProgressIndicator(),
             )
           : docCntrl.documentList.isEmpty
-              ? const Center(
-                  child: Text("No document found"),
+              ?  Center(
+                  child: Text("no_document_found".tr),
                 )
               : ListView.separated(
                   separatorBuilder: (context, index) {
@@ -30,7 +30,7 @@ class DocumentWidgets {
                   itemCount: docCntrl.documentList.length,
                   itemBuilder: (context, index) {
                     return documentContainer(
-                      image: docCntrl.documentList[index]['image'],
+                      image: docCntrl.documentList[index]['image'] ?? "",
                       name: docCntrl.documentList[index]['document_type_value'],
                     );
                   });
@@ -53,11 +53,15 @@ class DocumentWidgets {
             border: Border.all(color: HexColor('#EBEBEB'), width: 1.r),
             // image:  DecorationImage(image: image.image)
           ),
-          child: Image.network(
-            image,
-            fit: BoxFit.contain,
-            width: double.infinity,
-          ),
+          child: image == ""
+              ?  SizedBox(
+                  width: double.infinity,
+                  child: Center(child: Text("no_document_uploaded".tr)))
+              : Image.network(
+                  image,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                ),
         ),
         Positioned(
           left: .5,
@@ -105,7 +109,7 @@ class DocumentWidgets {
     try {
       await DioClientServices.instance.saveImageToGallery(url).then((value) {
         if (value['isSuccess'] == true) {
-          customSnackBar(Get.context!, "Document download successfully");
+          customSnackBar(Get.context!, "document_download_successfully".tr);
         }
       });
     } on Error {

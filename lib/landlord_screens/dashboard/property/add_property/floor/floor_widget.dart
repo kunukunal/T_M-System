@@ -73,8 +73,8 @@ class FloorWidget {
                     floorCntrl.updateFloorName.value.text = buildingTitle!;
                     floorCntrl.activeFloor.value = isFeature ?? false;
                     updateFloorDetails(
-                        button1: "Cancel",
-                        button2: "Update",
+                        button1: "cancel".tr,
+                        button2: "update".tr,
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -86,10 +86,10 @@ class FloorWidget {
                                 floorId: floorId!, noOfUnits: floor!);
                           } else {
                             customSnackBar(
-                                context, "Floor name can not be empty");
+                                context, "floor_name_cannot_be_empty".tr);
                           }
                         },
-                        title: "Update Floor");
+                        title: "update_floor".tr);
                   },
                   backgroundColor: Colors.blue,
                   foregroundColor: whiteColor,
@@ -101,8 +101,8 @@ class FloorWidget {
                 SlidableAction(
                   onPressed: (context) {
                     deleteFloorPopup(
-                        button1: "No",
-                        button2: "Yes",
+                        button1: "no".tr,
+                        button2: "yes".tr,
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -111,7 +111,7 @@ class FloorWidget {
                           floorCntrl.deleteFloorData(floorId: floorId!);
                         },
                         title:
-                            "Are you sure you want to Permanent remove $buildingTitle");
+                            "${'are_you_sure_permanent_remove'.tr} $buildingTitle");
                   },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: whiteColor,
@@ -138,13 +138,13 @@ class FloorWidget {
                         child: Row(
                           children: [
                             featureRentContainer(
-                                isFeatured: isFeature, title: 'Active'),
+                                isFeatured: isFeature, title: 'active'.tr),
                             featureRentContainer(
-                                isFeatured: !isFeature!, title: 'Inactive'),
+                                isFeatured: !isFeature!, title: 'inactive'.tr),
                             Padding(
                               padding: EdgeInsets.only(left: 60.w),
                               child: Text(
-                                '$floor  Unit',
+                                '$floor  ${'unit'.tr}',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 14.sp - commonFontSize,
@@ -237,15 +237,15 @@ class FloorWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AddPropertyWidget()
-                              .commomText('Floor Name', isMandatory: false),
+                              .commomText('floor_name'.tr, isMandatory: false),
                           customTextField(
                             controller: floorCntrl.updateFloorName.value,
                             textInputAction: TextInputAction.done,
-                            hintText: 'Type Here...',
+                            hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             isFilled: false,
                           ),
-                          AddPropertyWidget().commomText('Active/Inactive',
+                          AddPropertyWidget().commomText('${'active'.tr}/${'inactive'.tr}',
                               isMandatory: false),
                           Obx(() {
                             return Switch(
@@ -351,22 +351,22 @@ class FloorWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AddPropertyWidget()
-                              .commomText('Floor Name', isMandatory: true),
+                              .commomText('floor_name'.tr, isMandatory: true),
                           customTextField(
                             controller: floorName,
                             textInputAction: TextInputAction.done,
-                            hintText: 'Type Here...',
+                            hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             isFilled: false,
                           ),
                           AddPropertyWidget()
-                              .commomText('Units', isMandatory: true),
+                              .commomText('units'.tr, isMandatory: true),
                           customTextField(
                             controller: floorUnits,
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.number,
                             maxLength: 2,
-                            hintText: 'Type Here...',
+                            hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             isFilled: false,
                           ),
@@ -401,11 +401,11 @@ class FloorWidget {
                                       units: int.parse(floorUnits.text));
                                 } else {
                                   customSnackBar(Get.context!,
-                                      "Floor unit can not be empty");
+                                      "floor_unit_cannot_be_empty".tr);
                                 }
                               } else {
                                 customSnackBar(Get.context!,
-                                    "Floor name can not be empty");
+                                    "floor_name_cannot_be_empty".tr);
                               }
                             },
                             verticalPadding: 5.h,

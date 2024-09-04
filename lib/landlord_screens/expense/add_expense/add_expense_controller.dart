@@ -1,15 +1,14 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_modal.dart';
-
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class AddExpenseController extends GetxController {
   //variable
@@ -74,9 +73,12 @@ class AddExpenseController extends GetxController {
   }
 
   void getPropertyBuilding() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -119,9 +121,12 @@ class AddExpenseController extends GetxController {
   }
 
   void getExpenseTypeListApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -133,6 +138,7 @@ class AddExpenseController extends GetxController {
     );
     if (response.statusCode == 200) {
       final data = response.data;
+      print("dsakdsajdas ${data}");
       for (int i = 0; i < data.length; i++) {
         expenseList.add(data[i]['name']);
       }
@@ -194,7 +200,7 @@ class AddExpenseController extends GetxController {
       // log(selectedImages.first.name.toString(), name: 'Images');
       selectedImages.refresh();
     } else {
-      customSnackBar(Get.context!, 'Nothing is selected');
+      customSnackBar(Get.context!, 'nothing_is_selected'.tr);
     }
   }
 
@@ -211,22 +217,22 @@ class AddExpenseController extends GetxController {
                   addExpense();
                 }
               } else {
-                customSnackBar(Get.context!, "Please select the payment type");
+                customSnackBar(Get.context!, "please_select_payment_type".tr);
               }
             } else {
-              customSnackBar(Get.context!, "Please Fill the amount");
+              customSnackBar(Get.context!, "please_fill_amount".tr);
             }
           } else {
-            customSnackBar(Get.context!, "Please select the Date");
+            customSnackBar(Get.context!, "please_select_date".tr);
           }
         } else {
-          customSnackBar(Get.context!, "Please select the Expense Type");
+          customSnackBar(Get.context!, "please_select_expense_type".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please select the Building");
+        customSnackBar(Get.context!, "please_select_building".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please select the property");
+      customSnackBar(Get.context!, "please_select_property".tr);
     }
   }
 
@@ -240,9 +246,12 @@ class AddExpenseController extends GetxController {
     }
 
     addExpenseDatta.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -268,7 +277,7 @@ class AddExpenseController extends GetxController {
       if (response.statusCode == 201) {
         addExpenseDatta.value = false;
         Get.back(result: true);
-        customSnackBar(Get.context!, "Expense added Sucessfully.");
+        customSnackBar(Get.context!, "expense_added_successfully".tr);
       } else if (response.statusCode == 400) {
         addExpenseDatta.value = false;
       } else {
@@ -290,9 +299,12 @@ class AddExpenseController extends GetxController {
       }
     }
     addExpenseDatta.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPatchCall(
       body: {
@@ -320,7 +332,7 @@ class AddExpenseController extends GetxController {
       if (response.statusCode == 200) {
         addExpenseDatta.value = false;
         Get.back(result: true);
-        customSnackBar(Get.context!, "Expense Update Sucessfully.");
+        customSnackBar(Get.context!, "expense_update_successfully".tr);
       } else if (response.statusCode == 400) {
         addExpenseDatta.value = false;
       } else {

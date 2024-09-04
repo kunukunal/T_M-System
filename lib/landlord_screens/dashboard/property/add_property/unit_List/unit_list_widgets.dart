@@ -79,8 +79,8 @@ class UnitWidget {
                 SlidableAction(
                   onPressed: (context) {
                     deleteFloorPopup(
-                        button1: "No",
-                        button2: "Yes",
+                        button1: "no".tr,
+                        button2: "yes".tr,
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -89,7 +89,7 @@ class UnitWidget {
                           unitCntrl.deleteUnitData(unitId: unitId!);
                         },
                         title:
-                            "Are you sure you want to Permanent remove $floorName");
+                            "${'are_you_sure_permanent_remove'.tr} $floorName");
                   },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: whiteColor,
@@ -117,7 +117,7 @@ class UnitWidget {
                           height: 5.h,
                         ),
                          Text(
-                          'Unit ${index! + 1}',
+                          '${'unit'.tr} ${index! + 1}',
                           style:  TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12.sp - commonFontSize,
@@ -128,7 +128,7 @@ class UnitWidget {
                     ),
                   ),
                   Text(
-                    isOccupied! ? 'Occupied' : 'Available',
+                    isOccupied! ? 'occupied'.tr : 'available'.tr,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14.sp - commonFontSize,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 import 'package:tanent_management/tenant_screens/explore/search_modal.dart';
 
 class ExploreController extends GetxController {
@@ -16,9 +17,12 @@ class ExploreController extends GetxController {
 
   getPropertyBySearchLocation(String searchValue) async {
     isDataSearch.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -41,14 +45,14 @@ class ExploreController extends GetxController {
         // Reset the selected item since the search results have been updated
         exploreSearchItemSelected.value = null;
       } else {
-        exploreSearch.value = [Property(id: -1, title: 'No properties found')];
+        exploreSearch.value = [Property(id: -1, title: 'no_properties_found'.tr)];
         exploreSearchItemSelected.value = null;
         getUnitResult.clear();
       }
 
       isDataSearch.value = false;
     } else {
-      exploreSearch.value = [Property(id: -1, title: 'No properties found')];
+      exploreSearch.value = [Property(id: -1, title: 'no_properties_found'.tr)];
       exploreSearchItemSelected.value = null;
       getUnitResult.clear();
 
@@ -63,18 +67,21 @@ class ExploreController extends GetxController {
       if (exploreSearchItemSelected.value!.id != -1) {
         getUnitSearchByProperty();
       } else {
-        customSnackBar(Get.context!, "Please select the Property.");
+        customSnackBar(Get.context!, "property_not_selected".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please select the Property.");
+      customSnackBar(Get.context!, "property_not_selected".tr);
     }
   }
 
   getUnitSearchByProperty() async {
     getUnitByPropertySearchLoading.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {
@@ -94,9 +101,12 @@ class ExploreController extends GetxController {
   }
 
   addFavouriteUnit(int unitId, int index) async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
     final response = await DioClientServices.instance.dioPostCall(
       body: {"unit": unitId},
       headers: {

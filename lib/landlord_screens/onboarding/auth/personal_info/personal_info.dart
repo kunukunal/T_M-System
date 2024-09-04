@@ -46,7 +46,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Information', style: CustomStyles.otpStyle050505),
+        title: Text('personal_information'.tr, style: CustomStyles.otpStyle050505),
         actions: [
           Padding(
             padding: EdgeInsets.all(8.r),
@@ -55,7 +55,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   personalInfoCntrl.onSkipTap(
                       isFromRegister: widget.isFromRegister);
                 },
-                child: Text('Skip', style: CustomStyles.skipBlack)),
+                child: Text('skip'.tr, style: CustomStyles.skipBlack)),
           )
         ],
       ),
@@ -83,7 +83,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  Text('Personal Information', style: CustomStyles.skipBlack),
+                  Text('personal_information'.tr, style: CustomStyles.skipBlack),
                   const Divider(),
                   SizedBox(
                     height: 10.h,
@@ -161,34 +161,34 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Full Name'),
+                  PersonlInfoWidget.commomText('full_name'.tr),
                   customTextField(
                       controller: personalInfoCntrl.nameCntrl.value,
                       focusNode: personalInfoCntrl.nameFocus.value,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Email Id'),
+                  PersonlInfoWidget.commomText('email_id'.tr),
                   customTextField(
                       controller: personalInfoCntrl.emailCntrl.value,
                       focusNode: personalInfoCntrl.emailFocus.value,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Mobile Number',
+                  PersonlInfoWidget.commomText('enter_mobile'.tr,
                       isMandatory: true),
                   customTextField(
                       controller: personalInfoCntrl.phoneCntrl.value,
                       focusNode: personalInfoCntrl.phoneFocus.value,
-                      hintText: 'Enter Mobile Number',
+                      hintText: 'enter_mobile_number'.tr,
                       isBorder: true,
                       maxLength: 10,
                       onDropdownChanged: false,
@@ -200,11 +200,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Permanent Address'),
+                  PersonlInfoWidget.commomText('permanent_address'.tr),
                   customTextField(
                       controller: personalInfoCntrl.permanentAddCntrl.value,
                       focusNode: personalInfoCntrl.permanentFocus.value,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
                       isFilled: false,
@@ -212,12 +212,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Pincode', isMandatory: true),
+                  PersonlInfoWidget.commomText('pincode'.tr, isMandatory: true),
                   customTextField(
                       controller: personalInfoCntrl.pinNoCntrl.value,
                       focusNode: personalInfoCntrl.pinNoFocus.value,
                       keyboardType: TextInputType.number,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       maxLength: 6,
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
@@ -231,7 +231,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            PersonlInfoWidget.commomText('State'),
+                            PersonlInfoWidget.commomText('state'.tr),
                             // customTextField(
                             //     controller: personalInfoCntrl.stateCntrl.value,
                             //     width: Get.width / 2.3,
@@ -255,11 +255,11 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PersonlInfoWidget.commomText('City'),
+                          PersonlInfoWidget.commomText('city'.tr),
                           customTextField(
                               controller: personalInfoCntrl.cityCntrl.value,
                               width: Get.width / 2.3,
-                              hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
@@ -278,7 +278,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           personalInfoCntrl.onSubmitPressed();
                         }
                       },
-                      text: 'Next',
+                      text: 'next'.tr,
                       width: Get.width,
                       verticalPadding: 10.h),
                   SizedBox(

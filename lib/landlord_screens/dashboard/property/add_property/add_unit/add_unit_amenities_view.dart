@@ -15,7 +15,7 @@ class AddUnitAmentiesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: "Amenities"),
+      appBar: appBar(title: "amenities".tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -27,7 +27,7 @@ class AddUnitAmentiesView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Text(
-                      'Amenities Details',
+                      'amenities_details'.tr,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16.sp - commonFontSize,
@@ -74,7 +74,7 @@ class AddUnitAmentiesView extends StatelessWidget {
                             width: 10.w,
                           ),
                           Text(
-                            'Add Amenities(s)',
+                            'add_amenities'.tr,
                             style: TextStyle(
                                 fontSize: 16.sp - commonFontSize,
                                 fontWeight: FontWeight.w700,
@@ -108,10 +108,10 @@ class AddUnitAmentiesView extends StatelessWidget {
                     Get.back();
                   } else {
                     customSnackBar(context,
-                        "Please check all the field are filled correctly");
+                        "please_check_all_fields_filled_correctly".tr);
                   }
                 },
-                text: 'Save',
+                text: 'save'.tr,
                 width: Get.width,
                 verticalPadding: 10.h),
           ],

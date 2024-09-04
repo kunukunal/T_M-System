@@ -29,7 +29,7 @@ class TenantDocScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          title: Text(  addTenantDocCntrl.isForDocEdit.value?'Update Documents': 'Kirayedar Documents',
+          title: Text(  addTenantDocCntrl.isForDocEdit.value?'update_documents'.tr: 'kirayedar_documents'.tr,
               style: CustomStyles.otpStyle050505W700S16),
         ),
         body: Column(
@@ -49,8 +49,8 @@ class TenantDocScreen extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : addTenantDocCntrl.documentList.isEmpty
-                        ? const Center(
-                            child: Text("No Document found"),
+                        ?  Center(
+                            child: Text("no_document_found".tr),
                           )
                         : ListView.builder(
                             shrinkWrap: true,
@@ -157,7 +157,7 @@ class TenantDocScreen extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : customBorderButton( addTenantDocCntrl.isForDocEdit.value?'Update': 'Submit', () {
+              : customBorderButton( addTenantDocCntrl.isForDocEdit.value?'update'.tr: 'submit'.tr, () {
                   addTenantDocCntrl.onSubmitTap();
                 },
                   verticalPadding: 10.h,

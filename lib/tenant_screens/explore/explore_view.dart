@@ -19,7 +19,7 @@ class ExploreScreen extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           title: Text(
-            'Explore',
+            'explore'.tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
           ),
@@ -32,13 +32,13 @@ class ExploreScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ExploreWidget().exploreSearch(
-                    icon: occupiedIcon, titleUnit: 'Rent Due', units: '20/40'),
+                    icon: occupiedIcon, titleUnit: 'rent_due'.tr, units: '20/40'),
                 SizedBox(
                   height: 10.h,
                 ),
                 Obx(() {
                   return Text(
-                    "Search results (${exploreCntrl.getUnitResult.length})",
+                    "${'search_results'.tr} (${exploreCntrl.getUnitResult.length})",
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w700, fontFamily: 'Inter'),
                   );

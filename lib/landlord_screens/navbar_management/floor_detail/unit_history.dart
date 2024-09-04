@@ -15,7 +15,7 @@ class UnitHistory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        title: Text("Unit History",
+        title: Text("unit_history".tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter')),
         centerTitle: true,
@@ -26,8 +26,8 @@ class UnitHistory extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             : unitHistoryController.items.isEmpty
-                ? const Center(
-                    child: Text("No History data found"),
+                ?  Center(
+                    child: Text("no_history_data_found".tr),
                   )
                 : Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -51,7 +51,7 @@ class UnitHistory extends StatelessWidget {
                           subtitle: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Total Rent Received"),
+                               Text("total_rent_received".tr),
                               Text("₹ ${unitHistoryController.totalRent}",
                                   style: CustomStyles.titleText.copyWith(
                                       fontWeight: FontWeight.w400,
@@ -72,8 +72,8 @@ class UnitHistory extends StatelessWidget {
                         ),
                         Expanded(
                           child: unitHistoryController.items.isEmpty
-                              ? const Center(
-                                  child: Text("No History data found"),
+                              ?  Center(
+                                  child: Text("no_history_data_found".tr),
                                 )
                               : ListView.builder(
                                   itemCount: unitHistoryController.items.length,
@@ -169,8 +169,8 @@ Widget historyCard({
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "From",
+                     Text(
+                      "from".tr,
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(dateFrom!,
@@ -181,7 +181,7 @@ Widget historyCard({
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("To", style: TextStyle(fontSize: 16)),
+                     Text("to".tr, style: TextStyle(fontSize: 16)),
                     Text(dateTo!,
                         style: const TextStyle(
                             fontSize: 16,

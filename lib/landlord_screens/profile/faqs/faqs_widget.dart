@@ -26,7 +26,7 @@ class FaqsWidgets {
               width: 10.w,
             ),
             Text(
-              'Search',
+              'search'.tr,
               style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
             )
           ],
@@ -44,8 +44,8 @@ class FaqsWidgets {
               child: CircularProgressIndicator(),
             )
           : cntrl.quesAnsList.isEmpty
-              ? const Center(
-                  child: Text("No FAQ found"),
+              ?  Center(
+                  child: Text("no_faq_found".tr),
                 )
               : ListView.separated(
                   physics: const PageScrollPhysics(),

@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class AddTenantDocumentController extends GetxController {
   final aadharCntrl = TextEditingController().obs;
@@ -63,7 +64,7 @@ class AddTenantDocumentController extends GetxController {
         }
       } else {
         customSnackBar(Get.context!,
-            "Please add the ${documentList[index]['type_title']}");
+            "${'please_add_the'.tr} ${documentList[index]['type_title']}");
       }
     }
   }
@@ -78,10 +79,13 @@ class AddTenantDocumentController extends GetxController {
       image.add(await DioClientServices.instance
           .multipartFile(file: documentList[i]['image']));
     }
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    String accessToken = prefs.getString('access_token') ?? "";
-    final response = await DioClientServices.instance.dioPostCall(
+
+        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";    final response = await DioClientServices.instance.dioPostCall(
         body: isProfileNotCome.value
             ? {
                 'document_type': jsonEncode(id),
@@ -115,10 +119,9 @@ class AddTenantDocumentController extends GetxController {
 
   getDocumentType() async {
     doumentLoading.value = true;
-    print(
-        "jhjhj ${"$userDocumentType?limit=100&${isProfileNotCome.value ? "for_tenant=true" : "for_landlord=true"}"}");
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
     }, url: "$userDocumentType?limit=100&${isProfileNotCome.value ? "for_tenant=true" : "for_landlord=true"}");
@@ -170,10 +173,13 @@ class AddTenantDocumentController extends GetxController {
             .multipartFile(file: documentList[i]['image']));
       }
     }
-    final prefs = await SharedPreferences.getInstance();
-    String languaeCode = prefs.getString('languae_code') ?? "en";
-    String accessToken = prefs.getString('access_token') ?? "";
-    final response = await DioClientServices.instance.dioPutCall(
+
+        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";    final response = await DioClientServices.instance.dioPutCall(
         body: isFromTenantDoc.value
             ? {
                 'id_list': jsonEncode(id),

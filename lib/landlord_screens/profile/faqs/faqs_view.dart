@@ -15,7 +15,7 @@ class FAQsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(title: Text('FAQs', style: CustomStyles.skipBlack)),
+      appBar: AppBar(title: Text('faqs'.tr, style: CustomStyles.skipBlack)),
       body: SingleChildScrollView(
         child: Column(
           children: [

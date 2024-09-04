@@ -109,7 +109,7 @@ class AddExpenseWidgets {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Upload',
+                    'upload'.tr,
                     style: CustomStyles.hintText,
                   ),
                   attachIcon

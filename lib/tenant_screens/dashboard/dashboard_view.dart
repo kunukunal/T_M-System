@@ -45,7 +45,7 @@ class DashboardTenantScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 16.h),
                               child: Text(
-                                'Welcome, ${userData['name'] ?? "User"}',
+                                '${'welcome'.tr}, ${userData['name'] ?? "User"}',
                                 textAlign: TextAlign.start,
                                 style: CustomStyles.blue679BF1w700s20,
                               ),
@@ -72,7 +72,7 @@ class DashboardTenantScreen extends StatelessWidget {
             image: rentTotalImage,
             height: 159.h,
             isTackVisible: false,
-            subTitle: 'Total Rents'),
+            subTitle: 'total_rent'.tr),
         SizedBox(
           height: 16.h,
         ),
@@ -80,7 +80,7 @@ class DashboardTenantScreen extends StatelessWidget {
             image: incomeExpenseImage,
             height: 300.86.h,
             isTackVisible: true,
-            title: 'Rent'),
+            title: 'rent'.tr),
       ],
     );
   }

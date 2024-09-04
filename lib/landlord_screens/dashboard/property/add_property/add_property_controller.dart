@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/global_data.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class AddPropertyCntroller extends GetxController {
   final propertyTitleCntrl = TextEditingController().obs;
@@ -71,28 +72,31 @@ class AddPropertyCntroller extends GetxController {
                 addPropertyApi();
               }
             } else {
-              customSnackBar(Get.context!, "Please fill the State field");
+              customSnackBar(Get.context!, "please_fill_state".tr);
             }
           } else {
-            customSnackBar(Get.context!, "Please fill the City field");
+            customSnackBar(Get.context!, "please_fill_city".tr);
           }
         } else {
-          customSnackBar(Get.context!, "Please fill the Pincode field");
+          customSnackBar(Get.context!, "please_fill_pincode".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please fill the Address field");
+        customSnackBar(Get.context!, "please_fill_address".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please fill the title field");
+      customSnackBar(Get.context!, "please_fill_title".tr);
     }
 
     // Get.to(() => PropertyAb());
   }
 
   addPropertyApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     var propertyImage = [];
     for (int i = 0; i < propertyPickedImage.length; i++) {
@@ -121,8 +125,11 @@ class AddPropertyCntroller extends GetxController {
   }
 
   updatePropertyApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+
+
 
     var propertyImage = [];
     var deletedImage = [];

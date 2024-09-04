@@ -21,7 +21,7 @@ class FloorView extends StatelessWidget {
                 onPressed: () {
                   // propertyAbCntrl.onAddTap();
                   FloorWidget().addFloor(
-                      button1: "Cancel", button2: "Add", title: "Add Floor");
+                      button1: "cancel".tr, button2: "add".tr, title: "add_floor".tr);
                 },
                 backgroundColor: Colors.white,
                 shape:
@@ -43,8 +43,8 @@ class FloorView extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : floorCntrl.floorList.isEmpty
-                        ? const Center(
-                            child: Text("No Floor available"),
+                        ?  Center(
+                            child: Text("no_floor_available".tr),
                           )
                         : Padding(
                             padding: EdgeInsets.only(top: 10.h),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -158,7 +157,7 @@ class PropertyDetailWidget {
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              "$unitsAvailable Units(Available)",
+                              "$unitsAvailable ${'units_available'.tr}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp - commonFontSize,
@@ -178,7 +177,7 @@ class PropertyDetailWidget {
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              "$unitsOccupied Units(Occupied)",
+                              "$unitsOccupied ${'units_occupied'.tr}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp - commonFontSize,

@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/global_data.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/landlord_screens/notification/notification_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 import 'package:tanent_management/tenant_screens/payment_request/payment_request_view.dart';
 
 class DashBoardTenantController extends GetxController {
@@ -22,6 +23,7 @@ class DashBoardTenantController extends GetxController {
   @override
   onInit() {
     getDashboardData();
+
     super.onInit();
   }
 
@@ -29,21 +31,26 @@ class DashBoardTenantController extends GetxController {
     Get.to(() => NotificationView());
   }
 
- onTapPayRent(Map unitData) {
-    Get.to(() => PaymentRequestScreen(),arguments: [unitData]);
+  onTapPayRent(Map unitData) {
+    Get.to(() => PaymentRequestScreen(), arguments: [unitData]);
   }
-
 
   final unitList = [].obs;
   final paymentHistoryList = [].obs;
   final rentData = {}.obs;
   final isDashboardDataLaoding = false.obs;
 
+
+
   getDashboardData() async {
     isDashboardDataLaoding.value = true;
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioGetCall(
       headers: {

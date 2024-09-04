@@ -33,7 +33,7 @@ class PaymentWidget {
             SizedBox(
               height: 3.h,
             ),
-            Text("Payment Received",
+            Text("payment_received".tr,
                 style: TextStyle(
                     color: black,
                     fontSize: 15.sp - commonFontSize,
@@ -55,7 +55,7 @@ class PaymentWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Payment Request Form",
+        Text("payment_request_form".tr,
             style: TextStyle(
                 color: black,
                 fontSize: 16.sp - commonFontSize,
@@ -63,10 +63,10 @@ class PaymentWidget {
         SizedBox(
           height: 10.h,
         ),
-        PersonlInfoWidget.commomText('Amount'),
+        PersonlInfoWidget.commomText('amount'.tr),
         customTextField(
           controller: paymntCntrl.ammountController.value,
-          hintText: 'Type Here...',
+            hintText: '${'type_here'.tr}...',
           isBorder: true,
           color: HexColor('#F7F7F7'),
           isFilled: false,
@@ -74,10 +74,10 @@ class PaymentWidget {
         SizedBox(
           height: 5.h,
         ),
-        PersonlInfoWidget.commomText('Description'),
+        PersonlInfoWidget.commomText('description'.tr),
         customTextField(
             controller: paymntCntrl.descriptionController.value,
-            hintText: 'Type Here...',
+            hintText: '${'type_here'.tr}...',
             isBorder: true,
             color: HexColor('#F7F7F7'),
             isFilled: false,

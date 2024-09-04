@@ -24,10 +24,10 @@ class PaymentRequestScreen extends StatelessWidget {
             title: Text(
               paymntCntrl.isPaymentRequest.value == 0 ||
                       paymntCntrl.isPaymentRequest.value == 1
-                  ? 'Payment Request'
+                  ? 'payment_request'.tr
                   : paymntCntrl.isPaymentRequest.value == 2
-                      ? 'Payment Request'
-                      : 'Payment Request Success',
+                      ? 'payment_request'.tr
+                      : 'payment_request_status'.tr,
               style: CustomStyles.titleText
                   .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
             ),
@@ -44,7 +44,7 @@ class PaymentRequestScreen extends StatelessWidget {
                         SizedBox(height: 5.h),
                         PaymentWidget().paymenRequestForm(),
                         SizedBox(height: 5.h),
-                        customBorderButton("Send Request", () {
+                        customBorderButton("send_request".tr, () {
                           paymntCntrl.ontapSendRequest();
                         },
                             fontweight: FontWeight.w500,
@@ -65,7 +65,7 @@ class PaymentRequestScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Pay Your Rent Via",
+                              Text("pay_your_rent_via".tr,
                                   style: TextStyle(
                                       color: black,
                                       fontSize: 20.sp - commonFontSize,
@@ -109,7 +109,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                             SizedBox(
                                               height: 10.h,
                                             ),
-                                            Text("Cash",
+                                            Text("cash".tr,
                                                 style: TextStyle(
                                                     color: paymntCntrl
                                                                 .payentModeChoose
@@ -163,7 +163,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                             SizedBox(
                                               height: 10.h,
                                             ),
-                                            Text("Online Payments",
+                                            Text("online_payments".tr,
                                                 style: TextStyle(
                                                     color: paymntCntrl
                                                                 .payentModeChoose
@@ -184,7 +184,7 @@ class PaymentRequestScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          customBorderButton("Request", () {
+                          customBorderButton("request".tr, () {
                             paymntCntrl.ontappaymentVia();
                           },
                               fontweight: FontWeight.w500,
@@ -229,7 +229,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                   ? const Center(
                                       child: CircularProgressIndicator(),
                                     )
-                                  : customBorderButton("Request", () {
+                                  : customBorderButton("request".tr, () {
                                       paymntCntrl.ontapRequest();
                                     },
                                       fontweight: FontWeight.w500,
@@ -251,21 +251,21 @@ class PaymentRequestScreen extends StatelessWidget {
                                     height: 100,
                                   ),
                                   SizedBox(height: 5.h),
-                                  Text("We're on it!",
+                                  Text("we_are_on_it".tr,
                                       style: TextStyle(
                                           color: black,
                                           fontSize: 20.sp - commonFontSize,
                                           fontWeight: FontWeight.bold)),
                                   SizedBox(height: 5.h),
                                   Text(
-                                      "Your payment request has been send and you’ll get notification for your Confirmation.",
+                                      "your_payment_request_sent".tr,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: black,
                                           fontSize: 14.sp - commonFontSize,
                                           fontWeight: FontWeight.w400)),
                                   SizedBox(height: 5.h),
-                                  customBorderButton("Go Back Home", () {
+                                  customBorderButton("go_back_home".tr, () {
                                     paymntCntrl.ontapbackHomeRequest();
                                   },
                                       fontweight: FontWeight.w500,
@@ -277,7 +277,45 @@ class PaymentRequestScreen extends StatelessWidget {
                                       borderColor: Colors.transparent),
                                 ],
                               )
-                            : const SizedBox(),
+                            : paymntCntrl.isPaymentRequest.value == 4
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/icons/cross_icon.png",
+                                        height: 100,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(height: 5.h),
+                                      Text("transaction_failed".tr,
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 20.sp - commonFontSize,
+                                              fontWeight: FontWeight.bold)),
+                                      SizedBox(height: 5.h),
+                                      Text(
+                                          "payment_request_failed".tr,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: black,
+                                              fontSize: 14.sp - commonFontSize,
+                                              fontWeight: FontWeight.w400)),
+                                      SizedBox(height: 5.h),
+                                      customBorderButton("go_back_home".tr, () {
+                                        paymntCntrl.ontapbackHomeRequest();
+                                      },
+                                          fontweight: FontWeight.w500,
+                                          verticalPadding: 5.h,
+                                          horizontalPadding: 2.w,
+                                          btnHeight: 40.h,
+                                          color: HexColor('#679BF1'),
+                                          textColor: HexColor('#FFFFFF'),
+                                          borderColor: Colors.transparent),
+                                    ],
+                                  )
+                                : const SizedBox(),
           ));
     });
   }

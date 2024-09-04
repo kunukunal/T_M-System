@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -136,7 +134,7 @@ class TenantListWidgets {
                           print("sdajkasdj $e");
                         }
                       } else {
-                        customSnackBar(Get.context!, "Email not found");
+                        customSnackBar(Get.context!, "email_not_found".tr);
                       }
                     },
                     child: emailIcon),
@@ -156,7 +154,7 @@ class TenantListWidgets {
                           print("sdajkasdj $e");
                         }
                       } else {
-                        customSnackBar(Get.context!, "Phone number not found");
+                        customSnackBar(Get.context!, "phone_number_not_found".tr);
                       }
                     },
                     child: callIcon)
@@ -172,20 +170,20 @@ class TenantListWidgets {
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('Phone Number     :',
+            detailInnerWidget('${'phone_number'.tr}     :',
                 '${cntrl.phoneCode} ${cntrl.phoneNumber}'),
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('Email Address      :', '${cntrl.email}'),
+            detailInnerWidget('${'email_address'.tr}      :', '${cntrl.email}'),
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('Address                :', '${cntrl.address}'),
+            detailInnerWidget('${'address'.tr}                :', '${cntrl.address}'),
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('Occupied units   :', '${cntrl.occupiedUnit}'),
+            detailInnerWidget('${'occupied_units'.tr}   :', '${cntrl.occupiedUnit}'),
           ],
         ),
       ),
@@ -216,13 +214,13 @@ class TenantListWidgets {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Rent',
+                  'rent'.tr,
                   style: CustomStyles.otpStyle050505W700S16,
                 ),
                 Row(
                   children: [
                     Text(
-                      'Month to Month',
+                      'month_to_month'.tr,
                       style: CustomStyles.desc606060
                           .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
@@ -249,7 +247,7 @@ class TenantListWidgets {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rent paid',
+                      'rent_paid'.tr,
                       style: CustomStyles.desc606060
                           .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
@@ -263,7 +261,7 @@ class TenantListWidgets {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'Due',
+                      'due'.tr,
                       style: CustomStyles.desc606060
                           .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                     ),
@@ -285,8 +283,8 @@ class TenantListWidgets {
     final cntrl = Get.find<TenantDetailsController>();
 
     return cntrl.tenantUnitList.isEmpty
-        ? const Center(
-            child: Text("No Units found"),
+        ?  Center(
+            child: Text("no_units_found".tr),
           )
         : ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
@@ -383,7 +381,7 @@ class TenantListWidgets {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Amenities',
+                            'amenities'.tr,
                             style: CustomStyles.otpStyle050505.copyWith(
                                 fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
                           ),
@@ -391,8 +389,8 @@ class TenantListWidgets {
                             height: 5.h,
                           ),
                           cntrl.tenantUnitList[index]['amenities'].isEmpty
-                              ? const Center(
-                                  child: Text("No Amenties"),
+                              ?  Center(
+                                  child: Text("no_amenties".tr),
                                 )
                               : GridView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -447,8 +445,8 @@ class TenantListWidgets {
   tenantPaymentHistoryContainer() {
     final cntrl = Get.find<TenantDetailsController>();
     return cntrl.paymentList.isEmpty
-        ? const Center(
-            child: Text("No payment history found"),
+        ?  Center(
+            child: Text("no_payment_history_found".tr),
           )
         : ListView.separated(
             shrinkWrap: true,

@@ -17,7 +17,7 @@ class LandlordDocView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Landlord Documents', style: CustomStyles.otpStyle050505),
+          title: Text('landlord_documents'.tr, style: CustomStyles.otpStyle050505),
           automaticallyImplyLeading: false,
           leading: Obx(() {
             return landlordDocCntrl.isPercentageLoadingStart.value
@@ -36,7 +36,7 @@ class LandlordDocView extends StatelessWidget {
                   onTap: () {
                     landlordDocCntrl.onSubmitPressed();
                   },
-                  child: Text('Skip', style: CustomStyles.skipBlack)),
+                  child: Text('skip'.tr, style: CustomStyles.skipBlack)),
             )
           ],
         ),
@@ -59,7 +59,7 @@ class LandlordDocView extends StatelessWidget {
                   child: Column(
                     children: [
                       LandlordDocWidget.commomText(
-                          'Submit essential photos/documents for smooth landlord-business relationship.',
+                          'submit_essential_photos_documents'.tr,
                           fontsize: 16.sp - commonFontSize),
                       Obx(() {
                         return landlordDocCntrl
@@ -69,7 +69,7 @@ class LandlordDocView extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               )
                             : landlordDocCntrl.documentTypeList.isEmpty
-                                ? const Center(child: Text("No Document Found"))
+                                ?  Center(child: Text("no_document_found".tr))
                                 : ListView.builder(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -160,7 +160,7 @@ class LandlordDocView extends StatelessWidget {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    customBorderButton('Previous', () {
+                    customBorderButton('previous'.tr, () {
                       landlordDocCntrl.onPreviousTap();
                     },
                         verticalPadding: 10.h,
@@ -169,7 +169,7 @@ class LandlordDocView extends StatelessWidget {
                         width: Get.width / 2.3,
                         borderColor: HexColor('#679BF1'),
                         textColor: HexColor('#679BF1')),
-                    customBorderButton('Submit', () {
+                    customBorderButton('submit'.tr, () {
                       landlordDocCntrl.onSubmitTap(
                           isFromRegistered: isFromregister);
                     },

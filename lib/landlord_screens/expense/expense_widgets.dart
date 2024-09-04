@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -50,7 +48,7 @@ class ExpenseWidgets {
                     fontWeight: FontWeight.w700),
               ),
               Text(
-                'Total Expense this month',
+                'total_expense_this_month'.tr,
                 style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
               ),
               // SizedBox(
@@ -79,7 +77,7 @@ class ExpenseWidgets {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'History',
+          'history'.tr,
           style: CustomStyles.otpStyle050505
               .copyWith(fontFamily: 'DM Sans', fontWeight: FontWeight.w700),
         ),
@@ -89,8 +87,8 @@ class ExpenseWidgets {
                   child: CircularProgressIndicator(),
                 )
               : expenseCntrl.expenseList.isEmpty
-                  ? const Center(
-                      child: Text("No Expense data found"),
+                  ?  Center(
+                      child: Text("no_expense_data_found".tr),
                     )
                   : ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -221,7 +219,7 @@ class ExpenseWidgets {
                                                   .toString()
                                                   .split('/')
                                                   .last
-                                              : "No Image",
+                                              : "no_image".tr,
                                           style: CustomStyles
                                               .otpStyle050505W400S14,
                                         ),
@@ -250,8 +248,8 @@ class ExpenseWidgets {
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: [
-                                                                  const Text(
-                                                                    "Expense Image",
+                                                                   Text(
+                                                                    "expense_image".tr,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -299,12 +297,12 @@ class ExpenseWidgets {
                                                                             onPressed: () async {
                                                                               await DioClientServices.instance.saveImageToGallery(expenseCntrl.expenseList[index]['images'][ind]['image_url']).then((value) {
                                                                                 if (value['isSuccess'] == true) {
-                                                                                  customSnackBar(Get.context!, "Document download successfully");
+                                                                                  customSnackBar(Get.context!, "document_download_successfully".tr);
                                                                                 }
                                                                               });
                                                                             },
-                                                                            label: const Text(
-                                                                              "Download",
+                                                                            label:  Text(
+                                                                              "download".tr,
                                                                               style: TextStyle(color: Colors.white),
                                                                             )),
                                                                         const Divider()
@@ -320,7 +318,7 @@ class ExpenseWidgets {
                                                     },
                                                   )
                                                 : customSnackBar(
-                                                    context, "No Image found");
+                                                    context, "no_image_found".tr);
                                           },
                                           child: eyeIcon),
                                       SizedBox(
@@ -338,8 +336,8 @@ class ExpenseWidgets {
                                       GestureDetector(
                                           onTap: () {
                                             deleteExpense(
-                                                button1: "No",
-                                                button2: "Yes",
+                                                button1: "no".tr,
+                                                button2: "yes".tr,
                                                 onButton1Tap: () {
                                                   Get.back();
                                                 },
@@ -350,7 +348,7 @@ class ExpenseWidgets {
                                                           index]['id']);
                                                 },
                                                 title:
-                                                    "Are you sure you want to delete the Expense?");
+                                                    "are_you_sure_delete_expense".tr);
                                           },
                                           child: dustbinIcon)
                                     ],

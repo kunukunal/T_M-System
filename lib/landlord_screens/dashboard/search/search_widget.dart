@@ -20,7 +20,7 @@ class SearchWidget {
         ),
       ),
       centerTitle: true,
-      title: Text('Search', style: CustomStyles.otpStyle050505W700S16),
+      title: Text('search'.tr, style: CustomStyles.otpStyle050505W700S16),
     );
   }
 
@@ -161,7 +161,7 @@ class SearchWidget {
                             SizedBox(
                               width: 5.w,
                             ),
-                            isOccupied!
+                            isOccupied
                                 ? RichText(
                                     text: TextSpan(
                                       children: [
@@ -212,21 +212,21 @@ class SearchWidget {
                   child: Row(
                     children: [
                       Text(
-                        'Property $property    ',
+                        '${'property'.tr} $property    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
-                        'Building $building    ',
+                        '${'building'.tr} $building    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp - commonFontSize,
                             color: grey),
                       ),
                       Text(
-                        'Floor $floor    ',
+                        '${'floor'.tr} $floor    ',
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14.sp - commonFontSize,

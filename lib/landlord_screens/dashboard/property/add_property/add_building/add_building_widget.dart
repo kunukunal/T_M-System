@@ -77,26 +77,26 @@ class AddBuildingWidgets {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    commomText('Building Name', isMandatory: true),
+                    commomText('building_name'.tr, isMandatory: true),
                     customTextField(
                       controller: addBuildingCntrl.addMultipleBuilding[index]
                           ['building_name'] as TextEditingController,
                       textInputAction: TextInputAction.done,
                       // keyboardType: TextInputType.number,
 
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       // color: HexColor('#F7F7F7'),
                       isFilled: false,
                     ),
-                    commomText('No. of Floors ', isMandatory: true),
+                    commomText('${'number_of_floors'.tr} ', isMandatory: true),
                     customTextField(
                       controller: addBuildingCntrl.addMultipleBuilding[index]
                           ['floor'] as TextEditingController,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       maxLength: 2,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       readOnly: addBuildingCntrl.fromEdit.value?true:false,
                       // color: HexColor('#F7F7F7'),
@@ -183,7 +183,7 @@ class AddBuildingWidgets {
                               width: 10.w,
                             ),
                             Text(
-                              'Add Amenities(s)',
+                              'add_amenities'.tr,
                               style: TextStyle(
                                   fontSize: 16.sp - commonFontSize,
                                   fontWeight: FontWeight.w500,

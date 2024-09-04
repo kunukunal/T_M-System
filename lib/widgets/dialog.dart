@@ -1,4 +1,4 @@
-           import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -17,24 +17,25 @@ class CustomDialog {
             onWillPop: () async => false,
             child: const Center(
                 child: SizedBox(
-                  // height: 50,
-                  // width: 50,
+                    // height: 50,
+                    // width: 50,
                     child: SpinKitFadingCircle(
-                      color: Colors.white,
-                      size: 30,
-                    ))),
+              color: Colors.white,
+              size: 30,
+            ))),
           );
         });
   }
 
-  static customSnackBar(BuildContext context, String message, {int duration = 3}) {
+  static customSnackBar(BuildContext context, String message,
+      {int duration = 3}) {
     showSimpleNotification(
         Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(
               Radius.circular(12.0),
             ),
-            gradient:  linearGradient0to72
+            gradient: linearGradient0to72
             /* LinearGradient(
               begin: Alignment.topLeft,
               end: const Alignment(

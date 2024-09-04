@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/reports/report_widgets.dart';
 
@@ -12,7 +13,7 @@ class ReportTenantScreen extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: Text(
-          'Reports',
+          'reports'.tr,
           style: CustomStyles.titleText
               .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
         ),
@@ -27,14 +28,14 @@ class ReportTenantScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Property Overview",
+                    "property_overview".tr,
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w500, fontFamily: 'Inter'),
                   ),
                   Row(
                     children: [
                       Text(
-                        'Month',
+                        'month'.tr,
                         style: CustomStyles.titleText.copyWith(
                             fontWeight: FontWeight.w500, fontFamily: 'Inter'),
                       ),
@@ -53,9 +54,9 @@ class ReportTenantScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              const OverviewCard(
-                chartTitle: 'Occupied',
-                chartTitle2: 'Available',
+               OverviewCard(
+                chartTitle: 'occupied'.tr,
+                chartTitle2: 'available'.tr,
                 data: [20, 30, 40, 20],
                 data2: [10, 20, 30, 10],
                 xLabels: ['January', 'February', 'March', 'April'],
@@ -65,14 +66,14 @@ class ReportTenantScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Kirayedar Overview",
+                    "kirayedar_overview".tr,
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w500, fontFamily: 'Inter'),
                   ),
                   Row(
                     children: [
                       Text(
-                        'Month',
+                        'month'.tr,
                         style: CustomStyles.titleText.copyWith(
                             fontWeight: FontWeight.w500, fontFamily: 'Inter'),
                       ),
@@ -91,8 +92,8 @@ class ReportTenantScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              const OverviewCard(
-                chartTitle: 'No. of Kirayedar Verified',
+               OverviewCard(
+                chartTitle: 'no_of_kirayedar_verified'.tr,
                 data: [10, 20, 30, 15],
                 data2: null,
                 xLabels: ['January', 'February', 'March', 'April'],

@@ -76,7 +76,7 @@ class AddUnitWidget {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
@@ -88,7 +88,7 @@ class AddUnitWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 selectionCont(
-                  'Gallery',
+                  'gallery'.tr,
                   'assets/icons/pictures.png',
                   1,
                 ),
@@ -96,7 +96,7 @@ class AddUnitWidget {
                   width: 25.w,
                 ),
                 selectionCont(
-                  'Camera',
+                  'camera'.tr,
                   'assets/icons/camera.png',
                   2,
                 ),
@@ -115,7 +115,7 @@ class AddUnitWidget {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
@@ -260,13 +260,13 @@ class AddUnitWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AddPropertyWidget()
-                              .commomText('No. of Units', isMandatory: false),
+                              .commomText('number_of_units'.tr, isMandatory: false),
                           customTextField(
                             controller: addUnitCntrl.numberOfUnits.value,
                             keyboardType: TextInputType.number,
                             maxLength: 2,
                             textInputAction: TextInputAction.done,
-                            hintText: 'Type Here...',
+                            hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             isFilled: false,
                           ),

@@ -19,7 +19,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: appBar(
           title: isFromRegister!
-              ? "Register as ${authCntrl.onButtonTapTenant.value == 2 ? "Tenant" : "Landlord"}"
+              ? "${'register_as'.tr} ${authCntrl.onButtonTapTenant.value == 2 ? "tenant".tr : "landlord".tr}"
               : "Login",
           isBack: false),
       body: Column(

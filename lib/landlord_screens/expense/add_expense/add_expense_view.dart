@@ -29,7 +29,7 @@ class AddExpenseScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-            addExpCntrl.isfromEdit.value ? 'Update Expense' : 'Add Expense',
+            addExpCntrl.isfromEdit.value ? 'update_expense'.tr : 'add_expense'.tr,
             style: CustomStyles.otpStyle050505W700S16),
       ),
       body: ListView(
@@ -48,7 +48,7 @@ class AddExpenseScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Property', isMandatory: true),
+                  PersonlInfoWidget.commomText('property'.tr, isMandatory: true),
                   Obx(() => buildDropdown<Property>(
                         addExpCntrl.selectedProperty.value,
                         addExpCntrl.projrctsList,
@@ -56,7 +56,7 @@ class AddExpenseScreen extends StatelessWidget {
                         (value) => addExpCntrl.onProjectSelected(value),
                       )),
                   SizedBox(height: 5.h),
-                  PersonlInfoWidget.commomText('Building', isMandatory: true),
+                  PersonlInfoWidget.commomText('building'.tr, isMandatory: true),
                   Obx(() => buildDropdown<Building>(
                         addExpCntrl.selectedBuilding.value,
                         addExpCntrl.selectedProperty.value?.buildings ?? [],
@@ -75,7 +75,7 @@ class AddExpenseScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Expense Type',
+                  PersonlInfoWidget.commomText('expense_type'.tr,
                       isMandatory: true),
                   Obx(
                     () => bigDropDown(
@@ -89,35 +89,35 @@ class AddExpenseScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Date', isMandatory: true),
+                  PersonlInfoWidget.commomText('date'.tr, isMandatory: true),
                   AddExpenseWidgets().datePickerContainer(),
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Amount', isMandatory: true),
+                  PersonlInfoWidget.commomText('amount'.tr, isMandatory: true),
                   customTextField(
                       controller: addExpCntrl.amountCntrl.value,
                       focusNode: addExpCntrl.amountFocus.value,
                       keyboardType: TextInputType.number,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#FFFFFF'),
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Remarks'),
+                  PersonlInfoWidget.commomText('remarks'.tr),
                   customTextField(
                       controller: addExpCntrl.remarkCntrl.value,
                       focusNode: addExpCntrl.remarkFocus.value,
-                      hintText: 'Type Here...',
+                      hintText: '${'type_here'.tr}...',
                       isBorder: true,
                       color: HexColor('#FFFFFF'),
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Payment Type',
+                  PersonlInfoWidget.commomText('payment_type'.tr,
                       isMandatory: true),
                   SizedBox(
                     height: 2.h,
@@ -126,7 +126,7 @@ class AddExpenseScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('Attach'),
+                  PersonlInfoWidget.commomText('attach'.tr),
                   AddExpenseWidgets().filePickerContainer(),
                   SizedBox(
                     height: 5.h,
@@ -140,7 +140,7 @@ class AddExpenseScreen extends StatelessWidget {
                             addExpCntrl.onSaveTap();
                           },
                           text:
-                              addExpCntrl.isfromEdit.value ? 'Update' : 'Save',
+                              addExpCntrl.isfromEdit.value ? 'update'.tr : 'save'.tr,
                           width: Get.width),
                   SizedBox(
                     height: 5.h,

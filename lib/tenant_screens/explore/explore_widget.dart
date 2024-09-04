@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,7 +45,7 @@ class ExploreWidget {
                       }
                     },
                     icon: const Icon(Icons.search)),
-                hintText: "Enter the location",
+                hintText: "enter_location".tr,
                 prefixIconConstraints: BoxConstraints.loose(Size(35.w, 35.h)),
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(color: lightBorderGrey),
@@ -87,7 +85,7 @@ class ExploreWidget {
             child: Obx(() {
               return exploreCntrl.getUnitByPropertySearchLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : customBorderButton("Get Units", () {
+                  : customBorderButton("get_units".tr, () {
                       exploreCntrl.onTapSearchProperty();
                     },
                       fontweight: FontWeight.w500,
@@ -133,7 +131,7 @@ class ExploreWidget {
                 underline: Container(),
                 value: items.contains(selectedItem) ? selectedItem : null,
                 hint: Text(
-                  'Select Property',
+                  'select_property'.tr,
                   style: CustomStyles.hintText,
                 ),
                 items: items.map((Property item) {
@@ -163,8 +161,8 @@ class ExploreWidget {
 
     return Obx(() {
       return exploreCntrl.getUnitResult.isEmpty
-          ? const Center(
-              child: Text("No units found"),
+          ?  Center(
+              child: Text("no_units_found".tr),
             )
           : ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
@@ -339,7 +337,7 @@ class ExploreWidget {
                                               Flexible(
                                                 flex: 2,
                                                 child: Text(
-                                                  "${exploreCntrl.getUnitResult[index]['area_size'] ?? ""} sqft",
+                                                  "${exploreCntrl.getUnitResult[index]['area_size'] ?? ""} ${'sqft'.tr}",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,

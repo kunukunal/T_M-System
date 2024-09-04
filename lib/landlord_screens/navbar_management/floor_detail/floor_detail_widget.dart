@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -62,8 +61,8 @@ class FloorDetailWidget {
                       onPressed: (context) {
                         floorCntrl.rentTo.value = null;
                         exitTenant(
-                            button1: "No",
-                            button2: "Yes",
+                            button1: "no".tr,
+                            button2: "yes".tr,
                             onButton1Tap: () {
                               Get.back();
                             },
@@ -73,16 +72,16 @@ class FloorDetailWidget {
                                 floorCntrl.removeTenant(unitId!);
                               } else {
                                 customSnackBar(Get.context!,
-                                    "Please choose the unit exit date");
+                                    "please_choose_unit_exit_date".tr);
                               }
                             },
                             title:
-                                "Are you sure you want to remove the tenant?");
+                                "are_you_sure_remove_tenant".tr);
                       },
                       backgroundColor: const Color(0xFFFE4A49),
                       foregroundColor: whiteColor,
                       icon: Icons.exit_to_app,
-                      label: "Exit Tenant",
+                      label: "exit_tenant".tr,
                     ),
                   ],
                 )
@@ -186,7 +185,7 @@ class FloorDetailWidget {
                                         )
                                       : FittedBox(
                                           child: Text(
-                                            availablityTitle ?? "Available",
+                                            availablityTitle ?? "available".tr,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 fontSize:
@@ -248,11 +247,11 @@ class FloorDetailWidget {
                                         });
                                   } else {
                                     customSnackBar(Get.context!,
-                                        "Unit is already occupied, cannot add tenant");
+                                        "unit_is_already_occupied".tr);
                                   }
                                 },
                                 child: Text(
-                                  isOccupied == true ? "Booked" : "Book Now",
+                                  isOccupied == true ? "booked".tr : "book_now".tr,
                                   style: const TextStyle(color: Colors.white),
                                 )),
                           )
@@ -346,7 +345,7 @@ class FloorDetailWidget {
                                 fontSize: 18.sp - commonFontSize,
                                 fontWeight: FontWeight.w700)),
                       ),
-                      EditProfileWidget.commomText('Exit date'),
+                      EditProfileWidget.commomText('exit_date'.tr),
                       Obx(() {
                         return ManagementWidgets().datePickerContainer(
                             floorCntrl.rentTo.value == null

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
@@ -13,6 +12,7 @@ import 'package:tanent_management/landlord_screens/profile/faqs/faqs_view.dart';
 import 'package:tanent_management/landlord_screens/profile/my_profile/my_profile_widget.dart';
 import 'package:tanent_management/landlord_screens/profile/notification_setting/notification_view.dart';
 import 'package:tanent_management/landlord_screens/profile/privacy_policy/privacy_policy_view.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 import 'my_profile_controller.dart';
 
@@ -31,7 +31,7 @@ class MyProfileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyProfileWidget.myProfileContainer(
-                    name: userData['name'] ?? "User",
+                    name: userData['name'] ?? "user".tr,
                     phoneNo:
                         '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
                     image: userData['profile_image'] ?? ""),
@@ -39,14 +39,14 @@ class MyProfileView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
-                    'Settings',
+                    'settings'.tr,
                     style: TextStyle(
                         fontSize: 16.sp - commonFontSize,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
-                    title: 'Documents',
+                    title: 'documents'.tr,
                     onTap: () {
                       if (userData['user_type'] == 1) {
                         Get.to(
@@ -64,11 +64,11 @@ class MyProfileView extends StatelessWidget {
                     },
                     image: 'assets/icons/Group 26.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Tenants Rent',
+                    title: 'tenants_rent'.tr,
                     onTap: () {},
                     image: 'assets/icons/ic-bank.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Language',
+                    title: 'language'.tr,
                     onTap: () {
                       Get.to(
                         () => LanguageScreen(
@@ -78,7 +78,7 @@ class MyProfileView extends StatelessWidget {
                     },
                     image: 'assets/icons/language.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Notifications',
+                    title: 'notifications'.tr,
                     onTap: () {
                       Get.to(() => NotificationView());
                     },
@@ -87,26 +87,26 @@ class MyProfileView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
-                    'About Us',
+                    'about_us'.tr,
                     style: TextStyle(
                         fontSize: 16.sp - commonFontSize,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
                 MyProfileWidget.commonListTile(
-                    title: 'FAQ',
+                    title: 'faq'.tr,
                     onTap: () {
                       Get.to(() => FAQsView());
                     },
                     image: 'assets/icons/faq.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Privacy Policy',
+                    title: 'privacy_policy'.tr,
                     onTap: () {
                       Get.to(() => PrivacyPolicyScreen());
                     },
                     image: 'assets/icons/ic-security.png'),
                 MyProfileWidget.commonListTile(
-                    title: 'Contact Us',
+                    title: 'contact_us'.tr,
                     onTap: () {
                       Get.to(() => ContactUsScreen());
                     },
@@ -130,24 +130,23 @@ class MyProfileView extends StatelessWidget {
                   ),
                 ),
                 MyProfileWidget.commonListTile(
-                    title: 'Share',
+                    title: 'share'.tr,
                     onTap: () {},
                     image: 'assets/icons/ic-share.png'),
 
                 MyProfileWidget.commonListTile(
-                    title: 'Logout',
+                    title: 'logout'.tr,
                     onTap: () {
                       resgisterPopup(
-                        title: 'Logout',
-                        subtitle: 'Are you sure you want to log out?',
-                        button1: 'Cancel',
-                        button2: 'Yes, Logout',
+                        title: 'logout'.tr,
+                        subtitle: 'are_you_sure_logout'.tr,
+                        button1: 'cancel'.tr,
+                        button2: 'yes_logout'.tr,
                         onButton1Tap: () {
                           Get.back();
                         },
                         onButton2Tap: () async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.remove("access_token");
+                          await SharedPreferencesServices.clearSharedPrefData();
                           Get.deleteAll();
                           clearAll();
                           Navigator.pushAndRemoveUntil(
@@ -164,7 +163,7 @@ class MyProfileView extends StatelessWidget {
                     image: 'assets/icons/ic-logout.png'),
                 MyProfileWidget.commonListTile(
                     isDelete: true,
-                    title: 'Delete Account',
+                    title: 'delete_account'.tr,
                     onTap: () {},
                     image: null),
                 SizedBox(

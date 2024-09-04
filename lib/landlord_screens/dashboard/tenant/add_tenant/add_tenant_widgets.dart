@@ -96,7 +96,7 @@ class AddTenantWidgets {
         Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
             child: Text(
-              "Choose one to upload a picture",
+              "choose_picture".tr,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
@@ -108,13 +108,13 @@ class AddTenantWidgets {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 selectionCont(
-                    isFromProfile, 'Gallery', 'assets/icons/pictures.png', 1,
+                    isFromProfile, 'gallery'.tr, 'assets/icons/pictures.png', 1,
                     index: index),
                 SizedBox(
                   width: 25.w,
                 ),
                 selectionCont(
-                    isFromProfile, 'Camera', 'assets/icons/camera.png', 2,
+                    isFromProfile, 'camera'.tr, 'assets/icons/camera.png', 2,
                     index: index),
               ],
             ),
@@ -131,7 +131,7 @@ class AddTenantWidgets {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancel",
+                "cancel".tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
@@ -252,7 +252,7 @@ class AddTenantWidgets {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Enter otp",
+              "enter_otp".tr,
               style: TextStyle(
                   color: black,
                   fontSize: 18.sp - commonFontSize,
@@ -323,7 +323,7 @@ class AddTenantWidgets {
                             tenantCntrl.verifyTanantOtp();
                           }
                         } else {
-                          customSnackBar(Get.context!, "Please enter the otp.");
+                          customSnackBar(Get.context!, "please_enter_otp".tr);
                         }
                       }
                       ),
@@ -368,10 +368,10 @@ class AddTenantWidgets {
                             tenantCntrl.verifyTanantOtp();
                           }
                         } else {
-                          customSnackBar(Get.context!, "Please enter the otp.");
+                          customSnackBar(Get.context!, "please_enter_otp".tr);
                         }
                       },
-                      text: 'Submit',
+                      text: 'submit'.tr,
                       width: Get.width)
                   : const Center(child: CircularProgressIndicator()),
             ),
@@ -386,7 +386,7 @@ class AddTenantWidgets {
                 authCntrl.isTimeComplete.value = false;
               } else {
                 customSnackBar(
-                    Get.context!, "Please wait until the timer completes.");
+                    Get.context!, "please_wait_until_timer_completes".tr);
               }
             })
           ],

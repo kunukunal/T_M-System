@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class ContactUsController extends GetxController {
   //variables
@@ -27,20 +28,23 @@ class ContactUsController extends GetxController {
         if (descCntrl.value.text.trim().isNotEmpty) {
           sendMessageToContact();
         } else {
-          customSnackBar(Get.context!, "Please enter the Description");
+          customSnackBar(Get.context!, "please_enter_description".tr);
         }
       } else {
-        customSnackBar(Get.context!, "Please enter your email");
+        customSnackBar(Get.context!, "please_enter_email".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Please enter your name");
+      customSnackBar(Get.context!, "please_enter_name".tr);
     }
   }
 
   sendMessageToContact() async {
-    final prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? "";
-    String languaeCode = prefs.getString('languae_code') ?? "en";
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
 
     final response = await DioClientServices.instance.dioPostCall(
       body: {
@@ -62,7 +66,7 @@ class ContactUsController extends GetxController {
         emailCntrl.value.clear();
         descCntrl.value.clear();
         Get.back();
-        customSnackBar(Get.context!, "Your request submit successfully");
+        customSnackBar(Get.context!, "your_request_submitted_successfully".tr);
       } else if (response.statusCode == 400) {
         customSnackBar(Get.context!, response.data['email'][0]);
         // Handle error
