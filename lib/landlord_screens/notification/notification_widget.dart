@@ -7,9 +7,11 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/notification/notification_controller.dart';
 
 import '../../common/constants.dart';
+import 'ad_as_tenant/tenant_details_view.dart';
 
 class NotificationWidget {
   notifReceiveList({
+    int? tranId,
     String? transactionId,
     String? title,
     String? desc,
@@ -17,6 +19,7 @@ class NotificationWidget {
     String? name,
     String? date,
   }) {
+
     final notifCntrl = Get.find<NotificationController>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
@@ -76,7 +79,7 @@ class NotificationWidget {
                                 ),
                               ),
                               Text(
-                                price!,
+                                "₹ $price",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 12.sp - commonFontSize,
@@ -106,52 +109,61 @@ class NotificationWidget {
               SizedBox(
                 height: 5.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Name: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            'Name: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp - commonFontSize,
+                            ),
+                          ),
+                          Text(
+                            name!,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp - commonFontSize,
+                                color: grey),
+                          ),
+                        ],
                       ),
-                      Text(
-                        name!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            'Date: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp - commonFontSize,
+                            ),
+                          ),
+                          Text(
+                            date!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp - commonFontSize,
+                                color: grey),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Date: ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
-                      ),
-                      Text(
-                        date!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
-                      ),
-                    ],
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   customBorderButton('Decline', () {
-                    notifCntrl.onDeclineTap();
+                    // notifCntrl.onDeclineTap();
+                    declinePopup(tranId!);
                   },
                       verticalPadding: 12.h,
                       horizontalPadding: 2.w,
@@ -159,16 +171,21 @@ class NotificationWidget {
                       width: 90.w,
                       borderColor: HexColor('#679BF1'),
                       textColor: HexColor('#679BF1')),
-                  customBorderButton('Receive', () {
-                    notifCntrl.onReceiveTap();
-                  },
-                      verticalPadding: 12.h,
-                      horizontalPadding: 2.w,
-                      btnHeight: 30.h,
-                      width: 215.w,
-                      color: HexColor('#679BF1'),
-                      textColor: HexColor('#FFFFFF'),
-                      borderColor: Colors.transparent)
+                  Obx(() {
+                    return notifCntrl.isStatusUpdateLoading.value
+                        ? const CircularProgressIndicator()
+                        : customBorderButton('Receive', () {
+                            notifCntrl.updateTransationStatusNotification(
+                                tranId!, 2, 1);
+                          },
+                            verticalPadding: 12.h,
+                            horizontalPadding: 2.w,
+                            btnHeight: 30.h,
+                            width: 215.w,
+                            color: HexColor('#679BF1'),
+                            textColor: HexColor('#FFFFFF'),
+                            borderColor: Colors.transparent);
+                  })
                 ],
               )
             ],
@@ -178,17 +195,23 @@ class NotificationWidget {
     );
   }
 
-  notifRequestList({
-    String? title,
-    String? desc,
-    String? name,
-  }) {
+  notifRequestList(
+      {String? title,
+      String? desc,
+      String? name,
+      int? unitId,
+      int? notifiCationTypeId,
+      int? notifiCationId = 0,
+      int? processRequestId,
+      int? tenantId = 0,
+      String? date,
+      bool? isTenantAlreadyAdded = false}) {
     final notifCntrl = Get.find<NotificationController>();
     return Padding(
         padding:
             EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
         child: Container(
-          height: 160.h,
+          // height: 160.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: lightBorderGrey)),
@@ -219,7 +242,7 @@ class NotificationWidget {
                                     color: black),
                               ),
                               Text(
-                                name!,
+                                name ?? "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 16.sp - commonFontSize,
@@ -240,6 +263,27 @@ class NotificationWidget {
                       ],
                     ),
                   ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Date: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp - commonFontSize,
+                          ),
+                        ),
+                        Text(
+                         date??"",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp - commonFontSize,
+                              color: grey),
+                        ),
+                      ],
+                    ),
                   Divider(
                     color: HexColor('#EBEBEB'),
                     height: 1.h,
@@ -247,7 +291,21 @@ class NotificationWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  customBorderButton('View', () {},
+                  customBorderButton('View', () {
+                    Get.to(() => AdasTenatDetailsScreen(), arguments: [
+                      unitId,
+                      notifiCationTypeId,
+                      processRequestId,
+                      isTenantAlreadyAdded,
+                      tenantId,
+                      notifiCationId
+                    ])?.then((value) {
+                      print("jhkjkjk ${value}");
+                      if (value == true) {
+                        notifCntrl.getLandlordNotification();
+                      }
+                    });
+                  },
                       verticalPadding: 12.h,
                       horizontalPadding: 2.w,
                       btnHeight: 30.h,
@@ -262,13 +320,13 @@ class NotificationWidget {
   notifRegularList({
     String? title,
     String? desc,
+    String? date
   }) {
-    final notifCntrl = Get.find<NotificationController>();
     return Padding(
         padding:
             EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
         child: Container(
-          height: 85.h,
+          // height: 85.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
               border: Border.all(color: lightBorderGrey)),
@@ -299,7 +357,7 @@ class NotificationWidget {
                                     color: black),
                               ),
                               Text(
-                                desc!,
+                                desc??"",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -307,12 +365,35 @@ class NotificationWidget {
                                     fontSize: 14.sp - commonFontSize,
                                     color: grey),
                               ),
+
+
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                       Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Date: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp - commonFontSize,
+                          ),
+                        ),
+                        Text(
+                         date??"",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp - commonFontSize,
+                              color: grey),
+                        ),
+                      ],
+                    ),
                 ]),
           ),
         ));
@@ -324,7 +405,6 @@ class NotificationWidget {
     String? price,
     bool? isOccupied,
   }) {
-    final notifCntrl = Get.find<NotificationController>();
     return Padding(
         padding:
             EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
@@ -419,17 +499,20 @@ class NotificationWidget {
         ));
   }
 
-  declinePopup() {
+  declinePopup(int? tranId) {
+    final notifCntrl = Get.find<NotificationController>();
+
     return commonDeclinePopup(
       title: '',
       subtitle: 'Are you sure you want to decline this request?',
-      button1: 'Decline',
-      button2: 'Not, Received',
+      button1: 'Cancel',
+      button2: 'Decline',
       onButton1Tap: () {
         Get.back();
       },
       onButton2Tap: () {
         Get.back();
+        notifCntrl.updateTransationStatusNotification(tranId!, 3, 2);
       },
     );
   }

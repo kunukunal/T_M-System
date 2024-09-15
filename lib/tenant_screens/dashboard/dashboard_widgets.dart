@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,7 +9,7 @@ import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
-import 'package:tanent_management/tenant_screens/dashboard/rental_information.dart';
+import 'package:tanent_management/tenant_screens/dashboard/rental_controller.dart';
 import 'package:tanent_management/tenant_screens/explore/explore_view.dart';
 
 import '../../common/text_styles.dart';
@@ -35,11 +36,7 @@ class DashBoardTenantWidgets {
               SizedBox(
                 width: 5.w,
               ),
-              GestureDetector(
-                  onTap: () {
-                    Get.to(() => const RentalInformation());
-                  },
-                  child: creditCardIcon),
+              GestureDetector(onTap: () {}, child: creditCardIcon),
               SizedBox(
                 width: 5.w,
               ),
@@ -147,7 +144,9 @@ class DashBoardTenantWidgets {
     );
   }
 
-  Widget filterWidget({required String title}) {
+  Widget filterWidget(BuildContext context, {required String title}) {
+    final rentalCntrl = Get.find<RentalController>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -156,32 +155,41 @@ class DashBoardTenantWidgets {
           style: CustomStyles.titleText
               .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
         ),
-        Row(
-          children: [
-            Text(
-              'month'.tr,
-              style: CustomStyles.titleText
-                  .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Image.asset(
-              "assets/icons/filter.png",
-              height: 20.h,
-              width: 20.w,
-            )
-          ],
+        GestureDetector(
+          onTap: () {
+            rentalCntrl.selectMonthYear(context);
+          },
+          child: Row(
+            children: [
+              Obx(() {
+                return Text(
+                  rentalCntrl.rentFrom.value == null
+                      ? 'month'.tr
+                      : "${rentalCntrl.rentFrom.value!.month}/${rentalCntrl.rentFrom.value!.year}",
+                  style: CustomStyles.titleText.copyWith(
+                      fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                );
+              }),
+              SizedBox(
+                width: 10.w,
+              ),
+              Image.asset(
+                "assets/icons/filter.png",
+                height: 20.h,
+                width: 20.w,
+              )
+            ],
+          ),
         ),
       ],
     );
   }
 
-  paymentHistory() {
+  paymentHistory(final paymentHistoryList) {
     final dashCntrl = Get.find<DashBoardTenantController>();
 
     return ListView.builder(
-      itemCount: dashCntrl.paymentHistoryList.length,
+      itemCount: paymentHistoryList.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Padding(
@@ -212,8 +220,8 @@ class DashBoardTenantWidgets {
                           ),
                           child: Center(
                               child: Text(
-                            convertDateString(dashCntrl
-                                .paymentHistoryList[index]['transaction_date']),
+                            convertDateString(
+                                paymentHistoryList[index]['transaction_date']),
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16.sp - commonFontSize,
@@ -229,20 +237,46 @@ class DashBoardTenantWidgets {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              dashCntrl.paymentHistoryList[index]['unit'] ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16.sp - commonFontSize,
-                                  color: black),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  paymentHistoryList[index]['unit'] ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.sp - commonFontSize,
+                                      color: black),
+                                ),
+                                Text(
+                                  paymentHistoryList[index]['status'] == 2
+                                      ? "Approved"
+                                      : paymentHistoryList[index]['status'] == 1
+                                          ? "Pending"
+                                          : "Reject",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp - commonFontSize,
+                                      color: paymentHistoryList[index]
+                                                  ['status'] ==
+                                              2
+                                          ? green
+                                          : paymentHistoryList[index]
+                                                      ['status'] ==
+                                                  1
+                                              ? Colors.orange
+                                              : red),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 10.w,
                             ),
                             Text(
-                              "₹${dashCntrl.paymentHistoryList[index]['transaction_amount'] ?? ""}",
+                              "₹${paymentHistoryList[index]['transaction_amount'] ?? ""}",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -269,8 +303,7 @@ class DashBoardTenantWidgets {
                     ),
                     children: [
                       TextSpan(
-                        text: dashCntrl.paymentHistoryList[index]
-                            ['transaction_id'],
+                        text: paymentHistoryList[index]['transaction_id'],
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 14.sp - commonFontSize,

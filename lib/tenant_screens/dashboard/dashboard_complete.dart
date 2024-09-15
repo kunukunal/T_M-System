@@ -7,6 +7,7 @@ import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_widgets.dart';
+import 'package:tanent_management/tenant_screens/dashboard/rental_information.dart';
 import 'package:tanent_management/tenant_screens/explore/unit_details/unit_detail_view.dart';
 
 import '../../landlord_screens/dashboard/search/search_widget.dart';
@@ -62,16 +63,23 @@ class CompleteDashboard extends StatelessWidget {
                     style: CustomStyles.titleText.copyWith(
                         fontWeight: FontWeight.w700, fontFamily: 'Inter'),
                   ),
-                  Text(
-                    "see_all".tr,
-                    style: CustomStyles.titleText.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Inter',
-                        color: grey),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => RentalInformation());
+                    },
+                    child: Text(
+                      "see_all".tr,
+                      style: CustomStyles.titleText.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Inter',
+                          color: grey),
+                    ),
                   ),
                 ],
               ),
-              DashBoardTenantWidgets().paymentHistory()
+              DashBoardTenantWidgets().paymentHistory(
+                dashCntrl.paymentHistoryList,
+              )
             ],
           );
         }),

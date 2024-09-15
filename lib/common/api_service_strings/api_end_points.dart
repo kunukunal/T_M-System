@@ -98,3 +98,17 @@ const String notificationSetting = "accounts/notification-setting/";
 const String emailOtp = "accounts/email-otp/";
 
 const String emailOtpVerify = "accounts/email-otp-verify/";
+
+const String unitSearch = "landlord/search-units/?query=";
+const String paymentHistory = "tenant/payment-history/?";
+
+const String paymentRequestHistory = "tenant/unit-rent-details/?unit=";
+const String landlordNotification = "accounts/notification/";
+const String updateTransactionStatus = "transaction/transaction/";
+const String getTransactionByStatus = "transaction/get-transactions/?status=";
+const String getDueTransactions = "transaction/tenant-dues/";
+const String getKriyaderDetailsUsingNotifications =
+    "management/kirayedar-detail/70/add-as-tenant/?unit_id=";
+const String acceptRejectTenant = "management/add-tenant/";
+const String paytenantRent = "transaction/pay-tenant-rent/";
+const String phonePayCallbackUrl = "tenant/payment-callback/";

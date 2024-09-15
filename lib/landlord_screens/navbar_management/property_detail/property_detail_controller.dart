@@ -56,6 +56,7 @@ class PropertyDetailCntroller extends GetxController {
   }
 
   onBuildingTap(int id, String floorName) {
+       print("jhjhjh sdsd}");
     Get.to(() => FloorDetailView(), arguments: [id, floorName])!.then((value) {
       print("jhjhjh ${value}");
       if (value==true) {

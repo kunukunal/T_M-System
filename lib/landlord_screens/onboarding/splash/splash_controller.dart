@@ -1,4 +1,3 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
@@ -28,7 +27,7 @@ class SplashController extends GetxController {
   _getUserLogin() async {
     String token = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "en";
+        "";
     isProfileSetup.value = await SharedPreferencesServices.getBoolData(
             key: SharedPreferencesKeysEnum.ispersonalinfocompleted.value) ??
         true;
@@ -42,8 +41,8 @@ class SplashController extends GetxController {
   _getUserData() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getBool('first_run') ?? true) {
-      FlutterSecureStorage storage = const FlutterSecureStorage();
-      await storage.deleteAll();
+      // FlutterSecureStorage storage = const FlutterSecureStorage();
+      // await storage.deleteAll();
       prefs.setBool('first_run', false);
     }
     UserModel? userData1 = await getUserData();

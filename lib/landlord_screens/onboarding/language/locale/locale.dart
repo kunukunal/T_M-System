@@ -6,6 +6,6 @@ class LocaleFile extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': enUS,
-        'hi': hi,
+        'hi_IN': hi,
       };
 }

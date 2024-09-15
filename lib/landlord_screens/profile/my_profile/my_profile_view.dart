@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/notification/notification_receive/notification_receive_view.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/sign_in.dart';
 import 'package:tanent_management/landlord_screens/onboarding/language/language.dart';
 import 'package:tanent_management/landlord_screens/profile/contact_us/contact_us_view.dart';
@@ -63,10 +64,15 @@ class MyProfileView extends StatelessWidget {
                       }
                     },
                     image: 'assets/icons/Group 26.png'),
-                MyProfileWidget.commonListTile(
-                    title: 'tenants_rent'.tr,
-                    onTap: () {},
-                    image: 'assets/icons/ic-bank.png'),
+
+                userData['user_type'] == 1
+                    ? MyProfileWidget.commonListTile(
+                        title: "Payments",
+                        onTap: () {
+                          Get.to(() => NotificationReceiveView());
+                        },
+                        image: 'assets/icons/ic-bank.png')
+                    : const SizedBox(),
                 MyProfileWidget.commonListTile(
                     title: 'language'.tr,
                     onTap: () {
@@ -149,6 +155,9 @@ class MyProfileView extends StatelessWidget {
                           await SharedPreferencesServices.clearSharedPrefData();
                           Get.deleteAll();
                           clearAll();
+
+                          // prefs.setBool('first_run', false);
+
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
-import 'package:tanent_management/landlord_screens/dashboard/search/search_widget.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_widgets.dart';
+import 'package:tanent_management/tenant_screens/dashboard/rental_controller.dart';
 
 class RentalInformation extends StatelessWidget {
-  const RentalInformation({
+  RentalInformation({
     super.key,
   });
+  final rentalCntrl = Get.put(RentalController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,41 +23,47 @@ class RentalInformation extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SearchWidget().occUnoccContainer(
-                        icon: occupiedIcon,
-                        titleUnit: 'rent_due'.tr,
-                        units: '20/40'),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    SearchWidget().occUnoccContainer(
-                        icon: unOccupiedIcon,
-                        titleUnit: 'next_due_date'.tr,
-                        units: '10 Apr 2024'),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                DashBoardTenantWidgets().filterWidget(title: "payment_due".tr),
-                ListView.builder(
-                  itemCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) =>
-                      DashBoardTenantWidgets().paymentHistory(),
-                )
-              ],
-            ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     SearchWidget().occUnoccContainer(
+              //         icon: occupiedIcon,
+              //         titleUnit: 'rent_due'.tr,
+              //         units: '20/40'),
+              //     SizedBox(
+              //       width: 5.w,
+              //     ),
+              //     SearchWidget().occUnoccContainer(
+              //         icon: unOccupiedIcon,
+              //         titleUnit: 'next_due_date'.tr,
+              //         units: '10 Apr 2024'),
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              DashBoardTenantWidgets()
+                  .filterWidget(context, title: "payment_due".tr),
+              Obx(() {
+                return Expanded(
+                  child: rentalCntrl.isRentalDataLaoding.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : rentalCntrl.paymentHistoryList.isEmpty
+                          ? const Center(
+                              child: Text("No Payment record found"),
+                            )
+                          : DashBoardTenantWidgets()
+                              .paymentHistory(rentalCntrl.paymentHistoryList),
+                );
+              })
+            ],
           ),
         ));
   }

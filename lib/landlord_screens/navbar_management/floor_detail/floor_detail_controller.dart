@@ -33,6 +33,15 @@ class FloorDetailController extends GetxController {
   final isUnitsStatsLoading = false.obs;
   onBuildingTap(Map unitNameData, List amenities, Map rentData) {
     // if (userData['user_documents']) {
+
+
+      print("sajdkjsdsadas ${unitNameData} ${amenities} ${rentData}   ${unitPropertyNameData}  ${unitBuildingNameData} ${unitFloorNameData} ${unitNameData} ");
+
+
+
+
+
+
   Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
     false,
     [

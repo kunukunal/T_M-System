@@ -95,7 +95,7 @@ class DashBoardController extends GetxController {
       userData = data['user_data'];
       propertyStats = data['property_stats'];
       rentBox = data['rent'];
-      expenseBox.value = data['expense'] ?? 0.0;
+      expenseBox.value = data['expense'].toDouble() ?? 0.0;
       Map<String, dynamic> incomeData = data['income_data'];
       xIncomeExpenseLabels =
           incomeData.keys.map((key) => capitalize(key)).toList();

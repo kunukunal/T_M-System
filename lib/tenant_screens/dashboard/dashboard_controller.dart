@@ -32,15 +32,17 @@ class DashBoardTenantController extends GetxController {
   }
 
   onTapPayRent(Map unitData) {
-    Get.to(() => PaymentRequestScreen(), arguments: [unitData]);
+    Get.to(() => PaymentRequestScreen(), arguments: [unitData])!.then((value) {
+      if (value) {
+        getDashboardData();
+      }
+    });
   }
 
   final unitList = [].obs;
   final paymentHistoryList = [].obs;
   final rentData = {}.obs;
   final isDashboardDataLaoding = false.obs;
-
-
 
   getDashboardData() async {
     isDashboardDataLaoding.value = true;

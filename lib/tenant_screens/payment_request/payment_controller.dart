@@ -17,6 +17,11 @@ class PaymentController extends GetxController {
   final paymentUnitData = {}.obs;
   final paymentUnitId = 0.obs;
 
+  final totalduetillnow = 0.0.obs;
+  final pendingthismonth = 0.0.obs;
+  final pendingprocessamount = 0.0.obs;
+  final needReload = false.obs;
+
   @override
   void onInit() {
     paymentUnitData.value = Get.arguments[0];
@@ -24,6 +29,7 @@ class PaymentController extends GetxController {
     if (paymentUnitData.isNotEmpty) {
       paymentUnitId.value = paymentUnitData['id'];
       ammountController.value.text = paymentUnitData['rent'].toString();
+      getPaymentRequest(paymentUnitId.value);
     }
     super.onInit();
   }
@@ -46,7 +52,6 @@ class PaymentController extends GetxController {
         amount: double.parse(ammountController.value.text));
     var result = "";
     await phonepayCntrl.startTransaction().then((response) {
-      print("kdjaks ${response}");
       if (response != null) {
         String status = response['status'].toString();
         String error = response['error'].toString();
@@ -62,7 +67,7 @@ class PaymentController extends GetxController {
         result = "Flow Incomplete";
       }
 
-      print("dalskdlkasd ${result}");
+      print("dalskdlkasd $result");
     }).catchError((error) {
       // handleError(error);
       print("Errorssss: $error");
@@ -75,7 +80,7 @@ class PaymentController extends GetxController {
         phonePayCallBack();
       } else {
         isPaymentRequest.value = 3;
-        // submitPaymentRequest();
+        submitPaymentRequest();
       }
     } else {
       customSnackBar(Get.context!, "please_enter_amount".tr);
@@ -84,22 +89,17 @@ class PaymentController extends GetxController {
 
   ontapbackHomeRequest() {
     isPaymentRequest.value = 0;
-    Get.back();
+    Get.back(result: needReload.value);
   }
 
   final isPaymentRequestSucess = false.obs;
   submitPaymentRequest() async {
     isPaymentRequestSucess.value = true;
-    print("dsalklasd ${{
-      "unit_id": paymentUnitId.value,
-      "amount": ammountController.value.text.trim(),
-      "payment_mode":
-          payentModeChoose.value // (1 = Online Transafer, 2 = Cash, 3 = UPI)
-    }}");
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     final response = await DioClientServices.instance.dioPostCall(
@@ -107,7 +107,8 @@ class PaymentController extends GetxController {
         "unit_id": paymentUnitId.value,
         "amount": ammountController.value.text.trim(),
         "payment_mode":
-            payentModeChoose.value // (1 = Online Transafer, 2 = Cash, 3 = UPI)
+            payentModeChoose.value, // (1 = Online Transafer, 2 = Cash, 3 = UPI)
+        "description": descriptionController.value.text.trim()
       },
       headers: {
         'Authorization': "Bearer $accessToken",
@@ -118,10 +119,43 @@ class PaymentController extends GetxController {
     );
     if (response.statusCode == 200) {
       isPaymentRequestSucess.value = false;
-      print("dakldkalskdlas ${response.data}");
       isPaymentRequest.value = 3;
+      needReload.value = true;
     } else {
       isPaymentRequestSucess.value = false;
+    }
+  }
+
+  final isPaymentRequestDataLoading = false.obs;
+
+  getPaymentRequest(int unitId) async {
+    isPaymentRequestDataLoading.value = true;
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: "$paymentRequestHistory$unitId",
+    );
+    if (response.statusCode == 200) {
+      final data = response.data;
+      totalduetillnow.value = data['due_till_last_month'];
+      pendingthismonth.value = data['current_month_due'];
+      pendingprocessamount.value =
+          double.parse(data['pending_approval_payment'].toString());
+
+      isPaymentRequestDataLoading.value = false;
+    } else {
+      isPaymentRequestDataLoading.value = false;
     }
   }
 }

@@ -77,8 +77,7 @@ class AuthWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                Text(
-                    'join_us_today'.tr,
+                Text('join_us_today'.tr,
                     style: CustomStyles.descriptionText6c6c6c),
                 SizedBox(
                   height: 5.h,
@@ -111,25 +110,37 @@ class AuthWidget {
                     onPressed: () {
                       resgisterPopup(
                         title: 'registration_as'.tr,
-                        subtitle:
-                            'join_us_today'.tr,
-                        button1: 'Landlord',
-                        button2: 'Tenant',
+                        subtitle: 'join_us_today'.tr,
+                        button1: 'landlord'.tr,
+                        button2: 'tenant'.tr,
                         onButton1Tap: () {
-                          // isFromRegister = true;
                           authCntrl.onButtonTapTenant.value = 1;
                           Get.back();
-                          Get.to(() => SignInScreen(isFromRegister: true));
+                          Navigator.push(
+                              Get.context!,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SignInScreen(isFromRegister: true),
+                              ));
                         },
                         onButton2Tap: () {
-                          // isFromRegister = true;
                           authCntrl.onButtonTapTenant.value = 2;
                           Get.back();
-                          Get.to(() => SignInScreen(isFromRegister: true));
+                          Navigator.push(
+                              Get.context!,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SignInScreen(isFromRegister: true),
+                              ));
                         },
                       );
-                    }
-                  , child: Text('register_now'.tr,style: TextStyle(decoration: TextDecoration.underline,fontSize: 16.sp),))
+                    },
+                    child: Text(
+                      'register_now'.tr,
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 16.sp),
+                    ))
               ],
             ),
           ),

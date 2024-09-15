@@ -15,83 +15,176 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: SearchWidget().appBar(),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      appBar: SearchWidget().appBar(),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Divider(
+          color: HexColor('#EBEBEB'),
+          height: 1.h,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: Column(
             children: [
-          Divider(
-            color: HexColor('#EBEBEB'),
-            height: 1.h,
-          ),
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 10.w),
-            child: Column(
-
-              children: [
-                SizedBox(height: 10.h,),
-                customTextField(
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.all(10.r),
+              SizedBox(
+                height: 10.h,
+              ),
+              customTextField(
+                  // prefixIcon: Padding(
+                  //   padding: EdgeInsets.all(10.r),
+                  //   child: searchIcon,
+                  // ),
+                  hintStyle: CustomStyles.hintText,
+                  hintText: 'unit'.tr,
+                  controller: searchCntrl.searchCntrl.value,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.emailAddress,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      if (searchCntrl.searchCntrl.value.text
+                          .trim()
+                          .isNotEmpty) {
+                        searchCntrl.getUnitBySearch();
+                      } else {
+                        customSnackBar(Get.context!,
+                            "Please enter the property name for search");
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(5.r),
                       child: searchIcon,
                     ),
-                    hintStyle: CustomStyles.hintText,
-                    hintText: 'unit'.tr,
-                    controller: searchCntrl.searchCntrl.value,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.emailAddress,
-                    isBorder: true,
-                    isFilled: false),
-             Padding(
-               padding:  EdgeInsets.symmetric(vertical: 15.h),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                 SearchWidget().occUnoccContainer(
-                     icon: occupiedIcon,
-                     titleUnit: 'occupied_units'.tr,
-                     units: '300'),
-                 SearchWidget().occUnoccContainer(
-                     icon: unOccupiedIcon,
-                     titleUnit: 'unoccupied_units'.tr,
-                     units: '200'),
-               ],),
-             ),
-
-              ],
-            ),
-          ),
-          Padding(
-            padding:  EdgeInsets.only(left: 10.w,bottom: 10.w),
-
-            child: Text(
-              "units".tr,
-              style: TextStyle(fontSize: 16.sp - commonFontSize,fontWeight: FontWeight.w700, color: black),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-            shrinkWrap: true,
-              itemCount:searchCntrl.items.value.length,
-              itemBuilder: (context, index) {
-                return SearchWidget().unitList(
-                  unitTitle: searchCntrl.items.value[index]['unitTitle'] as String,
-                  price: searchCntrl.items.value[index]['price'] as String,
-                  availablityTitle: searchCntrl.items.value[index]['availablityTitle'] as String,
-                  icon: searchCntrl.items.value[index]['icon'] as String,
-                  buildingIcon: searchCntrl.items.value[index]['buildingIcon'] as String,
-                  property: searchCntrl.items.value[index]['property'] as String,
-                  building: searchCntrl.items.value[index]['building'] as String,
-                  floor: searchCntrl.items.value[index]['floor'] as String,
-                  isOccupied: searchCntrl.items.value[index]['isOccupied'] as bool
+                  ),
+                  isBorder: true,
+                  isFilled: false),
+              Obx(() {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 15.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SearchWidget().occUnoccContainer(
+                          isCheckBoxShow: true,
+                          icon: occupiedIcon,
+                          checkBoxVal: searchCntrl.isOcupiedUnitShow.value,
+                          onChange: (val) {
+                            searchCntrl.isOcupiedUnitShow.value = val!;
+                            searchCntrl.items.refresh();
+                          },
+                          titleUnit: 'occupied_units'.tr,
+                          units: searchCntrl.occupiedUnits.value.toString()),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SearchWidget().occUnoccContainer(
+                          isCheckBoxShow: true,
+                          checkBoxVal: searchCntrl.isUnOcupiedUnitShow.value,
+                          onChange: (val) {
+                            searchCntrl.isUnOcupiedUnitShow.value = val!;
+                            searchCntrl.items.refresh();
+                          },
+                          icon: unOccupiedIcon,
+                          titleUnit: 'unoccupied_units'.tr,
+                          units: searchCntrl.availableUnits.value.toString()),
+                    ],
+                  ),
                 );
-              },
+              }),
+            ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10.w, bottom: 10.w),
+          child: Text(
+            "units".tr,
+            style: TextStyle(
+                fontSize: 16.sp - commonFontSize,
+                fontWeight: FontWeight.w700,
+                color: black),
+          ),
+        ),
+        Obx(() {
+          return Expanded(
+              child: searchCntrl.unitDataLoading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : searchCntrl.items.isEmpty
+                      ? const Center(
+                          child: Text("No Units found"),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: searchCntrl.items.length,
+                          itemBuilder: (context, index) {
+                            // Get the value of isOccupied for the current item
+                            bool isOccupied =
+                                searchCntrl.items[index]['is_occupied'];
 
-            ),
-          )
-        ]),
-      ),
+                            // If both `isOcupiedUnitShow` and `isUnOcupiedUnitShow` are true, show all items
+                            if (searchCntrl.isOcupiedUnitShow.value &&
+                                searchCntrl.isUnOcupiedUnitShow.value) {
+                              return SearchWidget().unitList(
+                                unitTitle: searchCntrl.items[index]['name'],
+                                price: searchCntrl.items[index]['unit_rent'],
+                                availablityTitle: searchCntrl.items[index]
+                                    ['available_from'],
+                                lastOccoupiedDate: searchCntrl.items[index]
+                                    ['last_occupied_date'],
+                                amenities: searchCntrl.items[index]
+                                    ['amenities'],
+                                buildingid: searchCntrl.items[index]
+                                    ['building_id'],
+                                floorid: searchCntrl.items[index]['floor_id'],
+                                isrentnegotiable: searchCntrl.items[index]
+                                    ['is_rent_negotiable'],
+                                propertyid: searchCntrl.items[index]
+                                    ['property_id'],
+                                unitId: searchCntrl.items[index]['id'],
+                                buildingIcon: searchCntrl.items[index]['image'],
+                                property: searchCntrl.items[index]['property'],
+                                building: searchCntrl.items[index]['building'],
+                                floor: searchCntrl.items[index]['floor'],
+                                isOccupied: isOccupied,
+                              );
+                            }
+
+                            // Show items based on the filters
+                            if ((searchCntrl.isOcupiedUnitShow.value &&
+                                    isOccupied) ||
+                                (searchCntrl.isUnOcupiedUnitShow.value &&
+                                    !isOccupied)) {
+                              return SearchWidget().unitList(
+                                unitTitle: searchCntrl.items[index]['name'],
+                                price: searchCntrl.items[index]['unit_rent'],
+                                availablityTitle: searchCntrl.items[index]
+                                    ['available_from'],
+                                lastOccoupiedDate: searchCntrl.items[index]
+                                    ['last_occupied_date'],
+                                amenities: searchCntrl.items[index]
+                                    ['amenities'],
+                                buildingid: searchCntrl.items[index]
+                                    ['building_id'],
+                                floorid: searchCntrl.items[index]['floor_id'],
+                                isrentnegotiable: searchCntrl.items[index]
+                                    ['is_rent_negotiable'],
+                                propertyid: searchCntrl.items[index]
+                                    ['property_id'],
+                                unitId: searchCntrl.items[index]['id'],
+                                buildingIcon: searchCntrl.items[index]['image'],
+                                property: searchCntrl.items[index]['property'],
+                                building: searchCntrl.items[index]['building'],
+                                floor: searchCntrl.items[index]['floor'],
+                                isOccupied: isOccupied,
+                              );
+                            }
+
+                            // If no condition is met, return an empty SizedBox
+                            return SizedBox();
+                          },
+                        ));
+        })
+      ]),
     );
   }
 }

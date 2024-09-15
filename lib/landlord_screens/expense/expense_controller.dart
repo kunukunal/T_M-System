@@ -60,7 +60,7 @@ class ExpenseController extends GetxController {
         expenseList.clear();
 
         expenseList.addAll(response.data['history']);
-        dashCntrl.expenseBox.value = response.data['total_month_expense']??0.0;
+        dashCntrl.expenseBox.value = response.data['total_month_expense'].toDouble()??0.0;
         isExpenseDataget.value = false;
       } else if (response.statusCode == 400) {}
     }

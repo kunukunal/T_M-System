@@ -1,81 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
-import '../property/property_list/property_list_view.dart';
-
-class SearchCntroller extends GetxController{
-
+class SearchCntroller extends GetxController {
   final searchCntrl = TextEditingController().obs;
   final items = [
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
 
-    },
-    {
-      'unitTitle': 'Unit 3',
-      'price': '₹3500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
-
-    },
-    {
-      'unitTitle': 'Unit 2',
-      'price': '₹2900.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/profileIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':true
-
-    },
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
-
-    },
-    {
-      'unitTitle': 'Unit 1',
-      'price': '₹2500.00',
-      'availablityTitle': 'Available Since March',
-      'icon': 'assets/icons/homeIcon.png',
-      'shareIcon': 'assets/icons/Frame.png',
-      'buildingIcon':'assets/icons/a.png',
-      'property': 'B',
-      'building': '1',
-      'floor': '2',
-      'isOccupied':false
-
-    },
   ].obs;
 
-  onItemTap(){
-    Get.to(()=>
-        PropertyListView());
+
+
+  final totatUnits = 0.obs;
+  final availableUnits = 0.obs;
+  final occupiedUnits = 0.obs;
+
+  final unitDataLoading = false.obs;
+
+
+
+  final isOcupiedUnitShow=true.obs;
+  final isUnOcupiedUnitShow=true.obs;
+
+  getUnitBySearch() async {
+    unitDataLoading.value = true;
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: "$unitSearch${searchCntrl.value.text.trim()}",
+    );
+
+    if (response.statusCode == 200) {
+      unitDataLoading.value = false;
+
+      items.clear();
+      final data = response.data;
+      totatUnits.value = data['total'];
+      availableUnits.value = data['available'];
+      occupiedUnits.value = data['occupied'];
+
+      items.addAll(data['units']);
+      unitDataLoading.value = false;
+    } else {
+      unitDataLoading.value = false;
+      print('Error: ${response.statusCode}');
+    }
   }
 }

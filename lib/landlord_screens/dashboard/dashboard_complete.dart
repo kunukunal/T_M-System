@@ -62,12 +62,11 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-             ExpenseWidgets().totalExpenseContainer(),
+            ExpenseWidgets().totalExpenseContainer(),
             SizedBox(
               height: 10.h,
             ),
             tenantRentContainer(),
-          
             SizedBox(
               height: 10.h,
             ),
@@ -85,12 +84,12 @@ class CompleteDashboard extends StatelessWidget {
 
 tenantRentContainer({bool isForRent = true}) {
   final dashCntrl = Get.find<DashBoardController>();
-  num tRent =  dashCntrl.rentBox['total_rent'];
+  num tRent = dashCntrl.rentBox['total_rent'];
 
-  int totalRent =  tRent.toInt() ; // Total rent amount
-  num pRent =  dashCntrl.rentBox['rent_paid'];
+  int totalRent = tRent.toInt(); // Total rent amount
+  num pRent = dashCntrl.rentBox['rent_paid'];
   int paidRent = pRent.toInt();
-     ; // Amount of rent paid
+  ; // Amount of rent paid
   double progress = 0.0;
 
   if (totalRent > 0) {
@@ -150,7 +149,7 @@ tenantRentContainer({bool isForRent = true}) {
                         fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${ dashCntrl.rentBox['rent_paid']}',
+                    '₹${dashCntrl.rentBox['rent_paid']}',
                     style: CustomStyles.black16,
                   ),
                 ],
@@ -165,7 +164,7 @@ tenantRentContainer({bool isForRent = true}) {
                         fontFamily: 'DM Sans'),
                   ),
                   Text(
-                    '₹${ dashCntrl.rentBox['rent_due'] }',
+                    '₹${dashCntrl.rentBox['rent_due']}',
                     style: CustomStyles.black16,
                   ),
                 ],
@@ -221,7 +220,7 @@ class OverviewCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text(
+              Text(
                 'statistics'.tr,
                 style: TextStyle(
                   color: Colors.grey,
@@ -269,17 +268,28 @@ class OverviewCard extends StatelessWidget {
                       barGroups: _buildBarGroups(),
                       titlesData: FlTitlesData(
                         topTitles: SideTitles(showTitles: false),
-                        leftTitles: SideTitles(showTitles: true),
-                        rightTitles: SideTitles(showTitles: false),
-                        bottomTitles: SideTitles(
+                        leftTitles: SideTitles(
                           showTitles: true,
                           getTextStyles: (context, value) => TextStyle(
                             color: Colors.black,
-                            fontSize: 12.sp - commonFontSize,
+                            fontSize: 10.sp - commonFontSize,
+                          ),
+                        ),
+                        rightTitles: SideTitles(showTitles: false),
+                        bottomTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 10,
+                          getTextStyles: (context, value) => TextStyle(
+                            color: Colors.black,
+                            fontSize: 10.sp - commonFontSize,
                           ),
                           margin: 16.h,
                           getTitles: (double value) {
-                            return xLabels[value.toInt()];
+                            // Ensure the value is within the valid range of xLabels and return the first 3 letters.
+                            String label = xLabels[value.toInt()];
+                            return label.length > 3
+                                ? label.substring(0, 3)
+                                : label;
                           },
                         ),
                       ),
@@ -304,7 +314,7 @@ class OverviewCard extends StatelessWidget {
         }
         rods.add(
           BarChartRodData(
-            width: 18,
+            width: 5,
             y: value,
             colors: [colors[j]],
           ),
@@ -353,8 +363,10 @@ propertiesList() {
     itemCount: dashCntrl.proprtyList.length,
     itemBuilder: (context, index) {
       return InkWell(
-        onTap: (){
-           propertyCntrl.onItemTap(id:  dashCntrl.proprtyList[index]['id'], propertyTitle: dashCntrl.proprtyList[index]['title']);
+        onTap: () {
+          propertyCntrl.onItemTap(
+              id: dashCntrl.proprtyList[index]['id'],
+              propertyTitle: dashCntrl.proprtyList[index]['title']);
         },
         child: Container(
           width: double.infinity,
@@ -375,15 +387,15 @@ propertiesList() {
                         width: 60.w,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
-                            image:
-                                dashCntrl.proprtyList[index]['images'].isNotEmpty
-                                    ? DecorationImage(
-                                        image: NetworkImage(
-                                            dashCntrl.proprtyList[index]['images']
-                                                [0]["image"]),
-                                        fit: BoxFit.cover)
-                                    : DecorationImage(
-                                        image: profileIconWithWidget.image)),
+                            image: dashCntrl
+                                    .proprtyList[index]['images'].isNotEmpty
+                                ? DecorationImage(
+                                    image: NetworkImage(
+                                        dashCntrl.proprtyList[index]['images']
+                                            [0]["image"]),
+                                    fit: BoxFit.cover)
+                                : DecorationImage(
+                                    image: profileIconWithWidget.image)),
                       ),
                     ),
                     SizedBox(
@@ -404,12 +416,13 @@ propertiesList() {
                               )),
                               Text(
                                 dashCntrl.proprtyList[index]['status'] ?? "",
-                                style: CustomStyles.amountFA4343W700S12.copyWith(
-                                    color: dashCntrl.proprtyList[index]
-                                                ['status'] ==
-                                            "Available"
-                                        ? Colors.green
-                                        : Colors.red),
+                                style: CustomStyles.amountFA4343W700S12
+                                    .copyWith(
+                                        color: dashCntrl.proprtyList[index]
+                                                    ['status'] ==
+                                                "Available"
+                                            ? Colors.green
+                                            : Colors.red),
                               )
                             ],
                           ),

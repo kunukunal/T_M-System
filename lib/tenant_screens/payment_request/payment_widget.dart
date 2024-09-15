@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -11,35 +11,49 @@ import 'package:tanent_management/tenant_screens/payment_request/payment_control
 
 class PaymentWidget {
   paymentContainer() {
+    final paymntCntrl = Get.find<PaymentController>();
+
     return ListView.separated(
       shrinkWrap: true,
-      itemCount: 2,
+      itemCount: 3,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Container(
         height: 100,
         decoration: BoxDecoration(
-            color: HexColor("#E8EEF8"),
+            color: index == 0
+                ? Colors.red
+                : index == 1
+                    ? HexColor("#E8EEF8")
+                    : Colors.orange,
             borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("₹5000.00",
-                style: TextStyle(
-                    color: black,
-                    fontSize: 20.sp - commonFontSize,
-                    fontWeight: FontWeight.bold)),
-            SizedBox(
-              height: 3.h,
-            ),
-            Text("payment_received".tr,
-                style: TextStyle(
-                    color: black,
-                    fontSize: 15.sp - commonFontSize,
-                    fontWeight: FontWeight.w400)),
-          ],
-        ),
+        child: Obx(() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                  "₹ ${index == 0 ? paymntCntrl.totalduetillnow.value : index == 1 ? paymntCntrl.pendingthismonth.value : paymntCntrl.pendingprocessamount.value}",
+                  style: TextStyle(
+                      color: black,
+                      fontSize: 20.sp - commonFontSize,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 3.h,
+              ),
+              Text(
+                  index == 0
+                      ? "Last Due"
+                      : index == 1
+                          ? "This month due"
+                          : "Process amount",
+                  style: TextStyle(
+                      color: black,
+                      fontSize: 15.sp - commonFontSize,
+                      fontWeight: FontWeight.w700)),
+            ],
+          );
+        }),
       ),
       separatorBuilder: (context, index) {
         return SizedBox(
@@ -65,12 +79,13 @@ class PaymentWidget {
         ),
         PersonlInfoWidget.commomText('amount'.tr),
         customTextField(
-          controller: paymntCntrl.ammountController.value,
+            controller: paymntCntrl.ammountController.value,
             hintText: '${'type_here'.tr}...',
-          isBorder: true,
-          color: HexColor('#F7F7F7'),
-          isFilled: false,
-        ),
+            isBorder: true,
+            color: HexColor('#F7F7F7'),
+            isFilled: false,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.phone),
         SizedBox(
           height: 5.h,
         ),

@@ -16,7 +16,9 @@ class PhonePayController extends GetxController {
   String saltKey = "96434309-7796-489d-8924-ab56988a6076";
   String saltIndex = "1";
   String callBackUrl =
-      "https://webhook.site/f4d38d52-09ae-4570-be1e-7de0f3d5e9ed";
+      "http://127.0.0.1:8000/api/v1/tenant/payment-callback";
+  // String callBackUrl =
+  //     "https://webhook.site/f4d38d52-09ae-4570-be1e-7de0f3d5e9ed";
 
   @override
   void onInit() {
@@ -40,7 +42,7 @@ class PhonePayController extends GetxController {
 
     final requestData = {
       "merchantId": merchantId,
-      "merchantTransactionId": merchantTransactionId,
+      "merchantTransactionId": "TMSYSTEM123456",
       "merchantUserId": "90223250",
       "amount": (amount * 100).toInt(), // Ensuring that amount is an integer
       "mobileNumber": "9999999999",
@@ -71,4 +73,13 @@ class PhonePayController extends GetxController {
       handleError(error);
     }
   }
+
+
+
+
+
+
+
+
+
 }

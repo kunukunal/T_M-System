@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/dashboard/management/management_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_controller.dart';
 
 import '../../../common/constants.dart';
@@ -10,6 +14,7 @@ import '../../../common/text_styles.dart';
 class SearchWidget {
   appBar() {
     return AppBar(
+      surfaceTintColor: Colors.transparent,
       leading: InkWell(
         onTap: () {
           Get.back();
@@ -25,12 +30,19 @@ class SearchWidget {
   }
 
   //Occupied Container
-  occUnoccContainer({String? icon, String? titleUnit, String? units}) {
+  occUnoccContainer({
+    String? icon,
+    String? titleUnit,
+    String? units,
+    bool isCheckBoxShow = false,
+    bool? checkBoxVal,
+    Function(bool? val)? onChange,
+  }) {
     return Expanded(
       child: Container(
         // width: Get.width / 2.9,
         // constraints: BoxConstraints(minWidth:150.w, ),
-        height: 95.h,
+        height: isCheckBoxShow ? 110.h : 95.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: lightBorderGrey)),
@@ -52,11 +64,17 @@ class SearchWidget {
                   Expanded(
                     child: Text(
                       titleUnit!,
-                      style: TextStyle(fontSize: 14.sp - commonFontSize, color: black),
+                      style: TextStyle(
+                          fontSize: 14.sp - commonFontSize, color: black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                   ),
+                  if (isCheckBoxShow)
+                    Checkbox(
+                      value: checkBoxVal,
+                      onChanged: onChange,
+                    )
                 ],
               ),
             ),
@@ -69,7 +87,9 @@ class SearchWidget {
               child: Text(
                 units!,
                 style: TextStyle(
-                    fontSize: 20.sp - commonFontSize, color: black, fontWeight: FontWeight.w700),
+                    fontSize: 20.sp - commonFontSize,
+                    color: black,
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -78,29 +98,54 @@ class SearchWidget {
     );
   }
 
-  unitList({
-    String? unitTitle,
-    String? price,
-    String? availablityTitle,
-    String? icon,
-    String? buildingIcon,
-    String? property,
-    String? building,
-    String? floor,
-    bool? isOccupied,
-  }) {
+  unitList(
+      {String? unitTitle,
+      String? price,
+      String? availablityTitle,
+      String? lastOccoupiedDate,
+      String? buildingIcon,
+      String? propertyid,
+      String? buildingid,
+      String? floorid,
+      int? unitId,
+      String? property,
+      String? building,
+      bool? isrentnegotiable,
+      String? floor,
+      bool? isOccupied,
+      List? amenities}) {
     final searchCntl = Get.find<SearchCntroller>();
+
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
         onTap: () {
-          searchCntl.onItemTap();
+          if (isOccupied == false) {
+            Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
+              false,
+              [
+                {"id": int.parse(propertyid!), "name": property},
+                {"id": int.parse(buildingid!), "name": building},
+                {"id": int.parse(floorid!), "name": floor},
+                {"id": unitId, "name": unitTitle},
+              ],
+              amenities,
+              {"isNegiosiate": isrentnegotiable, "ammount": price}
+            ])!
+                .then((value) {
+              if (value == true) {
+                searchCntl.getUnitBySearch();
+              }
+            });
+          } else {
+            customSnackBar(Get.context!, "Unit already Occupied");
+          }
         },
         child: Container(
-          height: 120.h,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(color: lightBorderGrey)),
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(color: lightBorderGrey),
+          ),
           child: Column(
             children: [
               Padding(
@@ -114,126 +159,146 @@ class SearchWidget {
                         width: 90.w,
                         decoration: BoxDecoration(
                           color: HexColor('#444444'),
-                          borderRadius: BorderRadius.circular(10.r),
-                          image: DecorationImage(
-                              image: Image.asset(buildingIcon!).image,
-                              fit: BoxFit.cover),
+                          image: buildingIcon == null
+                              ? const DecorationImage(
+                                  image: AssetImage('assets/icons/a.png'),
+                                  fit: BoxFit.cover,
+                                )
+                              : DecorationImage(
+                                  image: NetworkImage(buildingIcon),
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              unitTitle!,
-                              style: TextStyle(
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  unitTitle ?? '',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14.sp - commonFontSize,
+                                    color: black,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                '₹$price',
+                                style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14.sp - commonFontSize,
-                                  color: black),
-                            ),
-                            SizedBox(
-                              width: 110.w,
-                            ),
-                            Text(
-                              price!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14.sp - commonFontSize,
-                                  color: black),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.w,
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              icon!,
-                              height: 23.h,
-                              width: isOccupied! ? 25.w : 20.w,
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            isOccupied
-                                ? RichText(
-                                    text: TextSpan(
+                                  color: black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/icons/homeIcon.png',
+                                height: 23.h,
+                                width: isOccupied! ? 25.w : 20.w,
+                              ),
+                              SizedBox(width: 5.w),
+                              isOccupied
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        TextSpan(
-                                          text: 'Occupied From July/2024 ',
+                                        Text(
+                                          lastOccoupiedDate!,
                                           style: TextStyle(
                                             color: red,
                                             fontSize: 12.sp - commonFontSize,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
                                         ),
-                                        TextSpan(
-                                          text: '\n John Wick',
+                                        Text(
+                                          'John Wick',
                                           style: TextStyle(
-                                              color: black, fontSize: 12.sp - commonFontSize),
+                                            color: black,
+                                            fontSize: 12.sp - commonFontSize,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
                                         ),
                                       ],
-                                    ),
-                                  )
-                                : Text(
-                                    availablityTitle!,
-                                    style: TextStyle(
+                                    )
+                                  : Text(
+                                      availablityTitle!,
+                                      style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 14.sp - commonFontSize,
-                                        color: green),
-                                  ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Image.asset(
-                              'assets/icons/Frame.png',
-                              height: 24.h,
-                              width: 24.w,
-                            ),
-                          ],
-                        ),
-                      ],
+                                        color: green,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/icons/Frame.png',
+                      height: 24.h,
+                      width: 24.w,
                     ),
                   ],
                 ),
               ),
-              Divider(
-                color: HexColor('#EBEBEB'),
-                height: 1.h,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        '${'property'.tr} $property    ',
+              Divider(color: HexColor('#EBEBEB'), height: 5.h),
+              Padding(
+                padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${'property'.tr} $property',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp - commonFontSize,
+                          color: grey,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      Text(
-                        '${'building'.tr} $building    ',
+                    ),
+                    SizedBox(width: 5.w),
+                    Expanded(
+                      child: Text(
+                        '${'building'.tr} $building',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp - commonFontSize,
+                          color: grey,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      Text(
-                        '${'floor'.tr} $floor    ',
+                    ),
+                    SizedBox(width: 5.w),
+                    Expanded(
+                      child: Text(
+                        '${'floor'.tr} $floor',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp - commonFontSize,
+                          color: grey,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

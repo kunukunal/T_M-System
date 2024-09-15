@@ -672,6 +672,7 @@ appBar(
   return AppBar(
     centerTitle: true,
     automaticallyImplyLeading: false,
+    surfaceTintColor: Colors.transparent,
     leading: isBack
         ? InkWell(
             onTap: () {

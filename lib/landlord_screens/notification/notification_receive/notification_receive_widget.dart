@@ -8,37 +8,44 @@ import 'package:tanent_management/landlord_screens/notification/notification_rec
 import '../../../common/constants.dart';
 import '../../../common/widgets.dart';
 
-class NotifReceiveWidget{
+class NotifReceiveWidget {
   notifReceiveList(
-      {
-        String? transactionId,
-        String? title,
-        String? desc,
-        String? price,
-        String? name,
-        String? date,
-      }) {
-    final notifReceiveCntrl = Get.find<NotifReceiveController>();
+      {String? transactionId,
+      String? title,
+      String? desc,
+      String? price,
+      String? name,
+      String? date,
+      int? transId,
+      int? status}) {
+    // final notifReceiveCntrl = Get.find<NotifReceiveController>();
     return Padding(
-      padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h,top: 10.h),
+      padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
       child: Container(
         height: 200.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: lightBorderGrey)),
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Transaction ID',
-                style:
-                TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.sp - commonFontSize,
+                    color: black),
               ),
-
-              Text(transactionId!,style: TextStyle(fontSize: 12.sp - commonFontSize,fontWeight: FontWeight.w400,color: grey),),
+              Text(
+                transactionId!,
+                style: TextStyle(
+                    fontSize: 12.sp - commonFontSize,
+                    fontWeight: FontWeight.w400,
+                    color: grey),
+              ),
               SizedBox(
                 height: 5.h,
               ),
@@ -46,7 +53,6 @@ class NotifReceiveWidget{
                 color: HexColor('#EBEBEB'),
                 height: 1.h,
               ),
-
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
                 child: Row(
@@ -57,7 +63,6 @@ class NotifReceiveWidget{
                     ),
                     Expanded(
                       child: Column(
-
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
@@ -65,21 +70,21 @@ class NotifReceiveWidget{
                               Expanded(
                                 child: Text(
                                   title!,
-                                  style:
-                                  TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp - commonFontSize, color: black),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp - commonFontSize,
+                                      color: black),
                                 ),
                               ),
                               Text(
-                                price!,
-
+                                "₹$price",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 12.sp - commonFontSize,
-                                    color: red),
+                                    color: status == 2 ? green : red),
                               ),
                             ],
                           ),
-
                           Text(
                             desc!,
                             maxLines: 2,
@@ -89,7 +94,6 @@ class NotifReceiveWidget{
                                 fontSize: 12.sp - commonFontSize,
                                 color: grey),
                           ),
-
                         ],
                       ),
                     ),
@@ -110,15 +114,13 @@ class NotifReceiveWidget{
                     children: [
                       Text(
                         'Name: ',
-
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp - commonFontSize,
+                        ),
                       ),
                       Text(
                         name!,
-
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,
@@ -130,15 +132,13 @@ class NotifReceiveWidget{
                     children: [
                       Text(
                         'Date: ',
-
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp - commonFontSize,
-                            color: grey),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp - commonFontSize,
+                        ),
                       ),
                       Text(
                         date!,
-
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,
@@ -149,15 +149,14 @@ class NotifReceiveWidget{
                 ],
               ),
               customBorderButton('Edit', () {
-notifReceiveCntrl.onEditTap();
+                status == 2 ? declinePopup(transId!) : recivedPopup(transId!);
               },
                   verticalPadding: 12.h,
                   horizontalPadding: 2.w,
                   btnHeight: 30.h,
-                  width:Get.width,
+                  width: Get.width,
                   borderColor: HexColor('#679BF1'),
                   textColor: HexColor('#679BF1'))
-
             ],
           ),
         ),
@@ -165,21 +164,38 @@ notifReceiveCntrl.onEditTap();
     );
   }
 
-  declinePopup(){
-    return   commonDeclinePopup(
+  declinePopup(int tranId) {
+    final notifReceiveCntrl = Get.find<NotifReceiveController>();
+
+    return commonDeclinePopup(
       title: '',
       subtitle: 'Are you sure you want to decline this request?',
-      button1: 'Decline',
-      button2: 'Not, Received',
+      button1: 'Close',
+      button2: 'Decline',
       onButton1Tap: () {
         Get.back();
-
-
       },
-      onButton2Tap: (){
+      onButton2Tap: () {
         Get.back();
+        notifReceiveCntrl.updateTransationStatusNotification(tranId, 3);
+      },
+    );
+  }
 
+  recivedPopup(int tranId) {
+    final notifReceiveCntrl = Get.find<NotifReceiveController>();
 
+    return commonDeclinePopup(
+      title: '',
+      subtitle: 'Are you sure you want to decline this request?',
+      button1: 'Close',
+      button2: 'Recieved',
+      onButton1Tap: () {
+        Get.back();
+      },
+      onButton2Tap: () {
+        Get.back();
+        notifReceiveCntrl.updateTransationStatusNotification(tranId, 2);
       },
     );
   }
