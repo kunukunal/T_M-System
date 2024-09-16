@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tanent_management/common/api_service_strings/base_url.dart';
 
 class DioClientServices {
@@ -166,6 +169,7 @@ class DioClientServices {
       return e.response;
     }
   }
+
   Future dioPutCall(
       {required dynamic body,
       required dynamic headers,
@@ -219,6 +223,30 @@ class DioClientServices {
       return result;
     } catch (e) {
       print("Error saving image to gallery: $e");
+    }
+  }
+
+  Future<String?> savePdfToDownloads(String pdfUrl) async {
+    try {
+      if (await Permission.storage.request().isGranted) {
+        var response = await Dio().get(
+          pdfUrl,
+          options: Options(responseType: ResponseType.bytes),
+        );
+        Directory? downloadsDir = Directory('/storage/emulated/0/Download');
+        if (!(await downloadsDir.exists())) {
+          downloadsDir = await getExternalStorageDirectory();
+        }
+        String filePath =
+            '${downloadsDir!.path}/downloaded_pdf_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        File file = File(filePath);
+        await file.writeAsBytes(response.data);
+        return filePath;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
     }
   }
 }

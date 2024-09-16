@@ -6,12 +6,12 @@ import 'package:tanent_management/common/api_service_strings/api_end_points.dart
 import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 import 'package:tanent_management/landlord_screens/navbar_management/navbar_management_view.dart';
+import 'package:tanent_management/landlord_screens/reports/report_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
 import '../dashboard/dashboard_view.dart';
 import '../expense/expense_view.dart';
-import '../reports/report_view.dart';
 
 class NavBarController extends GetxController {
   //variables
@@ -22,7 +22,7 @@ class NavBarController extends GetxController {
   //List Variables
   late final pages = [
     DashboardScreen(),
-    const ReportScreen(),
+    ReportScreen(),
     NavbarManagementScreen(), // TenantListScreen(),
     ExpenseScreen(),
     TenantListScreen(),

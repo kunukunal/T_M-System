@@ -82,9 +82,13 @@ const String landlordDashboard = "landlord/dashboard/";
 const String tenantDashboard = "tenant/dashboard/";
 
 const String getExplore = "tenant/properties/?search=";
+
 const String getUnitByPropertySearch = "tenant/units/?property=";
+
 const String makeUnitFavourite = "tenant/favorite-properties/";
+
 const String getUnitDetailsData = "tenant/unit-details/";
+
 const String sendTenantPaymentRequest = "tenant/payment-request/";
 
 const String teantUnitRequest = "tenant/unit-request/";
@@ -100,15 +104,35 @@ const String emailOtp = "accounts/email-otp/";
 const String emailOtpVerify = "accounts/email-otp-verify/";
 
 const String unitSearch = "landlord/search-units/?query=";
+
 const String paymentHistory = "tenant/payment-history/?";
 
 const String paymentRequestHistory = "tenant/unit-rent-details/?unit=";
+
 const String landlordNotification = "accounts/notification/";
+
 const String updateTransactionStatus = "transaction/transaction/";
+
 const String getTransactionByStatus = "transaction/get-transactions/?status=";
+
 const String getDueTransactions = "transaction/tenant-dues/";
+
 const String getKriyaderDetailsUsingNotifications =
-    "management/kirayedar-detail/70/add-as-tenant/?unit_id=";
+    "management/kirayedar-detail/";
+
 const String acceptRejectTenant = "management/add-tenant/";
+
 const String paytenantRent = "transaction/pay-tenant-rent/";
+
+
 const String phonePayCallbackUrl = "tenant/payment-callback/";
+
+const String report = "reports/transaction-receipts/";
+
+const String expnseFilter = "landlord/expenses/";
+
+const String occupancyFilter = "landlord/occupancy-trend/";
+
+const String incomeExpenseFilter = "landlord/income-expense/";
+
+const String expenseFilter = "management/expense/get-expenses/";

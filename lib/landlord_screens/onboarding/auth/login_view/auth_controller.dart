@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/navbar/navbar_view.dart';
@@ -53,7 +54,7 @@ class AuthController extends GetxController {
     await SharedPreferencesServices.setBoolData(
         key: SharedPreferencesKeysEnum.islandlord.value,
         value: onButtonTapTenant.value == 1 ? true : false);
-
+    isLandlord = onButtonTapTenant.value == 1 ? true : false;
     Get.offAll(() => PersonalInfo(
         isFromRegister: isFromRegister,
         mobileContrl: mobileNumberController.value.text,
@@ -65,10 +66,13 @@ class AuthController extends GetxController {
     if (userType == 1) {
       await SharedPreferencesServices.setBoolData(
           key: SharedPreferencesKeysEnum.islandlord.value, value: true);
+      isLandlord = true;
       Get.offAll(() => const NavBar(initialPage: 0));
     } else {
       await SharedPreferencesServices.setBoolData(
           key: SharedPreferencesKeysEnum.islandlord.value, value: false);
+      isLandlord = false;
+
       Get.offAll(() => const NavBarTenant(
             initialPage: 0,
           ));

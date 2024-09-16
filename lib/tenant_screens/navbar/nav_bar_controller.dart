@@ -9,7 +9,7 @@ import 'package:tanent_management/services/dio_client_service.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_view.dart';
 import 'package:tanent_management/tenant_screens/explore/explore_view.dart';
-import 'package:tanent_management/tenant_screens/reports/report_view.dart';
+import 'package:tanent_management/landlord_screens/reports/report_view.dart';
 
 class NavBarTenantController extends GetxController {
   //variables
@@ -21,7 +21,7 @@ class NavBarTenantController extends GetxController {
   late final pages = [
     DashboardTenantScreen(),
     ExploreScreen(),
-    const ReportTenantScreen(),
+    ReportScreen(),
     MyProfileView()
   ];
 

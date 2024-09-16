@@ -45,7 +45,7 @@ class ExpenseScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // ExpenseWidgets().dateRangePicker(),
+                  ExpenseWidgets().dateRangePicker(),
                   ExpenseWidgets().totalExpenseContainer(),
                   ExpenseWidgets().expenseList(),
                 ],

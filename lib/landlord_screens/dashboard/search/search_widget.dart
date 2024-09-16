@@ -42,7 +42,7 @@ class SearchWidget {
       child: Container(
         // width: Get.width / 2.9,
         // constraints: BoxConstraints(minWidth:150.w, ),
-        height: isCheckBoxShow ? 110.h : 95.h,
+        // height: isCheckBoxShow ? 120.h : 95.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: lightBorderGrey)),

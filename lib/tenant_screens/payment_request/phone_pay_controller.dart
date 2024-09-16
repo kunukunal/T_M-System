@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/api_service_strings/base_url.dart';
 
 class PhonePayController extends GetxController {
   String body = "";
@@ -15,10 +17,11 @@ class PhonePayController extends GetxController {
   String apiEndPoint = "/pg/v1/pay";
   String saltKey = "96434309-7796-489d-8924-ab56988a6076";
   String saltIndex = "1";
-  String callBackUrl =
-      "http://127.0.0.1:8000/api/v1/tenant/payment-callback";
+  String callBackUrl = "$commonBaseUrl$phonePayCallbackUrl";
   // String callBackUrl =
   //     "https://webhook.site/f4d38d52-09ae-4570-be1e-7de0f3d5e9ed";
+
+  final merchantTransactionId = "".obs;
 
   @override
   void onInit() {
@@ -37,12 +40,10 @@ class PhonePayController extends GetxController {
   }
 
   void getChecksum({required double amount}) {
-    String merchantTransactionId = "MT${DateTime.now().millisecondsSinceEpoch}";
-    print("Amount: $amount | Transaction ID: $merchantTransactionId");
-
+    merchantTransactionId.value = "TM${DateTime.now().millisecondsSinceEpoch}";
     final requestData = {
       "merchantId": merchantId,
-      "merchantTransactionId": "TMSYSTEM123456",
+      "merchantTransactionId": merchantTransactionId.value,
       "merchantUserId": "90223250",
       "amount": (amount * 100).toInt(), // Ensuring that amount is an integer
       "mobileNumber": "9999999999",
@@ -73,13 +74,4 @@ class PhonePayController extends GetxController {
       handleError(error);
     }
   }
-
-
-
-
-
-
-
-
-
 }

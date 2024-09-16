@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
@@ -34,7 +35,7 @@ class SplashController extends GetxController {
     isUserlandlord.value = await SharedPreferencesServices.getBoolData(
             key: SharedPreferencesKeysEnum.islandlord.value) ??
         false;
-
+    isLandlord = isUserlandlord.value;
     isUserLogin = token.isNotEmpty;
   }
 

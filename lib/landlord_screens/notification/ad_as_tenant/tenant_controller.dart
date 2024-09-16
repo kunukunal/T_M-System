@@ -61,7 +61,7 @@ class AdasTenatDetailsScreenController extends GetxController {
         "Content-Type": "application/json",
         "Accept-Language": languaeCode,
       },
-      url: "$getKriyaderDetailsUsingNotifications${unitId.value}",
+      url: "$getKriyaderDetailsUsingNotifications${tenantId.value}/add-as-tenant/?unit_id=${unitId.value}",
     );
 
     if (response != null) {

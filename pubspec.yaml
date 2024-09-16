@@ -57,7 +57,7 @@ dependencies:
   flutter_expandable_fab: ^2.1.0
   percent_indicator: ^4.2.3
   url_launcher: ^6.3.0
-  intl: ^0.17.0
+  intl: ^0.19.0
   image_gallery_saver: ^2.0.3
   flutter_pannable_rating_bar: ^2.7.2+1
   firebase_core: ^3.3.0
@@ -66,6 +66,9 @@ dependencies:
   uuid: ^4.4.2
   firebase_messaging: ^15.1.0
   googleapis_auth: ^1.6.0
+  path_provider: ^2.1.4
+  mat_month_picker_dialog: ^1.1.2
+  
 
 
 

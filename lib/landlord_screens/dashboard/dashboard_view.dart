@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +6,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
+import 'package:tanent_management/landlord_screens/dashboard/dashboard_complete.dart';
 import 'package:tanent_management/landlord_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/dashboard_widgets.dart';
-import 'package:tanent_management/landlord_screens/dashboard/dashboard_complete.dart';
 
 class DashboardScreen extends StatelessWidget {
   final bool isFromMain;

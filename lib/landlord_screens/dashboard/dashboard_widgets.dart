@@ -57,6 +57,67 @@ class DashBoardWidgets {
     );
   }
 
+  totalExpenseContainer() {
+    final cntrl = Get.find<DashBoardController>();
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 15.h),
+      child: Container(
+        // height: 134.h,
+        width: Get.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(color: HexColor('#EBEBEB'))),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  cntrl.monthFilter(Get.context!);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Obx(() {
+                      return Text(
+                        cntrl.rentFrom.value == null
+                            ? 'month'.tr
+                            : "${cntrl.rentFrom.value!.month}/${cntrl.rentFrom.value!.year}",
+                        style: CustomStyles.titleText.copyWith(
+                            fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                      );
+                    }),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Image.asset(
+                      "assets/icons/filter.png",
+                      height: 20.h,
+                      width: 20.w,
+                    )
+                  ],
+                ),
+              ),
+              Obx(() {
+                return Text(
+                  '₹${cntrl.expenseBox.value}',
+                  style: CustomStyles.black16.copyWith(
+                      fontSize: 28.sp - commonFontSize,
+                      fontWeight: FontWeight.w700),
+                );
+              }),
+              Text(
+                'total_expense_this_month'.tr,
+                style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   //floating action button
   floatingActionButton() {
     final dashCntrl = Get.find<DashBoardController>();

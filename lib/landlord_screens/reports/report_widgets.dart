@@ -4,16 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/text_styles.dart';
 
-class  ReportWidget{
-
-
-
-
-
-
-
-  List<BarChartGroupData> buildBarGroups(  final List<int> data,
-  final List<int>? data2) {
+class ReportWidget {
+  List<BarChartGroupData> buildBarGroups(
+      final List<int> data, final List<int>? data2) {
     List<BarChartGroupData> barGroups = [];
     for (int i = 0; i < data.length; i++) {
       barGroups.add(
@@ -61,8 +54,7 @@ class Indicator extends StatelessWidget {
   }
 }
 
-
-  class OverviewCard extends StatelessWidget {
+class OverviewCard extends StatelessWidget {
   final String chartTitle;
   final String? chartTitle2;
   final List<int> data;
@@ -122,7 +114,7 @@ class Indicator extends StatelessWidget {
                 ),
                 gridData: FlGridData(drawVerticalLine: false),
                 alignment: BarChartAlignment.spaceAround,
-                barGroups: ReportWidget().buildBarGroups(data,data2),
+                barGroups: ReportWidget().buildBarGroups(data, data2),
                 titlesData: FlTitlesData(
                   leftTitles: SideTitles(showTitles: true),
                   topTitles: SideTitles(showTitles: false),
@@ -145,4 +137,5 @@ class Indicator extends StatelessWidget {
         ],
       ),
     );
-  }}
+  }
+}

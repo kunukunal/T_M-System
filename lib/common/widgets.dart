@@ -100,7 +100,7 @@ Widget dropDownMenu({bool onDropdownChanged = true}) {
         ),
         underline: Container(),
         value: authCntrl.selectedItem.value,
-        items: authCntrl.items.value.map((String item) {
+        items: authCntrl.items.map((String item) {
           return DropdownMenuItem<String>(
             value: item,
             child: Text(

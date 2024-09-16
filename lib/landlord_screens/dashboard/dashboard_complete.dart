@@ -1,14 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/dashboard/dashboard_controller.dart';
+import 'package:tanent_management/landlord_screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/property_list/property_list_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_widget.dart';
-import 'package:tanent_management/landlord_screens/expense/expense_widgets.dart';
 
 class CompleteDashboard extends StatelessWidget {
   CompleteDashboard({super.key});
@@ -40,7 +41,36 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            filterWidget(title: "income_expense".tr),
+            Obx(() {
+              return filterWidget(
+                  title: "income_expense".tr,
+                  startDateTap: () async {
+                    final picked = await dashCntrl
+                        .selectDate(dashCntrl.incomingStartFrom.value);
+
+                    if (picked != null) {
+                      dashCntrl.incomingStartFrom.value = picked;
+                    }
+                  },
+                  endDateTap: () async {
+                    final picked = await dashCntrl
+                        .selectDate(dashCntrl.incomingEndFrom.value);
+
+                    if (picked != null) {
+                      dashCntrl.incomingEndFrom.value = picked;
+                    }
+                  },
+                  searchTap: () {
+                    dashCntrl.searchIncomeExpenseByDates();
+                  },
+                  startText: dashCntrl.incomingStartFrom.value == null
+                      ? ""
+                      : "${dashCntrl.incomingStartFrom.value?.month}/${dashCntrl.incomingStartFrom.value?.year}",
+                  endText: dashCntrl.incomingEndFrom.value == null
+                      ? ""
+                      : "${dashCntrl.incomingEndFrom.value?.month}/${dashCntrl.incomingEndFrom.value?.year}",
+                  isMultipleDate: true);
+            }),
             SizedBox(height: 16.h),
             OverviewCard(
               title: 'income_expense'.tr,
@@ -50,7 +80,36 @@ class CompleteDashboard extends StatelessWidget {
               xLabels: dashCntrl.xIncomeExpenseLabels,
             ),
             SizedBox(height: 16.h),
-            filterWidget(title: 'occupancy_trend'.tr),
+            Obx(() {
+              return filterWidget(
+                  title: 'occupancy_trend'.tr,
+                  startDateTap: () async {
+                    final picked = await dashCntrl
+                        .selectDate(dashCntrl.occupancyStartFrom.value);
+
+                    if (picked != null) {
+                      dashCntrl.occupancyStartFrom.value = picked;
+                    }
+                  },
+                  endDateTap: () async {
+                    final picked = await dashCntrl
+                        .selectDate(dashCntrl.occupancyEndFrom.value);
+
+                    if (picked != null) {
+                      dashCntrl.occupancyEndFrom.value = picked;
+                    }
+                  },
+                  searchTap: () {
+                    dashCntrl.searchOccupyTreadByDates();
+                  },
+                  startText: dashCntrl.occupancyStartFrom.value == null
+                      ? ""
+                      : "${dashCntrl.occupancyStartFrom.value?.month}/${dashCntrl.occupancyStartFrom.value?.year}",
+                  endText: dashCntrl.occupancyEndFrom.value == null
+                      ? ""
+                      : "${dashCntrl.occupancyEndFrom.value?.month}/${dashCntrl.occupancyEndFrom.value?.year}",
+                  isMultipleDate: true);
+            }),
             SizedBox(height: 16.h),
             OverviewCard(
               title: 'occupancy_trend'.tr,
@@ -62,7 +121,7 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            ExpenseWidgets().totalExpenseContainer(),
+            DashBoardWidgets().totalExpenseContainer(),
             SizedBox(
               height: 10.h,
             ),
@@ -70,7 +129,8 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            filterWidget(title: "property_list".tr),
+            filterWidget(
+                title: "property_list".tr, endDateTap: () {}, endText: ""),
             SizedBox(
               height: 10.h,
             ),
@@ -89,7 +149,6 @@ tenantRentContainer({bool isForRent = true}) {
   int totalRent = tRent.toInt(); // Total rent amount
   num pRent = dashCntrl.rentBox['rent_paid'];
   int paidRent = pRent.toInt();
-  ; // Amount of rent paid
   double progress = 0.0;
 
   if (totalRent > 0) {
@@ -180,9 +239,9 @@ tenantRentContainer({bool isForRent = true}) {
 class OverviewCard extends StatelessWidget {
   final String title;
   final List<String> chartTitles;
-  final List<List<int>> data;
+  final dynamic data;
   final List<Color> colors;
-  final List<String> xLabels;
+  final dynamic xLabels;
 
   const OverviewCard({
     super.key,
@@ -222,7 +281,7 @@ class OverviewCard extends StatelessWidget {
             children: [
               Text(
                 'statistics'.tr,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                 ),
               ),
@@ -256,46 +315,54 @@ class OverviewCard extends StatelessWidget {
                       ),
                     ),
                   )
-                : BarChart(
-                    BarChartData(
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      gridData: FlGridData(
-                        drawVerticalLine: false,
-                      ),
-                      alignment: BarChartAlignment.spaceAround,
-                      barGroups: _buildBarGroups(),
-                      titlesData: FlTitlesData(
-                        topTitles: SideTitles(showTitles: false),
-                        leftTitles: SideTitles(
-                          showTitles: true,
-                          getTextStyles: (context, value) => TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.sp - commonFontSize,
+                : Obx(() {
+                    return BarChart(
+                      BarChartData(
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        gridData: FlGridData(
+                          drawVerticalLine: false,
+                        ),
+                        alignment: BarChartAlignment.spaceAround,
+                        barGroups: _buildBarGroups(),
+                        titlesData: FlTitlesData(
+                          topTitles: SideTitles(showTitles: false),
+                          leftTitles: SideTitles(
+                            showTitles: true,
+                            getTextStyles: (context, value) => TextStyle(
+                              color: Colors.black,
+                              fontSize: 10.sp - commonFontSize,
+                            ),
+                          ),
+                          rightTitles: SideTitles(showTitles: false),
+                          bottomTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 10,
+                            getTextStyles: (context, value) => TextStyle(
+                              color: Colors.black,
+                              fontSize: 10.sp - commonFontSize,
+                            ),
+                            margin: 16.h,
+                            getTitles: (double value) {
+                              // Ensure the value is within the valid range of xLabels
+                              int index = value.toInt();
+                              if (index < 0 || index >= xLabels.value.length) {
+                                return ''; // Return an empty string if index is out of range
+                              }
+
+                              // Return the first 3 letters of the label if it exists
+                              String label = xLabels.value[index];
+                              return label.length > 3
+                                  ? label.substring(0, 3)
+                                  : label;
+                            },
                           ),
                         ),
-                        rightTitles: SideTitles(showTitles: false),
-                        bottomTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 10,
-                          getTextStyles: (context, value) => TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.sp - commonFontSize,
-                          ),
-                          margin: 16.h,
-                          getTitles: (double value) {
-                            // Ensure the value is within the valid range of xLabels and return the first 3 letters.
-                            String label = xLabels[value.toInt()];
-                            return label.length > 3
-                                ? label.substring(0, 3)
-                                : label;
-                          },
-                        ),
+                        minY: 0, // Ensure the minimum Y value is 0
                       ),
-                      minY: 0, // Ensure the minimum Y value is 0
-                    ),
-                  ),
+                    );
+                  }),
           ),
         ],
       ),
@@ -467,7 +534,14 @@ propertiesList() {
   );
 }
 
-Widget filterWidget({required String title}) {
+Widget filterWidget(
+    {required String title,
+    String startText = "",
+    String endText = "",
+    VoidCallback? startDateTap,
+    VoidCallback? endDateTap,
+    VoidCallback? searchTap,
+    bool isMultipleDate = false}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -478,19 +552,47 @@ Widget filterWidget({required String title}) {
       ),
       Row(
         children: [
-          Text(
-            'month'.tr,
-            style: CustomStyles.titleText
-                .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+          if (isMultipleDate)
+            GestureDetector(
+              onTap: startDateTap,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    startText != "" ? startText : ('month'.tr),
+                    style: CustomStyles.titleText.copyWith(
+                        fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                  ),
+                ),
+              ),
+            ),
+          SizedBox(
+            width: 2.w,
+          ),
+          GestureDetector(
+            onTap: endDateTap,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  endText != "" ? endText : ('month'.tr),
+                  style: CustomStyles.titleText.copyWith(
+                      fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                ),
+              ),
+            ),
           ),
           SizedBox(
             width: 10.w,
           ),
-          Image.asset(
-            "assets/icons/filter.png",
-            height: 20.h,
-            width: 20.w,
-          )
+          if (isMultipleDate)
+            GestureDetector(onTap: searchTap, child: searchIcon)
+          else
+            Image.asset(
+              "assets/icons/filter.png",
+              height: 20.h,
+              width: 20.w,
+            )
         ],
       ),
     ],

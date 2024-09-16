@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
@@ -51,30 +52,13 @@ class RentalController extends GetxController {
     }
   }
 
-  Future<void> selectMonthYear(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: rentFrom.value ?? DateTime.now(),
-      firstDate: DateTime(2023, 1), // You can adjust the start date
-      lastDate: DateTime(2101),
-      helpText: 'Select month and year', // Custom help text
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: Colors.blue, // Header color
 
-            colorScheme: const ColorScheme.light(primary: Colors.blue),
-            buttonTheme:
-                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-          ),
-          child: child!,
-        );
-      },
-    );
-
+  Future<void> monthFilter(BuildContext context) async {
+    final DateTime? picked = await selectMonthYear(context);
     if (picked != null) {
       rentFrom.value = DateTime(picked.year, picked.month);
       getRentalData();
     }
   }
+
 }

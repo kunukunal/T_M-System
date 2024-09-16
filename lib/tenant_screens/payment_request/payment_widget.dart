@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
+import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/personal_info/personal_info_widget.dart';
 import 'package:tanent_management/tenant_screens/payment_request/payment_controller.dart';
@@ -28,29 +29,41 @@ class PaymentWidget {
             borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Obx(() {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                  "₹ ${index == 0 ? paymntCntrl.totalduetillnow.value : index == 1 ? paymntCntrl.pendingthismonth.value : paymntCntrl.pendingprocessamount.value}",
-                  style: TextStyle(
-                      color: black,
-                      fontSize: 20.sp - commonFontSize,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 3.h,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                      "₹ ${index == 0 ? paymntCntrl.totalduetillnow.value : index == 1 ? paymntCntrl.pendingthismonth.value : paymntCntrl.pendingprocessamount.value}",
+                      style: TextStyle(
+                          color: black,
+                          fontSize: 20.sp - commonFontSize,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Text(
+                      index == 0
+                          ? "Last Due"
+                          : index == 1
+                              ? "This month due"
+                              : "Process amount",
+                      style: TextStyle(
+                          color: black,
+                          fontSize: 15.sp - commonFontSize,
+                          fontWeight: FontWeight.w700)),
+                ],
               ),
-              Text(
-                  index == 0
-                      ? "Last Due"
-                      : index == 1
-                          ? "This month due"
-                          : "Process amount",
-                  style: TextStyle(
-                      color: black,
-                      fontSize: 15.sp - commonFontSize,
-                      fontWeight: FontWeight.w700)),
+              if (paymntCntrl.rentBillUrl.value != "" && index == 1)
+                IconButton(
+                    onPressed: () {
+                      //  Get.to(()=>PdfView(pdfUrl: paymntCntrl.rentBillUrl.value,));
+                      saveNetworkPdf(paymntCntrl.rentBillUrl.value);
+                    },
+                    icon: const Icon(Icons.download))
             ],
           );
         }),

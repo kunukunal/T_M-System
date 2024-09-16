@@ -6,28 +6,88 @@ import 'package:intl/intl.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
-import 'package:tanent_management/landlord_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/landlord_screens/expense/expense_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 
 class ExpenseWidgets {
   dateRangePicker() {
+    final expense = Get.find<ExpenseController>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text('21 Jan 2024 - 24 Feb 2024',
-            style: CustomStyles.otpStyle050505.copyWith(
-                fontSize: 16.sp - commonFontSize, fontFamily: 'DM Sans')),
-        SizedBox(
-          width: 10.w,
+        GestureDetector(
+          onTap: () {
+            expense.selectMonthYear(Get.context!, true);
+          },
+          child: Card(
+            surfaceTintColor: Colors.transparent,
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Obx(() {
+                    return Text(
+                        "${expense.expnseStartFrom.value?.day}-${expense.expnseStartFrom.value?.month}-${expense.expnseStartFrom.value?.year}",
+                        style: CustomStyles.otpStyle050505.copyWith(
+                            fontSize: 16.sp - commonFontSize,
+                            fontFamily: 'DM Sans'));
+                  }),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  dropDownArrowIcon,
+                ],
+              ),
+            ),
+          ),
         ),
-        dropDownArrowIcon,
+        SizedBox(
+          width: 2.w,
+        ),
+        GestureDetector(
+          onTap: () {
+            expense.selectMonthYear(Get.context!, false);
+          },
+          child: Card(
+            surfaceTintColor: Colors.transparent,
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Obx(() {
+                    return Text(
+                        "${expense.expnseEndFrom.value?.day}-${expense.expnseEndFrom.value?.month}-${expense.expnseEndFrom.value?.year}",
+                        style: CustomStyles.otpStyle050505.copyWith(
+                            fontSize: 16.sp - commonFontSize,
+                            fontFamily: 'DM Sans'));
+                  }),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  dropDownArrowIcon,
+                ],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 3.w,
+        ),
+        GestureDetector(
+            onTap: () {
+              expense.searchByDates();
+            },
+            child: searchIcon)
       ],
     );
   }
 
   totalExpenseContainer() {
-    final cntrl = Get.find<DashBoardController>();
+    final cntrl = Get.find<ExpenseController>();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 15.h),
       child: Container(
@@ -41,12 +101,14 @@ class ExpenseWidgets {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                '₹${cntrl.expenseBox.value}',
-                style: CustomStyles.black16.copyWith(
-                    fontSize: 28.sp - commonFontSize,
-                    fontWeight: FontWeight.w700),
-              ),
+              Obx(() {
+                return Text(
+                  '₹${cntrl.istotalExpense.value}',
+                  style: CustomStyles.black16.copyWith(
+                      fontSize: 28.sp - commonFontSize,
+                      fontWeight: FontWeight.w700),
+                );
+              }),
               Text(
                 'total_expense_this_month'.tr,
                 style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
@@ -87,7 +149,7 @@ class ExpenseWidgets {
                   child: CircularProgressIndicator(),
                 )
               : expenseCntrl.expenseList.isEmpty
-                  ?  Center(
+                  ? Center(
                       child: Text("no_expense_data_found".tr),
                     )
                   : ListView.builder(
@@ -248,8 +310,9 @@ class ExpenseWidgets {
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: [
-                                                                   Text(
-                                                                    "expense_image".tr,
+                                                                  Text(
+                                                                    "expense_image"
+                                                                        .tr,
                                                                     style: TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
@@ -301,7 +364,7 @@ class ExpenseWidgets {
                                                                                 }
                                                                               });
                                                                             },
-                                                                            label:  Text(
+                                                                            label: Text(
                                                                               "download".tr,
                                                                               style: TextStyle(color: Colors.white),
                                                                             )),
@@ -317,8 +380,8 @@ class ExpenseWidgets {
                                                       );
                                                     },
                                                   )
-                                                : customSnackBar(
-                                                    context, "no_image_found".tr);
+                                                : customSnackBar(context,
+                                                    "no_image_found".tr);
                                           },
                                           child: eyeIcon),
                                       SizedBox(
@@ -348,7 +411,8 @@ class ExpenseWidgets {
                                                           index]['id']);
                                                 },
                                                 title:
-                                                    "are_you_sure_delete_expense".tr);
+                                                    "are_you_sure_delete_expense"
+                                                        .tr);
                                           },
                                           child: dustbinIcon)
                                     ],

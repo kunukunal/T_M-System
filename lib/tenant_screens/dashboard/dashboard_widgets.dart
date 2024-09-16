@@ -31,18 +31,18 @@ class DashBoardTenantWidgets {
                 dashCntrl.onNotifTap();
               },
               child: notifIcon),
-          Row(
-            children: [
-              SizedBox(
-                width: 5.w,
-              ),
-              GestureDetector(onTap: () {}, child: creditCardIcon),
-              SizedBox(
-                width: 5.w,
-              ),
-              GestureDetector(onTap: () {}, child: noteIcon)
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     SizedBox(
+          //       width: 5.w,
+          //     ),
+          //     GestureDetector(onTap: () {}, child: creditCardIcon),
+          //     SizedBox(
+          //       width: 5.w,
+          //     ),
+          //     GestureDetector(onTap: () {}, child: noteIcon)
+          //   ],
+          // ),
         ],
       ),
     );
@@ -157,7 +157,7 @@ class DashBoardTenantWidgets {
         ),
         GestureDetector(
           onTap: () {
-            rentalCntrl.selectMonthYear(context);
+            rentalCntrl.monthFilter(context);
           },
           child: Row(
             children: [

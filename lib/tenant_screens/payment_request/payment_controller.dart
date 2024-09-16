@@ -22,6 +22,8 @@ class PaymentController extends GetxController {
   final pendingprocessamount = 0.0.obs;
   final needReload = false.obs;
 
+  final rentBillUrl = "".obs;
+
   @override
   void onInit() {
     paymentUnitData.value = Get.arguments[0];
@@ -56,9 +58,14 @@ class PaymentController extends GetxController {
         String status = response['status'].toString();
         String error = response['error'].toString();
         if (status == 'SUCCESS') {
-          // result = "Flow Completed - Status: Success!";
-          isPaymentRequest.value = 3;
+          print("fdskladklasd ${response}");
+          print("fdskladklasd ${response}");
+          print("fdskladklasd ${phonepayCntrl.merchantTransactionId.value}");
+          submitPaymentRequest(
+              tansactionId: phonepayCntrl.merchantTransactionId.value);
         } else if (status == "FAILURE") {
+          print("fdskladklasd ${response}");
+          print("fdskladklasd ${phonepayCntrl.merchantTransactionId.value}");
           isPaymentRequest.value = 4;
         } else {
           result = "Flow Completed - Status: $status and Error: $error";
@@ -93,7 +100,7 @@ class PaymentController extends GetxController {
   }
 
   final isPaymentRequestSucess = false.obs;
-  submitPaymentRequest() async {
+  submitPaymentRequest({String? tansactionId}) async {
     isPaymentRequestSucess.value = true;
 
     String accessToken = await SharedPreferencesServices.getStringData(
@@ -108,7 +115,8 @@ class PaymentController extends GetxController {
         "amount": ammountController.value.text.trim(),
         "payment_mode":
             payentModeChoose.value, // (1 = Online Transafer, 2 = Cash, 3 = UPI)
-        "description": descriptionController.value.text.trim()
+        "description": descriptionController.value.text.trim(),
+        if (payentModeChoose.value == 1) "phonepe_txn_id": tansactionId,
       },
       headers: {
         'Authorization': "Bearer $accessToken",
@@ -148,8 +156,11 @@ class PaymentController extends GetxController {
     );
     if (response.statusCode == 200) {
       final data = response.data;
+
+      print("dsakdja ${data}");
       totalduetillnow.value = data['due_till_last_month'];
       pendingthismonth.value = data['current_month_due'];
+      rentBillUrl.value = data['rent_bill'] ?? "";
       pendingprocessamount.value =
           double.parse(data['pending_approval_payment'].toString());
 

@@ -50,7 +50,9 @@ Map userData = {
   "email_verified": false
 };
 
+bool isLandlord = false;
 clearAll() {
+  isLandlord = false;
   userData = {
     "id": 0,
     "name": "",
