@@ -30,7 +30,6 @@ class PaymentController extends GetxController {
 
     if (paymentUnitData.isNotEmpty) {
       paymentUnitId.value = paymentUnitData['id'];
-      ammountController.value.text = paymentUnitData['rent'].toString();
       getPaymentRequest(paymentUnitId.value);
     }
     super.onInit();
@@ -158,12 +157,16 @@ class PaymentController extends GetxController {
       final data = response.data;
 
       print("dsakdja ${data}");
-      totalduetillnow.value = data['due_till_last_month'];
-      pendingthismonth.value = data['current_month_due'];
-      rentBillUrl.value = data['rent_bill'] ?? "";
+      totalduetillnow.value = data['due_till_last_month'].toDouble();
+      pendingthismonth.value = data['current_month_due'].toDouble();
+
       pendingprocessamount.value =
           double.parse(data['pending_approval_payment'].toString());
+      rentBillUrl.value = data['rent_bill'] ?? "";
 
+      final amnt = ((totalduetillnow.value + pendingthismonth.value) -
+          pendingprocessamount.value);
+      ammountController.value.text = amnt > 0 ? amnt.toString() : "0";
       isPaymentRequestDataLoading.value = false;
     } else {
       isPaymentRequestDataLoading.value = false;

@@ -188,17 +188,18 @@ class DashBoardController extends GetxController {
   }
 
   Future<DateTime?> selectDate(DateTime? date) async {
+    final today = DateTime.now();
     return await showDatePicker(
       context: Get.context!,
-      initialDate: date ?? DateTime.now(),
+      initialDate: date ?? today,
       firstDate: DateTime(2023, 1), // You can adjust the start date
-      lastDate: DateTime(2101),
+      lastDate: DateTime(
+          today.year, today.month, today.day), // Prevents future date selection
       helpText: 'Select month and year', // Custom help text
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.blue, // Header color
-
             colorScheme: const ColorScheme.light(primary: Colors.blue),
             buttonTheme:
                 const ButtonThemeData(textTheme: ButtonTextTheme.primary),
@@ -234,7 +235,6 @@ class DashBoardController extends GetxController {
       rentBox = data['rent'];
       final now = DateTime.now();
       rentFrom.value = DateTime(now.year, now.month);
-      // setMonthStartAndEndDates();
       expenseBox.value = data['expense'].toDouble() ?? 0.0;
       Map<String, dynamic> incomeData = data['income_data'];
       xIncomeExpenseLabels.value =
@@ -255,6 +255,10 @@ class DashBoardController extends GetxController {
       rentDue.value =
           occupancyTrend.values.map((values) => values[1] as int).toList();
       proprtyList.addAll(data['properties']);
+      incomingStartFrom.value = null;
+      incomingEndFrom.value = null;
+      occupancyStartFrom.value = null;
+      occupancyEndFrom.value = null;
       isDashboardDataLaoding.value = false;
     } else {
       isDashboardDataLaoding.value = false;

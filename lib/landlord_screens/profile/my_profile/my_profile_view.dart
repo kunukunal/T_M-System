@@ -148,6 +148,7 @@ class MyProfileView extends StatelessWidget {
                         subtitle: 'are_you_sure_logout'.tr,
                         button1: 'cancel'.tr,
                         button2: 'yes_logout'.tr,
+                        
                         onButton1Tap: () {
                           Get.back();
                         },

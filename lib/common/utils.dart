@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mat_month_picker_dialog/mat_month_picker_dialog.dart';
-import 'package:tanent_management/common/widgets.dart';
-import 'package:tanent_management/services/dio_client_service.dart';
 
 convertDateString(String date) {
   DateTime dateTime = DateTime.parse(date);
@@ -12,22 +11,32 @@ convertDateString(String date) {
 }
 
 Future<DateTime?> selectMonthYear(BuildContext context) async {
+  DateTime today = DateTime.now();
+
   final DateTime? picked = await showMonthPicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2050));
+    context: context,
+    initialDate: today,
+    firstDate: DateTime(2023),
+    lastDate: DateTime(
+        today.year, today.month), // Limits to the current month and year
+  );
 
   return picked;
 }
-  saveNetworkPdf(String url) async {
-    try {
-      await DioClientServices.instance.savePdfToDownloads(url).then((value) {
-        if (value != null) {
-          customSnackBar(Get.context!, "document_download_successfully".tr);
-        }
-      });
-    } on Error {
-      throw 'Error has occured while saving';
-    }
+
+final _flutterMediaDownloaderPlugin = MediaDownload();
+
+saveNetworkPdf(String url) async {
+  try {
+    // await DioClientServices.instance
+    //     .savePdfToDownloads(Get.context!, url)
+    //     .then((value) {
+    //   if (value != null) {
+    //     customSnackBar(Get.context!, "document_download_successfully".tr);
+    //   }
+    // });
+    _flutterMediaDownloaderPlugin.downloadMedia(Get.context!, url);
+  } on Error {
+    throw 'Error has occured while saving';
   }
+}

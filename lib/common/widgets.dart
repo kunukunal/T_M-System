@@ -272,6 +272,59 @@ customSnackBar(BuildContext context, String msgStr) {
       duration: const Duration(seconds: 3));
 }
 
+notification(BuildContext context, String title, String subtitle) {
+  showSimpleNotification(
+      Container(
+        // height: 80.0,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.0),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(0.4, 0.8),
+            colors: <Color>[
+              // primaryBlue,
+              // backgroundColor,
+              // secondaryGreen
+              Color(0xff009FFD),
+              Color(0xff2A2A72),
+            ],
+            tileMode: TileMode.clamp,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                subtitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      background: Colors.transparent,
+      slideDismiss: true,
+      duration: const Duration(seconds: 3));
+}
+
 resgisterPopup({
   required String title,
   required String subtitle,
@@ -357,6 +410,7 @@ resgisterPopup({
                       onPressed: onButton2Tap,
                       text: button2,
                       width: 140.w,
+                      height: 42.h,
                     )
                   : customBorderButton(
                       button2,

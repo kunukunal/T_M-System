@@ -1,5 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class NotificationService {
@@ -30,9 +32,8 @@ class NotificationService {
   void handleMessage(
     RemoteMessage? event,
   ) async {
-
-          print(
-          "${event?.data} ${event?.notification?.title} ${event?.notification?.body} ${event?.messageType}");
+    print(
+        "${event?.data} ${event?.notification?.title} ${event?.notification?.body} ${event?.messageType}");
   }
 
   // handle selctnotification
@@ -46,9 +47,9 @@ class NotificationService {
     FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
     FirebaseMessaging.onMessage.listen((event) async {
-      print(
-          "${event.data} ${event.notification?.title} ${event.notification?.body} ${event.messageType}");
       handleMessage(event);
+      notification(
+          Get.context!, event.notification!.title!, event.notification!.body!);
     });
   }
 }

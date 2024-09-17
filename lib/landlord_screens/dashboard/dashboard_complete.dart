@@ -130,7 +130,7 @@ class CompleteDashboard extends StatelessWidget {
               height: 10.h,
             ),
             filterWidget(
-                title: "property_list".tr, endDateTap: () {}, endText: ""),
+                title: "property_list".tr, endDateTap: () {}, endText: "Month"),
             SizedBox(
               height: 10.h,
             ),
@@ -558,10 +558,15 @@ Widget filterWidget(
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    startText != "" ? startText : ('month'.tr),
-                    style: CustomStyles.titleText.copyWith(
-                        fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: 50.w),
+                    child: Center(
+                      child: Text(
+                        startText != "" ? startText : 'From',
+                        style: CustomStyles.titleText.copyWith(
+                            fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -574,10 +579,15 @@ Widget filterWidget(
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: Text(
-                  endText != "" ? endText : ('month'.tr),
-                  style: CustomStyles.titleText.copyWith(
-                      fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: 50.w),
+                  child: Center(
+                    child: Text(
+                      endText != "" ? endText : 'To',
+                      style: CustomStyles.titleText.copyWith(
+                          fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                    ),
+                  ),
                 ),
               ),
             ),

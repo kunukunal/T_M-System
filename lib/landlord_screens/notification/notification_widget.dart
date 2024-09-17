@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -19,7 +21,6 @@ class NotificationWidget {
     String? name,
     String? date,
   }) {
-
     final notifCntrl = Get.find<NotificationController>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
@@ -109,54 +110,54 @@ class NotificationWidget {
               SizedBox(
                 height: 5.h,
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Text(
-                            'Name: ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.sp - commonFontSize,
-                            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          'Name: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp - commonFontSize,
                           ),
-                          Text(
+                        ),
+                        Expanded(
+                          child: Text(
                             name!,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp - commonFontSize,
-                                color: grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Text(
-                            'Date: ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.sp - commonFontSize,
-                            ),
-                          ),
-                          Text(
-                            date!,
-                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14.sp - commonFontSize,
                                 color: grey),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Date: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp - commonFontSize,
+                        ),
                       ),
-                    )
-                  ],
-                ),
+                      Text(
+                        date!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp - commonFontSize,
+                            color: grey),
+                      ),
+                    ],
+                  )
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,27 +264,27 @@ class NotificationWidget {
                       ],
                     ),
                   ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Date: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Date: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp - commonFontSize,
+                        ),
+                      ),
+                      Text(
+                        date ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,
-                          ),
-                        ),
-                        Text(
-                         date??"",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp - commonFontSize,
-                              color: grey),
-                        ),
-                      ],
-                    ),
+                            color: grey),
+                      ),
+                    ],
+                  ),
                   Divider(
                     color: HexColor('#EBEBEB'),
                     height: 1.h,
@@ -317,11 +318,7 @@ class NotificationWidget {
         ));
   }
 
-  notifRegularList({
-    String? title,
-    String? desc,
-    String? date
-  }) {
+  notifRegularList({String? title, String? desc, String? date}) {
     return Padding(
         padding:
             EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
@@ -357,7 +354,7 @@ class NotificationWidget {
                                     color: black),
                               ),
                               Text(
-                                desc??"",
+                                desc ?? "",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -365,35 +362,33 @@ class NotificationWidget {
                                     fontSize: 14.sp - commonFontSize,
                                     color: grey),
                               ),
-
-
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                       Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Date: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Date: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp - commonFontSize,
+                        ),
+                      ),
+                      Text(
+                        date ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,
-                          ),
-                        ),
-                        Text(
-                         date??"",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp - commonFontSize,
-                              color: grey),
-                        ),
-                      ],
-                    ),
+                            color: grey),
+                      ),
+                    ],
+                  ),
                 ]),
           ),
         ));

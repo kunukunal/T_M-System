@@ -4,11 +4,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tanent_management/common/api_service_strings/base_url.dart';
+import 'package:tanent_management/common/widgets.dart';
 
 class DioClientServices {
   DioClientServices._();
@@ -226,9 +228,10 @@ class DioClientServices {
     }
   }
 
-  Future<String?> savePdfToDownloads(String pdfUrl) async {
+  Future<String?> savePdfToDownloads(
+      BuildContext context, String pdfUrl) async {
     try {
-      if (await Permission.storage.request().isGranted) {
+      if (await Permission.manageExternalStorage.request().isGranted) {
         var response = await Dio().get(
           pdfUrl,
           options: Options(responseType: ResponseType.bytes),
@@ -243,6 +246,8 @@ class DioClientServices {
         await file.writeAsBytes(response.data);
         return filePath;
       } else {
+        customSnackBar(context,
+            "Permission not granted. kindly allow it from app setting.");
         return null;
       }
     } catch (e) {
