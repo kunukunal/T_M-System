@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
@@ -251,12 +253,11 @@ class ManagementController extends GetxController {
 // sucesss
         return true;
       } else if (rentTo.value!.isAtSameMomentAs(rentFrom.value!)) {
-        customSnackBar(
-            Get.context!, "rent_to_date_same_as_rent_from_date".tr);
+        customSnackBar(Get.context!, "rent_to_date_same_as_rent_from_date".tr);
         return false;
       } else {
-        customSnackBar(Get.context!,
-            "rent_to_date_earlier_than_rent_from_date".tr);
+        customSnackBar(
+            Get.context!, "rent_to_date_earlier_than_rent_from_date".tr);
 
         return false;
       }
@@ -274,7 +275,7 @@ class ManagementController extends GetxController {
         lastDate: DateTime(2101));
     if (picked != null && picked != rentFrom.value) {
       rentFrom.value = picked;
-      rentTo.value=addMonths(picked, 11);
+      rentTo.value = addMonths(picked, 11);
     }
   }
 
@@ -532,7 +533,7 @@ class ManagementController extends GetxController {
         );
       }
     }
-     String accessToken = await SharedPreferencesServices.getStringData(
+    String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
         "";
     String languaeCode = await SharedPreferencesServices.getStringData(
@@ -558,7 +559,7 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
+              "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             }
           : {
@@ -579,7 +580,7 @@ class ManagementController extends GetxController {
               "rent_type": seletentRentTypeId
                   .value, // (1, Advance) (2, Monthly) (3, Yearly)
               "rent_from": rentFromDate,
-              if (rentToDate.trim().isNotEmpty) "rent_to": rentToDate,
+              "rent_to": rentToDate,
               "remarks": remarkCntrl.value.text.trim()
             },
       headers: {
@@ -593,9 +594,15 @@ class ManagementController extends GetxController {
 
     if (response != null) {
       print("fsdaosalkasld ${response.data}  ${response.statusCode}");
+
       if (response.statusCode == 200) {
         print("fsdaosalkasld 2 ${response.data}");
-
+        if (response.data['success'] == true) {
+          Get.back(result: true);
+          Get.back(result: true);
+        } else {
+          Get.back(result: true);
+        }
         customSnackBar(Get.context!, response.data['message']);
 
         addTenantOtpVerify.value = false;

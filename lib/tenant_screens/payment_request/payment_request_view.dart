@@ -50,7 +50,7 @@ class PaymentRequestScreen extends StatelessWidget {
                           SizedBox(height: 5.h),
                           PaymentWidget().paymenRequestForm(),
                           SizedBox(height: 5.h),
-                          customBorderButton("send_request".tr, () {
+                          customBorderButton("Continue", () {
                             String amnt =
                                 paymntCntrl.ammountController.value.text;
                             if (paymntCntrl
@@ -214,7 +214,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            customBorderButton("request".tr, () {
+                            customBorderButton("Continue", () {
                               paymntCntrl.ontappaymentVia();
                             },
                                 fontweight: FontWeight.w500,
@@ -249,6 +249,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                       borderSide:
                                           BorderSide(color: lightBorderGrey),
                                     ),
+                                    prefixText: "₹",
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: lightBorderGrey),
@@ -263,7 +264,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                     ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
-                                    : customBorderButton("request".tr, () {
+                                    : customBorderButton("send_request".tr, () {
                                         String amnt = paymntCntrl
                                             .ammountController.value.text;
                                         if (paymntCntrl.ammountController.value
