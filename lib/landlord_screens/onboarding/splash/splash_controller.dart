@@ -11,7 +11,7 @@ class SplashController extends GetxController {
 //MARK: - Variables & Constants
   final userData = Rxn<UserModel>();
   var isgoThroughVisible = false.obs;
-  final _isLoading = true.obs;
+  // final _isLoading = true.obs;
   bool isLoggedIn = false;
 
   bool isUserLogin = false;
@@ -41,15 +41,18 @@ class SplashController extends GetxController {
 
   _getUserData() async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.getBool('first_run') ?? true) {
-      // FlutterSecureStorage storage = const FlutterSecureStorage();
-      // await storage.deleteAll();
-      prefs.setBool('first_run', false);
-    }
-    UserModel? userData1 = await getUserData();
-    bool isGoThrough = await isGothroughVisible;
-    userData.value = userData1;
-    isgoThroughVisible.value = isGoThrough;
-    _isLoading.value = true;
+    isgoThroughVisible.value = prefs.getBool('first_run') ?? true;
+    // if (prefs.getBool('first_run') ?? true) {
+
+    //   isgoThroughVisible.value=false;
+    //   // FlutterSecureStorage storage = const FlutterSecureStorage();
+    //   // await storage.deleteAll();
+    //   prefs.setBool('first_run', false);
+    // }
+    // UserModel? userData1 = await getUserData();
+    // bool isGoThrough = await isGothroughVisible;
+    // userData.value = userData1;
+    // isgoThroughVisible.value = isGoThrough;
+    // _isLoading.value = true;
   }
 }

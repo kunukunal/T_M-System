@@ -9,7 +9,7 @@ class TenantDetailsController extends GetxController {
 
   final paymentList = [].obs;
 
-  final rentData = {"total_rent": 0, "rent_paid": 0, "rent_due": 0}.obs;
+  final rentData = {"total_rent": 0.0, "rent_paid": 0.0, "rent_due": 0.0}.obs;
 
   final kireyderId = 0.obs;
 
@@ -65,9 +65,9 @@ class TenantDetailsController extends GetxController {
         tenantUnitList.clear();
         paymentList.clear();
         rentData.value = {
-          "total_rent": data['rent']['total_rent'],
-          "rent_paid": data['rent']['rent_paid'],
-          "rent_due": data['rent']['rent_due']
+          "total_rent": data['rent']['total_rent'].toDouble(),
+          "rent_paid": data['rent']['rent_paid'].toDouble(),
+          "rent_due": data['rent']['rent_due'].toDouble(),
         };
         name.value = data['name'] ?? "";
         email.value = data['email'] ?? "";

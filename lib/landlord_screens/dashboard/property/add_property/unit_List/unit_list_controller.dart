@@ -22,7 +22,7 @@ class UnitCntroller extends GetxController {
     floorId.value = Get.arguments[0];
     floorName.value = Get.arguments[1];
     buildingAmenties.value = Get.arguments[2];
-    buildingName.value=Get.arguments[3];
+    buildingName.value = Get.arguments[3];
     isBackNeeded.value = false;
     getAllUnit();
     super.onInit();
@@ -61,7 +61,6 @@ class UnitCntroller extends GetxController {
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
       "Accept-Language": languaeCode,
@@ -71,10 +70,15 @@ class UnitCntroller extends GetxController {
         unitList.clear();
         unitList.addAll(response.data['units']);
         if (unitList.isEmpty) {
-          Get.off(() => AddUnitView(),
-              arguments: [floorId.value, false, buildingAmenties]);
+          Get.to(() => AddUnitView(),
+                  arguments: [floorId.value, false, buildingAmenties])
+              ?.then((value) {
+            if (value) {
+              Get.back(result: true);
+              isBackNeeded.value = true;
+            }
+          });
         }
-
         isUnitLoaded.value = false;
       } else if (response.statusCode == 400) {}
     }
@@ -87,7 +91,6 @@ class UnitCntroller extends GetxController {
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
 
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",

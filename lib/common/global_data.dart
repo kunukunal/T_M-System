@@ -51,6 +51,8 @@ Map userData = {
 };
 
 bool isLandlord = false;
+bool isPlatformIos = false;
+String appVersion="";
 clearAll() {
   isLandlord = false;
   userData = {

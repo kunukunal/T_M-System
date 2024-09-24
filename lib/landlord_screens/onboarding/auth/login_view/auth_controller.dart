@@ -144,9 +144,13 @@ class AuthController extends GetxController {
             customSnackBar(
                 Get.context!, response.data['message'][0].toString());
             openOtpScreen(isFromRegister: isFromRegister);
-            log("OTP send Successfully.");
           } else if (response.statusCode == 400) {
-            customSnackBar(Get.context!, response.data['phone'][0].toString());
+            if (response.data.toString().contains("error")) {
+              customSnackBar(Get.context!, response.data['error'][0]);
+            } else {
+              customSnackBar(
+                  Get.context!, response.data['phone'][0].toString());
+            }
           }
         }
       } else {

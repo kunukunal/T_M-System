@@ -56,8 +56,8 @@ class TenantListWidgets {
                   children: [
                     Text(
                       tenantCntrl.tenantList[index]['name'] ?? "",
-                      style:
-                          CustomStyles.otpStyle050505.copyWith(fontSize: 16.sp - commonFontSize),
+                      style: CustomStyles.otpStyle050505
+                          .copyWith(fontSize: 16.sp - commonFontSize),
                     ),
                     SizedBox(
                       height: 2.h,
@@ -69,8 +69,8 @@ class TenantListWidgets {
                           tenantCntrl.tenantList[index]['address'] ?? "",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              CustomStyles.desc606060.copyWith(fontSize: 14.sp - commonFontSize),
+                          style: CustomStyles.desc606060
+                              .copyWith(fontSize: 14.sp - commonFontSize),
                         ))
                   ],
                 ),
@@ -154,7 +154,8 @@ class TenantListWidgets {
                           print("sdajkasdj $e");
                         }
                       } else {
-                        customSnackBar(Get.context!, "phone_number_not_found".tr);
+                        customSnackBar(
+                            Get.context!, "phone_number_not_found".tr);
                       }
                     },
                     child: callIcon)
@@ -179,11 +180,13 @@ class TenantListWidgets {
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('${'address'.tr}                :', '${cntrl.address}'),
+            detailInnerWidget(
+                '${'address'.tr}                :', '${cntrl.address}'),
             SizedBox(
               height: 10.h,
             ),
-            detailInnerWidget('${'occupied_units'.tr}   :', '${cntrl.occupiedUnit}'),
+            detailInnerWidget(
+                '${'occupied_units'.tr}   :', '${cntrl.occupiedUnit}'),
           ],
         ),
       ),
@@ -193,8 +196,8 @@ class TenantListWidgets {
   tenantRentContainer() {
     final cntrl = Get.find<TenantDetailsController>();
 
-    int totalRent = cntrl.rentData['total_rent'] ?? 0; // Total rent amount
-    int paidRent = cntrl.rentData['rent_paid'] ?? 0; // Amount of rent paid
+    double totalRent = cntrl.rentData['total_rent'] ?? 0.0; // Total rent amount
+    double paidRent = cntrl.rentData['rent_paid'] ?? 0.0; // Amount of rent paid
     double progress = 0.0;
 
     if (totalRent > 0) {
@@ -221,8 +224,9 @@ class TenantListWidgets {
                   children: [
                     Text(
                       'month_to_month'.tr,
-                      style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                      style: CustomStyles.desc606060.copyWith(
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'DM Sans'),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -248,8 +252,9 @@ class TenantListWidgets {
                   children: [
                     Text(
                       'rent_paid'.tr,
-                      style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                      style: CustomStyles.desc606060.copyWith(
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'DM Sans'),
                     ),
                     Text(
                       '₹${cntrl.rentData['rent_paid']}',
@@ -262,8 +267,9 @@ class TenantListWidgets {
                   children: [
                     Text(
                       'due'.tr,
-                      style: CustomStyles.desc606060
-                          .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                      style: CustomStyles.desc606060.copyWith(
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'DM Sans'),
                     ),
                     Text(
                       '₹${cntrl.rentData['rent_due']}',
@@ -283,7 +289,7 @@ class TenantListWidgets {
     final cntrl = Get.find<TenantDetailsController>();
 
     return cntrl.tenantUnitList.isEmpty
-        ?  Center(
+        ? Center(
             child: Text("no_units_found".tr),
           )
         : ListView.separated(
@@ -383,13 +389,14 @@ class TenantListWidgets {
                           Text(
                             'amenities'.tr,
                             style: CustomStyles.otpStyle050505.copyWith(
-                                fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+                                fontSize: 14.sp - commonFontSize,
+                                fontFamily: 'DM Sans'),
                           ),
                           SizedBox(
                             height: 5.h,
                           ),
                           cntrl.tenantUnitList[index]['amenities'].isEmpty
-                              ?  Center(
+                              ? Center(
                                   child: Text("no_amenties".tr),
                                 )
                               : GridView.builder(
@@ -445,7 +452,7 @@ class TenantListWidgets {
   tenantPaymentHistoryContainer() {
     final cntrl = Get.find<TenantDetailsController>();
     return cntrl.paymentList.isEmpty
-        ?  Center(
+        ? Center(
             child: Text("no_payment_history_found".tr),
           )
         : ListView.separated(
@@ -500,7 +507,8 @@ class TenantListWidgets {
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: CustomStyles.desc606060.copyWith(
-                                  fontSize: 12.sp - commonFontSize, fontFamily: 'DM Sans'),
+                                  fontSize: 12.sp - commonFontSize,
+                                  fontFamily: 'DM Sans'),
                             ),
                           ],
                         ),
@@ -541,8 +549,8 @@ class TenantListWidgets {
           value,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: CustomStyles.desc606060
-              .copyWith(fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+          style: CustomStyles.desc606060.copyWith(
+              fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
         )),
       ],
     );

@@ -23,6 +23,7 @@ class TermsAndConditionController extends GetxController {
 
   onNextClicked() {
     if (checkboxValue.value) {
+      SharedPreferencesServices.setBoolData(key: 'first_run', value: false);
       Get.to(() => SignInScreen(
             isFromRegister: false,
           ));
@@ -32,8 +33,7 @@ class TermsAndConditionController extends GetxController {
   }
 
   getSiteFeatures() async {
-
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {

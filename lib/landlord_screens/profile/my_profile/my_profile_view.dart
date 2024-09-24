@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tanent_management/common/global_data.dart';
+import 'package:tanent_management/common/links.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/notification/notification_receive/notification_receive_view.dart';
@@ -137,7 +139,13 @@ class MyProfileView extends StatelessWidget {
                 ),
                 MyProfileWidget.commonListTile(
                     title: 'share'.tr,
-                    onTap: () {},
+                    onTap: () {
+                      try {
+                        final String message =
+                            "Get app from ${isPlatformIos ? ios_link : android_link}";
+                        Share.share(message);
+                      } catch (e) {}
+                    },
                     image: 'assets/icons/ic-share.png'),
 
                 MyProfileWidget.commonListTile(
@@ -148,7 +156,6 @@ class MyProfileView extends StatelessWidget {
                         subtitle: 'are_you_sure_logout'.tr,
                         button1: 'cancel'.tr,
                         button2: 'yes_logout'.tr,
-                        
                         onButton1Tap: () {
                           Get.back();
                         },
@@ -156,9 +163,8 @@ class MyProfileView extends StatelessWidget {
                           await SharedPreferencesServices.clearSharedPrefData();
                           Get.deleteAll();
                           clearAll();
-
-                          // prefs.setBool('first_run', false);
-
+                          SharedPreferencesServices.setBoolData(
+                              key: 'first_run', value: false);
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
@@ -174,11 +180,28 @@ class MyProfileView extends StatelessWidget {
                 MyProfileWidget.commonListTile(
                     isDelete: true,
                     title: 'delete_account'.tr,
-                    onTap: () {},
+                    onTap: () {
+                      resgisterPopup(
+                        title: "Delete Account",
+                        subtitle: "Are you sure you want to delete the account",
+                        button1: 'cancel'.tr,
+                        button2: "Yes, Delete",
+                        onButton1Tap: () {
+                          Get.back();
+                        },
+                        onButton2Tap: () async {
+                          profileCntrl.deleteAccountApi(context);
+                        },
+                      );
+                    },
                     image: null),
                 SizedBox(
+                  height: 5.h,
+                ),
+                Center(child: Text("Version: $appVersion")),
+                SizedBox(
                   height: 10.h,
-                )
+                ),
               ],
             ),
           ],

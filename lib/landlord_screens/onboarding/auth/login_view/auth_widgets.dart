@@ -65,7 +65,7 @@ class AuthWidget {
               borderRadius: BorderRadius.circular(7.r),
               border: Border.all(color: HexColor('#8AB9F1'), width: 2.w)),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 17.h),
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,11 +77,11 @@ class AuthWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                Text('join_us_today'.tr,
+                Text("Register your space as",
                     style: CustomStyles.descriptionText6c6c6c),
-                SizedBox(
-                  height: 5.h,
-                ),
+                // SizedBox(
+                //   height: 5.h,
+                // ),
                 // customButton(
                 //     onPressed: () {
                 //       resgisterPopup(
@@ -109,8 +109,8 @@ class AuthWidget {
                 TextButton(
                     onPressed: () {
                       resgisterPopup(
-                        title: 'registration_as'.tr,
-                        subtitle: 'join_us_today'.tr,
+                        title: 'registration'.tr,
+                        subtitle: "Register your space as",
                         button1: 'landlord'.tr,
                         button2: 'tenant'.tr,
                         onButton1Tap: () {
@@ -135,6 +135,7 @@ class AuthWidget {
                         },
                       );
                     },
+                    
                     child: Text(
                       'register_now'.tr,
                       style: TextStyle(

@@ -136,3 +136,5 @@ const String occupancyFilter = "landlord/occupancy-trend/";
 const String incomeExpenseFilter = "landlord/income-expense/";
 
 const String expenseFilter = "management/expense/get-expenses/";
+
+const String deleteAccount = "accounts/delete-account/";

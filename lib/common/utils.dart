@@ -3,6 +3,8 @@ import 'package:flutter_media_downloader/flutter_media_downloader.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mat_month_picker_dialog/mat_month_picker_dialog.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:tanent_management/common/global_data.dart';
 
 convertDateString(String date) {
   DateTime dateTime = DateTime.parse(date);
@@ -39,4 +41,10 @@ saveNetworkPdf(String url) async {
   } on Error {
     throw 'Error has occured while saving';
   }
+}
+deviceInfo() async {
+  PackageInfo deviceInfo = await PackageInfo.fromPlatform();
+  appVersion = deviceInfo.version;
+
+  return appVersion;
 }

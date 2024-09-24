@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 
@@ -36,7 +38,12 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
           AuthWidget.loginForm(isFromRegister!),
-          isFromRegister! ? const SizedBox() : AuthWidget.registrationBox()
+          isFromRegister! ? const SizedBox() : AuthWidget.registrationBox(),
+          if (isFromRegister == false)
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text("Version: $appVersion"),
+            )
         ],
       ),
     );

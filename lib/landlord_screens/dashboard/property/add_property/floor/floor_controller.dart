@@ -34,6 +34,7 @@ class FloorCntroller extends GetxController {
     Get.to(() => UnitView(),
             arguments: [floorId, floorName, buildingitemAmenties,buildingName.value])!
         .then((value) {
+          print("aslkdla ${value}");
       if (value == true) {
         isApiNeeded.value = true;
         getFloorData();

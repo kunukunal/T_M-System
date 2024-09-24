@@ -6,7 +6,9 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/dashboard_controller.dart';
+import 'package:tanent_management/landlord_screens/dashboard/management/management_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_property_view.dart';
+import 'package:tanent_management/landlord_screens/profile/edit_profile/edit_profile_widget.dart';
 
 import '../../common/text_styles.dart';
 
@@ -353,6 +355,145 @@ class DashBoardWidgets {
           ),
         ),
       ],
+    );
+  }
+
+//
+
+  filterDashboardOnChart({
+    required String title,
+    required String button1,
+    required String button2,
+    required Function() onButton1Tap,
+    required Function() onButton2Tap,
+    bool isFromIncomeExpense = true,
+  }) async {
+    final dashCntrl = Get.find<DashBoardController>();
+
+    Get.dialog(
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.r,
+        ),
+        child: Center(
+          child: Material(
+            borderRadius: BorderRadius.circular(
+              18.r,
+            ),
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 400.w, // Adjust the max width as needed
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(
+                    18.r,
+                  )),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(title,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18.sp - commonFontSize,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      EditProfileWidget.commomText("From", isMandatory: true),
+                      Obx(() {
+                        return ManagementWidgets().datePickerContainer(
+                            isFromIncomeExpense
+                                ? (dashCntrl.incomingStartFrom.value == null
+                                    ? 'Select'
+                                    : '${dashCntrl.incomingStartFrom.value!.day}-${dashCntrl.incomingStartFrom.value!.month}-${dashCntrl.incomingStartFrom.value!.year}')
+                                : (dashCntrl.occupancyStartFrom.value == null
+                                    ? 'Select'
+                                    : '${dashCntrl.occupancyStartFrom.value!.day}-${dashCntrl.occupancyStartFrom.value!.month}-${dashCntrl.occupancyStartFrom.value!.year}'),
+                            onTap: () async {
+                          if (isFromIncomeExpense) {
+                            final picked = await dashCntrl
+                                .selectDate(dashCntrl.incomingStartFrom.value);
+
+                            if (picked != null) {
+                              dashCntrl.incomingStartFrom.value = picked;
+                            }
+                          } else {
+                            final picked = await dashCntrl
+                                .selectDate(dashCntrl.occupancyStartFrom.value);
+
+                            if (picked != null) {
+                              dashCntrl.occupancyStartFrom.value = picked;
+                            }
+                          }
+                        });
+                      }),
+                      EditProfileWidget.commomText("To", isMandatory: true),
+                      Obx(() {
+                        return ManagementWidgets().datePickerContainer(
+                            isFromIncomeExpense
+                                ? (dashCntrl.incomingEndFrom.value == null
+                                    ? 'Select'
+                                    : '${dashCntrl.incomingEndFrom.value!.day}-${dashCntrl.incomingEndFrom.value!.month}-${dashCntrl.incomingEndFrom.value!.year}')
+                                : (dashCntrl.occupancyEndFrom.value == null
+                                    ? 'Select'
+                                    : '${dashCntrl.occupancyEndFrom.value!.day}-${dashCntrl.occupancyEndFrom.value!.month}-${dashCntrl.occupancyEndFrom.value!.year}'),
+                            onTap: () async {
+                          if (isFromIncomeExpense) {
+                            final picked = await dashCntrl
+                                .selectDate(dashCntrl.incomingEndFrom.value);
+
+                            if (picked != null) {
+                              dashCntrl.incomingEndFrom.value = picked;
+                            }
+                          } else {
+                            final picked = await dashCntrl
+                                .selectDate(dashCntrl.occupancyEndFrom.value);
+
+                            if (picked != null) {
+                              dashCntrl.occupancyEndFrom.value = picked;
+                            }
+                          }
+                        });
+                      }),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          customBorderButton(button1, onButton1Tap,
+                              verticalPadding: 5.h,
+                              horizontalPadding: 2.w,
+                              btnHeight: 35.h,
+                              width: 140.w,
+                              borderColor: HexColor('#679BF1'),
+                              textColor: HexColor('#679BF1')),
+                          customBorderButton(
+                            button2,
+                            onButton2Tap,
+                            verticalPadding: 5.h,
+                            horizontalPadding: 2.w,
+                            btnHeight: 35.h,
+                            color: HexColor('#679BF1'),
+                            textColor: Colors.white,
+                            width: 140.w,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false,
     );
   }
 }

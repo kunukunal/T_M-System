@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/firebase_options.dart';
 import 'package:tanent_management/landlord_screens/onboarding/splash/splash.dart';
 import 'package:tanent_management/landlord_screens/onboarding/language/locale/locale.dart';
@@ -29,6 +33,8 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? languageCode =
       prefs.getString(SharedPreferencesKeysEnum.languaecode.value);
+  isPlatformIos = Platform.isIOS;
+  deviceInfo();
   Locale? locale;
   if (languageCode != null) {
     locale = Locale(languageCode);

@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -41,36 +40,29 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Obx(() {
-              return filterWidget(
-                  title: "income_expense".tr,
-                  startDateTap: () async {
-                    final picked = await dashCntrl
-                        .selectDate(dashCntrl.incomingStartFrom.value);
-
-                    if (picked != null) {
-                      dashCntrl.incomingStartFrom.value = picked;
-                    }
-                  },
-                  endDateTap: () async {
-                    final picked = await dashCntrl
-                        .selectDate(dashCntrl.incomingEndFrom.value);
-
-                    if (picked != null) {
-                      dashCntrl.incomingEndFrom.value = picked;
-                    }
-                  },
-                  searchTap: () {
-                    dashCntrl.searchIncomeExpenseByDates();
-                  },
-                  startText: dashCntrl.incomingStartFrom.value == null
-                      ? ""
-                      : "${dashCntrl.incomingStartFrom.value?.month}/${dashCntrl.incomingStartFrom.value?.year}",
-                  endText: dashCntrl.incomingEndFrom.value == null
-                      ? ""
-                      : "${dashCntrl.incomingEndFrom.value?.month}/${dashCntrl.incomingEndFrom.value?.year}",
-                  isMultipleDate: true);
-            }),
+            Obx(
+              () => filterChartWidget(
+                title: "income_expense".tr,
+                isShowSelected: dashCntrl.incomingStartFrom.value != null &&
+                    dashCntrl.incomingEndFrom.value != null,
+                searchTap: () {
+                  DashBoardWidgets().filterDashboardOnChart(
+                    title: "income_expense".tr,
+                    button1: "Cancel",
+                    button2: "Search",
+                    onButton1Tap: () {
+                      dashCntrl.incomingStartFrom.value = null;
+                      dashCntrl.incomingEndFrom.value = null;
+                      Get.back();
+                    },
+                    onButton2Tap: () {
+                      Get.back();
+                      dashCntrl.searchIncomeExpenseByDates();
+                    },
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 16.h),
             OverviewCard(
               title: 'income_expense'.tr,
@@ -80,36 +72,30 @@ class CompleteDashboard extends StatelessWidget {
               xLabels: dashCntrl.xIncomeExpenseLabels,
             ),
             SizedBox(height: 16.h),
-            Obx(() {
-              return filterWidget(
-                  title: 'occupancy_trend'.tr,
-                  startDateTap: () async {
-                    final picked = await dashCntrl
-                        .selectDate(dashCntrl.occupancyStartFrom.value);
-
-                    if (picked != null) {
-                      dashCntrl.occupancyStartFrom.value = picked;
-                    }
-                  },
-                  endDateTap: () async {
-                    final picked = await dashCntrl
-                        .selectDate(dashCntrl.occupancyEndFrom.value);
-
-                    if (picked != null) {
-                      dashCntrl.occupancyEndFrom.value = picked;
-                    }
-                  },
-                  searchTap: () {
-                    dashCntrl.searchOccupyTreadByDates();
-                  },
-                  startText: dashCntrl.occupancyStartFrom.value == null
-                      ? ""
-                      : "${dashCntrl.occupancyStartFrom.value?.month}/${dashCntrl.occupancyStartFrom.value?.year}",
-                  endText: dashCntrl.occupancyEndFrom.value == null
-                      ? ""
-                      : "${dashCntrl.occupancyEndFrom.value?.month}/${dashCntrl.occupancyEndFrom.value?.year}",
-                  isMultipleDate: true);
-            }),
+            Obx(
+              () => filterChartWidget(
+                title: 'occupancy_trend'.tr,
+                isShowSelected: dashCntrl.occupancyStartFrom.value != null &&
+                    dashCntrl.occupancyEndFrom.value != null,
+                searchTap: () {
+                  DashBoardWidgets().filterDashboardOnChart(
+                    isFromIncomeExpense: false,
+                    title: "occupancy_trend".tr,
+                    button1: "Cancel",
+                    button2: "Search",
+                    onButton1Tap: () {
+                      dashCntrl.occupancyStartFrom.value = null;
+                      dashCntrl.occupancyEndFrom.value = null;
+                      Get.back();
+                    },
+                    onButton2Tap: () {
+                      Get.back();
+                      dashCntrl.searchOccupyTreadByDates();
+                    },
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 16.h),
             OverviewCard(
               title: 'occupancy_trend'.tr,
@@ -595,16 +581,53 @@ Widget filterWidget(
           SizedBox(
             width: 10.w,
           ),
-          if (isMultipleDate)
-            GestureDetector(onTap: searchTap, child: searchIcon)
-          else
+          GestureDetector(
+            onTap: searchTap,
+            child: Image.asset(
+              "assets/icons/filter.png",
+              height: 20.h,
+              width: 20.w,
+            ),
+          )
+        ],
+      ),
+    ],
+  );
+}
+
+Widget filterChartWidget(
+    {required String title,
+    VoidCallback? searchTap,
+    bool isShowSelected = false}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: CustomStyles.titleText
+            .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+      ),
+      GestureDetector(
+        onTap: searchTap,
+        child: Stack(
+          children: [
             Image.asset(
               "assets/icons/filter.png",
               height: 20.h,
               width: 20.w,
-            )
-        ],
-      ),
+            ),
+            if (isShowSelected)
+              Positioned(
+                top: 0,
+                right: 0,
+                child: CircleAvatar(
+                  backgroundColor: red,
+                  radius: 4,
+                ),
+              )
+          ],
+        ),
+      )
     ],
   );
 }

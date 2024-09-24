@@ -14,12 +14,11 @@ class TermsAndConditionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'terms_and_conditions'.tr,
+           "T&C / Policies",
             style: CustomStyles.otpStyle050505,
           ),
           backgroundColor: Colors.transparent,
@@ -28,23 +27,22 @@ class TermsAndConditionScreen extends StatelessWidget {
           centerTitle: true,
           leading: Container(),
         ),
-
-        body: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            Divider(
-              color: HexColor('#EBEBEB'),
-            ),
-            Obx(() {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                ),
-                child: cntrl.siteFeatureData.keys.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView.builder(
+        body: Obx(() {
+          return cntrl.siteFeatureData.keys.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    Divider(
+                      color: HexColor('#EBEBEB'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                      ),
+                      child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: cntrl.siteFeatureData.keys.length,
@@ -68,47 +66,49 @@ class TermsAndConditionScreen extends StatelessWidget {
                               ),
                               HtmlWidget(
                                 section['content'],
-                                textStyle: CustomStyles.desc606060
-                                    .copyWith(fontSize: 14.sp - commonFontSize, height: 1.5.h),
+                                textStyle: CustomStyles.desc606060.copyWith(
+                                    fontSize: 14.sp - commonFontSize,
+                                    height: 1.5.h),
                               ),
                             ],
                           );
                         },
                       ),
-              );
-            }),
-            Row(
-              children: [
-                Obx(() {
-                  return Checkbox(
-                      value: cntrl.checkboxValue.value,
-                      onChanged: (value) {
-                        cntrl.onCheckBoxClicked(value);
-                      });
-                }),
-                Text(
-                  'i_agree_and_continue'.tr,
-                  style: CustomStyles.desc606060.copyWith(fontSize: 16.sp - commonFontSize),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: customButton(
-                  onPressed: () {
-                    cntrl.onNextClicked();
-                  },
-                  width: Get.width,
-                  text: 'next'.tr),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-          ],
-        ),
+                    ),
+                    Row(
+                      children: [
+                        Obx(() {
+                          return Checkbox(
+                              value: cntrl.checkboxValue.value,
+                              onChanged: (value) {
+                                cntrl.onCheckBoxClicked(value);
+                              });
+                        }),
+                        Text(
+                          'i_agree_and_continue'.tr,
+                          style: CustomStyles.desc606060
+                              .copyWith(fontSize: 16.sp - commonFontSize),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: customButton(
+                          onPressed: () {
+                            cntrl.onNextClicked();
+                          },
+                          width: Get.width,
+                          text: 'next'.tr),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],
+                );
+        }),
       ),
     );
   }
