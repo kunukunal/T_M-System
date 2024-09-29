@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -27,7 +26,7 @@ class ManagementScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         leading: InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.back(result: true),
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: backArrowImage,
@@ -246,7 +245,8 @@ class ManagementScreen extends StatelessWidget {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    EditProfileWidget.commomText('from_rent'.tr),
+                                    EditProfileWidget.commomText(
+                                        'from_rent'.tr),
                                     ManagementWidgets().datePickerContainer(
                                         manageCntrl.rentFrom.value == null
                                             ? 'Select'
@@ -392,7 +392,7 @@ class ManagementScreen extends StatelessWidget {
                                               FilteringTextInputFormatter
                                                   .digitsOnly
                                             ],
-                                            readOnly: manageCntrl
+                                            readOnly: !manageCntrl
                                                 .isRentNegiosate.value,
                                             width: Get.width / 2.3,
                                             hintText: '${'type_here'.tr}...',

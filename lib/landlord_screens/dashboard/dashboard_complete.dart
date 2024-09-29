@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -115,8 +116,20 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            filterWidget(
-                title: "property_list".tr, endDateTap: () {}, endText: "Month"),
+            tenantRentContainerWithFilter(),
+            SizedBox(
+              height: 10.h,
+            ),
+            // filterWidget(
+            //     title: "property_list".tr, endDateTap: () {}, endText: "Month"),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "property_list".tr,
+                style: CustomStyles.titleText
+                    .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+              ),
+            ),
             SizedBox(
               height: 10.h,
             ),
@@ -128,7 +141,7 @@ class CompleteDashboard extends StatelessWidget {
   }
 }
 
-tenantRentContainer({bool isForRent = true}) {
+tenantRentContainer() {
   final dashCntrl = Get.find<DashBoardController>();
   num tRent = dashCntrl.rentBox['total_rent'];
 
@@ -154,23 +167,9 @@ tenantRentContainer({bool isForRent = true}) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                isForRent ? 'rent'.tr : 'expense'.tr,
+                'rent'.tr,
                 style: CustomStyles.otpStyle050505W700S16,
               ),
-              Row(
-                children: [
-                  Text(
-                    'month_to_month'.tr,
-                    style: CustomStyles.desc606060.copyWith(
-                        fontSize: 14.sp - commonFontSize,
-                        fontFamily: 'DM Sans'),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  filterIcon
-                ],
-              )
             ],
           ),
           SizedBox(height: 10.h),
@@ -188,7 +187,7 @@ tenantRentContainer({bool isForRent = true}) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isForRent ? 'rent_paid'.tr : "upcoming".tr,
+                    "Total rent received",
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -203,7 +202,7 @@ tenantRentContainer({bool isForRent = true}) {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    isForRent ? 'due'.tr : 'overdue'.tr,
+                    "Total rent due",
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -220,6 +219,114 @@ tenantRentContainer({bool isForRent = true}) {
       ),
     ),
   );
+}
+
+tenantRentContainerWithFilter() {
+  final dashCntrl = Get.find<DashBoardController>();
+  num tRent = dashCntrl.filterrentBox['total_rent'] ?? 0;
+  int totalRent = tRent.toInt(); // Total rent amount
+
+  num pRent = dashCntrl.filterrentBox['rent_received'] ?? 0;
+  int paidRent = pRent.toInt();
+
+  double progress = 0.0;
+  if (totalRent > 0) {
+    progress = paidRent / totalRent;
+  }
+
+  return Obx(() {
+    return Container(
+      height: 122.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          border: Border.all(color: HexColor('#EBEBEB')),
+          borderRadius: BorderRadius.circular(10.r)),
+      child: Padding(
+        padding: EdgeInsets.all(10.r),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'rent'.tr,
+                  style: CustomStyles.otpStyle050505W700S16,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    dashCntrl.monthFilter(Get.context!, isFromExpense: false);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        dashCntrl.filterrentBoxDate.value == null
+                            ? 'month'.tr
+                            : "${dashCntrl.filterrentBoxDate.value!.month}/${dashCntrl.filterrentBoxDate.value!.year}",
+                        style: CustomStyles.titleText.copyWith(
+                            fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Image.asset(
+                        "assets/icons/filter.png",
+                        height: 20.h,
+                        width: 20.w,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            LinearProgressIndicator(
+              value: progress,
+              backgroundColor: HexColor('#D9E3F4'),
+              valueColor: AlwaysStoppedAnimation<Color>(HexColor('#679BF1')),
+              minHeight: 5.h,
+            ),
+            SizedBox(height: 15.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Total rent received",
+                      style: CustomStyles.desc606060.copyWith(
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'DM Sans'),
+                    ),
+                    Text(
+                      '₹${dashCntrl.filterrentBox['rent_received']}',
+                      style: CustomStyles.black16,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Total rent due",
+                      style: CustomStyles.desc606060.copyWith(
+                          fontSize: 14.sp - commonFontSize,
+                          fontFamily: 'DM Sans'),
+                    ),
+                    Text(
+                      '₹${dashCntrl.filterrentBox['remaining_due']}',
+                      style: CustomStyles.black16,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  });
 }
 
 class OverviewCard extends StatelessWidget {

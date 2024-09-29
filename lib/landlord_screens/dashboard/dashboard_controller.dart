@@ -60,6 +60,13 @@ class DashBoardController extends GetxController {
   final isDashboardDataLaoding = false.obs;
   Map propertyStats = {"total_units": 0, "occupied_units": 0, "tenants": 0};
   Map rentBox = {"total_rent": 0, "rent_paid": 0, "rent_due": 0};
+  final filterrentBox = <String, dynamic>{
+    "rent_received": 0.0,
+    "total_rent": 0.0,
+    "remaining_due": 0.0
+  }.obs;
+  final filterrentBoxDate = Rxn<DateTime>();
+
   final expenseBox = 0.0.obs;
   final xIncomeExpenseLabels = [].obs;
   final income = [].obs;
@@ -233,6 +240,7 @@ class DashBoardController extends GetxController {
       userData = data['user_data'];
       propertyStats = data['property_stats'];
       rentBox = data['rent'];
+      filterrentBox.value = data['month_rent'];
       final now = DateTime.now();
       rentFrom.value = DateTime(now.year, now.month);
       expenseBox.value = data['expense'].toDouble() ?? 0.0;
@@ -259,6 +267,7 @@ class DashBoardController extends GetxController {
       incomingEndFrom.value = null;
       occupancyStartFrom.value = null;
       occupancyEndFrom.value = null;
+      filterrentBoxDate.value = null;
       isDashboardDataLaoding.value = false;
     } else {
       isDashboardDataLaoding.value = false;
@@ -292,11 +301,40 @@ class DashBoardController extends GetxController {
     }
   }
 
-  Future<void> monthFilter(BuildContext context) async {
+  getRentBoxFilter() async {
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url:
+          "$rentMonthFilter?month=${filterrentBoxDate.value?.month}&year=${filterrentBoxDate.value?.year}",
+    );
+    if (response != null) {
+      if (response.statusCode == 200) {
+        filterrentBox.value = response.data;
+      }
+    }
+  }
+
+  Future<void> monthFilter(BuildContext context,
+      {bool isFromExpense = true}) async {
     final DateTime? picked = await selectMonthYear(context);
     if (picked != null) {
-      rentFrom.value = DateTime(picked.year, picked.month);
-      getExpenseFilter();
+      if (isFromExpense) {
+        rentFrom.value = DateTime(picked.year, picked.month);
+        getExpenseFilter();
+      } else if (isFromExpense == false) {
+        filterrentBoxDate.value = DateTime(picked.year, picked.month);
+        getRentBoxFilter();
+      }
     }
   }
 }

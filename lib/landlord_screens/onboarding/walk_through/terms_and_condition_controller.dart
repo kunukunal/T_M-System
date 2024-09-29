@@ -41,7 +41,14 @@ class TermsAndConditionController extends GetxController {
     }, url: siteFeatures);
     if (response != null) {
       if (response.statusCode == 200) {
-        siteFeatureData.value = response.data;
+        response.data.forEach((key, value) {
+          if (value != null) {
+            if (key == "privacy_policies" || key == "terms_condition") {
+              siteFeatureData[key] = value;
+            }
+          }
+        });
+
         log("siteFeatures data get Successfully.");
       }
     }

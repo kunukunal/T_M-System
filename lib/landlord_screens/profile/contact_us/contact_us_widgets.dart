@@ -15,16 +15,17 @@ class ContactUsWidgets {
       padding: EdgeInsets.symmetric(horizontal: 25.w),
       child: Column(
         children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Text(
+              'contact_us'.tr,
+              textAlign: TextAlign.center,
+              style: CustomStyles.title414141,
+            ),
+          ),
           SizedBox(
-              height: 60.h,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Text(
-                  'contact_us_for_ride_share_address'.tr,
-                  textAlign: TextAlign.center,
-                  style: CustomStyles.title414141,
-                ),
-              )),
+            height: 10.h,
+          ),
           Text(
             'DaqOrbit Automation and Services (OPC) Private Limited New Delhi, East Delhi',
             textAlign: TextAlign.center,

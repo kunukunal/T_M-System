@@ -34,15 +34,23 @@ class UnitDetailViewWidget {
                   controller: unitDetailsCntrl.pageController.value,
                   children: [
                     ...List.generate(
-                        unitDetailsCntrl.unitImageList.length,
+                        unitDetailsCntrl.unitImageList.isNotEmpty
+                            ? unitDetailsCntrl.unitImageList.length
+                            : 1,
                         (index) => ClipRRect(
                               borderRadius: BorderRadius.circular(10.r),
-                              child: Image.network(
-                                unitDetailsCntrl.unitImageList[index]
-                                    ['image_url'],
-                                height: 350.h,
-                                fit: BoxFit.cover,
-                              ),
+                              child: unitDetailsCntrl.unitImageList.isNotEmpty
+                                  ? Image.network(
+                                      unitDetailsCntrl.unitImageList[index]
+                                          ['image_url'],
+                                      height: 350.h,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/walk_through_image.png",
+                                      height: 350.h,
+                                      fit: BoxFit.cover,
+                                    ),
                             ))
                   ],
                 ),
@@ -52,7 +60,9 @@ class UnitDetailViewWidget {
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: SmoothPageIndicator(
                       controller: unitDetailsCntrl.pageController.value,
-                      count: unitDetailsCntrl.unitImageList.length,
+                      count: unitDetailsCntrl.unitImageList.isNotEmpty
+                          ? unitDetailsCntrl.unitImageList.length
+                          : 1,
                       effect: SlideEffect(
                           dotWidth: 8.w,
                           dotHeight: 8.h,

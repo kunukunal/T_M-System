@@ -4,7 +4,6 @@ import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
-import '../../../common/functions.dart';
 import '../../../modals/user_modal.dart';
 
 class SplashController extends GetxController {

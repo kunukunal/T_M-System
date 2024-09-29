@@ -101,18 +101,45 @@ class MyProfileView extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                 ),
+
+                MyProfileWidget.commonListTile(
+                    title: "About Us",
+                    onTap: () {
+                      Get.to(() => PrivacyPolicyScreen(
+                            isFrom: 1,
+                          ));
+                    },
+                    image: 'assets/icons/ic-security.png'),
+                MyProfileWidget.commonListTile(
+                    title: 'privacy_policy'.tr,
+                    onTap: () {
+                      Get.to(() => PrivacyPolicyScreen(
+                            isFrom: 2,
+                          ));
+                    },
+                    image: 'assets/icons/ic-security.png'),
+                MyProfileWidget.commonListTile(
+                    title: "Terms and conditions",
+                    onTap: () {
+                      Get.to(() => PrivacyPolicyScreen(
+                            isFrom: 3,
+                          ));
+                    },
+                    image: 'assets/icons/ic-security.png'),
+                MyProfileWidget.commonListTile(
+                    title: "Refund & Cancellation",
+                    onTap: () {
+                      Get.to(() => PrivacyPolicyScreen(
+                            isFrom: 4,
+                          ));
+                    },
+                    image: 'assets/icons/ic-security.png'),
                 MyProfileWidget.commonListTile(
                     title: 'faq'.tr,
                     onTap: () {
                       Get.to(() => FAQsView());
                     },
                     image: 'assets/icons/faq.png'),
-                MyProfileWidget.commonListTile(
-                    title: 'privacy_policy'.tr,
-                    onTap: () {
-                      Get.to(() => PrivacyPolicyScreen());
-                    },
-                    image: 'assets/icons/ic-security.png'),
                 MyProfileWidget.commonListTile(
                     title: 'contact_us'.tr,
                     onTap: () {
@@ -137,6 +164,24 @@ class MyProfileView extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                 ),
+                MyProfileWidget.commonListTile(
+                    isDelete: true,
+                    title: 'delete_account'.tr,
+                    onTap: () {
+                      resgisterPopup(
+                        title: "Delete Account",
+                        subtitle: "Are you sure you want to delete the account",
+                        button1: 'cancel'.tr,
+                        button2: "Yes, Delete",
+                        onButton1Tap: () {
+                          Get.back();
+                        },
+                        onButton2Tap: () async {
+                          profileCntrl.deleteAccountApi(context);
+                        },
+                      );
+                    },
+                    image: null),
                 MyProfileWidget.commonListTile(
                     title: 'share'.tr,
                     onTap: () {
@@ -177,24 +222,7 @@ class MyProfileView extends StatelessWidget {
                       );
                     },
                     image: 'assets/icons/ic-logout.png'),
-                MyProfileWidget.commonListTile(
-                    isDelete: true,
-                    title: 'delete_account'.tr,
-                    onTap: () {
-                      resgisterPopup(
-                        title: "Delete Account",
-                        subtitle: "Are you sure you want to delete the account",
-                        button1: 'cancel'.tr,
-                        button2: "Yes, Delete",
-                        onButton1Tap: () {
-                          Get.back();
-                        },
-                        onButton2Tap: () async {
-                          profileCntrl.deleteAccountApi(context);
-                        },
-                      );
-                    },
-                    image: null),
+
                 SizedBox(
                   height: 5.h,
                 ),

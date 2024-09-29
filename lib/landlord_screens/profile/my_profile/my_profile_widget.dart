@@ -130,11 +130,11 @@ class MyProfileWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 10.w),
       child: ListTile(
-          tileColor: isDelete ? Colors.red : whiteColor,
+          tileColor: whiteColor,
           leading: isDelete
               ? const Icon(
                   Icons.delete,
-                  color: Colors.white,
+                  color: Colors.red,
                 )
               : image != null
                   ? Image.asset(
@@ -151,7 +151,7 @@ class MyProfileWidget {
             style: TextStyle(
                 fontSize: 14.sp - commonFontSize,
                 fontWeight: isDelete ? FontWeight.w700 : FontWeight.w500,
-                color: isDelete ? whiteColor : HexColor('#050505')),
+                color: isDelete ? Colors.red : HexColor('#050505')),
           ),
           onTap: onTap),
     );

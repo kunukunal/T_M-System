@@ -226,6 +226,7 @@ class ManagementController extends GetxController {
     if (unit != null) {
       // Pre-fill rent data
       amountCntrl.value.text = unit.unitRent.toString();
+      print(" sdas ${unit.isRentRnegotiable}");
       isRentNegiosate.value = unit.isRentRnegotiable;
       // Populate amenities list
       amenitiesList.clear();

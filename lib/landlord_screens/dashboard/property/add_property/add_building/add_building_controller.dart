@@ -94,7 +94,6 @@ class AddBuildingCntroller extends GetxController {
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioPostCall(
       body: transformedData, // Ensure this is correctly handled as a List
       isRawData: true,
@@ -129,13 +128,12 @@ class AddBuildingCntroller extends GetxController {
         };
       }).toList(),
     };
-     String accessToken = await SharedPreferencesServices.getStringData(
+    String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
         "";
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
 
     final response = await DioClientServices.instance.dioPatchCall(
       body: transformedData,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/dashboard/property/add_property/unit_List/unit_details/unit_details_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/unit_List/unit_list_controller.dart';
 
 import '../../../../../common/constants.dart';
@@ -54,7 +55,11 @@ class UnitWidget {
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          print("dasdjkasl ${unitId}");
+
+          Get.to(() => UnitDetails(), arguments: [unitId]);
+        },
         child: Container(
           height: 68.h,
           decoration: BoxDecoration(
@@ -108,7 +113,7 @@ class UnitWidget {
                       children: [
                         Text(
                           floorName!,
-                          style:TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp - commonFontSize,
                               color: black),
@@ -116,14 +121,13 @@ class UnitWidget {
                         SizedBox(
                           height: 5.h,
                         ),
-                         Text(
+                        Text(
                           '${'unit'.tr} ${index! + 1}',
-                          style:  TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12.sp - commonFontSize,
                               color: grey),
                         ),
-                       
                       ],
                     ),
                   ),

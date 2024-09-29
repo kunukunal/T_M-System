@@ -138,3 +138,4 @@ const String incomeExpenseFilter = "landlord/income-expense/";
 const String expenseFilter = "management/expense/get-expenses/";
 
 const String deleteAccount = "accounts/delete-account/";
+const String rentMonthFilter = "landlord/month-rent/";

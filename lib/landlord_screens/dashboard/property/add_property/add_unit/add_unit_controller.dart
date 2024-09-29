@@ -25,6 +25,7 @@ class AddUnitController extends GetxController {
 
   final ametiesList = [].obs;
   final isNegosiateSelected = true.obs;
+  final sameConfiguratonWithAllFlats = true.obs;
   final isActiveSelected = true.obs;
   final isOccupiedSelected = true.obs;
 
@@ -109,6 +110,7 @@ class AddUnitController extends GetxController {
       if (unitRentCntrl.value.text.trim().isNotEmpty) {
         if (areaSizeCntrl.value.text.trim().isNotEmpty) {
           if (isEdit.value == false) {
+            sameConfiguratonWithAllFlats.value = true;
             AddUnitWidget().addMultipleUnits(
               title: "how_many_units_with_same_configuration".tr,
               button1: "cancel".tr,
@@ -173,9 +175,7 @@ class AddUnitController extends GetxController {
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioPostCall(
-
       body: {
         "floor": floorId.value,
         "name": unitNameCntrl.value.text.trim(),
@@ -189,13 +189,13 @@ class AddUnitController extends GetxController {
         "amenities": jsonEncode(transformedData),
         "units_with_same_config": numberOfUnits.value.text,
         "is_occupied": !isOccupiedSelected.value,
-        "is_active": isActiveSelected.value
+        "is_active": isActiveSelected.value,
+        "add_to_upper_floors": sameConfiguratonWithAllFlats.value
       },
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: addUnit,
     );
@@ -232,16 +232,14 @@ class AddUnitController extends GetxController {
         }
       }
     }
-       String accessToken = await SharedPreferencesServices.getStringData(
+    String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
         "";
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioPatchCall(
-
       body: {
         "floor": floorId.value,
         "name": unitNameCntrl.value.text.trim(),
@@ -261,8 +259,7 @@ class AddUnitController extends GetxController {
       headers: {
         'Authorization': "Bearer $accessToken",
         "Content-Type": "application/json",
-              "Accept-Language": languaeCode,
-
+        "Accept-Language": languaeCode,
       },
       url: "$addUnit${unitId.value}/",
     );

@@ -43,12 +43,9 @@ class UnitDetailView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (unitDetailCntrl.unitImageList.isNotEmpty)
+                        // if (unitDetailCntrl.unitImageList.isNotEmpty)
                           UnitDetailViewWidget().pageViewWidget(),
-                        if (unitDetailCntrl.unitImageList.isNotEmpty)
-                          SizedBox(
-                            height: 10.h,
-                          ),
+                   
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(

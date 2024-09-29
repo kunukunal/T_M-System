@@ -34,31 +34,26 @@ class FloorDetailController extends GetxController {
   onBuildingTap(Map unitNameData, List amenities, Map rentData) {
     // if (userData['user_documents']) {
 
+    print(
+        "sajdkjsdsadas ${unitNameData} ${amenities} ${rentData}   ${unitPropertyNameData}  ${unitBuildingNameData} ${unitFloorNameData} ${unitNameData} ");
 
-      print("sajdkjsdsadas ${unitNameData} ${amenities} ${rentData}   ${unitPropertyNameData}  ${unitBuildingNameData} ${unitFloorNameData} ${unitNameData} ");
-
-
-
-
-
-
-  Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
-    false,
-    [
-      unitPropertyNameData,
-      unitBuildingNameData,
-      unitFloorNameData,
-      unitNameData
-    ],
-    amenities,
-    rentData
-  ])!
-      .then((value) {
-    if (value == true) {
-      isRefreshmentRequired.value = true;
-      getUnitsStats();
-    }
-  });
+    Get.to(() => ManagementScreen(isFromDashboard: false), arguments: [
+      false,
+      [
+        unitPropertyNameData,
+        unitBuildingNameData,
+        unitFloorNameData,
+        unitNameData
+      ],
+      amenities,
+      rentData
+    ])!
+        .then((value) {
+      if (value == true) {
+        isRefreshmentRequired.value = true;
+        getUnitsStats();
+      }
+    });
 // }
 // else{
 //   Get.to(()=>DocumentScreen(isFromTenant: false),arguments: [false, userData['id']]);
@@ -68,10 +63,10 @@ class FloorDetailController extends GetxController {
   getUnitsStats() async {
     isUnitsStatsLoading.value = true;
 
-
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -111,10 +106,10 @@ class FloorDetailController extends GetxController {
   }
 
   removeTenant(int unitId) async {
-
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     String dateToString =

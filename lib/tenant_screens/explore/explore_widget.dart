@@ -22,7 +22,11 @@ class ExploreWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
+            padding: EdgeInsets.only(
+              left: 7.w,
+              right: 7.w,
+              top: 10.h,
+            ),
             child: TextFormField(
               controller: exploreCntrl.serachPropertyController.value,
               decoration: InputDecoration(
@@ -68,35 +72,43 @@ class ExploreWidget {
             ),
           ),
           Obx(() {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              child: exloreDropDown(
-                selectedItem: exploreCntrl.exploreSearchItemSelected.value,
-                color: whiteColor,
-                items: exploreCntrl.exploreSearch,
-                onChange: (Property item) {
-                  exploreCntrl.exploreSearchItemSelected.value = item;
-                },
-              ),
-            );
-          }),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
-            child: Obx(() {
-              return exploreCntrl.getUnitByPropertySearchLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : customBorderButton("get_units".tr, () {
-                      exploreCntrl.onTapSearchProperty();
-                    },
-                      fontweight: FontWeight.w500,
-                      verticalPadding: 5.h,
-                      horizontalPadding: 2.w,
-                      btnHeight: 40.h,
-                      color: HexColor('#679BF1'),
-                      textColor: HexColor('#FFFFFF'),
-                      borderColor: Colors.transparent);
-            }),
-          )
+            return exploreCntrl.exploreSearch.isNotEmpty &&
+                    exploreCntrl.exploreSearch[0].id != -1
+                ? Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.h, horizontal: 10.w),
+                        child: exloreDropDown(
+                          selectedItem:
+                              exploreCntrl.exploreSearchItemSelected.value,
+                          color: whiteColor,
+                          items: exploreCntrl.exploreSearch,
+                          onChange: (Property item) {
+                            exploreCntrl.exploreSearchItemSelected.value = item;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.h, horizontal: 7.w),
+                        child: exploreCntrl.getUnitByPropertySearchLoading.value
+                            ? const Center(child: CircularProgressIndicator())
+                            : customBorderButton("get_units".tr, () {
+                                exploreCntrl.onTapSearchProperty();
+                              },
+                                fontweight: FontWeight.w500,
+                                verticalPadding: 5.h,
+                                horizontalPadding: 2.w,
+                                btnHeight: 40.h,
+                                color: HexColor('#679BF1'),
+                                textColor: HexColor('#FFFFFF'),
+                                borderColor: Colors.transparent),
+                      )
+                    ],
+                  )
+                : SizedBox();
+          })
         ],
       ),
     );
@@ -161,7 +173,7 @@ class ExploreWidget {
 
     return Obx(() {
       return exploreCntrl.getUnitResult.isEmpty
-          ?  Center(
+          ? Center(
               child: Text("no_units_found".tr),
             )
           : ListView.separated(

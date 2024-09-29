@@ -78,7 +78,8 @@ class AddUnitWidget {
             child: Text(
               "choose_picture".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -117,7 +118,8 @@ class AddUnitWidget {
               child: Text(
                 "cancel".tr,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),
@@ -259,8 +261,8 @@ class AddUnitWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AddPropertyWidget()
-                              .commomText('number_of_units'.tr, isMandatory: false),
+                          AddPropertyWidget().commomText('number_of_units'.tr,
+                              isMandatory: false),
                           customTextField(
                             controller: addUnitCntrl.numberOfUnits.value,
                             keyboardType: TextInputType.number,
@@ -270,6 +272,26 @@ class AddUnitWidget {
                             isBorder: true,
                             isFilled: false,
                           ),
+                          Obx(() {
+                            return CheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              enableFeedback: false,
+                              contentPadding: EdgeInsets.zero,
+                              value: addUnitCntrl
+                                  .sameConfiguratonWithAllFlats.value,
+                              onChanged: (value) {
+                                addUnitCntrl.sameConfiguratonWithAllFlats
+                                    .value = value!;
+                              },
+                              title: Text(
+                                "Same Configuration with all Floors",
+                                style: TextStyle(
+                                    fontSize: 16.sp - commonFontSize,
+                                    fontWeight: FontWeight.w500,
+                                    color: black),
+                              ),
+                            );
+                          }),
                         ],
                       ),
                       SizedBox(
