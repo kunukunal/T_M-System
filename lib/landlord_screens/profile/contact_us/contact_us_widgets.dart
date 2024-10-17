@@ -35,7 +35,7 @@ class ContactUsWidgets {
             height: 10.h,
           ),
           Text(
-            'Call :+91 9898129898\nEmail : support@tmsystem.com',
+            'Call :+91 8800903307\nEmail : info@daqorbit.com',
             textAlign: TextAlign.center,
             style: CustomStyles.title898989,
           ),

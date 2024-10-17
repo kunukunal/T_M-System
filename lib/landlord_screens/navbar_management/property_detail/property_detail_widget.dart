@@ -56,7 +56,7 @@ class PropertyDetailWidget {
           child: Container(
             height: propertyCntrl.selectedIndex.value == index &&
                     propertyCntrl.isExpand.value
-                ? 210.h
+                ? 230.h
                 : 120.h,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
@@ -230,7 +230,8 @@ class PropertyDetailWidget {
                                             Text(
                                               "${floor[index]['name']}",
                                               style: TextStyle(
-                                                  fontSize: 14.sp - commonFontSize,
+                                                  fontSize:
+                                                      14.sp - commonFontSize,
                                                   fontWeight: FontWeight.w700,
                                                   color: black),
                                             ),
@@ -238,7 +239,8 @@ class PropertyDetailWidget {
                                             Text(
                                                 "${floor[index]['available_units']}/${floor[index]['total_units']}",
                                                 style: TextStyle(
-                                                    fontSize: 14.sp - commonFontSize,
+                                                    fontSize:
+                                                        14.sp - commonFontSize,
                                                     fontWeight: FontWeight.w500,
                                                     color: lightBlue)),
                                           ],

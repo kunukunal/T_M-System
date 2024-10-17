@@ -77,7 +77,7 @@ class LandlordDocWidget {
   Future<void> showSelectionDialog(BuildContext context, {int? index}) {
     return Get.bottomSheet(Container(
       width: double.infinity,
-      height: 250.h,
+      height: 300.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),

@@ -50,6 +50,7 @@ class PersonalInfoController extends GetxController {
 
   final selectedState = "Select".obs;
 
+  final isTenant = false.obs;
   //finctions
   onPreviousTap() {
     Get.back();
@@ -76,7 +77,8 @@ class PersonalInfoController extends GetxController {
   getDocumentType() async {
     isDocumentTypeDataLoading.value = true;
     final authCntrl = Get.put(AuthController());
-
+    isTenant.value = authCntrl.onButtonTapTenant.value == 2;
+    print("dfsaklksaldklaskdlkasdl ");
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";

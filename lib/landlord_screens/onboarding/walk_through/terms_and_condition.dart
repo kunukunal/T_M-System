@@ -14,26 +14,47 @@ class TermsAndConditionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-           "T&C / Policies",
-            style: CustomStyles.otpStyle050505,
-          ),
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.transparent,
-          primary: false,
-          centerTitle: true,
-          leading: Container(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "T&C / Policies",
+          style: CustomStyles.otpStyle050505,
         ),
-        body: Obx(() {
-          return cntrl.siteFeatureData.keys.isEmpty
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        // primary: false,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        // leading: Container(),
+      ),
+      floatingActionButton: Obx(() {
+        return (cntrl.siteFeatureData.keys.isEmpty) ||
+                (cntrl.siteFeatureData.keys.isNotEmpty &&
+                    cntrl.isbuttonShow.value == false)
+            ? SizedBox()
+            : FloatingActionButton.small(
+                backgroundColor: Colors.blueAccent,
+                onPressed: () {
+                  cntrl.scrollController.value.animateTo(
+                    cntrl.scrollController.value.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_downward,
+                  color: Colors.white,
+                ),
+              );
+      }),
+      body: Obx(() {
+        return cntrl.siteFeatureData.keys.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                controller: cntrl.scrollController.value,
+                child: Column(
                   children: [
                     Divider(
                       color: HexColor('#EBEBEB'),
@@ -43,7 +64,7 @@ class TermsAndConditionScreen extends StatelessWidget {
                         horizontal: 16.w,
                       ),
                       child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: cntrl.siteFeatureData.keys.length,
                         itemBuilder: (context, index) {
@@ -107,9 +128,9 @@ class TermsAndConditionScreen extends StatelessWidget {
                       height: 15.h,
                     ),
                   ],
-                );
-        }),
-      ),
+                ),
+              );
+      }),
     );
   }
 }

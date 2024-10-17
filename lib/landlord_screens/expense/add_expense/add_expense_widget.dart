@@ -47,45 +47,42 @@ class AddExpenseWidgets {
   //Payment Type Radio Button
   radioButtons() {
     final addExCntrl = Get.find<AddExpenseController>();
-    return SizedBox(
-      height: 60.h,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: GridView.builder(
-            shrinkWrap: true,
-            itemCount: addExCntrl.paymentTypeList.length,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 24.h,
-                mainAxisSpacing: 15.h,
-                crossAxisSpacing: 10.w),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  addExCntrl.onPaymentTypeTap(index);
-                },
-                child: Row(
-                  children: [
-                    addExCntrl.paymentTypeList[index]['isSelected']
-                        ? selectedCheckboxIcon
-                        : checkboxIcon,
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      addExCntrl.paymentTypeList[index]['name'],
-                      style: addExCntrl.paymentTypeList[index]['isSelected']
-                          ? CustomStyles.otpStyle050505W400S14
-                              .copyWith(fontSize: 16.sp - commonFontSize)
-                          : CustomStyles.desc606060
-                              .copyWith(fontFamily: 'DM Sans'),
-                    )
-                  ],
-                ),
-              );
-            }),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: GridView.builder(
+          shrinkWrap: true,
+          itemCount: addExCntrl.paymentTypeList.length,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisExtent: 24.h,
+              mainAxisSpacing: 15.h,
+              crossAxisSpacing: 10.w),
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                addExCntrl.onPaymentTypeTap(index);
+              },
+              child: Row(
+                children: [
+                  addExCntrl.paymentTypeList[index]['isSelected']
+                      ? selectedCheckboxIcon
+                      : checkboxIcon,
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Text(
+                    addExCntrl.paymentTypeList[index]['name'],
+                    style: addExCntrl.paymentTypeList[index]['isSelected']
+                        ? CustomStyles.otpStyle050505W400S14
+                            .copyWith(fontSize: 16.sp - commonFontSize)
+                        : CustomStyles.desc606060
+                            .copyWith(fontFamily: 'DM Sans'),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 

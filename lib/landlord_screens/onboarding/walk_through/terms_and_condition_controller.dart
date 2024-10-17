@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
@@ -11,9 +12,19 @@ import 'package:tanent_management/services/shared_preferences_services.dart';
 class TermsAndConditionController extends GetxController {
   final siteFeatureData = {}.obs;
   final checkboxValue = false.obs;
+  final scrollController = ScrollController().obs;
+  final isbuttonShow = true.obs;
   @override
   void onInit() {
     getSiteFeatures();
+    scrollController.value.addListener(() {
+      if (scrollController.value.offset ==
+          scrollController.value.position.maxScrollExtent) {
+        isbuttonShow.value = false;
+      } else {
+        isbuttonShow.value = true;
+      }
+    });
     super.onInit();
   }
 

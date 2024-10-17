@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
@@ -451,6 +452,7 @@ class TenantListWidgets {
 
   tenantPaymentHistoryContainer() {
     final cntrl = Get.find<TenantDetailsController>();
+
     return cntrl.paymentList.isEmpty
         ? Center(
             child: Text("no_payment_history_found".tr),
@@ -459,6 +461,9 @@ class TenantListWidgets {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
+              DateTime dateTime =
+                  DateTime.parse(cntrl.paymentList[index]['created_at']);
+              String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
               return Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -477,7 +482,7 @@ class TenantListWidgets {
                             borderRadius: BorderRadius.circular(10.r)),
                         child: Center(
                           child: Text(
-                            cntrl.paymentList[index]['created_at'],
+                            formattedDate,
                             textAlign: TextAlign.center,
                             style: CustomStyles.black16.copyWith(
                               fontSize: 14.sp - commonFontSize,
@@ -508,6 +513,18 @@ class TenantListWidgets {
                               overflow: TextOverflow.ellipsis,
                               style: CustomStyles.desc606060.copyWith(
                                   fontSize: 12.sp - commonFontSize,
+                                  fontFamily: 'DM Sans'),
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Text(
+                              cntrl.paymentList[index]['transaction_id'],
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomStyles.desc606060.copyWith(
+                                  fontSize: 12.sp - commonFontSize,
+                                  fontWeight: FontWeight.w700,
                                   fontFamily: 'DM Sans'),
                             ),
                           ],

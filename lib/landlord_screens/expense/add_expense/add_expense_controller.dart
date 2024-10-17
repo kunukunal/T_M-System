@@ -35,6 +35,7 @@ class AddExpenseController extends GetxController {
     {'name': 'Bank Transfer', 'isSelected': false},
     {'name': 'Net Banking', 'isSelected': false},
     {'name': 'Credit Card', 'isSelected': false},
+    {'name': 'Cash', 'isSelected': false},
     {'name': 'Cheque', 'isSelected': false},
   ].obs;
   final paymentTypeSelected = "".obs;
@@ -73,10 +74,10 @@ class AddExpenseController extends GetxController {
   }
 
   void getPropertyBuilding() async {
-
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -121,10 +122,10 @@ class AddExpenseController extends GetxController {
   }
 
   void getExpenseTypeListApi() async {
-
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -249,7 +250,8 @@ class AddExpenseController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -302,7 +304,8 @@ class AddExpenseController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
