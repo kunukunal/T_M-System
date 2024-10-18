@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
             // Add other supported locales here
           ],
           debugShowCheckedModeBanner: false,
-          title: 'Tenant Management',
+          title: 'Rentpur',
           theme: ThemeData(
             fontFamily: 'DM Sans',
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

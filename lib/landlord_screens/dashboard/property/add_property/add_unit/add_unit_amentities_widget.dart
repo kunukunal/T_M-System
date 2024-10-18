@@ -68,7 +68,7 @@ class AddUnitAmenitiesWidget {
                           amenitiesElement['ammount'] as TextEditingController,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      hintText: '\u0024 1,00,000',
+                      hintText: '₹ 1,00,000',
                       isBorder: true,
                       // color: HexColor('#F7F7F7'),
                       isFilled: false,

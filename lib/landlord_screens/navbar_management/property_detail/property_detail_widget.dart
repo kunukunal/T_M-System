@@ -56,7 +56,7 @@ class PropertyDetailWidget {
           child: Container(
             height: propertyCntrl.selectedIndex.value == index &&
                     propertyCntrl.isExpand.value
-                ? 230.h
+                ? 225.h
                 : 120.h,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.r),
@@ -205,56 +205,65 @@ class PropertyDetailWidget {
                     ? Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: floor!.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  propertyCntrl.onBuildingTap(
-                                      floor[index]['id'],
-                                      "$propertyTitle - " +
-                                          floor[index]['name']);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5.h),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "${floor[index]['name']}",
-                                              style: TextStyle(
-                                                  fontSize:
-                                                      14.sp - commonFontSize,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: black),
-                                            ),
-                                            // const Spacer(),
-                                            Text(
-                                                "${floor[index]['available_units']}/${floor[index]['total_units']}",
+                          child: RawScrollbar(
+                            trackVisibility: true,
+                            thumbVisibility: true,
+                            controller: propertyCntrl.scrollBar.value,
+                            thickness: 3,
+                            thumbColor: Colors.black,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: floor!.length,
+                              controller: propertyCntrl.scrollBar.value,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    propertyCntrl.onBuildingTap(
+                                        floor[index]['id'],
+                                        "$propertyTitle - " +
+                                            floor[index]['name']);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 5.h),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "${floor[index]['name']}",
                                                 style: TextStyle(
                                                     fontSize:
                                                         14.sp - commonFontSize,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: lightBlue)),
-                                          ],
+                                                    fontWeight: FontWeight.w700,
+                                                    color: black),
+                                              ),
+                                              // const Spacer(),
+                                              Text(
+                                                  "${floor[index]['available_units']}/${floor[index]['total_units']}",
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp -
+                                                          commonFontSize,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: lightBlue)),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Divider(
-                                        color: HexColor('#EBEBEB'),
-                                        height: 1.h,
-                                      ),
-                                    ],
+                                        Divider(
+                                          color: HexColor('#EBEBEB'),
+                                          height: 1.h,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       )

@@ -111,7 +111,7 @@ class ExpenseWidgets {
               }),
               Text(
                 'total_expense_this_month'.tr,
-                style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans'),
+                style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans', fontSize: 14),
               ),
               // SizedBox(
               //   height: 10.h,

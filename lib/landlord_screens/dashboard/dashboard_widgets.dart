@@ -311,7 +311,13 @@ class DashBoardWidgets {
           isTackVisible
               ? customButton(
                   onPressed: () {
-                    Get.to(() => AddPropertyView(), arguments: [false, {}]);
+                    Get.to(() => AddPropertyView(), arguments: [false, {}])
+                        ?.then((value) {
+                      if (value == true) {
+                        final dashCntrl = Get.find<DashBoardController>();
+                        dashCntrl.getDashboardData();
+                      }
+                    });
                   },
                   text: 'add_property'.tr,
                   width: 136.w,
