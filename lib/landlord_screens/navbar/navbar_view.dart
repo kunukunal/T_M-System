@@ -88,14 +88,18 @@ class _NavBarState extends State<NavBar> {
                   NavBarWidgets.buildNavItem(
                       3,
                       dashboardCntrl.selectedIndex.value == 3
-                          ? expenseActiveIcon
-                          : expenseIcon,
+                          ? expenseCutomImage
+                          : expenseCutomImage,
+                      color: dashboardCntrl.selectedIndex.value == 3
+                          ? lightBlue
+                          : null,
                       'expense'.tr),
-                  NavBarWidgets.buildNavItem(4,
+                  NavBarWidgets.buildNavItem(
+                      4,
                       dashboardCntrl.selectedIndex.value == 4
                           ? profileActiveIcon
-                          : profileIcon
-                      , 'tenants'.tr),
+                          : profileIcon,
+                      'tenants'.tr),
                 ],
               )
             ],

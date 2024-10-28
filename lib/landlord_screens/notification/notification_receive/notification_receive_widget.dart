@@ -187,7 +187,7 @@ class NotifReceiveWidget {
 
     return commonDeclinePopup(
       title: '',
-      subtitle: 'Are you sure you want to decline this request?',
+      subtitle: 'Are you sure you want to recieved this request?',
       button1: 'Close',
       button2: 'Recieved',
       onButton1Tap: () {

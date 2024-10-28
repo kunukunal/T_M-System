@@ -7,6 +7,7 @@ import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class SearchCntroller extends GetxController {
   final searchCntrl = TextEditingController().obs;
+final focusNode = FocusNode().obs;
   final items = [
 
   ].obs;

@@ -33,11 +33,15 @@ class MyProfileView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MyProfileWidget.myProfileContainer(
-                    name: userData['name'] ?? "user".tr,
-                    phoneNo:
-                        '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
-                    image: userData['profile_image'] ?? ""),
+                Obx(
+                  () {
+                    return MyProfileWidget.myProfileContainer(
+                        name: userData['name'] ?? "user".tr,
+                        phoneNo:
+                            '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
+                        image: profileCntrl.profileImage.value);
+                  },
+                ),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
@@ -168,16 +172,32 @@ class MyProfileView extends StatelessWidget {
                     isDelete: true,
                     title: 'delete_account'.tr,
                     onTap: () {
-                      resgisterPopup(
+                      profileCntrl.deleteController.value.clear();
+                      deletePopup(
                         title: "Delete Account",
-                        subtitle: "Are you sure you want to delete the account",
-                        button1: 'cancel'.tr,
-                        button2: "Yes, Delete",
+                        subtitle:
+                            "We're sorry to see you go. If you delete your account, all your data will be permanently removed and cannot be recovered. Are you sure you want to proceed?",
+                        button2: 'cancel'.tr,
+                        button1: "Yes, Delete",
+                        deleteController: profileCntrl.deleteController.value,
                         onButton1Tap: () {
-                          Get.back();
+                          if (profileCntrl.deleteController.value.text
+                              .trim()
+                              .isNotEmpty) {
+                            if (profileCntrl.deleteController.value.text ==
+                                "Delete") {
+                              profileCntrl.deleteAccountApi(context);
+                            } else {
+                              customSnackBar(context,
+                                  "Please type \"Delete\" for delete this account");
+                            }
+                          } else {
+                            customSnackBar(
+                                context, "Please enter the text \"Delete\"");
+                          }
                         },
                         onButton2Tap: () async {
-                          profileCntrl.deleteAccountApi(context);
+                          Get.back();
                         },
                       );
                     },

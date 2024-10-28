@@ -93,6 +93,8 @@ String managementActiveIcon = "assets/icons/management_active_icon.png";
 String managementIcon = "assets/icons/management_icon.png";
 String expenseActiveIcon = "assets/icons/expensee_active_icon.png";
 String expenseIcon = "assets/icons/expense_icon.png";
+String expenseCutomImage = "assets/icons/expenseCutomImage.png";
+
 String profileActiveIcon = "assets/icons/profile_active_icon.png";
 String profileIcon = "assets/icons/profile_icon.png";
 String exploreActiveIcon = "assets/icons/explore_selected.png";

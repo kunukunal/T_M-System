@@ -9,6 +9,7 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/personal_info/personal_info_controller.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/personal_info/personal_info_widget.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 import '../../../../common/text_styles.dart';
 
@@ -46,7 +47,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('personal_information'.tr, style: CustomStyles.otpStyle050505),
+        title:
+            Text('personal_information'.tr, style: CustomStyles.otpStyle050505),
         actions: [
           Padding(
             padding: EdgeInsets.all(8.r),
@@ -83,7 +85,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  Text('personal_information'.tr, style: CustomStyles.skipBlack),
+                  Text('personal_information'.tr,
+                      style: CustomStyles.skipBlack),
                   const Divider(),
                   SizedBox(
                     height: 10.h,
@@ -221,6 +224,30 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       maxLength: 6,
                       isBorder: true,
                       color: HexColor('#F7F7F7'),
+                      onChange: (value) async {
+                        if (value.length == 6) {
+                          await DioClientServices.instance
+                              .postCodeApi(value, context)
+                              .then(
+                            (value) {
+                              if (value != null) {
+                                if (value['state'] != "") {
+                                  int index =
+                                      state.indexOf(value['state'] ?? "");
+                                  if (index != -1) {
+                                    personalInfoCntrl.selectedState.value =
+                                        state[index];
+                                  }
+                                }
+                                if (value['city'] != "") {
+                                  personalInfoCntrl.cityCntrl.value.text =
+                                      value['city'] ?? "";
+                                }
+                              }
+                            },
+                          );
+                        }
+                      },
                       isFilled: false),
                   SizedBox(
                     height: 5.h,
@@ -259,7 +286,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           customTextField(
                               controller: personalInfoCntrl.cityCntrl.value,
                               width: Get.width / 2.3,
-                      hintText: '${'type_here'.tr}...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),

@@ -65,13 +65,18 @@ class PersonalInfoController extends GetxController {
   }
 
   void onSubmitTap({required bool? isFromRegistered}) async {
-    int index =
-        documentTypeList.indexWhere((element) => element['image'] == null);
-    if (index != -1) {
-      customSnackBar(Get.context!, "please_add_all_documents".tr);
+    if (documentTypeList.isNotEmpty) {
+      userDocumentUpdate(isFromRegistered: isFromRegistered);
     } else {
       userDocumentUpdate(isFromRegistered: isFromRegistered);
     }
+    // int index =
+    //     documentTypeList.indexWhere((element) => element['image'] == null);
+    // if (index != -1) {
+    //   customSnackBar(Get.context!, "please_add_all_documents".tr);
+    // } else {
+    //   userDocumentUpdate(isFromRegistered: isFromRegistered);
+    // }
   }
 
   getDocumentType() async {
@@ -114,8 +119,13 @@ class PersonalInfoController extends GetxController {
     List image = [];
     for (int i = 0; i < documentTypeList.length; i++) {
       id.add(documentTypeList[i]['id']);
-      image.add(await DioClientServices.instance
-          .multipartFile(file: documentTypeList[i]['image']));
+      print("daskldk ${documentTypeList[i]['image']}");
+      if (documentTypeList[i]['image'] == null) {
+        image.add(await DioClientServices.instance.multipartAssetsFile());
+      } else {
+        image.add(await DioClientServices.instance
+            .multipartFile(file: documentTypeList[i]['image']));
+      }
     }
 
     String languaeCode = await SharedPreferencesServices.getStringData(

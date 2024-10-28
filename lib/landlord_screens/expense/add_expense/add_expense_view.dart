@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/dashboard/management/managment_modal.dart';
 import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_controller.dart';
-import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_modal.dart';
+
 import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_widget.dart';
 import '../../../common/text_styles.dart';
 import '../../onboarding/auth/personal_info/personal_info_widget.dart';
@@ -29,7 +30,9 @@ class AddExpenseScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-            addExpCntrl.isfromEdit.value ? 'update_expense'.tr : 'add_expense'.tr,
+            addExpCntrl.isfromEdit.value
+                ? 'update_expense'.tr
+                : 'add_expense'.tr,
             style: CustomStyles.otpStyle050505W700S16),
       ),
       body: ListView(
@@ -48,30 +51,39 @@ class AddExpenseScreen extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  PersonlInfoWidget.commomText('property'.tr, isMandatory: true),
+                  PersonlInfoWidget.commomText('property'.tr,
+                      isMandatory: true),
                   Obx(() => buildDropdown<Property>(
                         addExpCntrl.selectedProperty.value,
-                        addExpCntrl.projrctsList,
-                        'Select Property',
+                        addExpCntrl.projectsListData,
+                        'select_property'.tr,
                         (value) => addExpCntrl.onProjectSelected(value),
                       )),
                   SizedBox(height: 5.h),
-                  PersonlInfoWidget.commomText('building'.tr, isMandatory: true),
+                  PersonlInfoWidget.commomText('building'.tr,
+                      isMandatory: true),
                   Obx(() => buildDropdown<Building>(
                         addExpCntrl.selectedBuilding.value,
                         addExpCntrl.selectedProperty.value?.buildings ?? [],
-                        'Select Building',
+                        'select_building'.tr,
                         (value) => addExpCntrl.onBuildingSelected(value),
                       )),
-                  // PersonlInfoWidget.commomText('Project',isMandatory: true),
-                  // bigDropDown(selectedItem: addExpCntrl.selectedProjectItem.value, items: addExpCntrl.projrctsList.value, onChange: (item){
-                  //   addExpCntrl.selectedProjectItem.value=item;
-                  // }),
-                  // SizedBox(height: 5.h,),
-                  // PersonlInfoWidget.commomText('Building',isMandatory: true),
-                  // bigDropDown(selectedItem: addExpCntrl.selectedBuildingItem.value, items: addExpCntrl.buildingList.value, onChange: (item){
-                  //   addExpCntrl.selectedBuildingItem.value=item;
-                  // }),
+                  SizedBox(height: 5.h),
+                  PersonlInfoWidget.commomText('floor'.tr, isMandatory: true),
+                  Obx(() => buildDropdown<Floor>(
+                        addExpCntrl.selectedFloor.value,
+                        addExpCntrl.floorsList,
+                        'select_floor'.tr,
+                        (value) => addExpCntrl.onFloorSelected(value),
+                      )),
+                  SizedBox(height: 5.h),
+                  PersonlInfoWidget.commomText('unit'.tr, isMandatory: true),
+                  Obx(() => buildDropdown<Unit>(
+                        addExpCntrl.selectedUnit.value,
+                        addExpCntrl.unitsList,
+                        'select_unit'.tr,
+                        (value) => addExpCntrl.onUnitSelected(value),
+                      )),
                   SizedBox(
                     height: 5.h,
                   ),
@@ -85,10 +97,28 @@ class AddExpenseScreen extends StatelessWidget {
                           addExpCntrl.selectedExpenseItem.value = item;
                         }),
                   ),
-
                   SizedBox(
                     height: 5.h,
                   ),
+                  Obx(() {
+                    return addExpCntrl.selectedExpenseItem.value == "Other"
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              PersonlInfoWidget.commomText('Other Expense'),
+                              customTextField(
+                                  controller: addExpCntrl.otherExpense.value,
+                                  hintText: 'Type Expense...',
+                                  isBorder: true,
+                                  color: HexColor('#FFFFFF'),
+                                  isFilled: false),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                            ],
+                          )
+                        : SizedBox();
+                  }),
                   PersonlInfoWidget.commomText('date'.tr, isMandatory: true),
                   AddExpenseWidgets().datePickerContainer(),
                   SizedBox(
@@ -139,8 +169,9 @@ class AddExpenseScreen extends StatelessWidget {
                           onPressed: () {
                             addExpCntrl.onSaveTap();
                           },
-                          text:
-                              addExpCntrl.isfromEdit.value ? 'update'.tr : 'save'.tr,
+                          text: addExpCntrl.isfromEdit.value
+                              ? 'update'.tr
+                              : 'save'.tr,
                           width: Get.width),
                   SizedBox(
                     height: 5.h,

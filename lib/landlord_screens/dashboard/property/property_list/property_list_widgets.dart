@@ -24,7 +24,8 @@ class PropertyWidget {
         ),
       ),
       centerTitle: true,
-      title: Text('property_list'.tr, style: CustomStyles.otpStyle050505W700S16),
+      title:
+          Text('property_list'.tr, style: CustomStyles.otpStyle050505W700S16),
       actions: [
         // InkWell(
         //     onTap: () {
@@ -200,7 +201,9 @@ class PropertyWidget {
             child: Text(
           title!,
           style: TextStyle(
-              fontSize: 12.sp - commonFontSize, color: black, fontWeight: FontWeight.w500),
+              fontSize: 12.sp - commonFontSize,
+              color: black,
+              fontWeight: FontWeight.w500),
         )),
       ),
     );

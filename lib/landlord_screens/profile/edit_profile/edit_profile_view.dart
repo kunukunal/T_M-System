@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -9,6 +10,7 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/landlord_screens/profile/edit_profile/edit_profile_controller.dart';
 import 'package:tanent_management/landlord_screens/profile/edit_profile/edit_profile_widget.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 import '../../../../common/text_styles.dart';
 import '../../../common/constants.dart';
@@ -163,6 +165,50 @@ class EditProfileVew extends StatelessWidget {
                           ),
                           Row(
                             children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  EditProfileWidget.commomText('pincode'.tr),
+                                  customTextField(
+                                    controller: editCntrl.pinNoCntrl.value,
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    width: Get.width / 2.3,
+                                    maxLength: 6,
+                                    hintText: '${'type_here'.tr}...',
+                                    isBorder: true,
+                                    color: HexColor('#F7F7F7'),
+                                    isFilled: false,
+                                    onChange: (value) async {
+                                      if (value.length == 6) {
+                                        await DioClientServices.instance
+                                            .postCodeApi(value,context)
+                                            .then(
+                                          (value) {
+                                            if (value != null) {
+                                              if (value['state'] != "") {
+                                                int index = state.indexOf(
+                                                    value['state'] ?? "");
+                                                if (index != -1) {
+                                                  editCntrl.selectedState
+                                                      .value = state[index];
+                                                }
+                                              }
+                                              if (value['city'] != "") {
+                                                editCntrl.cityCntrl.value.text =
+                                                    value['city'] ?? "";
+                                              }
+                                            }
+                                          },
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 15.w),
                               Obx(() {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,21 +233,6 @@ class EditProfileVew extends StatelessWidget {
                                   ],
                                 );
                               }),
-                              SizedBox(width: 15.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  EditProfileWidget.commomText('pincode'.tr),
-                                  customTextField(
-                                      controller: editCntrl.pinNoCntrl.value,
-                                      keyboardType: TextInputType.phone,
-                                      width: Get.width / 2.3,
-                              hintText: '${'type_here'.tr}...',
-                                      isBorder: true,
-                                      color: HexColor('#F7F7F7'),
-                                      isFilled: false),
-                                ],
-                              )
                             ],
                           ),
                           SizedBox(

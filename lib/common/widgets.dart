@@ -49,7 +49,7 @@ customTextField({
             ? dropDownMenu(onDropdownChanged: onDropdownChanged)
             : Container(),
         Expanded(
-          child: TextField(
+          child: TextFormField(
             maxLength: maxLength,
             maxLines: maxLines ?? 1,
             obscureText: obscureText ?? false,
@@ -63,7 +63,7 @@ customTextField({
             strutStyle: StrutStyle.fromTextStyle(CustomStyles.lightHint16),
             onTap: onTap ?? () {},
             onChanged: onChange,
-            onSubmitted: onSubmitted,
+            onFieldSubmitted: onSubmitted,
             decoration: InputDecoration(
               prefixIcon: prefixIcon,
               contentPadding:
@@ -387,6 +387,129 @@ resgisterPopup({
                       color: HexColor('#6C6C6C'),
                       fontSize: 16.sp - commonFontSize - commonFontSize,
                       fontWeight: FontWeight.w500),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: customBorderButton(
+                  button1,
+                  onButton1Tap,
+                  verticalPadding: 5.h,
+                  horizontalPadding: 2.w,
+                  btnHeight: title == 'Logout' ? 42.h : 35.h,
+                  width: 140.w,
+                  borderColor: HexColor('#679BF1'),
+                  textColor: HexColor('#679BF1'),
+                ),
+              ),
+              title == 'Logout'
+                  ? customButton(
+                      onPressed: onButton2Tap,
+                      text: button2,
+                      width: 140.w,
+                      height: 42.h,
+                    )
+                  : customBorderButton(
+                      button2,
+                      onButton2Tap,
+                      verticalPadding: 5.h,
+                      horizontalPadding: 2.w,
+                      btnHeight: 35.h,
+                      width: 140.w,
+                    ),
+            ],
+          ),
+        ],
+      ),
+    ),
+    barrierDismissible: true,
+  );
+}
+
+deletePopup({
+  required String title,
+  required String subtitle,
+  required String button1,
+  required String button2,
+  required TextEditingController deleteController,
+  required Function() onButton1Tap,
+  required Function() onButton2Tap,
+}) async {
+  return await Get.dialog(
+    AlertDialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18.r),
+      ),
+      titlePadding: EdgeInsets.only(top: 5.h, left: 14.w, right: 14.w),
+      contentPadding: EdgeInsets.only(left: 14.w, right: 14.w, bottom: 14.h),
+      title: Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                  color: black,
+                  fontSize: 18.sp - commonFontSize,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.w700),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          // Spacer(),
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: crossIcon,
+          ),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0, top: 12.0),
+            child: Text(
+              subtitle,
+              textAlign: TextAlign.start,
+              style: title == 'Logout'
+                  ? CustomStyles.otpStyle050505.copyWith(
+                      fontFamily: 'DM Sans',
+                      fontSize: 16.sp - commonFontSize,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.none)
+                  : TextStyle(
+                      fontFamily: 'Inter',
+                      decoration: TextDecoration.none,
+                      height: 1.4,
+                      color: HexColor('#6C6C6C'),
+                      fontSize: 16.sp - commonFontSize - commonFontSize,
+                      fontWeight: FontWeight.w500),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          TextFormField(
+            controller: deleteController,
+            decoration: InputDecoration(
+              hintText: "Type \"Delete\" text",
+              hintStyle: TextStyle(color: Colors.red),
+              prefixIconConstraints: BoxConstraints.loose(Size(35.w, 35.h)),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: lightBorderGrey),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: lightBorderGrey),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: lightBorderGrey),
+              ),
             ),
           ),
           SizedBox(height: 10.h),

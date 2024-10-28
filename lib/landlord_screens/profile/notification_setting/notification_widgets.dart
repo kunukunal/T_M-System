@@ -208,19 +208,22 @@ class NotifWidget {
                     width: 5.w,
                   ),
                   otpTextField(
-                      authCntrl.otpController4.value,
-                      authCntrl.otpFocus4.value,
-                      authCntrl.otpFocus3.value,
-                      authCntrl.otpFocus4.value, onChanged: (value) {
-                    // if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
-                    //     authCntrl.otpController2.value.text.trim().isNotEmpty &&
-                    //     authCntrl.otpController3.value.text.trim().isNotEmpty &&
-                    //     authCntrl.otpController4.value.text.trim().isNotEmpty) {
-                    //   // manageCntrl.verifyOtpTenantApi();
-                    // } else {
-                    //   customSnackBar(Get.context!, "Please enter the otp.");
+                    authCntrl.otpController4.value,
+                    authCntrl.otpFocus4.value,
+                    authCntrl.otpFocus3.value,
+                    authCntrl.otpFocus4.value,
+
+                    //     onChanged: (value) {
+                    //   // if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                    //   //     authCntrl.otpController2.value.text.trim().isNotEmpty &&
+                    //   //     authCntrl.otpController3.value.text.trim().isNotEmpty &&
+                    //   //     authCntrl.otpController4.value.text.trim().isNotEmpty) {
+                    //   //   // manageCntrl.verifyOtpTenantApi();
+                    //   // } else {
+                    //   //   customSnackBar(Get.context!, "Please enter the otp.");
+                    //   // }
                     // }
-                  }),
+                  ),
                 ],
               ),
             ),

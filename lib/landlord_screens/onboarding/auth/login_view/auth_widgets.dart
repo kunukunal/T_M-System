@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/auth_controller.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/sign_in.dart';
 import 'package:timer_count_down/timer_count_down.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../common/widgets.dart';
 
@@ -50,6 +52,61 @@ class AuthWidget {
         ],
       ),
     );
+  }
+
+  void showHelpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Need Help?'),
+          content: RichText(
+            text: TextSpan(
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+              children: [
+                const TextSpan(
+                  text:
+                      "If you have any questions or need assistance, feel free to reach out to us at ",
+                ),
+                TextSpan(
+                  text: "info@daqorbit.com",
+                  style: const TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      _launchEmail("info@daqorbit.com");
+                    },
+                ),
+                const TextSpan(
+                  text: ". We're here to help!",
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _launchEmail(String email) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    } else {
+      throw 'Could not launch $emailUri';
+    }
   }
 
   static registrationBox() {
@@ -135,7 +192,6 @@ class AuthWidget {
                         },
                       );
                     },
-                    
                     child: Text(
                       'register_now'.tr,
                       style: TextStyle(
@@ -220,6 +276,11 @@ class AuthWidget {
                 authCntrl.otpFocus3.value,
                 authCntrl.otpFocus4.value,
                 onChanged: (p0) {
+                  if (p0 == '') {
+                    authCntrl.otpFocus3.value.requestFocus();
+                  } else {
+                    authCntrl.otpFocus4.value.requestFocus();
+                  }
                   if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
                       authCntrl.otpController2.value.text.trim().isNotEmpty &&
                       authCntrl.otpController3.value.text.trim().isNotEmpty &&
@@ -338,6 +399,7 @@ Widget otpTextField(TextEditingController controller, FocusNode focus,
       maxLength: 1,
       onChanged: onChanged ??
           (value) {
+            print("dsadasjkd ${value}");
             if (value == '') {
               previousFocus.requestFocus();
             } else {

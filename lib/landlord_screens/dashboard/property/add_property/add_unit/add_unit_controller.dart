@@ -91,7 +91,7 @@ class AddUnitController extends GetxController {
   ].obs;
   final unitFeature = [
     'For Rent',
-    'For Sale',
+    // 'For Sale',
   ].obs;
 
   onAddAmeties() {

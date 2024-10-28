@@ -31,10 +31,14 @@ class FloorCntroller extends GetxController {
   onAddTap() {}
 
   onFloorTap({required int floorId, required String floorName}) {
-    Get.to(() => UnitView(),
-            arguments: [floorId, floorName, buildingitemAmenties,buildingName.value])!
+    Get.to(() => UnitView(), arguments: [
+      floorId,
+      floorName,
+      buildingitemAmenties,
+      buildingName.value
+    ])!
         .then((value) {
-          print("aslkdla ${value}");
+      print("aslkdla ${value}");
       if (value == true) {
         isApiNeeded.value = true;
         getFloorData();
@@ -50,7 +54,6 @@ class FloorCntroller extends GetxController {
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
@@ -73,7 +76,6 @@ class FloorCntroller extends GetxController {
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
       "Accept-Language": languaeCode,
@@ -82,8 +84,13 @@ class FloorCntroller extends GetxController {
       if (response.statusCode == 200) {
         isApiNeeded.value = true;
         getFloorData();
+
         customSnackBar(Get.context!, response.data['message']);
-      } else if (response.statusCode == 400) {}
+      } else if (response.statusCode == 400) {
+        if (response.data.toString().contains("occupied_units")) {
+          customSnackBar(Get.context!, response.data['occupied_units']);
+        }
+      }
     }
   }
 
@@ -94,7 +101,6 @@ class FloorCntroller extends GetxController {
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
 
     final response = await DioClientServices.instance.dioPatchCall(body: {
       "name": updateFloorName.value.text,
@@ -112,11 +118,9 @@ class FloorCntroller extends GetxController {
   }
 
   addFloorData({required String floorName, required int units}) async {
-     String accessToken = await SharedPreferencesServices.getStringData(
+    String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
         "";
-
-
 
     final response = await DioClientServices.instance.dioPostCall(
         body: {

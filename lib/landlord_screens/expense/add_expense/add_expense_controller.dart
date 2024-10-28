@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
 import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/common/widgets.dart';
-import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_modal.dart';
+import 'package:tanent_management/landlord_screens/dashboard/management/managment_modal.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
@@ -21,12 +21,13 @@ class AddExpenseController extends GetxController {
 
   final selectedImages = [].obs; // List of selected image
   final picker = ImagePicker();
-  final selectedProperty = Rxn<Property>();
-  final selectedBuilding = Rxn<Building>();
+  // final selectedProperty = Rxn<Property>();
+  // final selectedBuilding = Rxn<Building>();
   final amountFocus = FocusNode().obs;
   final remarkFocus = FocusNode().obs;
+  final otherExpense = TextEditingController().obs;
   //List variables
-  final projrctsList = <Property>[].obs;
+  // final projrctsList = <Property>[].obs;
   final expenseList = [
     'Select',
   ].obs;
@@ -54,6 +55,7 @@ class AddExpenseController extends GetxController {
       amountCntrl.value.text = editMap['expense_amount'];
       date.value = DateTime.parse(editMap['expense_date']);
       remarkCntrl.value.text = editMap['remarks'];
+
       for (var element in paymentTypeList) {
         if (element['name'] == editMap['payment_type']) {
           element['isSelected'] = true;
@@ -72,6 +74,62 @@ class AddExpenseController extends GetxController {
       }
     }
   }
+
+  // void getPropertyBuilding() async {
+  //   String accessToken = await SharedPreferencesServices.getStringData(
+  //           key: SharedPreferencesKeysEnum.accessToken.value) ??
+  //       "";
+  //   String languaeCode = await SharedPreferencesServices.getStringData(
+  //           key: SharedPreferencesKeysEnum.languaecode.value) ??
+  //       "en";
+
+  //   final response = await DioClientServices.instance.dioGetCall(
+  //     headers: {
+  //       'Authorization': "Bearer $accessToken",
+  //       "Content-Type": "application/json",
+  //       "Accept-Language": languaeCode,
+  //     },
+  //     url: getPropertyAndBuildingList,
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> responseData = response.data;
+  //     projrctsList.clear();
+  //     for (var item in responseData) {
+  //       projrctsList.add(Property.fromJson(item));
+  //     }
+  //     if (isfromEdit.value) {
+  //       if (isfromEdit.value) {
+  //         for (int i = 0; i < projrctsList.length; i++) {
+  //           if (projrctsList[i].id == editMap['project']) {
+  //             selectedProperty.value = projrctsList[i];
+  //             for (int k = 0; k < projrctsList[i].buildings.length; k++) {
+  //               print("Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projrctsList[i].buildings.length}, Building ID: ${projrctsList[i].buildings[k].id}");
+
+  //               if (projrctsList[i].buildings[k].id == editMap['building']) {
+  //                 selectedBuilding.value = projrctsList[i].buildings[k];
+  //                 break;
+  //               }
+  //             }
+  //             break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     print('Error: ${response.statusCode}');
+  //   }
+  // }
+
+  final selectedProperty = Rxn<Property>();
+  final selectedBuilding = Rxn<Building>();
+  final selectedFloor = Rxn<Floor>();
+  final selectedUnit = Rxn<Unit>();
+
+  final projectsListData = <Property>[].obs;
+  final buildingsList = <Building>[].obs;
+  final floorsList = <Floor>[].obs;
+  final unitsList = <Unit>[].obs;
 
   void getPropertyBuilding() async {
     String accessToken = await SharedPreferencesServices.getStringData(
@@ -92,32 +150,135 @@ class AddExpenseController extends GetxController {
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = response.data;
-      projrctsList.clear();
+      projectsListData.clear();
+      print("dasjkjsd ${responseData}");
       for (var item in responseData) {
-        projrctsList.add(Property.fromJson(item));
+        projectsListData.add(Property.fromJson(item));
       }
       if (isfromEdit.value) {
-        if (isfromEdit.value) {
-          for (int i = 0; i < projrctsList.length; i++) {
-            if (projrctsList[i].id == editMap['project']) {
-              selectedProperty.value = projrctsList[i];
-
-              for (int k = 0; k < projrctsList[i].buildings.length; k++) {
+        for (int i = 0; i < projectsListData.length; i++) {
+          print("jkkjkj ${editMap}");
+          if (projectsListData[i].id == editMap['project']) {
+            selectedProperty.value = projectsListData[i];
+            if (editMap['building'] != null) {
+              for (int k = 0; k < projectsListData[i].buildings.length; k++) {
                 print(
-                    "Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projrctsList[i].buildings.length}, Building ID: ${projrctsList[i].buildings[k].id}");
-
-                if (projrctsList[i].buildings[k].id == editMap['building']) {
-                  selectedBuilding.value = projrctsList[i].buildings[k];
+                    "Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projectsListData[i].buildings.length}, Building ID: ${projectsListData[i].buildings[k].id}");
+                if (projectsListData[i].buildings[k].id ==
+                    editMap['building']) {
+                  selectedBuilding.value = projectsListData[i].buildings[k];
+                  print("dsajkdjasl ${editMap['building']}");
+                  getFloorsAndUnits(editMap['building']);
                   break;
                 }
               }
+            }
+            break;
+          }
+        }
+      }
+    } else {
+      print('Error: ${response.statusCode}');
+    }
+  }
+
+  void getFloorsAndUnits(int buildingId) async {
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: "$getFloorAndUnitList$buildingId/",
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = response.data['floors'];
+      floorsList.clear();
+      for (var item in responseData) {
+        floorsList.add(Floor.fromJson(item));
+      }
+      if (isfromEdit.value) {
+        print("daskldk ${editMap['floor']}");
+        if (editMap['floor'] != null) {
+          for (int i = 0; i < floorsList.length; i++) {
+            if (floorsList[i].id == editMap['floor']) {
+              selectedFloor.value = floorsList[i];
+              print("daskldk ${editMap['unit']}");
+              if (editMap['unit'] != null) {
+                unitsList.value = floorsList[i].units;
+                for (int k = 0; k < floorsList[i].units.length; k++) {
+                  print(
+                      "Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projectsListData[i].buildings.length}, Building ID: ${projectsListData[i].buildings[k].id}");
+
+                  if (floorsList[i].units[k].id == editMap['unit']) {
+                    print("dsadsa ${floorsList[i].units[k].id}");
+                    selectedUnit.value = floorsList[i].units[k];
+                    print(
+                        "dsadsa ${floorsList[i].units[k].id} ${selectedUnit.value}  ${unitsList.length}");
+                    break;
+                  }
+                }
+              }
+
               break;
             }
           }
         }
       }
     } else {
+      // Handle other status codes and errors
       print('Error: ${response.statusCode}');
+    }
+  }
+
+  void onProjectSelected(Property? project) {
+    selectedProperty.value = project;
+    selectedBuilding.value = null;
+    selectedFloor.value = null;
+    selectedUnit.value = null;
+    floorsList.clear();
+    unitsList.clear();
+  }
+
+  void onBuildingSelected(Building? building) {
+    selectedBuilding.value = building;
+    if (building != null) {
+      floorsList.value = building.floors;
+      // Optionally fetch floors from API if not included in the building data
+      getFloorsAndUnits(building.id); // Uncomment if floors need to be fetched
+    } else {
+      floorsList.clear();
+    }
+    selectedFloor.value = null;
+    selectedUnit.value = null;
+    unitsList.clear();
+  }
+
+  void onFloorSelected(Floor? floor) {
+    selectedFloor.value = floor;
+    if (floor != null) {
+      unitsList.value = floor.units;
+    } else {
+      unitsList.clear();
+    }
+    selectedUnit.value = null;
+  }
+
+  void onUnitSelected(Unit? unit) {
+    selectedUnit.value = unit;
+    if (unit != null) {
+      // Pre-fill rent data
+      // amountCntrl.value.text = unit.unitRent.toString();
+    } else {
+      // amountCntrl.value.clear();
     }
   }
 
@@ -147,19 +308,23 @@ class AddExpenseController extends GetxController {
       if (isfromEdit.value) {
         if (expenseList.contains(editMap['expense_type'])) {
           selectedExpenseItem.value = editMap['expense_type'];
+          print("dasklkdlksaldklask ${selectedExpenseItem.value == "Other"}");
+          if (selectedExpenseItem.value == "Other") {
+            otherExpense.value.text = editMap['other_expense'];
+          }
         }
       }
     } else {}
   }
 
-  void onProjectSelected(Property? project) {
-    selectedProperty.value = project;
-    selectedBuilding.value = null;
-  }
+  // void onProjectSelected(Property? project) {
+  //   selectedProperty.value = project;
+  //   selectedBuilding.value = null;
+  // }
 
-  void onBuildingSelected(Building? building) {
-    selectedBuilding.value = building;
-  }
+  // void onBuildingSelected(Building? building) {
+  //   selectedBuilding.value = building;
+  // }
 
 //functions
   Future<void> selectDate(BuildContext context) async {
@@ -207,32 +372,48 @@ class AddExpenseController extends GetxController {
 
   onSaveTap() {
     if (selectedProperty.value != null) {
-      if (selectedBuilding.value != null) {
-        if (selectedExpenseItem.value != "Select") {
-          if (date.value != null) {
-            if (amountCntrl.value.text.isNotEmpty) {
-              if (paymentTypeSelected.value != "") {
+      // if (selectedBuilding.value != null) {
+      if (selectedExpenseItem.value != "Select") {
+        if (date.value != null) {
+          if (amountCntrl.value.text.isNotEmpty) {
+            if (paymentTypeSelected.value != "") {
+              if (selectedExpenseItem.value != "Other") {
                 if (isfromEdit.value) {
                   updateExpense();
                 } else {
                   addExpense();
                 }
               } else {
-                customSnackBar(Get.context!, "please_select_payment_type".tr);
+                if (otherExpense.value.text.trim().isNotEmpty) {
+                  if (isfromEdit.value) {
+                    updateExpense();
+                  } else {
+                    addExpense();
+                  }
+                } else {
+                  customSnackBar(
+                      Get.context!, "Please enter the other Expense");
+                }
               }
             } else {
-              customSnackBar(Get.context!, "please_fill_amount".tr);
+              customSnackBar(Get.context!, "please_select_payment_type".tr);
             }
           } else {
-            customSnackBar(Get.context!, "please_select_date".tr);
+            customSnackBar(Get.context!, "please_fill_amount".tr);
           }
         } else {
-          customSnackBar(Get.context!, "please_select_expense_type".tr);
+          customSnackBar(Get.context!, "please_select_date".tr);
         }
       } else {
-        customSnackBar(Get.context!, "please_select_building".tr);
+        customSnackBar(Get.context!, "please_select_expense_type".tr);
       }
-    } else {
+    }
+    // else {
+    //   customSnackBar(Get.context!, "please_select_building".tr);
+    // }
+    // }
+
+    else {
       customSnackBar(Get.context!, "please_select_property".tr);
     }
   }
@@ -254,12 +435,17 @@ class AddExpenseController extends GetxController {
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
+    print(
+        "dksalkd ${selectedBuilding.value?.id} ${selectedFloor.value?.id} ${selectedUnit.value?.id}");
     final response = await DioClientServices.instance.dioPostCall(
       body: {
         "project": selectedProperty.value!.id,
-        "building": selectedBuilding.value!.id,
+        if (selectedBuilding.value != null)
+          "building": selectedBuilding.value!.id,
+        if (selectedFloor.value != null) "floor": selectedFloor.value!.id,
+        if (selectedUnit.value != null) "unit": selectedUnit.value!.id,
         "expense_type": selectedExpenseItem.value,
+        "other_expense": otherExpense.value.text.trim(),
         "expense_date":
             "${date.value!.year}-${date.value!.month}-${date.value!.day}",
         "expense_amount": amountCntrl.value.text,
@@ -312,8 +498,12 @@ class AddExpenseController extends GetxController {
     final response = await DioClientServices.instance.dioPatchCall(
       body: {
         "project": selectedProperty.value!.id,
-        "building": selectedBuilding.value!.id,
+        if (selectedBuilding.value != null)
+          "building": selectedBuilding.value!.id,
+        if (selectedFloor.value != null) "floor": selectedFloor.value!.id,
+        if (selectedUnit.value != null) "unit": selectedUnit.value!.id,
         "expense_type": selectedExpenseItem.value,
+        "other_expense": otherExpense.value.text.trim(),
         "expense_date":
             "${date.value!.year}-${date.value!.month}-${date.value!.day}",
         "expense_amount": amountCntrl.value.text,

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
-import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/explore/explore_controller.dart';
 import 'package:tanent_management/tenant_screens/explore/search_modal.dart';
 import 'package:tanent_management/tenant_screens/explore/unit_details/unit_detail_view.dart';
@@ -29,6 +28,7 @@ class ExploreWidget {
             ),
             child: TextFormField(
               controller: exploreCntrl.serachPropertyController.value,
+              textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(right: 10),
@@ -69,6 +69,14 @@ class ExploreWidget {
                 //   }
                 // });
               },
+              onFieldSubmitted: (value) {
+                if (exploreCntrl.serachPropertyController.value.text
+                    .trim()
+                    .isNotEmpty) {
+                  exploreCntrl.getPropertyBySearchLocation(
+                      exploreCntrl.serachPropertyController.value.text.trim());
+                }
+              },
             ),
           ),
           Obx(() {
@@ -86,25 +94,26 @@ class ExploreWidget {
                           items: exploreCntrl.exploreSearch,
                           onChange: (Property item) {
                             exploreCntrl.exploreSearchItemSelected.value = item;
+                            exploreCntrl.onTapSearchProperty();
                           },
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.h, horizontal: 7.w),
-                        child: exploreCntrl.getUnitByPropertySearchLoading.value
-                            ? const Center(child: CircularProgressIndicator())
-                            : customBorderButton("get_units".tr, () {
-                                exploreCntrl.onTapSearchProperty();
-                              },
-                                fontweight: FontWeight.w500,
-                                verticalPadding: 5.h,
-                                horizontalPadding: 2.w,
-                                btnHeight: 40.h,
-                                color: HexColor('#679BF1'),
-                                textColor: HexColor('#FFFFFF'),
-                                borderColor: Colors.transparent),
-                      )
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(
+                      //       vertical: 10.h, horizontal: 7.w),
+                      //   child: exploreCntrl.getUnitByPropertySearchLoading.value
+                      //       ? const Center(child: CircularProgressIndicator())
+                      //       : customBorderButton("get_units".tr, () {
+                      //           exploreCntrl.onTapSearchProperty();
+                      //         },
+                      //           fontweight: FontWeight.w500,
+                      //           verticalPadding: 5.h,
+                      //           horizontalPadding: 2.w,
+                      //           btnHeight: 40.h,
+                      //           color: HexColor('#679BF1'),
+                      //           textColor: HexColor('#FFFFFF'),
+                      //           borderColor: Colors.transparent),
+                      // )
                     ],
                   )
                 : SizedBox();
@@ -216,8 +225,8 @@ class ExploreWidget {
                                                   ['image']),
                                               fit: BoxFit.cover)
                                           : DecorationImage(
-                                              image:
-                                                  profileIconWithWidget.image)),
+                                              image: AssetImage(
+                                                  "assets/images/apartment1_image.png"))),
                                 ),
                               ),
                               SizedBox(
@@ -245,7 +254,7 @@ class ExploreWidget {
                                               style: CustomStyles
                                                   .amountFA4343W700S12
                                                   .copyWith(
-                                                      color: Colors.red,
+                                                      color: lightBlue,
                                                       fontSize: 15.0 -
                                                           commonFontSize),
                                             ),

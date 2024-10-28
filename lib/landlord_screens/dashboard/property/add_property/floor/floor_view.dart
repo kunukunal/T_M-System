@@ -13,22 +13,18 @@ class FloorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FloorWidget().appBar(floorCntrl.buildingName.value.capitalize.toString()),
-      floatingActionButton: Obx(() {
-        return floorCntrl.floorList.isEmpty
-            ? const SizedBox()
-            : FloatingActionButton(
-                onPressed: () {
-                  // propertyAbCntrl.onAddTap();
-                  FloorWidget().addFloor(
-                      button1: "cancel".tr, button2: "add".tr, title: "add_floor".tr);
-                },
-                backgroundColor: Colors.white,
-                shape:
-                    CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
-                child: addIcon,
-              );
-      }),
+      appBar: FloorWidget()
+          .appBar(floorCntrl.buildingName.value.capitalize.toString()),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // propertyAbCntrl.onAddTap();
+          FloorWidget().addFloor(
+              button1: "cancel".tr, button2: "add".tr, title: "add_floor".tr);
+        },
+        backgroundColor: Colors.white,
+        shape: CircleBorder(side: BorderSide(color: HexColor('#EBEBEB'))),
+        child: addIcon,
+      ),
       body: WillPopScope(
         onWillPop: () async {
           Get.back(result: floorCntrl.isApiNeeded.value);
@@ -43,7 +39,7 @@ class FloorView extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : floorCntrl.floorList.isEmpty
-                        ?  Center(
+                        ? Center(
                             child: Text("no_floor_available".tr),
                           )
                         : Padding(

@@ -48,24 +48,29 @@ class AddTenantDocumentController extends GetxController {
 
   onSubmitTap() {
     if (documentList.isNotEmpty) {
-      int index = -1;
-
-      for (int i = 0; i < documentList.length; i++) {
-        if (documentList[i]['image'] == null) {
-          index = i;
-          break;
-        }
-      }
-      if (index == -1) {
-        if (isForDocEdit.value) {
-          updateDocument();
-        } else {
-          uploadDocumenById();
-        }
+      if (isForDocEdit.value) {
+        updateDocument();
       } else {
-        customSnackBar(Get.context!,
-            "${'please_add_the'.tr} ${documentList[index]['type_title']}");
+        uploadDocumenById();
       }
+      // int index = -1;
+
+      // for (int i = 0; i < documentList.length; i++) {
+      //   if (documentList[i]['image'] == null) {
+      //     index = i;
+      //     break;
+      //   }
+      // }
+      // if (index == -1) {
+      //   if (isForDocEdit.value) {
+      //     updateDocument();
+      //   } else {
+      //     uploadDocumenById();
+      //   }
+      // } else {
+      //   customSnackBar(Get.context!,
+      //       "${'please_add_the'.tr} ${documentList[index]['type_title']}");
+      // }
     }
   }
 
@@ -80,12 +85,13 @@ class AddTenantDocumentController extends GetxController {
           .multipartFile(file: documentList[i]['image']));
     }
 
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";    final response = await DioClientServices.instance.dioPostCall(
+        "";
+    final response = await DioClientServices.instance.dioPostCall(
         body: isProfileNotCome.value
             ? {
                 'document_type': jsonEncode(id),
@@ -119,7 +125,7 @@ class AddTenantDocumentController extends GetxController {
 
   getDocumentType() async {
     doumentLoading.value = true;
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
@@ -174,12 +180,13 @@ class AddTenantDocumentController extends GetxController {
       }
     }
 
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";    final response = await DioClientServices.instance.dioPutCall(
+        "";
+    final response = await DioClientServices.instance.dioPutCall(
         body: isFromTenantDoc.value
             ? {
                 'id_list': jsonEncode(id),

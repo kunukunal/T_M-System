@@ -61,7 +61,9 @@ class AddTenantController extends GetxController {
 
       isComingForEdit.value = true;
       name.value.text = editData['name'];
-      authCntrl.selectedItem.value = "  ${editData['phone_code']}";
+      authCntrl.selectedItem.value = editData['phone_code'].toString().isEmpty
+          ? "  +91"
+          : "  ${editData['phone_code']}";
       emailCntrl.value.text = editData['email'];
       kireyderId.value = editData['id'];
       phoneCntrl.value.text = editData['phone_number'];
@@ -87,35 +89,36 @@ class AddTenantController extends GetxController {
 
   //functions
   onNextTap(bool isForEdit) {
-    if (name.value.text.trim().isNotEmpty) {
-      if (emailCntrl.value.text.trim().isNotEmpty) {
-        if (phoneCntrl.value.text.trim().isNotEmpty) {
-          if (pinNoCntrl.value.text.trim().isNotEmpty) {
-            if (cityCntrl.value.text.trim().isNotEmpty) {
-              if (selectedState.value != "Select") {
-                if (isForEdit) {
-                  updateTenantApi();
-                } else {
-                  addTenantByLandLordApi();
-                }
-              } else {
-                customSnackBar(Get.context!, "please_enter_state".tr);
-              }
+    // if (name.value.text.trim().isNotEmpty) {
+    // if (emailCntrl.value.text.trim().isNotEmpty) {
+    if (phoneCntrl.value.text.trim().isNotEmpty) {
+      if (pinNoCntrl.value.text.trim().isNotEmpty) {
+        if (cityCntrl.value.text.trim().isNotEmpty) {
+          if (selectedState.value != "Select") {
+            if (isForEdit) {
+              updateTenantApi();
             } else {
-              customSnackBar(Get.context!, "please_enter_city".tr);
+              addTenantByLandLordApi();
             }
           } else {
-            customSnackBar(Get.context!, "please_enter_pincode".tr);
+            customSnackBar(Get.context!, "please_enter_state".tr);
           }
         } else {
-          customSnackBar(Get.context!, "please_enter_phone_number".tr);
+          customSnackBar(Get.context!, "please_enter_city".tr);
         }
       } else {
-        customSnackBar(Get.context!, "please_enter_email".tr);
+        customSnackBar(Get.context!, "please_enter_pincode".tr);
       }
     } else {
-      customSnackBar(Get.context!, "please_enter_name".tr);
+      customSnackBar(Get.context!, "please_enter_phone_number".tr);
     }
+    // }
+    // else {
+    //   customSnackBar(Get.context!, "please_enter_email".tr);
+    // }
+    // } else {
+    //   customSnackBar(Get.context!, "please_enter_name".tr);
+    // }
 
     // Get.to(() => TenantDocScreen());
   }
@@ -138,7 +141,8 @@ class AddTenantController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -147,10 +151,11 @@ class AddTenantController extends GetxController {
         "user_type": 2,
         "phone_code": authCntrl.selectedItem.trim(),
         "phone": phoneCntrl.value.text.trim(),
-        "name": name.value.text.trim(),
+        "name": name.value.text.trim().isEmpty ? "" : name.value.text.trim(),
         "landmark": streetdCntrl.value.text.trim(),
         "profile_image": image,
-        "email": emailCntrl.value.text.trim(),
+        if (emailCntrl.value.text.trim().isNotEmpty)
+          "email": emailCntrl.value.text.trim(),
         "address": permanentAddCntrl.value.text.trim(),
         "city": cityCntrl.value.text.trim(),
         "zip_code": pinNoCntrl.value.text.trim(),
@@ -194,7 +199,8 @@ class AddTenantController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -255,7 +261,8 @@ class AddTenantController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -265,10 +272,12 @@ class AddTenantController extends GetxController {
               "id": kireyderId.value,
               "phone_code": authCntrl.selectedItem.trim(),
               "phone": phoneCntrl.value.text.trim(),
-              "name": name.value.text.trim(),
+              "name":
+                  name.value.text.trim().isEmpty ? "" : name.value.text.trim(),
               "landmark": streetdCntrl.value.text.trim(),
               "profile_image": image,
-              "email": emailCntrl.value.text.trim(),
+              if (emailCntrl.value.text.trim().isNotEmpty)
+                "email": emailCntrl.value.text.trim(),
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
@@ -278,9 +287,11 @@ class AddTenantController extends GetxController {
               "id": kireyderId.value,
               "phone_code": authCntrl.selectedItem.trim(),
               "phone": phoneCntrl.value.text.trim(),
-              "name": name.value.text.trim(),
+              "name":
+                  name.value.text.trim().isEmpty ? "" : name.value.text.trim(),
               "landmark": streetdCntrl.value.text.trim(),
-              "email": emailCntrl.value.text.trim(),
+              if (emailCntrl.value.text.trim().isNotEmpty)
+                "email": emailCntrl.value.text.trim(),
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
@@ -327,10 +338,10 @@ class AddTenantController extends GetxController {
         : null;
     addTenantOtpVerify.value = true;
 
-
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -344,10 +355,12 @@ class AddTenantController extends GetxController {
                   authCntrl.otpController3.value.text +
                   authCntrl.otpController4.value.text,
               "phone": phoneCntrl.value.text.trim(),
-              "name": name.value.text.trim(),
+              "name":
+                  name.value.text.trim().isEmpty ? "" : name.value.text.trim(),
               "landmark": streetdCntrl.value.text.trim(),
               "profile_image": image,
-              "email": emailCntrl.value.text.trim(),
+              if (emailCntrl.value.text.trim().isNotEmpty)
+                "email": emailCntrl.value.text.trim(),
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),
@@ -361,9 +374,11 @@ class AddTenantController extends GetxController {
                   authCntrl.otpController3.value.text +
                   authCntrl.otpController4.value.text,
               "phone": phoneCntrl.value.text.trim(),
-              "name": name.value.text.trim(),
+              "name":
+                  name.value.text.trim().isEmpty ? "" : name.value.text.trim(),
               "landmark": streetdCntrl.value.text.trim(),
-              "email": emailCntrl.value.text.trim(),
+              if (emailCntrl.value.text.trim().isNotEmpty)
+                "email": emailCntrl.value.text.trim(),
               "address": permanentAddCntrl.value.text.trim(),
               "city": cityCntrl.value.text.trim(),
               "zip_code": pinNoCntrl.value.text.trim(),

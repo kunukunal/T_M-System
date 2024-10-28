@@ -155,7 +155,7 @@ class LandlordDocView extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(() {
         return landlordDocCntrl.isPercentageLoadingStart.value
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

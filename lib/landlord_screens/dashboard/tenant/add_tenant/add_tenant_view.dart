@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/add_tenant_widgets.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/text_styles.dart';
@@ -249,7 +250,7 @@ class AddTenantScreen extends StatelessWidget {
                               controller: addTenantCntrl.streetdCntrl.value,
                               focusNode: addTenantCntrl.streetdtFocus.value,
                               width: Get.width / 2.3,
-                      hintText: '${'type_here'.tr}...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),
@@ -267,9 +268,33 @@ class AddTenantScreen extends StatelessWidget {
                               focusNode: addTenantCntrl.pinNoFocus.value,
                               keyboardType: TextInputType.number,
                               width: Get.width / 2.3,
-                      hintText: '${'type_here'.tr}...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
+                              onChange: (value) async {
+                                if (value.length == 6) {
+                                  await DioClientServices.instance
+                                      .postCodeApi(value, context)
+                                      .then(
+                                    (value) {
+                                      if (value != null) {
+                                        if (value['state'] != "") {
+                                          int index = state
+                                              .indexOf(value['state'] ?? "");
+                                          if (index != -1) {
+                                            addTenantCntrl.selectedState.value =
+                                                state[index];
+                                          }
+                                        }
+                                        if (value['city'] != "") {
+                                          addTenantCntrl.cityCntrl.value.text =
+                                              value['city'] ?? "";
+                                        }
+                                      }
+                                    },
+                                  );
+                                }
+                              },
                               isFilled: false),
                         ],
                       )
@@ -313,7 +338,7 @@ class AddTenantScreen extends StatelessWidget {
                               controller: addTenantCntrl.cityCntrl.value,
                               focusNode: addTenantCntrl.cityFocus.value,
                               width: Get.width / 2.3,
-                      hintText: '${'type_here'.tr}...',
+                              hintText: '${'type_here'.tr}...',
                               isBorder: true,
                               color: HexColor('#F7F7F7'),
                               isFilled: false),

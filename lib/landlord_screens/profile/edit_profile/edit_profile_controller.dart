@@ -41,12 +41,13 @@ class EditProfileController extends GetxController {
     isProfileLoadingGet.value = true;
     final authCntrl = Get.put(AuthController());
 
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";    final response = await DioClientServices.instance.dioGetCall(headers: {
+        "";
+    final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
       'Authorization': "Bearer $accessToken",
     }, url: userProfile);
@@ -112,7 +113,7 @@ class EditProfileController extends GetxController {
   userProfileUpdate() async {
     isProfileUpdating.value = true;
 
-        String languaeCode = await SharedPreferencesServices.getStringData(
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     String accessToken = await SharedPreferencesServices.getStringData(
@@ -157,8 +158,12 @@ class EditProfileController extends GetxController {
         url: userProfile);
     if (response != null) {
       if (response.statusCode == 200) {
+        print("sdasdasdasd ${response.data}");
+        userData['profile_image'] = response.data['profile_image'];
+        final profileValue = response.data['profile_image'];
         customSnackBar(Get.context!, "profile_update_successfully".tr);
         isProfileUpdating.value = false;
+        Get.back(result: profileValue);
         log("Profile update Successfully.");
       } else if (response.statusCode == 400) {
         if (response.data.toString().contains("email")) {

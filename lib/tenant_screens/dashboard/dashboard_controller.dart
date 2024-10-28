@@ -32,6 +32,7 @@ class DashBoardTenantController extends GetxController {
   }
 
   onTapPayRent(Map unitData) {
+    print("jjjkkjk ${unitData}");
     Get.to(() => PaymentRequestScreen(), arguments: [unitData])!.then((value) {
       if (value) {
         getDashboardData();
@@ -68,6 +69,7 @@ class DashBoardTenantController extends GetxController {
       unitList.clear();
       paymentHistoryList.clear();
       unitList.addAll(data['units']);
+      print("dasklk ${unitList}");
       paymentHistoryList.addAll(data['payment_history']);
       rentData.value = data['rent'];
       isDashboardDataLaoding.value = false;

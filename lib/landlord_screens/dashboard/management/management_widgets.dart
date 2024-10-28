@@ -45,8 +45,8 @@ class ManagementWidgets {
     final manageCntrl = Get.find<ManagementController>();
 
     return manageCntrl.amenitiesList.isEmpty
-        ?  Center(
-            child:  Text("no_amenities".tr),
+        ? Center(
+            child: Text("no_amenities".tr),
           )
         : Wrap(children: [
             ...List.generate(
@@ -69,10 +69,11 @@ class ManagementWidgets {
                               '${manageCntrl.amenitiesList[index]['name']} - ',
                               style: manageCntrl.amenitiesList[index]
                                       ['isSelected']
-                                  ? CustomStyles.otpStyle050505W400S14
-                                      .copyWith(fontSize: 14.sp - commonFontSize)
+                                  ? CustomStyles.otpStyle050505W400S14.copyWith(
+                                      fontSize: 14.sp - commonFontSize)
                                   : CustomStyles.desc606060.copyWith(
-                                      fontFamily: 'DM Sans', fontSize: 14.sp - commonFontSize),
+                                      fontFamily: 'DM Sans',
+                                      fontSize: 14.sp - commonFontSize),
                             ),
                             InkWell(
                                 onTap: () {
@@ -233,41 +234,46 @@ class ManagementWidgets {
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus2.value),
-                      SizedBox(width: 5.w,),
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController2.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus3.value),
-                      SizedBox(width: 5.w,),
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController3.value,
                       authCntrl.otpFocus3.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus4.value),
-                      SizedBox(width: 5.w,),
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController4.value,
                       authCntrl.otpFocus4.value,
                       authCntrl.otpFocus3.value,
-                      authCntrl.otpFocus4.value,
-                      onChanged: (value){
-                          if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
-                            authCntrl.otpController2.value.text
-                                .trim()
-                                .isNotEmpty &&
-                            authCntrl.otpController3.value.text
-                                .trim()
-                                .isNotEmpty &&
-                            authCntrl.otpController4.value.text
-                                .trim()
-                                .isNotEmpty) {
-                          manageCntrl.verifyOtpTenantApi();
-                        } else {
-                          customSnackBar(Get.context!, "please_enter_otp".tr);
-                        }
-                      }
-                      ),
+                      authCntrl.otpFocus4.value, onChanged: (value) {
+                    print("sakjaslajslas");
+                    if (value == '') {
+                      authCntrl.otpFocus3.value.requestFocus();
+                    } else {
+                      authCntrl.otpFocus4.value.requestFocus();
+                    }
+                    if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController2.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController3.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController4.value.text.trim().isNotEmpty) {
+                      print("dsakldklksadlksaldkasd");
+                      manageCntrl.verifyOtpTenantApi();
+                    } else {
+                      customSnackBar(Get.context!, "please_enter_otp".tr);
+                    }
+                  }),
                 ],
               ),
             ),

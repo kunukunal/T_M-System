@@ -105,13 +105,14 @@ class ExpenseWidgets {
                 return Text(
                   '₹${cntrl.istotalExpense.value}',
                   style: CustomStyles.black16.copyWith(
-                      fontSize: 28.sp - commonFontSize,
+                      fontSize: 20.sp - commonFontSize,
                       fontWeight: FontWeight.w700),
                 );
               }),
               Text(
                 'total_expense_this_month'.tr,
-                style: CustomStyles.desc606060.copyWith(fontFamily: 'DM Sans', fontSize: 14),
+                style: CustomStyles.desc606060
+                    .copyWith(fontFamily: 'DM Sans', fontSize: 14),
               ),
               // SizedBox(
               //   height: 10.h,
@@ -160,264 +161,255 @@ class ExpenseWidgets {
                         DateTime dateTime = DateTime.parse(
                             expenseCntrl.expenseList[index]['expense_date']);
                         String formattedDate =
-                            DateFormat('dd MMM').format(dateTime);
+                            DateFormat('dd MMM yyyy').format(dateTime);
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 7.h),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                border: Border.all(color: HexColor('#EBEBEB'))),
-                            child: Padding(
-                              padding: EdgeInsets.all(15.r),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 50.h,
-                                        width: 60.w,
-                                        decoration: BoxDecoration(
-                                            color: HexColor('#BCD1F3'),
-                                            borderRadius:
-                                                BorderRadius.circular(10.r)),
-                                        child: Center(
-                                          child: Text(
-                                            formattedDate,
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                CustomStyles.black16.copyWith(
-                                              fontSize: 14.sp - commonFontSize,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              expenseCntrl.expenseList[index]
-                                                  ['expense_type'],
+                          child: GestureDetector(
+                            onTap: () {
+                              showDetailSheet(
+                                  context,
+                                  DateFormat('dd MMM yyyy').format(dateTime),
+                                  expenseCntrl.expenseList[index]
+                                              ['expense_type'] ==
+                                          "Other"
+                                      ? expenseCntrl.expenseList[index]
+                                          ['other_expense']
+                                      : expenseCntrl.expenseList[index]
+                                          ['expense_type'],
+                                  expenseCntrl.expenseList[index]
+                                          ['project_name'] ??
+                                      "",
+                                  expenseCntrl.expenseList[index]
+                                          ['building_name'] ??
+                                      "",
+                                  expenseCntrl.expenseList[index]
+                                          ['floor_name'] ??
+                                      "",
+                                  expenseCntrl.expenseList[index]
+                                          ['unit_name'] ??
+                                      "",
+                                  expenseCntrl.expenseList[index]
+                                      ['payment_type'],
+                                  expenseCntrl.expenseList[index]['remarks'],
+                                  expenseCntrl.expenseList[index]
+                                      ['expense_amount'],
+                                  expenseCntrl.expenseList[index]['images']);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  border:
+                                      Border.all(color: HexColor('#EBEBEB'))),
+                              child: Padding(
+                                padding: EdgeInsets.all(15.r),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 50.h,
+                                          width: 60.w,
+                                          decoration: BoxDecoration(
+                                              color: HexColor('#BCD1F3'),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r)),
+                                          child: Center(
+                                            child: Text(
+                                              formattedDate,
                                               textAlign: TextAlign.center,
                                               style:
                                                   CustomStyles.black16.copyWith(
                                                 fontSize:
-                                                    15.sp - commonFontSize,
+                                                    14.sp - commonFontSize,
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 5.w,
-                                            ),
-                                            Container(
-                                              height: 22.h,
-                                              width: expenseCntrl.expenseList[
-                                                              index]
-                                                          ['payment_type'] ==
-                                                      'Cash'
-                                                  ? 59.w
-                                                  : 97.w,
-                                              decoration: BoxDecoration(
-                                                  color: expenseCntrl.expenseList[
-                                                                  index][
-                                                              'payment_type'] ==
-                                                          'Cash'
-                                                      ? HexColor('#00AA50')
-                                                      : HexColor('#ED893E'),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.r)),
-                                              child: Center(
-                                                child: Text(
-                                                  expenseCntrl
-                                                          .expenseList[index]
-                                                      ['payment_type'],
-                                                  textAlign: TextAlign.center,
-                                                  style: CustomStyles.white12,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                expenseCntrl.expenseList[index]
+                                                            ['expense_type'] ==
+                                                        "Other"
+                                                    ? expenseCntrl
+                                                            .expenseList[index]
+                                                        ['other_expense']
+                                                    : expenseCntrl
+                                                            .expenseList[index]
+                                                        ['expense_type'],
+                                                textAlign: TextAlign.center,
+                                                style: CustomStyles.black16
+                                                    .copyWith(
+                                                  fontSize:
+                                                      15.sp - commonFontSize,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.w,
-                                            ),
-                                            Text(
-                                              expenseCntrl.expenseList[index]
-                                                  ['remarks'],
-                                              style: CustomStyles.desc606060
-                                                  .copyWith(
-                                                      fontSize: 12.sp -
-                                                          commonFontSize,
-                                                      fontFamily: 'DM Sans'),
-                                            ),
-                                          ],
+                                              SizedBox(
+                                                height: 5.w,
+                                              ),
+                                              Container(
+                                                height: 22.h,
+                                                width: expenseCntrl.expenseList[
+                                                                index]
+                                                            ['payment_type'] ==
+                                                        'Cash'
+                                                    ? 59.w
+                                                    : 97.w,
+                                                decoration: BoxDecoration(
+                                                    color: expenseCntrl.expenseList[
+                                                                    index][
+                                                                'payment_type'] ==
+                                                            'Cash'
+                                                        ? HexColor('#00AA50')
+                                                        : HexColor('#ED893E'),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.r)),
+                                                child: Center(
+                                                  child: Text(
+                                                    expenseCntrl
+                                                            .expenseList[index]
+                                                        ['payment_type'],
+                                                    textAlign: TextAlign.center,
+                                                    style: CustomStyles.white12,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5.w,
+                                              ),
+                                              Text(
+                                                expenseCntrl.expenseList[index]
+                                                    ['remarks'],
+                                                style: CustomStyles.desc606060
+                                                    .copyWith(
+                                                        fontSize: 12.sp -
+                                                            commonFontSize,
+                                                        fontFamily: 'DM Sans'),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        "₹${expenseCntrl.expenseList[index]['expense_amount']}",
-                                        style: CustomStyles.amountFA4343W500S15,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Divider(
-                                    color: HexColor('#EBEBEB'),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          expenseCntrl
-                                                  .expenseList[index]['images']
-                                                  .isNotEmpty
-                                              ? expenseCntrl.expenseList[index]
-                                                      ['images'][0]['image_url']
-                                                  .toString()
-                                                  .split('/')
-                                                  .last
-                                              : "no_image".tr,
-                                          style: CustomStyles
-                                              .otpStyle050505W400S14,
+                                        Text(
+                                          "₹${expenseCntrl.expenseList[index]['expense_amount']}",
+                                          style:
+                                              CustomStyles.amountFA4343W500S15,
                                         ),
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Divider(
+                                      color: HexColor('#EBEBEB'),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
                                             expenseCntrl
                                                     .expenseList[index]
                                                         ['images']
                                                     .isNotEmpty
-                                                ? showModalBottomSheet(
-                                                    context: context,
-                                                    isScrollControlled: true,
-                                                    enableDrag: false,
-                                                    useSafeArea: true,
-                                                    builder: (context) {
-                                                      return SingleChildScrollView(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Column(
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    "expense_image"
-                                                                        .tr,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            18),
-                                                                  ),
-                                                                  IconButton(
-                                                                    icon: const Icon(
-                                                                        Icons
-                                                                            .cancel),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Get.back();
-                                                                    },
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Wrap(
-                                                                children: [
-                                                                  ...List.generate(
-                                                                      expenseCntrl
-                                                                          .expenseList[
-                                                                              index]
-                                                                              [
-                                                                              'images']
-                                                                          .length,
-                                                                      (ind) {
-                                                                    return Column(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height:
-                                                                              300,
-                                                                          child:
-                                                                              Image.network(
-                                                                            expenseCntrl.expenseList[index]['images'][ind]['image_url'],
-                                                                          ),
-                                                                        ),
-                                                                        ElevatedButton.icon(
-                                                                            icon: const Icon(
-                                                                              Icons.download,
-                                                                              color: Colors.white,
-                                                                            ),
-                                                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                                                                            onPressed: () async {
-                                                                              await DioClientServices.instance.saveImageToGallery(expenseCntrl.expenseList[index]['images'][ind]['image_url']).then((value) {
-                                                                                if (value['isSuccess'] == true) {
-                                                                                  customSnackBar(Get.context!, "document_download_successfully".tr);
-                                                                                }
-                                                                              });
-                                                                            },
-                                                                            label: Text(
-                                                                              "download".tr,
-                                                                              style: TextStyle(color: Colors.white),
-                                                                            )),
-                                                                        const Divider()
-                                                                      ],
-                                                                    );
-                                                                  })
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  )
-                                                : customSnackBar(context,
-                                                    "no_image_found".tr);
-                                          },
-                                          child: eyeIcon),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
-                                            expenseCntrl.onEditTap(expenseCntrl
-                                                .expenseList[index]);
-                                          },
-                                          child: pencilIcon),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
-                                            deleteExpense(
-                                                button1: "no".tr,
-                                                button2: "yes".tr,
-                                                onButton1Tap: () {
-                                                  Get.back();
-                                                },
-                                                onButton2Tap: () {
-                                                  Get.back();
-                                                  expenseCntrl.onDeleteTap(
-                                                      expenseCntrl.expenseList[
-                                                          index]['id']);
-                                                },
-                                                title:
-                                                    "are_you_sure_delete_expense"
-                                                        .tr);
-                                          },
-                                          child: dustbinIcon)
-                                    ],
-                                  )
-                                ],
+                                                ? expenseCntrl
+                                                    .expenseList[index]
+                                                        ['images'][0]
+                                                        ['image_url']
+                                                    .toString()
+                                                    .split('/')
+                                                    .last
+                                                : "no_image".tr,
+                                            style: CustomStyles
+                                                .otpStyle050505W400S14,
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              showDetailSheet(
+                                                  context,
+                                                  formattedDate,
+                                                  expenseCntrl.expenseList[index]['expense_type'] ==
+                                                          "Other"
+                                                      ? expenseCntrl.expenseList[index]
+                                                          ['other_expense']
+                                                      : expenseCntrl
+                                                              .expenseList[index]
+                                                          ['expense_type'],
+                                                  expenseCntrl.expenseList[index]
+                                                          ['project_name'] ??
+                                                      "",
+                                                  expenseCntrl.expenseList[index]
+                                                          ['building_name'] ??
+                                                      "",
+                                                  expenseCntrl.expenseList[index]
+                                                          ['floor_name'] ??
+                                                      "",
+                                                  expenseCntrl.expenseList[index]
+                                                          ['unit_name'] ??
+                                                      "",
+                                                  expenseCntrl.expenseList[index]
+                                                      ['payment_type'],
+                                                  expenseCntrl.expenseList[index]
+                                                      ['remarks'],
+                                                  expenseCntrl.expenseList[index]
+                                                      ['expense_amount'],
+                                                  expenseCntrl.expenseList[index]
+                                                      ['images']);
+                                              // expenseCntrl
+                                              //         .expenseList[index]
+                                              //             ['images']
+                                              //         .isNotEmpty
+                                              //     ?
+
+                                              // : customSnackBar(context,
+                                              //     "no_image_found".tr);
+                                            },
+                                            child: eyeIcon),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              expenseCntrl.onEditTap(
+                                                  expenseCntrl
+                                                      .expenseList[index]);
+                                            },
+                                            child: pencilIcon),
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        GestureDetector(
+                                            onTap: () {
+                                              deleteExpense(
+                                                  button1: "no".tr,
+                                                  button2: "yes".tr,
+                                                  onButton1Tap: () {
+                                                    Get.back();
+                                                  },
+                                                  onButton2Tap: () {
+                                                    Get.back();
+                                                    expenseCntrl.onDeleteTap(
+                                                        expenseCntrl
+                                                                .expenseList[
+                                                            index]['id']);
+                                                  },
+                                                  title:
+                                                      "are_you_sure_delete_expense"
+                                                          .tr);
+                                            },
+                                            child: dustbinIcon)
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -503,6 +495,295 @@ class ExpenseWidgets {
         ),
       ),
       barrierDismissible: true,
+    );
+  }
+
+  showDetailSheet(
+      BuildContext context,
+      String date,
+      String expenseType,
+      String propertyName,
+      String buildingName,
+      String floorName,
+      String unitName,
+      String paymentType,
+      String remark,
+      String expenseAmount,
+      List expenseList) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      useSafeArea: true,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Expense",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.cancel),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Card(
+                      elevation: 2,
+                      color: switchGrey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Title: ",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      17.sp - commonFontSize,
+                                                  fontWeight: FontWeight.bold)),
+                                          Expanded(
+                                            child: Text(expenseType,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        15.sp - commonFontSize,
+                                                    fontWeight:
+                                                        FontWeight.w600)),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5.w,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Date: ",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    17.sp - commonFontSize,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(date,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      15.sp - commonFontSize,
+                                                  fontWeight: FontWeight.w600)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "₹${expenseAmount}",
+                                      style: CustomStyles.amountFA4343W500S15,
+                                    ),
+                                    SizedBox(
+                                      height: 5.w,
+                                    ),
+                                    Container(
+                                      height: 22.h,
+                                      width:
+                                          paymentType == 'Cash' ? 59.w : 97.w,
+                                      decoration: BoxDecoration(
+                                          color: paymentType == 'Cash'
+                                              ? HexColor('#00AA50')
+                                              : HexColor('#ED893E'),
+                                          borderRadius:
+                                              BorderRadius.circular(10.r)),
+                                      child: Center(
+                                        child: Text(
+                                          paymentType,
+                                          textAlign: TextAlign.center,
+                                          style: CustomStyles.white12,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Row(
+                              children: [
+                                Text("Property name: ",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 17.sp - commonFontSize,
+                                        fontWeight: FontWeight.bold)),
+                                Text(propertyName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15.sp - commonFontSize,
+                                        color: lightBlue,
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Row(
+                              children: [
+                                Text("Buidling name: ",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 17.sp - commonFontSize,
+                                        fontWeight: FontWeight.bold)),
+                                Text(buildingName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15.sp - commonFontSize,
+                                        color: lightBlue,
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Row(
+                              children: [
+                                Text("Floor name: ",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 17.sp - commonFontSize,
+                                        fontWeight: FontWeight.bold)),
+                                Text(floorName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15.sp - commonFontSize,
+                                        color: lightBlue,
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Row(
+                              children: [
+                                Text("Unit name: ",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 17.sp - commonFontSize,
+                                        fontWeight: FontWeight.bold)),
+                                Text(unitName,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 15.sp - commonFontSize,
+                                        color: lightBlue,
+                                        fontWeight: FontWeight.w600)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Remark: ",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 17.sp - commonFontSize,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    remark,
+                                    style: CustomStyles.black14.copyWith(
+                                        fontSize: 15.sp - commonFontSize,
+                                        fontFamily: 'DM Sans'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Divider(),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Wrap(
+                      children: [
+                        ...List.generate(expenseList.length, (ind) {
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: 300,
+                                child: Image.network(
+                                  expenseList[ind]['image_url'],
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                  icon: const Icon(
+                                    Icons.download,
+                                    color: Colors.white,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue),
+                                  onPressed: () async {
+                                    await DioClientServices.instance
+                                        .saveImageToGallery(
+                                            expenseList[ind]['image_url'])
+                                        .then((value) {
+                                      if (value['isSuccess'] == true) {
+                                        customSnackBar(
+                                            Get.context!,
+                                            "document_download_successfully"
+                                                .tr);
+                                      }
+                                    });
+                                  },
+                                  label: Text(
+                                    "download".tr,
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                              const Divider()
+                            ],
+                          );
+                        })
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

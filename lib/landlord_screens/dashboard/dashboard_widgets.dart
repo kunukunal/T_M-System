@@ -203,7 +203,12 @@ class DashBoardWidgets {
                     width: 1.w, // Border width
                   ),
                 ),
-                child: addExpenseIcon,
+                child: Image.asset(
+                  expenseCutomImage,
+                  color: black,
+                  height: 24.h,
+                  width: 24.w,
+                ),
               ),
             ],
           ),
@@ -215,7 +220,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                'add_tenant'.tr,
+                "Add/Edit Tenant",
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -246,7 +251,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                'add_properties'.tr,
+                "Add/Edit Properties",
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),

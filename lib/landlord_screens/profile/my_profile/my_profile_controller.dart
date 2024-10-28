@@ -14,11 +14,26 @@ class MyProfileController extends GetxController {
   onEditProfileTap(isFromProfile) {
     Get.to(() => EditProfileVew(
           isFromProfile: isFromProfile,
-        ));
+        ))?.then(
+      (value) {
+        if (value != "") {
+          profileImage.value = value;
+          userData['profile_image'] = profileImage.value;
+        }
+      },
+    );
   }
 
-  final isAccountDelete = false.obs;
+  final profileImage = "".obs;
 
+  @override
+  void onInit() {
+    profileImage.value = userData['profile_image']??"";
+    super.onInit();
+  }
+
+  final deleteController = TextEditingController().obs;
+  final isAccountDelete = false.obs;
   deleteAccountApi(BuildContext context) async {
     isAccountDelete.value = true;
     String accessToken = await SharedPreferencesServices.getStringData(
@@ -42,18 +57,21 @@ class MyProfileController extends GetxController {
         await SharedPreferencesServices.clearSharedPrefData();
         Get.deleteAll();
         clearAll();
-         SharedPreferencesServices.setBoolData(
-                              key: 'first_run', value: false);
+        SharedPreferencesServices.setBoolData(key: 'first_run', value: false);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => SignInScreen(isFromRegister: false),
             ),
             (route) => false);
+        customSnackBar(Get.context!, "Account deleted successfully.");
       } else if (response.statusCode == 400) {
         isAccountDelete.value = false;
-
-        customSnackBar(Get.context!, "Account deleted successfully.");
+        if (response != null &&
+            response.data.toString().contains("active_rentals")) {
+          Get.back();
+          customSnackBar(Get.context!, response.data['active_rentals'][0]);
+        }
       }
     }
   }

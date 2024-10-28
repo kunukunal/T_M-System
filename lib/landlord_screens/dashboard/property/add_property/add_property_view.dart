@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_property_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/add_property_widgets.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/text_styles.dart';
@@ -45,7 +46,8 @@ class AddPropertyView extends StatelessWidget {
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('address'.tr, isMandatory: true),
+                  AddPropertyWidget()
+                      .commomText('address'.tr, isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.addressCntrl.value,
                     textInputAction: TextInputAction.done,
@@ -67,7 +69,8 @@ class AddPropertyView extends StatelessWidget {
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
                   ),
-                  AddPropertyWidget().commomText('pincode'.tr, isMandatory: true),
+                  AddPropertyWidget()
+                      .commomText('pincode'.tr, isMandatory: true),
                   customTextField(
                     controller: addPropertyCntrl.pinCodeCntrl.value,
                     textInputAction: TextInputAction.done,
@@ -78,39 +81,60 @@ class AddPropertyView extends StatelessWidget {
                     isBorder: true,
                     // color: HexColor('#F7F7F7'),
                     isFilled: false,
+                    onChange: (value) async {
+                      if (value.length == 6) {
+                        await DioClientServices.instance
+                            .postCodeApi(value, context)
+                            .then(
+                          (value) {
+                            if (value != null) {
+                              if (value['state'] != "") {
+                                int index = state.indexOf(value['state'] ?? "");
+                                if (index != -1) {
+                                  addPropertyCntrl.selectedState.value =
+                                      state[index];
+                                }
+                              }
+                              if (value['city'] != "") {
+                                addPropertyCntrl.cityCntrl.value.text =
+                                    value['city'] ?? "";
+                              }
+                            }
+                          },
+                        );
+                      }
+                    },
                   ),
                   Row(
                     children: [
-                      Obx(
-                        () {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AddPropertyWidget()
-                                  .commomText('state'.tr, isMandatory: true),
-                              // customTextField(
-                              //   controller: addPropertyCntrl.stateCntrl.value,
-                              //   textInputAction: TextInputAction.done,
-                              //   // keyboardType: TextInputType.number,
-                              //   hintText: 'Type Here...',
-                              //   isBorder: true,
-                              //   // color: HexColor('#F7F7F7'),
-                              //   isFilled: false,
-                              //   width: Get.width / 2.3,
-                              // ),
-                              bigDropDown(
-                                  // width: 150.5.w,
-                                  width: Get.width / 2.3,
-                                  selectedItem:
-                                      addPropertyCntrl.selectedState.value,
-                                  items: state,
-                                  onChange: (item) {
-                                    addPropertyCntrl.selectedState.value = item;
-                                  }),
-                            ],
-                          );
-                        }
-                      ),
+                      Obx(() {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AddPropertyWidget()
+                                .commomText('state'.tr, isMandatory: true),
+                            // customTextField(
+                            //   controller: addPropertyCntrl.stateCntrl.value,
+                            //   textInputAction: TextInputAction.done,
+                            //   // keyboardType: TextInputType.number,
+                            //   hintText: 'Type Here...',
+                            //   isBorder: true,
+                            //   // color: HexColor('#F7F7F7'),
+                            //   isFilled: false,
+                            //   width: Get.width / 2.3,
+                            // ),
+                            bigDropDown(
+                                // width: 150.5.w,
+                                width: Get.width / 2.3,
+                                selectedItem:
+                                    addPropertyCntrl.selectedState.value,
+                                items: state,
+                                onChange: (item) {
+                                  addPropertyCntrl.selectedState.value = item;
+                                }),
+                          ],
+                        );
+                      }),
                       SizedBox(width: 15.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +145,7 @@ class AddPropertyView extends StatelessWidget {
                             controller: addPropertyCntrl.cityCntrl.value,
                             textInputAction: TextInputAction.done,
                             // keyboardType: TextInputType.number,
-                    hintText: '${'type_here'.tr}...',
+                            hintText: '${'type_here'.tr}...',
                             isBorder: true,
                             // color: HexColor('#F7F7F7'),
                             isFilled: false,

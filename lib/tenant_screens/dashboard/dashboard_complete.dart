@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/landlord_screens/reports/pdf_view.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/rental_information.dart';
@@ -170,12 +171,46 @@ unitList() {
                                 width: 5.w,
                               ),
                               Expanded(
-                                  child: Text(
-                                dashCntrl.unitList[index]['address'] ?? "",
-                                style: CustomStyles.address050505w400s12,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ))
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        dashCntrl.unitList[index]['address'] ??
+                                            "",
+                                        style:
+                                            CustomStyles.address050505w400s12,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            if (dashCntrl.unitList[index]
+                                                    ['bill'] !=
+                                                null) {
+                                              Get.to(() => ReportPdfView(
+                                                    name: dashCntrl
+                                                                .unitList[index]
+                                                            ['name'] ??
+                                                        "",
+                                                    pdfUrl: dashCntrl
+                                                            .unitList[index]
+                                                        ['bill'],
+                                                  ));
+                                            } else {
+                                              customSnackBar(
+                                                  context, "No bill found");
+                                            }
+                                          },
+                                          child: eyeIcon),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ],

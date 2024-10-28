@@ -221,20 +221,20 @@ class TenantListWidgets {
                   'rent'.tr,
                   style: CustomStyles.otpStyle050505W700S16,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'month_to_month'.tr,
-                      style: CustomStyles.desc606060.copyWith(
-                          fontSize: 14.sp - commonFontSize,
-                          fontFamily: 'DM Sans'),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    filterIcon
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     Text(
+                //       'month_to_month'.tr,
+                //       style: CustomStyles.desc606060.copyWith(
+                //           fontSize: 14.sp - commonFontSize,
+                //           fontFamily: 'DM Sans'),
+                //     ),
+                //     SizedBox(
+                //       width: 10.w,
+                //     ),
+                //     filterIcon
+                //   ],
+                // )
               ],
             ),
             SizedBox(height: 10.h),
@@ -252,7 +252,7 @@ class TenantListWidgets {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'rent_paid'.tr,
+                      'Rent Received',
                       style: CustomStyles.desc606060.copyWith(
                           fontSize: 14.sp - commonFontSize,
                           fontFamily: 'DM Sans'),

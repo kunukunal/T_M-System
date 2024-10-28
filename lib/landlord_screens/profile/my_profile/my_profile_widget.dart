@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/landlord_screens/profile/my_profile/my_profile_controller.dart';
 
@@ -25,11 +26,14 @@ class MyProfileWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
           child: Row(
             children: [
-              InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: backArrowImageWhite),
+              Visibility(
+                visible: userData['user_type'] == 1,
+                child: InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: backArrowImageWhite),
+              ),
               SizedBox(
                 width: 10.w,
               ),

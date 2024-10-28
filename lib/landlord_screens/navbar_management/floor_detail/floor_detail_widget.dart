@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/management/management_widgets.dart';
+import 'package:tanent_management/landlord_screens/dashboard/property/add_property/unit_List/unit_details/unit_details_view.dart';
 import 'package:tanent_management/landlord_screens/navbar_management/floor_detail/floor_detail_controller.dart';
 import 'package:tanent_management/landlord_screens/navbar_management/floor_detail/unit_history.dart';
 import 'package:tanent_management/landlord_screens/profile/edit_profile/edit_profile_widget.dart';
@@ -45,257 +46,265 @@ class FloorDetailWidget {
     final floorCntrl = Get.find<FloorDetailController>();
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 10.h),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: lightBorderGrey)),
-        child: Slidable(
-          key: UniqueKey(),
-          endActionPane: isOccupied == true
-              ? ActionPane(
-                  motion: const DrawerMotion(),
-                  children: [
-                    //
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => UnitDetails(), arguments: [unitId]);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: lightBorderGrey)),
+          child: Slidable(
+            key: UniqueKey(),
+            endActionPane: isOccupied == true
+                ? ActionPane(
+                    motion: const DrawerMotion(),
+                    children: [
+                      //
 
-                    SlidableAction(
-                      onPressed: (context) {
-                        floorCntrl.rentTo.value = null;
-                        exitTenant(
-                            button1: "no".tr,
-                            button2: "yes".tr,
-                            onButton1Tap: () {
-                              Get.back();
-                            },
-                            onButton2Tap: () {
-                              if (floorCntrl.rentTo.value != null) {
+                      SlidableAction(
+                        onPressed: (context) {
+                          floorCntrl.rentTo.value = null;
+                          exitTenant(
+                              button1: "no".tr,
+                              button2: "yes".tr,
+                              onButton1Tap: () {
                                 Get.back();
-                                floorCntrl.removeTenant(unitId!);
-                              } else {
-                                customSnackBar(Get.context!,
-                                    "please_choose_unit_exit_date".tr);
-                              }
-                            },
-                            title:
-                                "are_you_sure_remove_tenant".tr);
-                      },
-                      backgroundColor: const Color(0xFFFE4A49),
-                      foregroundColor: whiteColor,
-                      icon: Icons.exit_to_app,
-                      label: "exit_tenant".tr,
-                    ),
-                  ],
-                )
-              : null,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Container(
-                        height: 80.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                          color: HexColor('#444444'),
-                          borderRadius: BorderRadius.circular(10.r),
-                          image: buildingIcon != null
-                              ? DecorationImage(
-                                  image: NetworkImage(buildingIcon),
-                                  fit: BoxFit.cover)
-                              : const DecorationImage(
-                                  image: AssetImage("assets/icons/a.png"),
-                                  fit: BoxFit.cover),
+                              },
+                              onButton2Tap: () {
+                                if (floorCntrl.rentTo.value != null) {
+                                  Get.back();
+                                  floorCntrl.removeTenant(unitId!);
+                                } else {
+                                  customSnackBar(Get.context!,
+                                      "please_choose_unit_exit_date".tr);
+                                }
+                              },
+                              title: "are_you_sure_remove_tenant".tr);
+                        },
+                        backgroundColor: const Color(0xFFFE4A49),
+                        foregroundColor: whiteColor,
+                        icon: Icons.exit_to_app,
+                        label: "exit_tenant".tr,
+                      ),
+                    ],
+                  )
+                : null,
+            child: Column(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.r),
+                        child: Container(
+                          height: 80.h,
+                          width: 90.w,
+                          decoration: BoxDecoration(
+                            color: HexColor('#444444'),
+                            borderRadius: BorderRadius.circular(10.r),
+                            image: buildingIcon != null
+                                ? DecorationImage(
+                                    image: NetworkImage(buildingIcon),
+                                    fit: BoxFit.cover)
+                                : const DecorationImage(
+                                    image: AssetImage("assets/icons/a.png"),
+                                    fit: BoxFit.cover),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  unitTitle!,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp - commonFontSize,
-                                      color: black),
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  price!,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14.sp - commonFontSize,
-                                      color: black),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Row(children: [
-                                  Image.asset(
-                                    icon!,
-                                    height: 23.h,
-                                    width: isOccupied! ? 25.w : 20.w,
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    unitTitle!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.sp - commonFontSize,
+                                        color: black),
                                   ),
-                                  SizedBox(
-                                    width: 5.w,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    price!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.sp - commonFontSize,
+                                        color: black),
                                   ),
-                                  isOccupied
-                                      ? Flexible(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '$availablityTitle',
-                                                style: TextStyle(
-                                                  color: red,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.w,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(children: [
+                                    Image.asset(
+                                      icon!,
+                                      height: 23.h,
+                                      width: isOccupied! ? 25.w : 20.w,
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    isOccupied
+                                        ? Flexible(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '$availablityTitle',
+                                                  style: TextStyle(
+                                                    color: red,
+                                                    fontSize:
+                                                        12.sp - commonFontSize,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
+                                                  tenantName ?? "",
+                                                  style: TextStyle(
+                                                      color: black,
+                                                      fontSize: 12.sp -
+                                                          commonFontSize),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        : FittedBox(
+                                            child: Text(
+                                              availablityTitle ??
+                                                  "available".tr,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
                                                   fontSize:
                                                       12.sp - commonFontSize,
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              Text(
-                                                tenantName ?? "",
-                                                style: TextStyle(
-                                                    color: black,
-                                                    fontSize:
-                                                        12.sp - commonFontSize),
-                                              )
-                                            ],
+                                                  color: green),
+                                            ),
                                           ),
-                                        )
-                                      : FittedBox(
-                                          child: Text(
-                                            availablityTitle ?? "available".tr,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize:
-                                                    12.sp - commonFontSize,
-                                                color: green),
-                                          ),
-                                        ),
-                                ]),
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => UnitHistory(),
-                                          arguments: [unitId]);
-                                    },
-                                    child: Image.asset(
-                                      'assets/icons/timer.png',
-                                      width: 20.w,
-                                      height: 20.h,
+                                  ]),
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => UnitHistory(),
+                                            arguments: [unitId]);
+                                      },
+                                      child: Image.asset(
+                                        'assets/icons/timer.png',
+                                        width: 20.w,
+                                        height: 20.h,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  if (isOccupied == false)
-                                    Image.asset(
-                                      'assets/icons/Frame.png',
-                                      height: 20.h,
-                                      width: 20.w,
+                                    const SizedBox(
+                                      width: 10,
                                     ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              
-                                style: ElevatedButton.styleFrom(
-                                  fixedSize: Size(120.w, 25.h),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    backgroundColor: isOccupied == true
-                                        ?HexColor("#ed6d6d")
-                                        : Color.fromARGB(255, 33, 194, 243)),
-                                onPressed: () {
-                                  if (isOccupied == false) {
-                                    floorCntrl.onBuildingTap(
-                                        {"id": unitId, "name": unitTitle},
-                                        amenities!,
-                                        {
-                                          'isNegiosiate':
-                                              floorCntrl.items[index!]
-                                                  ['is_rent_negotiable'],
-                                          'ammount': floorCntrl.items[index]
-                                              ['unit_rent']
-                                        });
-                                  } else {
-                                    customSnackBar(Get.context!,
-                                        "unit_is_already_occupied".tr);
-                                  }
-                                },
-                                child: Text(
-                                  isOccupied == true ? "booked".tr : "book_now".tr,
-                                  style: const TextStyle(color: Colors.white),
-                                )),
-                          )
-                        ],
+                                    if (isOccupied == false)
+                                      Image.asset(
+                                        'assets/icons/Frame.png',
+                                        height: 20.h,
+                                        width: 20.w,
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      fixedSize: Size(120.w, 25.h),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      backgroundColor: isOccupied == true
+                                          ? HexColor("#ed6d6d")
+                                          : Color.fromARGB(255, 33, 194, 243)),
+                                  onPressed: () {
+                                    if (isOccupied == false) {
+                                      floorCntrl.onBuildingTap(
+                                          {"id": unitId, "name": unitTitle},
+                                          amenities!,
+                                          {
+                                            'isNegiosiate':
+                                                floorCntrl.items[index!]
+                                                    ['is_rent_negotiable'],
+                                            'ammount': floorCntrl.items[index]
+                                                ['unit_rent']
+                                          });
+                                    } else {
+                                      customSnackBar(Get.context!,
+                                          "unit_is_already_occupied".tr);
+                                    }
+                                  },
+                                  child: Text(
+                                    isOccupied == true
+                                        ? "booked".tr
+                                        : "book_now".tr,
+                                    style: const TextStyle(color: Colors.white),
+                                  )),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              // Divider(
-              //   color: HexColor('#EBEBEB'),
-              //   height: 1.h,
-              // ),
-              // Expanded(
-              //   child: Padding(
-              //     padding: EdgeInsets.only(left: 10.w),
-              //     child: Row(
-              //       children: [
-              //         Text(
-              //           'Property $property    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp - commonFontSize,
-              //               color: grey),
-              //         ),
-              //         Text(
-              //           'Building $building    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp - commonFontSize,
-              //               color: grey),
-              //         ),
-              //         Text(
-              //           'Floor $floor    ',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w700,
-              //               fontSize: 14.sp - commonFontSize,
-              //               color: grey),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
+                // Divider(
+                //   color: HexColor('#EBEBEB'),
+                //   height: 1.h,
+                // ),
+                // Expanded(
+                //   child: Padding(
+                //     padding: EdgeInsets.only(left: 10.w),
+                //     child: Row(
+                //       children: [
+                //         Text(
+                //           'Property $property    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp - commonFontSize,
+                //               color: grey),
+                //         ),
+                //         Text(
+                //           'Building $building    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp - commonFontSize,
+                //               color: grey),
+                //         ),
+                //         Text(
+                //           'Floor $floor    ',
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.w700,
+                //               fontSize: 14.sp - commonFontSize,
+                //               color: grey),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ),

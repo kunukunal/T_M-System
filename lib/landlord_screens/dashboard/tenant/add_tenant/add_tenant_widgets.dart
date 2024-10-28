@@ -72,7 +72,8 @@ class AddTenantWidgets {
                         cameraIcon,
                         Text(title!,
                             style: TextStyle(
-                                color: HexColor('#606060'), fontSize: 14.sp - commonFontSize)),
+                                color: HexColor('#606060'),
+                                fontSize: 14.sp - commonFontSize)),
                       ],
                     ),
                   ),
@@ -98,7 +99,8 @@ class AddTenantWidgets {
             child: Text(
               "choose_picture".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 14.sp - commonFontSize, color: Colors.white),
             )),
         ListTile(
           title: Padding(
@@ -133,7 +135,8 @@ class AddTenantWidgets {
               child: Text(
                 "cancel".tr,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14.sp - commonFontSize, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14.sp - commonFontSize, color: Colors.white),
               )),
         ),
       ]),
@@ -285,48 +288,48 @@ class AddTenantWidgets {
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus2.value),
-                      SizedBox(width: 5.w,),
-
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController2.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus1.value,
                       authCntrl.otpFocus3.value),
-                      SizedBox(width: 5.w,),
-
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController3.value,
                       authCntrl.otpFocus3.value,
                       authCntrl.otpFocus2.value,
                       authCntrl.otpFocus4.value),
-                      SizedBox(width: 5.w,),
-
+                  SizedBox(
+                    width: 5.w,
+                  ),
                   otpTextField(
                       authCntrl.otpController4.value,
                       authCntrl.otpFocus4.value,
                       authCntrl.otpFocus3.value,
-                      authCntrl.otpFocus4.value,
-                      onChanged: (value){
-                         if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
-                            authCntrl.otpController2.value.text
-                                .trim()
-                                .isNotEmpty &&
-                            authCntrl.otpController3.value.text
-                                .trim()
-                                .isNotEmpty &&
-                            authCntrl.otpController4.value.text
-                                .trim()
-                                .isNotEmpty) {
-                          if (tenantCntrl.isComingForEdit.value) {
-                            tenantCntrl.verifyupdateTenantApi();
-                          } else {
-                            tenantCntrl.verifyTanantOtp();
-                          }
-                        } else {
-                          customSnackBar(Get.context!, "please_enter_otp".tr);
-                        }
+                      authCntrl.otpFocus4.value, onChanged: (value) {
+                    if (value == '') {
+                      authCntrl.otpFocus3.value.requestFocus();
+                    } else {
+                      authCntrl.otpFocus4.value.requestFocus();
+                    }
+                    if (authCntrl.otpController1.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController2.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController3.value.text.trim().isNotEmpty &&
+                        authCntrl.otpController4.value.text.trim().isNotEmpty) {
+                      if (tenantCntrl.isComingForEdit.value) {
+                        tenantCntrl.verifyupdateTenantApi();
+                      } else {
+                        tenantCntrl.verifyTanantOtp();
                       }
-                      ),
+                    } else {
+                      customSnackBar(Get.context!, "please_enter_otp".tr);
+                    }
+                  }),
                 ],
               ),
             ),

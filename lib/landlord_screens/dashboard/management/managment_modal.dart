@@ -22,10 +22,6 @@ class Property {
   }
 }
 
-
-
-
-
 class Building {
   final int id;
   final String name;

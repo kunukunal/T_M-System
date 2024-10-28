@@ -6,9 +6,10 @@ import 'package:tanent_management/landlord_screens/navbar/nav_bar_controller.dar
 
 import '../../common/text_styles.dart';
 
-class NavBarWidgets{
+class NavBarWidgets {
   //NavBar
-  static Widget buildNavItem(int index, String icon, String name) {
+  static Widget buildNavItem(int index, String icon, String name,
+      {Color? color}) {
     final dashboardCntrl = Get.put(NavBarController());
     return Obx(() {
       return GestureDetector(
@@ -16,23 +17,23 @@ class NavBarWidgets{
         child: Column(
           children: [
             Container(
-              width:Get.width/5,
-              height: 2.h,
+                width: Get.width / 5,
+                height: 2.h,
                 color: index == dashboardCntrl.selectedIndex.value
                     ? HexColor('#679BF1')
-                    :Colors.transparent
-            ),
+                    : Colors.transparent),
             Container(
               height: 38.h,
               width: 40.5.w,
               padding: EdgeInsets.all(8.r),
               decoration: BoxDecoration(
-                 color: Colors.white,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(7.r)),
               child: Image.asset(
                 icon,
                 height: 23.h,
                 width: 26.w,
+                color: color,
               ),
             ),
             SizedBox(
@@ -50,5 +51,4 @@ class NavBarWidgets{
       );
     });
   }
-
 }

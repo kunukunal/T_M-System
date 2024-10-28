@@ -138,9 +138,9 @@ class PropertyListController extends GetxController {
         getPropertyListData();
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {
-        // if (response.data.toString().contains("email")) {
-        //   customSnackBar(Get.context!, response.data['email'][0].toString());
-        // }
+        if (response.data.toString().contains("occupied_units")) {
+          customSnackBar(Get.context!, response.data['occupied_units']);
+        }
       }
     }
   }

@@ -65,13 +65,12 @@ class PropertyAbCntroller extends GetxController {
 
   getBuildingData() async {
     isBuildingDataListLoading.value = true;
-      String accessToken = await SharedPreferencesServices.getStringData(
+    String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
         "";
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
-
 
     final response = await DioClientServices.instance.dioGetCall(headers: {
       'Authorization': "Bearer $accessToken",
@@ -98,7 +97,6 @@ class PropertyAbCntroller extends GetxController {
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
-
     final response = await DioClientServices.instance.dioDeleteCall(headers: {
       'Authorization': "Bearer $accessToken",
       "Accept-Language": languaeCode,
@@ -109,9 +107,10 @@ class PropertyAbCntroller extends GetxController {
         getBuildingData();
         customSnackBar(Get.context!, response.data['message']);
       } else if (response.statusCode == 400) {
-        // if (response.data.toString().contains("email")) {
-        //   customSnackBar(Get.context!, response.data['email'][0].toString());
-        // }
+        print("daslksdasd");
+        if (response.data.toString().contains("occupied_units")) {
+          customSnackBar(Get.context!, response.data['occupied_units']);
+        }
       }
     }
   }

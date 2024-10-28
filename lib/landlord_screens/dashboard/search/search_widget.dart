@@ -37,62 +37,66 @@ class SearchWidget {
     bool isCheckBoxShow = false,
     bool? checkBoxVal,
     Function(bool? val)? onChange,
+    Function()? ontap,
   }) {
     return Expanded(
-      child: Container(
-        // width: Get.width / 2.9,
-        // constraints: BoxConstraints(minWidth:150.w, ),
-        // height: isCheckBoxShow ? 120.h : 95.h,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: lightBorderGrey)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
-              child: Row(
-                children: [
-                  Image.asset(
-                    icon!,
-                    height: 20.h,
-                    width: 20.w,
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Expanded(
-                    child: Text(
-                      titleUnit!,
-                      style: TextStyle(
-                          fontSize: 14.sp - commonFontSize, color: black),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+      child: GestureDetector(
+        onTap: ontap,
+        child: Container(
+          // width: Get.width / 2.9,
+          // constraints: BoxConstraints(minWidth:150.w, ),
+          // height: isCheckBoxShow ? 120.h : 95.h,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: lightBorderGrey)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 7.w),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      icon!,
+                      height: 20.h,
+                      width: 20.w,
                     ),
-                  ),
-                  if (isCheckBoxShow)
-                    Checkbox(
-                      value: checkBoxVal,
-                      onChanged: onChange,
-                    )
-                ],
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Expanded(
+                      child: Text(
+                        titleUnit!,
+                        style: TextStyle(
+                            fontSize: 14.sp - commonFontSize, color: black),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    if (isCheckBoxShow)
+                      Checkbox(
+                        value: checkBoxVal,
+                        onChanged: onChange,
+                      )
+                  ],
+                ),
               ),
-            ),
-            Divider(
-              color: lightBorderGrey,
-              height: 1.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-              child: Text(
-                units!,
-                style: TextStyle(
-                    fontSize: 20.sp - commonFontSize,
-                    color: black,
-                    fontWeight: FontWeight.w700),
+              Divider(
+                color: lightBorderGrey,
+                height: 1.h,
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                child: Text(
+                  units!,
+                  style: TextStyle(
+                      fontSize: 20.sp - commonFontSize,
+                      color: black,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

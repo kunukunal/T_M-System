@@ -10,6 +10,7 @@ import 'package:tanent_management/landlord_screens/dashboard/dashboard_controlle
 import 'package:tanent_management/landlord_screens/dashboard/dashboard_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/property_list/property_list_controller.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_widget.dart';
+import 'package:tanent_management/landlord_screens/navbar/nav_bar_controller.dart';
 
 class CompleteDashboard extends StatelessWidget {
   CompleteDashboard({super.key});
@@ -26,6 +27,10 @@ class CompleteDashboard extends StatelessWidget {
               children: [
                 SearchWidget().occUnoccContainer(
                     icon: occupiedIcon,
+                    ontap: () {
+                      final managementCntrl = Get.find<NavBarController>();
+                      managementCntrl.onItemTap(2);
+                    },
                     titleUnit: 'properties_units'.tr,
                     units:
                         '${dashCntrl.propertyStats['occupied_units']}/${dashCntrl.propertyStats['total_units']}'),
@@ -34,6 +39,10 @@ class CompleteDashboard extends StatelessWidget {
                 ),
                 SearchWidget().occUnoccContainer(
                     icon: unOccupiedIcon,
+                    ontap: () {
+                      final managementCntrl = Get.find<NavBarController>();
+                      managementCntrl.onItemTap(4);
+                    },
                     titleUnit: 'tenants'.tr,
                     units: '${dashCntrl.propertyStats['tenants']}'),
               ],
@@ -112,10 +121,10 @@ class CompleteDashboard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            tenantRentContainer(),
-            SizedBox(
-              height: 10.h,
-            ),
+            // tenantRentContainer(),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
             tenantRentContainerWithFilter(),
             SizedBox(
               height: 10.h,

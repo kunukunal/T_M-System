@@ -7,6 +7,7 @@ import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/profile/documents/document_controller.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 class DocumentWidgets {
   documentList() {
@@ -17,7 +18,7 @@ class DocumentWidgets {
               child: CircularProgressIndicator(),
             )
           : docCntrl.documentList.isEmpty
-              ?  Center(
+              ? Center(
                   child: Text("no_document_found".tr),
                 )
               : ListView.separated(
@@ -42,66 +43,112 @@ class DocumentWidgets {
     required String image,
     required String name,
   }) {
-    return Stack(
-      children: [
-        Container(
-          height: 158.h,
-          padding: EdgeInsets.zero,
-          margin: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: HexColor('#EBEBEB'), width: 1.r),
-            // image:  DecorationImage(image: image.image)
-          ),
-          child: image == ""
-              ?  SizedBox(
-                  width: double.infinity,
-                  child: Center(child: Text("no_document_uploaded".tr)))
-              : Image.network(
-                  image,
-                  fit: BoxFit.contain,
-                  width: double.infinity,
+    return GestureDetector(
+      onTap: () {
+        if (image != "")
+          showModalBottomSheet(
+            context: Get.context!,
+            isScrollControlled: true,
+            enableDrag: false,
+            useSafeArea: true,
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.cancel),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
+                        ],
+                      ),
+                      Material(
+                        child: WidgetZoom(
+                          heroAnimationTag: 'tag',
+                          zoomWidget: Image.network(image),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-        ),
-        Positioned(
-          left: .5,
-          right: .5,
-          bottom: .5,
-          child: Container(
-            height: 50.h,
+              );
+            },
+          );
+        else
+          customSnackBar(Get.context!, "No document found");
+      },
+      child: Stack(
+        children: [
+          Container(
+            height: 158.h,
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: HexColor('#D9E3F4'),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10.r),
-                bottomRight: Radius.circular(10.r),
-              ),
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: HexColor('#EBEBEB'), width: 1.r),
+              // image:  DecorationImage(image: image.image)
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Text(
-                    name,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: CustomStyles.skipBlack.copyWith(
-                      fontSize: 16.sp - commonFontSize,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )),
-                  if (image != "")
-                    GestureDetector(
-                        onTap: () {
-                          _saveNetworkImage(image);
-                        },
-                        child: downloadIcon)
-                ],
+            child: image == ""
+                ? SizedBox(
+                    width: double.infinity,
+                    child: Center(child: Text("no_document_uploaded".tr)))
+                : Image.network(
+                    image,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                  ),
+          ),
+          Positioned(
+            left: .5,
+            right: .5,
+            bottom: .5,
+            child: Container(
+              height: 50.h,
+              decoration: BoxDecoration(
+                color: HexColor('#D9E3F4'),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.r),
+                  bottomRight: Radius.circular(10.r),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: CustomStyles.skipBlack.copyWith(
+                        fontSize: 16.sp - commonFontSize,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )),
+                    if (image != "")
+                      GestureDetector(
+                          onTap: () {
+                            _saveNetworkImage(image);
+                          },
+                          child: downloadIcon)
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
-
+import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -215,6 +215,51 @@ class DioClientServices {
     return await MultipartFile.fromFile(file.path, filename: file.name);
   }
 
+  Future<MultipartFile?> multipartAssetsFile() async {
+    try {
+      Directory directory;
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory() ??
+            await getApplicationDocumentsDirectory();
+      } else if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        throw Exception("Unsupported platform");
+      }
+
+      String imagePath = path.join(directory.path, 'sample.png');
+      print('Image Path: $imagePath');
+
+      File imageFile = File(imagePath);
+      if (!imageFile.existsSync()) {
+        print('Image not found. Copying from assets...');
+
+        // Check if asset path is correct.
+        ByteData byteData;
+        try {
+          byteData = await rootBundle.load('assets/icons/no_image.png');
+        } catch (e) {
+          print('Error loading asset: $e');
+          return null;
+        }
+
+        Uint8List imageData = byteData.buffer.asUint8List();
+        await imageFile.writeAsBytes(imageData);
+        print('Image saved to: $imagePath');
+      } else {
+        print('Image already exists at: $imagePath');
+      }
+
+      return await MultipartFile.fromFile(
+        imageFile.path,
+        filename: 'sample.png',
+      );
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
   Future saveImageToGallery(String imageUrl) async {
     try {
       var response = await _dio.get(imageUrl,
@@ -252,6 +297,48 @@ class DioClientServices {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  Future postCodeApi(String pincode, BuildContext context) async {
+    try {
+      Response response = await _dio.get(
+        "https://api.postalpincode.in/pincode/$pincode",
+      );
+
+      if (response.data != null) {
+        print("dsakdlksa ${response.data} ${response.data[0]['PostOffice']}");
+        if (response.data[0]['PostOffice'] != null) {
+          log("City: ${response.data[0]['PostOffice'][0]['Block']} state: ${response.data[0]['PostOffice'][0]['State']}");
+          return {
+            'city': response.data[0]['PostOffice'][0]['Block'],
+            'state': response.data[0]['PostOffice'][0]['State']
+          };
+        } else {
+          customSnackBar(context, response.data[0]['Message']);
+          return {'city': '', 'state': ''};
+        }
+      } else
+        print("mkalsd ${response.data}");
+      return response;
+    } on DioException catch (e) {
+      log("${e.response?.statusCode}", name: "Exception response null");
+
+      if (e.response == null) {
+        log("$e", name: "Exception response null");
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout) {}
+      } else if (e.response != null) {
+        log('Dio error!', name: "dioGetCall");
+        log('STATUS: ${e.response?.statusCode}', name: "dioGetCall");
+        log('DATA: ${e.response?.data}', name: "dioGetCall");
+        log('HEADERS: ${e.response?.headers}', name: "dioGetCall");
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+      } else {
+        log('Error sending request!', name: "dioGetCall");
+        log("${e.message}", name: "dioGetCall");
+      }
+      return e.response;
     }
   }
 }

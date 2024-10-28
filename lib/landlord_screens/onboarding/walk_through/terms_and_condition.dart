@@ -96,22 +96,19 @@ class TermsAndConditionScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    Row(
-                      children: [
-                        Obx(() {
-                          return Checkbox(
-                              value: cntrl.checkboxValue.value,
-                              onChanged: (value) {
-                                cntrl.onCheckBoxClicked(value);
-                              });
-                        }),
-                        Text(
-                          'i_agree_and_continue'.tr,
-                          style: CustomStyles.desc606060
-                              .copyWith(fontSize: 16.sp - commonFontSize),
-                        ),
-                      ],
-                    ),
+                    Obx(() {
+                      return CheckboxListTile(
+                          value: cntrl.checkboxValue.value,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text(
+                            'i_agree_and_continue'.tr,
+                            style: CustomStyles.desc606060
+                                .copyWith(fontSize: 16.sp - commonFontSize),
+                          ),
+                          onChanged: (value) {
+                            cntrl.onCheckBoxClicked(value);
+                          });
+                    }),
                     SizedBox(
                       height: 15.h,
                     ),

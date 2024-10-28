@@ -124,7 +124,6 @@ const String acceptRejectTenant = "management/add-tenant/";
 
 const String paytenantRent = "transaction/pay-tenant-rent/";
 
-
 const String phonePayCallbackUrl = "tenant/payment-callback/";
 
 const String report = "reports/transaction-receipts/";
@@ -139,3 +138,4 @@ const String expenseFilter = "management/expense/get-expenses/";
 
 const String deleteAccount = "accounts/delete-account/";
 const String rentMonthFilter = "landlord/month-rent/";
+const String notificationRead = "accounts/notification/";

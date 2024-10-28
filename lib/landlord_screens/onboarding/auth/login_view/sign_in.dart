@@ -23,7 +23,23 @@ class SignInScreen extends StatelessWidget {
           title: isFromRegister!
               ? "${'register_as'.tr} ${authCntrl.onButtonTapTenant.value == 2 ? "tenant".tr : "landlord".tr}"
               : "Login",
-          isBack: false),
+          isBack: false,
+          actions: [
+            PopupMenuButton<String>(
+              onSelected: (String value) {
+                if (value == 'Help') {
+                  AuthWidget().showHelpDialog(context);
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: 'Help',
+                  child: Text('Help'),
+                ),
+              ],
+              icon: const Icon(Icons.more_vert),
+            )
+          ]),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

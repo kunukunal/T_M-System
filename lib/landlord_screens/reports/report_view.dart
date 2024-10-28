@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/utils.dart';
+import 'package:tanent_management/landlord_screens/reports/pdf_view.dart';
 import 'package:tanent_management/landlord_screens/reports/report_controller.dart';
 
 class ReportScreen extends StatelessWidget {
@@ -76,156 +76,169 @@ class ReportScreen extends StatelessWidget {
                               itemCount: reportCntrl.reportList.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return Card(
-                                  surfaceTintColor: Colors.transparent,
-                                  elevation: 5,
-                                  shape: ContinuousRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      side: BorderSide(
-                                        color: reportCntrl.reportList[index]
-                                                    ['transaction']['status'] ==
-                                                2
-                                            ? green
-                                            : reportCntrl.reportList[index]
-                                                            ['transaction']
-                                                        ['status'] ==
-                                                    1
-                                                ? Colors.orange
-                                                : red,
-                                      )),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  if (isLandlord)
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => ReportPdfView(
+                                          name: reportCntrl.reportList[index]
+                                                      ['transaction']
+                                                  ['unit_name'] ??
+                                              "",
+                                          pdfUrl: reportCntrl.reportList[index]
+                                              ['receipt'],
+                                        ));
+                                  },
+                                  child: Card(
+                                    surfaceTintColor: Colors.transparent,
+                                    elevation: 5,
+                                    shape: ContinuousRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        side: BorderSide(
+                                          color: reportCntrl.reportList[index]
+                                                          ['transaction']
+                                                      ['status'] ==
+                                                  2
+                                              ? green
+                                              : reportCntrl.reportList[index]
+                                                              ['transaction']
+                                                          ['status'] ==
+                                                      1
+                                                  ? Colors.orange
+                                                  : red,
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    if (isLandlord)
+                                                      Text(
+                                                        reportCntrl.reportList[
+                                                                        index]
+                                                                    ['user']
+                                                                ['name'] ??
+                                                            "",
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: CustomStyles
+                                                            .titleText
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    'Inter'),
+                                                      ),
                                                     Text(
                                                       reportCntrl.reportList[
-                                                                  index]['user']
-                                                              ['name'] ??
+                                                                      index][
+                                                                  'transaction']
+                                                              ['unit_name'] ??
                                                           "",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      style: CustomStyles
+                                                          .titleText
+                                                          .copyWith(
+                                                              fontWeight: isLandlord
+                                                                  ? FontWeight
+                                                                      .w500
+                                                                  : FontWeight
+                                                                      .bold,
+                                                              fontSize:
+                                                                  commonFontSize +
+                                                                      (isLandlord
+                                                                          ? 14
+                                                                          : 15),
+                                                              fontFamily:
+                                                                  'Inter'),
+                                                    ),
+                                                    Text(
+                                                      "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
                                                       style: CustomStyles
                                                           .titleText
                                                           .copyWith(
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold,
+                                                                      .w500,
+                                                              fontSize:
+                                                                  commonFontSize +
+                                                                      14,
+                                                              // color: whiteColor,
                                                               fontFamily:
                                                                   'Inter'),
                                                     ),
-                                                  Text(
-                                                    reportCntrl.reportList[
-                                                                    index]
-                                                                ['transaction']
-                                                            ['unit_name'] ??
-                                                        "",
-                                                    style: CustomStyles
-                                                        .titleText
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                isLandlord
-                                                                    ? FontWeight
-                                                                        .w500
-                                                                    : FontWeight
-                                                                        .bold,
-                                                            fontSize:
-                                                                commonFontSize +
-                                                                    (isLandlord
-                                                                        ? 14
-                                                                        : 15),
-                                                            fontFamily:
-                                                                'Inter'),
-                                                  ),
-                                                  Text(
-                                                    "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
-                                                    style: CustomStyles
-                                                        .titleText
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize:
-                                                                commonFontSize +
-                                                                    14,
-                                                            // color: whiteColor,
-                                                            fontFamily:
-                                                                'Inter'),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            if (reportCntrl.reportList[index]
-                                                    ['receipt'] !=
-                                                null)
-                                              IconButton(
-                                                  onPressed: () {
-                                                    saveNetworkPdf(reportCntrl
-                                                            .reportList[index]
-                                                        ['receipt']);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.download,
-                                                  ))
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              reportCntrl.reportList[index]
-                                                      ['transaction']
-                                                  ['transaction_date'],
-                                              style: CustomStyles.titleText
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      // color: whiteColor,
-                                                      fontSize:
-                                                          commonFontSize + 14,
-                                                      fontFamily: 'Inter'),
-                                            ),
-                                            Text(
-                                              reportCntrl.reportList[index]
-                                                      ['transaction']
-                                                  ['payment_status_value'],
-                                              style: CustomStyles.titleText
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize:
-                                                          commonFontSize + 14,
-                                                      color: reportCntrl.reportList[
-                                                                          index]
-                                                                      ['transaction']
-                                                                  ['status'] ==
-                                                              2
-                                                          ? green
-                                                          : reportCntrl.reportList[
-                                                                              index]
-                                                                          ['transaction']
-                                                                      [
-                                                                      'status'] ==
-                                                                  1
-                                                              ? Colors.orange
-                                                              : red,
-                                                      fontFamily: 'Inter'),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              if (reportCntrl.reportList[index]
+                                                      ['receipt'] !=
+                                                  null)
+                                                IconButton(
+                                                    onPressed: () {
+                                                      saveNetworkPdf(reportCntrl
+                                                              .reportList[index]
+                                                          ['receipt']);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.download,
+                                                    ))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                reportCntrl.reportList[index]
+                                                        ['transaction']
+                                                    ['transaction_date'],
+                                                style: CustomStyles.titleText
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        // color: whiteColor,
+                                                        fontSize:
+                                                            commonFontSize + 14,
+                                                        fontFamily: 'Inter'),
+                                              ),
+                                              Text(
+                                                reportCntrl.reportList[index]
+                                                        ['transaction']
+                                                    ['payment_status_value'],
+                                                style: CustomStyles.titleText
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize:
+                                                            commonFontSize + 14,
+                                                        color: reportCntrl.reportList[
+                                                                            index]
+                                                                        ['transaction']
+                                                                    [
+                                                                    'status'] ==
+                                                                2
+                                                            ? green
+                                                            : reportCntrl.reportList[
+                                                                            index]['transaction']
+                                                                        ['status'] ==
+                                                                    1
+                                                                ? Colors.orange
+                                                                : red,
+                                                        fontFamily: 'Inter'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
