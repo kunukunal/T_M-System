@@ -37,7 +37,15 @@ class SearchView extends StatelessWidget {
                   hintStyle: CustomStyles.hintText,
                   hintText: 'unit'.tr,
                   controller: searchCntrl.searchCntrl.value,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) {
+                    if (searchCntrl.searchCntrl.value.text.trim().isNotEmpty) {
+                      searchCntrl.getUnitBySearch();
+                    } else {
+                      customSnackBar(Get.context!,
+                          "Please enter the property name for search");
+                    }
+                  },
                   keyboardType: TextInputType.emailAddress,
                   suffixIcon: GestureDetector(
                     onTap: () {

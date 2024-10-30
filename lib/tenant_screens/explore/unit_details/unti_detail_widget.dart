@@ -111,7 +111,7 @@ class UnitDetailViewWidget {
                 SizedBox(
                   width: 5.w,
                 ),
-                SvgPicture.asset("assets/icons/i_icon.svg")
+                // SvgPicture.asset("assets/icons/i_icon.svg")
               ],
             )
           ],

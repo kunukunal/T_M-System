@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:tanent_management/common/constants.dart';
 import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/links.dart';
 import 'package:tanent_management/common/text_styles.dart';
@@ -15,6 +16,7 @@ import 'package:tanent_management/landlord_screens/profile/faqs/faqs_view.dart';
 import 'package:tanent_management/landlord_screens/profile/my_profile/my_profile_widget.dart';
 import 'package:tanent_management/landlord_screens/profile/notification_setting/notification_view.dart';
 import 'package:tanent_management/landlord_screens/profile/privacy_policy/privacy_policy_view.dart';
+import 'package:tanent_management/landlord_screens/reports/report_view.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
 import 'my_profile_controller.dart';
@@ -70,14 +72,13 @@ class MyProfileView extends StatelessWidget {
                       }
                     },
                     image: 'assets/icons/Group 26.png'),
-
                 userData['user_type'] == 1
                     ? MyProfileWidget.commonListTile(
-                        title: "Payments",
+                        title: 'reports'.tr,
                         onTap: () {
-                          Get.to(() => NotificationReceiveView());
+                          Get.to(() => ReportScreen());
                         },
-                        image: 'assets/icons/ic-bank.png')
+                        image: reportActiveIcon)
                     : const SizedBox(),
                 MyProfileWidget.commonListTile(
                     title: 'language'.tr,

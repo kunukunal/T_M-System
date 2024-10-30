@@ -52,6 +52,7 @@ class NotifReceiveController extends GetxController {
           recivedTransactionLoading.value = false;
           recieveditems.clear();
           recieveditems.addAll(response.data);
+          print("dsalkd ${recieveditems}");
         } else {
           cancelTransactionLoading.value = false;
           cancelitems.clear();

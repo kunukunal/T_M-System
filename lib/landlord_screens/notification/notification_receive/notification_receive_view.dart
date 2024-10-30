@@ -23,7 +23,8 @@ class NotificationReceiveView extends StatelessWidget {
       length: 3, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Payments'),
+          title: Text('Payments', style: CustomStyles.otpStyle050505W700S16),
+          centerTitle: true,
           bottom: TabBar(
             labelColor: HexColor('#679BF1'),
             indicatorColor: HexColor('#679BF1'),

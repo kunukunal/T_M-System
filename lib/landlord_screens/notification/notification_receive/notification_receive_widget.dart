@@ -69,7 +69,7 @@ class NotifReceiveWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  title!,
+                                  title ?? "",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14.sp - commonFontSize,
@@ -86,7 +86,7 @@ class NotifReceiveWidget {
                             ],
                           ),
                           Text(
-                            desc!,
+                            desc ?? "",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

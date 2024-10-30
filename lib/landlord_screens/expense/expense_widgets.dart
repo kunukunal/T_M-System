@@ -153,268 +153,286 @@ class ExpenseWidgets {
                   ? Center(
                       child: Text("no_expense_data_found".tr),
                     )
-                  : ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: expenseCntrl.expenseList.length,
-                      itemBuilder: (context, index) {
-                        DateTime dateTime = DateTime.parse(
-                            expenseCntrl.expenseList[index]['expense_date']);
-                        String formattedDate =
-                            DateFormat('dd MMM yyyy').format(dateTime);
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 7.h),
-                          child: GestureDetector(
-                            onTap: () {
-                              showDetailSheet(
-                                  context,
-                                  DateFormat('dd MMM yyyy').format(dateTime),
-                                  expenseCntrl.expenseList[index]
-                                              ['expense_type'] ==
-                                          "Other"
-                                      ? expenseCntrl.expenseList[index]
-                                          ['other_expense']
-                                      : expenseCntrl.expenseList[index]
-                                          ['expense_type'],
-                                  expenseCntrl.expenseList[index]
-                                          ['project_name'] ??
-                                      "",
-                                  expenseCntrl.expenseList[index]
-                                          ['building_name'] ??
-                                      "",
-                                  expenseCntrl.expenseList[index]
-                                          ['floor_name'] ??
-                                      "",
-                                  expenseCntrl.expenseList[index]
-                                          ['unit_name'] ??
-                                      "",
-                                  expenseCntrl.expenseList[index]
-                                      ['payment_type'],
-                                  expenseCntrl.expenseList[index]['remarks'],
-                                  expenseCntrl.expenseList[index]
-                                      ['expense_amount'],
-                                  expenseCntrl.expenseList[index]['images']);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  border:
-                                      Border.all(color: HexColor('#EBEBEB'))),
-                              child: Padding(
-                                padding: EdgeInsets.all(15.r),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                  : Padding(
+                      padding: EdgeInsets.only(bottom: 55.h),
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: expenseCntrl.expenseList.length,
+                          itemBuilder: (context, index) {
+                            DateTime dateTime = DateTime.parse(expenseCntrl
+                                .expenseList[index]['expense_date']);
+                            String formattedDate =
+                                DateFormat('dd MMM yyyy').format(dateTime);
+                            return Padding(
+                              padding: EdgeInsets.only(top: 7.h, bottom: 7.h),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showDetailSheet(
+                                      context,
+                                      DateFormat('dd MMM yyyy')
+                                          .format(dateTime),
+                                      expenseCntrl.expenseList[index]
+                                                  ['expense_type'] ==
+                                              "Other"
+                                          ? expenseCntrl.expenseList[index]
+                                              ['other_expense']
+                                          : expenseCntrl.expenseList[index]
+                                              ['expense_type'],
+                                      expenseCntrl.expenseList[index]
+                                              ['project_name'] ??
+                                          "",
+                                      expenseCntrl.expenseList[index]
+                                              ['building_name'] ??
+                                          "",
+                                      expenseCntrl.expenseList[index]
+                                              ['floor_name'] ??
+                                          "",
+                                      expenseCntrl.expenseList[index]
+                                              ['unit_name'] ??
+                                          "",
+                                      expenseCntrl.expenseList[index]
+                                          ['payment_type'],
+                                      expenseCntrl.expenseList[index]
+                                          ['remarks'],
+                                      expenseCntrl.expenseList[index]
+                                          ['expense_amount'],
+                                      expenseCntrl.expenseList[index]
+                                          ['images']);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      border: Border.all(
+                                          color: HexColor('#EBEBEB'))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(15.r),
+                                    child: Column(
                                       children: [
-                                        Container(
-                                          height: 50.h,
-                                          width: 60.w,
-                                          decoration: BoxDecoration(
-                                              color: HexColor('#BCD1F3'),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r)),
-                                          child: Center(
-                                            child: Text(
-                                              formattedDate,
-                                              textAlign: TextAlign.center,
-                                              style:
-                                                  CustomStyles.black16.copyWith(
-                                                fontSize:
-                                                    14.sp - commonFontSize,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                expenseCntrl.expenseList[index]
-                                                            ['expense_type'] ==
-                                                        "Other"
-                                                    ? expenseCntrl
-                                                            .expenseList[index]
-                                                        ['other_expense']
-                                                    : expenseCntrl
-                                                            .expenseList[index]
-                                                        ['expense_type'],
-                                                textAlign: TextAlign.center,
-                                                style: CustomStyles.black16
-                                                    .copyWith(
-                                                  fontSize:
-                                                      15.sp - commonFontSize,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5.w,
-                                              ),
-                                              Container(
-                                                height: 22.h,
-                                                width: expenseCntrl.expenseList[
-                                                                index]
-                                                            ['payment_type'] ==
-                                                        'Cash'
-                                                    ? 59.w
-                                                    : 97.w,
-                                                decoration: BoxDecoration(
-                                                    color: expenseCntrl.expenseList[
-                                                                    index][
-                                                                'payment_type'] ==
-                                                            'Cash'
-                                                        ? HexColor('#00AA50')
-                                                        : HexColor('#ED893E'),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.r)),
-                                                child: Center(
-                                                  child: Text(
-                                                    expenseCntrl
-                                                            .expenseList[index]
-                                                        ['payment_type'],
-                                                    textAlign: TextAlign.center,
-                                                    style: CustomStyles.white12,
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 50.h,
+                                              width: 60.w,
+                                              decoration: BoxDecoration(
+                                                  color: HexColor('#BCD1F3'),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r)),
+                                              child: Center(
+                                                child: Text(
+                                                  formattedDate,
+                                                  textAlign: TextAlign.center,
+                                                  style: CustomStyles.black16
+                                                      .copyWith(
+                                                    fontSize:
+                                                        14.sp - commonFontSize,
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 5.w,
+                                            ),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    expenseCntrl.expenseList[
+                                                                    index][
+                                                                'expense_type'] ==
+                                                            "Other"
+                                                        ? expenseCntrl
+                                                                    .expenseList[
+                                                                index]
+                                                            ['other_expense']
+                                                        : expenseCntrl
+                                                                    .expenseList[
+                                                                index]
+                                                            ['expense_type'],
+                                                    textAlign: TextAlign.center,
+                                                    style: CustomStyles.black16
+                                                        .copyWith(
+                                                      fontSize: 15.sp -
+                                                          commonFontSize,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.w,
+                                                  ),
+                                                  Container(
+                                                    height: 22.h,
+                                                    width: expenseCntrl.expenseList[
+                                                                    index][
+                                                                'payment_type'] ==
+                                                            'Cash'
+                                                        ? 59.w
+                                                        : 97.w,
+                                                    decoration: BoxDecoration(
+                                                        color: expenseCntrl.expenseList[
+                                                                        index][
+                                                                    'payment_type'] ==
+                                                                'Cash'
+                                                            ? HexColor(
+                                                                '#00AA50')
+                                                            : HexColor(
+                                                                '#ED893E'),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    10.r)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        expenseCntrl.expenseList[
+                                                                index]
+                                                            ['payment_type'],
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: CustomStyles
+                                                            .white12,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.w,
+                                                  ),
+                                                  Text(
+                                                    expenseCntrl
+                                                            .expenseList[index]
+                                                        ['remarks'],
+                                                    style: CustomStyles
+                                                        .desc606060
+                                                        .copyWith(
+                                                            fontSize: 12.sp -
+                                                                commonFontSize,
+                                                            fontFamily:
+                                                                'DM Sans'),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                expenseCntrl.expenseList[index]
-                                                    ['remarks'],
-                                                style: CustomStyles.desc606060
-                                                    .copyWith(
-                                                        fontSize: 12.sp -
-                                                            commonFontSize,
-                                                        fontFamily: 'DM Sans'),
+                                            ),
+                                            Text(
+                                              "₹${expenseCntrl.expenseList[index]['expense_amount']}",
+                                              style: CustomStyles
+                                                  .amountFA4343W500S15,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                        Divider(
+                                          color: HexColor('#EBEBEB'),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                expenseCntrl
+                                                        .expenseList[index]
+                                                            ['images']
+                                                        .isNotEmpty
+                                                    ? expenseCntrl
+                                                        .expenseList[index]
+                                                            ['images'][0]
+                                                            ['image_url']
+                                                        .toString()
+                                                        .split('/')
+                                                        .last
+                                                    : "no_image".tr,
+                                                style: CustomStyles
+                                                    .otpStyle050505W400S14,
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Text(
-                                          "₹${expenseCntrl.expenseList[index]['expense_amount']}",
-                                          style:
-                                              CustomStyles.amountFA4343W500S15,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Divider(
-                                      color: HexColor('#EBEBEB'),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            expenseCntrl
-                                                    .expenseList[index]
-                                                        ['images']
-                                                    .isNotEmpty
-                                                ? expenseCntrl
-                                                    .expenseList[index]
-                                                        ['images'][0]
-                                                        ['image_url']
-                                                    .toString()
-                                                    .split('/')
-                                                    .last
-                                                : "no_image".tr,
-                                            style: CustomStyles
-                                                .otpStyle050505W400S14,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              showDetailSheet(
-                                                  context,
-                                                  formattedDate,
-                                                  expenseCntrl.expenseList[index]['expense_type'] ==
-                                                          "Other"
-                                                      ? expenseCntrl.expenseList[index]
-                                                          ['other_expense']
-                                                      : expenseCntrl
-                                                              .expenseList[index]
-                                                          ['expense_type'],
-                                                  expenseCntrl.expenseList[index]
-                                                          ['project_name'] ??
-                                                      "",
-                                                  expenseCntrl.expenseList[index]
-                                                          ['building_name'] ??
-                                                      "",
-                                                  expenseCntrl.expenseList[index]
-                                                          ['floor_name'] ??
-                                                      "",
-                                                  expenseCntrl.expenseList[index]
-                                                          ['unit_name'] ??
-                                                      "",
-                                                  expenseCntrl.expenseList[index]
-                                                      ['payment_type'],
-                                                  expenseCntrl.expenseList[index]
-                                                      ['remarks'],
-                                                  expenseCntrl.expenseList[index]
-                                                      ['expense_amount'],
-                                                  expenseCntrl.expenseList[index]
-                                                      ['images']);
-                                              // expenseCntrl
-                                              //         .expenseList[index]
-                                              //             ['images']
-                                              //         .isNotEmpty
-                                              //     ?
+                                            ),
+                                            // GestureDetector(
+                                            //     onTap: () {
+                                            //       showDetailSheet(
+                                            //           context,
+                                            //           formattedDate,
+                                            //           expenseCntrl.expenseList[index]['expense_type'] ==
+                                            //                   "Other"
+                                            //               ? expenseCntrl.expenseList[index]
+                                            //                   ['other_expense']
+                                            //               : expenseCntrl
+                                            //                       .expenseList[index]
+                                            //                   ['expense_type'],
+                                            //           expenseCntrl.expenseList[index]
+                                            //                   ['project_name'] ??
+                                            //               "",
+                                            //           expenseCntrl.expenseList[index]
+                                            //                   ['building_name'] ??
+                                            //               "",
+                                            //           expenseCntrl.expenseList[index]
+                                            //                   ['floor_name'] ??
+                                            //               "",
+                                            //           expenseCntrl.expenseList[index]
+                                            //                   ['unit_name'] ??
+                                            //               "",
+                                            //           expenseCntrl.expenseList[index]
+                                            //               ['payment_type'],
+                                            //           expenseCntrl.expenseList[index]
+                                            //               ['remarks'],
+                                            //           expenseCntrl.expenseList[index]
+                                            //               ['expense_amount'],
+                                            //           expenseCntrl.expenseList[index]
+                                            //               ['images']);
+                                            //       // expenseCntrl
+                                            //       //         .expenseList[index]
+                                            //       //             ['images']
+                                            //       //         .isNotEmpty
+                                            //       //     ?
 
-                                              // : customSnackBar(context,
-                                              //     "no_image_found".tr);
-                                            },
-                                            child: eyeIcon),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              expenseCntrl.onEditTap(
-                                                  expenseCntrl
-                                                      .expenseList[index]);
-                                            },
-                                            child: pencilIcon),
-                                        SizedBox(
-                                          width: 10.w,
-                                        ),
-                                        GestureDetector(
-                                            onTap: () {
-                                              deleteExpense(
-                                                  button1: "no".tr,
-                                                  button2: "yes".tr,
-                                                  onButton1Tap: () {
-                                                    Get.back();
-                                                  },
-                                                  onButton2Tap: () {
-                                                    Get.back();
-                                                    expenseCntrl.onDeleteTap(
-                                                        expenseCntrl
-                                                                .expenseList[
-                                                            index]['id']);
-                                                  },
-                                                  title:
-                                                      "are_you_sure_delete_expense"
-                                                          .tr);
-                                            },
-                                            child: dustbinIcon)
+                                            //       // : customSnackBar(context,
+                                            //       //     "no_image_found".tr);
+                                            //     },
+                                            //     child: eyeIcon),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  expenseCntrl.onEditTap(
+                                                      expenseCntrl
+                                                          .expenseList[index]);
+                                                },
+                                                child: pencilIcon),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  deleteExpense(
+                                                      button1: "no".tr,
+                                                      button2: "yes".tr,
+                                                      onButton1Tap: () {
+                                                        Get.back();
+                                                      },
+                                                      onButton2Tap: () {
+                                                        Get.back();
+                                                        expenseCntrl.onDeleteTap(
+                                                            expenseCntrl
+                                                                    .expenseList[
+                                                                index]['id']);
+                                                      },
+                                                      title:
+                                                          "are_you_sure_delete_expense"
+                                                              .tr);
+                                                },
+                                                child: dustbinIcon)
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      });
+                            );
+                          }),
+                    );
         }),
       ],
     );

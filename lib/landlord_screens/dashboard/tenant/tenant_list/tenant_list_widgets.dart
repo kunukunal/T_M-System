@@ -413,6 +413,8 @@ class TenantListWidgets {
                                           mainAxisSpacing: 10.h,
                                           crossAxisSpacing: 5.w),
                                   itemBuilder: (BuildContext context, int ind) {
+                                    print(
+                                        "dsakdkl ${cntrl.tenantUnitList[index]}");
                                     return SizedBox(
                                       height: 24.h,
                                       width: 156.5.w,
@@ -427,6 +429,17 @@ class TenantListWidgets {
                                                 ['amenities'][ind]['name'],
                                             style: CustomStyles.black14
                                                 .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Text(
+                                            "₹${cntrl.tenantUnitList[index]['amenities'][ind]['price']}",
+                                            style: CustomStyles.black14
+                                                .copyWith(
+                                                  color: Colors.blue,
                                                     fontWeight:
                                                         FontWeight.w400),
                                           )

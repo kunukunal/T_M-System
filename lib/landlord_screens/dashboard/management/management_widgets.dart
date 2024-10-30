@@ -258,7 +258,6 @@ class ManagementWidgets {
                       authCntrl.otpFocus4.value,
                       authCntrl.otpFocus3.value,
                       authCntrl.otpFocus4.value, onChanged: (value) {
-                    print("sakjaslajslas");
                     if (value == '') {
                       authCntrl.otpFocus3.value.requestFocus();
                     } else {
@@ -268,7 +267,6 @@ class ManagementWidgets {
                         authCntrl.otpController2.value.text.trim().isNotEmpty &&
                         authCntrl.otpController3.value.text.trim().isNotEmpty &&
                         authCntrl.otpController4.value.text.trim().isNotEmpty) {
-                      print("dsakldklksadlksaldkasd");
                       manageCntrl.verifyOtpTenantApi();
                     } else {
                       customSnackBar(Get.context!, "please_enter_otp".tr);

@@ -220,7 +220,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                "Add/Edit Tenant",
+                "Add Tenant",
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),

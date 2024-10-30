@@ -76,9 +76,12 @@ class _NavBarState extends State<NavBar> {
                   NavBarWidgets.buildNavItem(
                       1,
                       dashboardCntrl.selectedIndex.value == 1
-                          ? reportActiveIcon
-                          : reportIcon,
-                      'reports'.tr),
+                          ? 'assets/icons/ic-bank.png'
+                          : 'assets/icons/ic-bank.png',
+                      color: dashboardCntrl.selectedIndex.value == 1
+                          ? null
+                          : Colors.black,
+                      'Payments'),
                   NavBarWidgets.buildNavItem(
                       2,
                       dashboardCntrl.selectedIndex.value == 2
