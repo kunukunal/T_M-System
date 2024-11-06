@@ -11,7 +11,7 @@ import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/tenant_screens/dashboard/dashboard_controller.dart';
 import 'package:tanent_management/tenant_screens/dashboard/rental_controller.dart';
 import 'package:tanent_management/tenant_screens/explore/explore_view.dart';
-
+import 'package:badges/badges.dart' as badge;
 import '../../common/text_styles.dart';
 
 class DashBoardTenantWidgets {
@@ -26,11 +26,23 @@ class DashBoardTenantWidgets {
         children: [
           SizedBox(height: 42.h, width: 94.35.w, child: splashImage),
           const Spacer(),
-          GestureDetector(
-              onTap: () {
-                dashCntrl.onNotifTap();
-              },
-              child: notifIcon),
+          GestureDetector(onTap: () {
+            dashCntrl.onNotifTap();
+          }, child: Obx(() {
+            return badge.Badge(
+              child: notifIcon,
+              showBadge: dashCntrl.notificationCount.value > 0,
+              badgeContent: Text(
+                "${dashCntrl.notificationCount.value}",
+                style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w600),
+              ),
+              badgeStyle: badge.BadgeStyle(
+                badgeColor: dashCntrl.notificationCount.value > 0
+                    ? Colors.orange
+                    : Colors.transparent,
+              ),
+            );
+          })),
           // Row(
           //   children: [
           //     SizedBox(

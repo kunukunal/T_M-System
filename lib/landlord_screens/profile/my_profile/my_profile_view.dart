@@ -7,7 +7,6 @@ import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/links.dart';
 import 'package:tanent_management/common/text_styles.dart';
 import 'package:tanent_management/common/widgets.dart';
-import 'package:tanent_management/landlord_screens/notification/notification_receive/notification_receive_view.dart';
 import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/sign_in.dart';
 import 'package:tanent_management/landlord_screens/onboarding/language/language.dart';
 import 'package:tanent_management/landlord_screens/profile/contact_us/contact_us_view.dart';
@@ -18,7 +17,6 @@ import 'package:tanent_management/landlord_screens/profile/notification_setting/
 import 'package:tanent_management/landlord_screens/profile/privacy_policy/privacy_policy_view.dart';
 import 'package:tanent_management/landlord_screens/reports/report_view.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
-
 import 'my_profile_controller.dart';
 
 class MyProfileView extends StatelessWidget {
@@ -38,7 +36,7 @@ class MyProfileView extends StatelessWidget {
                 Obx(
                   () {
                     return MyProfileWidget.myProfileContainer(
-                        name: userData['name'] ?? "user".tr,
+                        name: profileCntrl.name.value ,
                         phoneNo:
                             '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
                         image: profileCntrl.profileImage.value);

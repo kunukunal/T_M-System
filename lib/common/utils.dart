@@ -14,7 +14,6 @@ convertDateString(String date) {
 
 Future<DateTime?> selectMonthYear(BuildContext context) async {
   DateTime today = DateTime.now();
-
   final DateTime? picked = await showMonthPicker(
     context: context,
     initialDate: today,

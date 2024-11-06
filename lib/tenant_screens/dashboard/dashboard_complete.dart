@@ -219,21 +219,23 @@ unitList() {
                   ],
                 ),
               ),
-              Divider(
-                color: lightBorderGrey,
-                // height: 1.h,
-              ),
-              customBorderWithIconButton(
-                "pay_your_rent".tr,
-                () {
-                  dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
-                },
-                verticalPadding: 5.h,
-                horizontalPadding: 2.w,
-                btnHeight: 35.h,
-                borderColor: HexColor('#679BF1'),
-                textColor: HexColor('#679BF1'),
-              ),
+              if (dashCntrl.unitList[index]['pay_rent'] == true)
+                Divider(
+                  color: lightBorderGrey,
+                  // height: 1.h,
+                ),
+              if (dashCntrl.unitList[index]['pay_rent'] == true)
+                customBorderWithIconButton(
+                  "pay_your_rent".tr,
+                  () {
+                    dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
+                  },
+                  verticalPadding: 5.h,
+                  horizontalPadding: 2.w,
+                  btnHeight: 35.h,
+                  borderColor: HexColor('#679BF1'),
+                  textColor: HexColor('#679BF1'),
+                ),
             ],
           ),
         ),

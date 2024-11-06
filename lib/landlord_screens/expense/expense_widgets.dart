@@ -674,7 +674,7 @@ class ExpenseWidgets {
                             ),
                             Row(
                               children: [
-                                Text("Buidling name: ",
+                                Text("Building name: ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17.sp - commonFontSize,

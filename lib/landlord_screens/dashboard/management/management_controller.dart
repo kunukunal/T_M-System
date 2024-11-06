@@ -148,6 +148,9 @@ class ManagementController extends GetxController {
       for (var item in responseData) {
         projectsListData.add(Property.fromJson(item));
       }
+      if (projectsListData.length == 1) {
+        onProjectSelected(projectsListData[0]);
+      }
     } else {
       print('Error: ${response.statusCode}');
     }
@@ -176,6 +179,10 @@ class ManagementController extends GetxController {
       for (var item in responseData) {
         floorsList.add(Floor.fromJson(item));
       }
+
+      if (floorsList.length == 1) {
+        onFloorSelected(floorsList[0]);
+      }
     } else {
       // Handle other status codes and errors
       print('Error: ${response.statusCode}');
@@ -191,6 +198,10 @@ class ManagementController extends GetxController {
     unitsList.clear();
     amenitiesList.clear();
     amountCntrl.value.clear();
+
+    if (projectsListData[0].buildings.length == 1) {
+      onBuildingSelected(selectedProperty.value?.buildings[0]);
+    }
   }
 
   void onBuildingSelected(Building? building) {
@@ -219,6 +230,9 @@ class ManagementController extends GetxController {
     selectedUnit.value = null;
     amenitiesList.clear();
     amountCntrl.value.clear();
+    if (floorsList[0].units.length == 1) {
+      onUnitSelected(floorsList[0].units[0]);
+    }
   }
 
   void onUnitSelected(Unit? unit) {

@@ -108,6 +108,8 @@ class PaymentRequestScreen extends StatelessWidget {
                                               2;
                                         },
                                         child: Container(
+                                             constraints:
+                                              BoxConstraints(minHeight: 100.h),
                                           decoration: BoxDecoration(
                                               color: paymntCntrl
                                                           .payentModeChoose
@@ -164,6 +166,8 @@ class PaymentRequestScreen extends StatelessWidget {
                                               1;
                                         },
                                         child: Container(
+                                          constraints:
+                                              BoxConstraints(minHeight: 100.h),
                                           decoration: BoxDecoration(
                                               color: paymntCntrl
                                                           .payentModeChoose

@@ -44,11 +44,16 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final Locale? locale;
 
   const MyApp({super.key, this.locale});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -61,7 +66,7 @@ class MyApp extends StatelessWidget {
       return OverlaySupport.global(
         child: GetMaterialApp(
           translations: LocaleFile(),
-          locale: locale ?? Get.deviceLocale,
+          locale: widget.locale ?? Get.deviceLocale,
           fallbackLocale:
               const Locale('en', 'US'), // Fallback language in case of failure
           supportedLocales: const [

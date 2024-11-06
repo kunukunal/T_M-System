@@ -61,6 +61,7 @@ class PersonalInfoController extends GetxController {
     if (documentTypeList.isEmpty) {
       getDocumentType();
     }
+    isTenant.value = !Get.arguments[0];
     super.onInit();
   }
 
@@ -81,15 +82,16 @@ class PersonalInfoController extends GetxController {
 
   getDocumentType() async {
     isDocumentTypeDataLoading.value = true;
-    final authCntrl = Get.put(AuthController());
-    isTenant.value = authCntrl.onButtonTapTenant.value == 2;
+    // final authCntrl = Get.put(AuthController());
+
+    // isTenant.value = authCntrl.onButtonTapTenant.value == 2;
     print("dfsaklksaldklaskdlkasdl ");
     String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     final response = await DioClientServices.instance.dioGetCall(headers: {
       "Accept-Language": languaeCode,
-    }, url: "$userDocumentType?limit=100&${authCntrl.onButtonTapTenant.value == 2 ? "for_tenant=true" : "for_landlord=true"}");
+    }, url: "$userDocumentType?limit=100&${isTenant.value ? "for_tenant=true" : "for_landlord=true"}");
     if (response != null) {
       if (response.statusCode == 200) {
         isDocumentTypeDataLoading.value = false;
@@ -112,8 +114,6 @@ class PersonalInfoController extends GetxController {
   }
 
   userDocumentUpdate({bool? isFromRegistered}) async {
-    final authCntrl = Get.put(AuthController());
-
     isPercentageLoadingStart.value = true;
     List id = [];
     List image = [];
@@ -150,7 +150,7 @@ class PersonalInfoController extends GetxController {
               value: true);
 
           // Get.offAll(() => const NavBar(initialPage: 0));
-          if (authCntrl.onButtonTapTenant.value == 1) {
+          if (isTenant.value == false) {
             Get.offAll(() => const NavBar(initialPage: 0));
           } else {
             Get.offAll(() => const NavBarTenant(initialPage: 0));
@@ -176,14 +176,12 @@ class PersonalInfoController extends GetxController {
 
   //functions
   onSkipTap({required bool? isFromRegister, bool isFromApi = false}) {
-    final authCntrl = Get.put(AuthController());
-
     if (isFromApi) {
       Get.to(() => LandlordDocView(
             isFromregister: isFromRegister,
           ));
     } else {
-      if (authCntrl.onButtonTapTenant.value == 1) {
+      if (isTenant.value == false) {
         Get.offAll(() => const NavBar(initialPage: 0));
       } else {
         Get.offAll(() => const NavBarTenant(initialPage: 0));
@@ -195,31 +193,35 @@ class PersonalInfoController extends GetxController {
   }
 
   onNextTap({required bool? isFromRegister}) {
-    if (nameCntrl.value.text.trim().isNotEmpty) {
-      // if (emailCntrl.value.text.trim().isNotEmpty) {
-      if (permanentAddCntrl.value.text.trim().isNotEmpty) {
-        if (pinNoCntrl.value.text.trim().isNotEmpty) {
-          if (selectedState.value != "Select") {
-            if (cityCntrl.value.text.trim().isNotEmpty) {
-              userProfileUpdate(isFromRegister: isFromRegister);
-            } else {
-              customSnackBar(Get.context!, "please_enter_city".tr);
-            }
-          } else {
-            customSnackBar(Get.context!, "please_enter_state".tr);
-          }
-        } else {
-          customSnackBar(Get.context!, "please_enter_pincode".tr);
-        }
-      } else {
-        customSnackBar(Get.context!, "please_enter_permanent_address".tr);
-      }
-      // } else {
-      //   customSnackBar(Get.context!, "Please Enter your Email");
-      // }
-    } else {
-      customSnackBar(Get.context!, "please_enter_name".tr);
-    }
+    // if (nameCntrl.value.text.trim().isNotEmpty) {
+    // if (emailCntrl.value.text.trim().isNotEmpty) {
+    // if (permanentAddCntrl.value.text.trim().isNotEmpty) {
+    // if (pinNoCntrl.value.text.trim().isNotEmpty) {
+    // if (selectedState.value != "Select") {
+    // if (cityCntrl.value.text.trim().isNotEmpty) {
+    userProfileUpdate(isFromRegister: isFromRegister);
+    // } else {
+    //   customSnackBar(Get.context!, "please_enter_city".tr);
+    // }
+    // } else {
+    //   customSnackBar(Get.context!, "please_enter_state".tr);
+    // }
+    // } else {
+    //   customSnackBar(Get.context!, "please_enter_pincode".tr);
+    // }
+    // }
+
+    //   else {
+    //     customSnackBar(Get.context!, "please_enter_permanent_address".tr);
+    //   }
+    //   // } else {
+    //   //   customSnackBar(Get.context!, "Please Enter your Email");
+    //   // }
+    // }
+
+    // else {
+    //   customSnackBar(Get.context!, "please_enter_name".tr);
+    // }
 
     // if (nameCntrl.value.text.trim().isNotEmpty &&
     //     // emailCntrl.value.text.trim().isNotEmpty &&
@@ -234,9 +236,7 @@ class PersonalInfoController extends GetxController {
   }
 
   onSubmitPressed() {
-    final authCntrl = Get.put(AuthController());
-
-    if (authCntrl.onButtonTapTenant.value == 1) {
+    if (isTenant.value == false) {
       Get.offAll(() => const NavBar(initialPage: 0));
     } else {
       Get.offAll(() => const NavBarTenant(initialPage: 0));
@@ -256,31 +256,39 @@ class PersonalInfoController extends GetxController {
                 "profile_image": await DioClientServices.instance
                     .multipartFile(file: imageFile.value!),
                 "name": nameCntrl.value.text.trim(),
-                if (emailCntrl.value.text.isNotEmpty)
+                if (emailCntrl.value.text.trim().isNotEmpty)
                   "email": emailCntrl.value.text.trim(),
 
                 // "age": 19,
                 // "gender": "M",
-                "address": permanentAddCntrl.value.text.trim(),
-                "city": cityCntrl.value.text.trim(),
-                "zip_code": pinNoCntrl.value.text,
+                if (permanentAddCntrl.value.text.trim().isNotEmpty)
+                  "address": permanentAddCntrl.value.text.trim(),
+                if (cityCntrl.value.text.trim().isNotEmpty)
+                  "city": cityCntrl.value.text.trim(),
+                if (pinNoCntrl.value.text.trim().isNotEmpty)
+                  "zip_code": pinNoCntrl.value.text,
                 // "state": stateCntrl.value.text.trim(),
-                "state": selectedState.value,
+                if (selectedState.value != "Select")
+                  "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
               }
             : {
                 "name": nameCntrl.value.text.trim(),
-                if (emailCntrl.value.text.isNotEmpty)
+                if (emailCntrl.value.text.trim().isNotEmpty)
                   "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
-                "address": permanentAddCntrl.value.text.trim(),
-                "city": cityCntrl.value.text.trim(),
-                "zip_code": pinNoCntrl.value.text,
+                if (permanentAddCntrl.value.text.trim().isNotEmpty)
+                  "address": permanentAddCntrl.value.text.trim(),
+                if (cityCntrl.value.text.trim().isNotEmpty)
+                  "city": cityCntrl.value.text.trim(),
+                if (pinNoCntrl.value.text.trim().isNotEmpty)
+                  "zip_code": pinNoCntrl.value.text,
                 // "state": stateCntrl.value.text.trim(),
-                "state": selectedState.value,
+                if (selectedState.value != "Select")
+                  "state": selectedState.value,
 
                 // "country": "Country",
                 // "longitude": 98.5656665,

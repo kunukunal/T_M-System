@@ -16,18 +16,21 @@ class NotifReceiveWidget {
       String? price,
       String? name,
       String? date,
+      String? transactionModeValue,
       int? transId,
+      int? trnsactionMode,
       int? status}) {
     // final notifReceiveCntrl = Get.find<NotifReceiveController>();
+    print("daslsdkas ${trnsactionMode} ${transactionModeValue}");
     return Padding(
       padding: EdgeInsets.only(left: 10.h, right: 10.w, bottom: 5.h, top: 10.h),
       child: Container(
-        height: 200.h,
+        // height: 200.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: lightBorderGrey)),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +123,7 @@ class NotifReceiveWidget {
                         ),
                       ),
                       Text(
-                        name!,
+                        name??"",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,
@@ -148,15 +151,16 @@ class NotifReceiveWidget {
                   )
                 ],
               ),
-              customBorderButton('Edit', () {
-                status == 2 ? declinePopup(transId!) : recivedPopup(transId!);
-              },
-                  verticalPadding: 12.h,
-                  horizontalPadding: 2.w,
-                  btnHeight: 30.h,
-                  width: Get.width,
-                  borderColor: HexColor('#679BF1'),
-                  textColor: HexColor('#679BF1'))
+              if (trnsactionMode != 1)
+                customBorderButton('Edit', () {
+                  status == 2 ? declinePopup(transId!) : recivedPopup(transId!);
+                },
+                    verticalPadding: 12.h,
+                    horizontalPadding: 2.w,
+                    btnHeight: 30.h,
+                    width: Get.width,
+                    borderColor: HexColor('#679BF1'),
+                    textColor: HexColor('#679BF1'))
             ],
           ),
         ),

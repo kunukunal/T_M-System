@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
@@ -7,7 +9,7 @@ import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/property_list/property_list_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_view.dart';
-import 'package:tanent_management/landlord_screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
+import 'package:tanent_management/landlord_screens/dashboard/tenant/add_tenant/add_tenant_view.dart';
 import 'package:tanent_management/landlord_screens/expense/add_expense/add_expense_view.dart';
 import 'package:tanent_management/landlord_screens/notification/notification_view.dart';
 import 'package:tanent_management/landlord_screens/profile/my_profile/my_profile_view.dart';
@@ -35,7 +37,11 @@ class DashBoardController extends GetxController {
 
   onAddTenantTap() {
     isAddTap.value = false;
-    Get.to(() => TenantListScreen(), arguments: [true]);
+    Get.to(() => AddTenantScreen(), arguments: [
+      false,
+      {},
+      {'isEdit': false}
+    ]);
     // Get.to(() => AddTenantScreen());
   }
 
@@ -49,7 +55,11 @@ class DashBoardController extends GetxController {
   }
 
   onNotifTap() {
-    Get.to(() => NotificationView());
+    Get.to(() => NotificationView())?.then((value) {
+      if (value == true) {
+        getDashboardData();
+      }
+    });
   }
 
   onProfileTap() {
@@ -66,7 +76,7 @@ class DashBoardController extends GetxController {
     "remaining_due": 0.0
   }.obs;
   final filterrentBoxDate = Rxn<DateTime>();
-
+  final notificationCount = 0.obs;
   final expenseBox = 0.0.obs;
   final xIncomeExpenseLabels = [].obs;
   final income = [].obs;
@@ -74,7 +84,6 @@ class DashBoardController extends GetxController {
   final xOccupancyTrendLabels = [].obs;
   final rentPaid = [].obs;
   final rentDue = [].obs;
-
   final incomingStartFrom = Rxn<DateTime>();
   final incomingEndFrom = Rxn<DateTime>();
   final occupancyStartFrom = Rxn<DateTime>();
@@ -236,10 +245,12 @@ class DashBoardController extends GetxController {
     );
     if (response.statusCode == 200) {
       final data = response.data;
+      log(data.toString());
       proprtyList.clear();
       userData = data['user_data'];
       propertyStats = data['property_stats'];
       rentBox = data['rent'];
+      notificationCount.value = data['unread_notifications'];
       filterrentBox.value = data['month_rent'];
       final now = DateTime.now();
       rentFrom.value = DateTime(now.year, now.month);

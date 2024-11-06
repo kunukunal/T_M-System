@@ -9,7 +9,7 @@ import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class NotificationController extends GetxController {
   final items = [].obs;
-
+  final isRefreshScreen = false.obs;
   onReceiveTap() {
     Get.to(() => NotificationReceiveView());
   }
@@ -124,6 +124,9 @@ class NotificationController extends GetxController {
       print("dsjakjdas ${response.statusCode} ${response.data}");
       if (response.statusCode == 200) {
         getLandlordNotification();
+        isRefreshScreen.value = true;
+
+        print("fdsklakdsa dfd ${isRefreshScreen.value}");
       } else if (response.statusCode == 400) {
         // Handle error
       }

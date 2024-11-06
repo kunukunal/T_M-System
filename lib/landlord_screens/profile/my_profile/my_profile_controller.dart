@@ -16,8 +16,9 @@ class MyProfileController extends GetxController {
           isFromProfile: isFromProfile,
         ))?.then(
       (value) {
-        if (value != "") {
-          profileImage.value = value;
+        if (value.isNotEmpty) {
+          profileImage.value = value[0] ?? "";
+          name.value = value[1] ?? "user".tr;
           userData['profile_image'] = profileImage.value;
         }
       },
@@ -26,9 +27,12 @@ class MyProfileController extends GetxController {
 
   final profileImage = "".obs;
 
+  final name = "".obs;
+
   @override
   void onInit() {
-    profileImage.value = userData['profile_image']??"";
+    profileImage.value = userData['profile_image'] ?? "";
+    name.value = userData['name'] ?? "user".tr;
     super.onInit();
   }
 

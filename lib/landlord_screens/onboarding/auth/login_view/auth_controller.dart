@@ -43,7 +43,7 @@ class AuthController extends GetxController {
   void onInit() {
     selectedItem.value = items[0];
     // startTimer();
-
+    advancedStatusCheck();
     super.onInit();
   }
 
@@ -55,10 +55,12 @@ class AuthController extends GetxController {
         key: SharedPreferencesKeysEnum.islandlord.value,
         value: onButtonTapTenant.value == 1 ? true : false);
     isLandlord = onButtonTapTenant.value == 1 ? true : false;
-    Get.offAll(() => PersonalInfo(
-        isFromRegister: isFromRegister,
-        mobileContrl: mobileNumberController.value.text,
-        phoneCode: selectedItem.value));
+    Get.offAll(
+        () => PersonalInfo(
+            isFromRegister: isFromRegister,
+            mobileContrl: mobileNumberController.value.text,
+            phoneCode: selectedItem.value),
+        arguments: [isLandlord]);
   }
 
   onOtpSubmitPressed(

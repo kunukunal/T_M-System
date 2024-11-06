@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/tenant_screens/navbar/nav_bar_controller.dart';
 import 'package:tanent_management/tenant_screens/navbar/nav_bar_widgets.dart';
 
@@ -29,6 +30,7 @@ class _NavBarState extends State<NavBarTenant> {
       dashboardCntrl.pageController.value =
           PageController(initialPage: widget.initialPage);
     }
+    advancedStatusCheck();
   }
 
   @override

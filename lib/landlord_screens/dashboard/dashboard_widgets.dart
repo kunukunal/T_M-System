@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,10 +14,8 @@ import 'package:tanent_management/landlord_screens/profile/edit_profile/edit_pro
 import '../../common/text_styles.dart';
 
 class DashBoardWidgets {
-  //app bar
   appBar() {
     final dashCntrl = Get.find<DashBoardController>();
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
       child: Row(
@@ -34,11 +33,24 @@ class DashBoardWidgets {
               SizedBox(
                 width: 20.w,
               ),
-              GestureDetector(
-                  onTap: () {
-                    dashCntrl.onNotifTap();
-                  },
-                  child: notifIcon),
+              GestureDetector(onTap: () {
+                dashCntrl.onNotifTap();
+              }, child: Obx(() {
+                return badge.Badge(
+                  child: notifIcon,
+                  showBadge: dashCntrl.notificationCount.value > 0,
+                  badgeContent: Text(
+                    "${dashCntrl.notificationCount.value}",
+                    style:
+                        TextStyle(fontSize: 8.sp, fontWeight: FontWeight.w600),
+                  ),
+                  badgeStyle: badge.BadgeStyle(
+                    badgeColor: dashCntrl.notificationCount.value > 0
+                        ? Colors.orange
+                        : Colors.transparent,
+                  ),
+                );
+              })),
               SizedBox(
                 width: 20.w,
               ),

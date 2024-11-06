@@ -36,16 +36,16 @@ class NotificationReceiveView extends StatelessWidget {
                 // }
               } else if (value == 1) {
                 // if (notifReceiveCntrl.cancelitems.isEmpty) {
-                notifReceiveCntrl.getTransactionByStatusApi(3);
+                notifReceiveCntrl.getDueTransacionApi();
                 // }
               } else if (value == 2) {
-                notifReceiveCntrl.getDueTransacionApi();
+                notifReceiveCntrl.getTransactionByStatusApi(3);
               }
             },
             tabs: const [
               Tab(text: 'Received'),
-              Tab(text: 'Cancelled'),
               Tab(text: 'Due'),
+              Tab(text: 'Cancelled'),
             ],
           ),
         ),
@@ -56,16 +56,15 @@ class NotificationReceiveView extends StatelessWidget {
             Obx(() {
               return _buildTabContent(notifReceiveCntrl.recieveditems, 2);
             }),
-
+            Obx(() {
+              return dueList();
+            }),
             // Cancelled Tab
             Obx(() {
               return _buildTabContent(notifReceiveCntrl.cancelitems, 3);
             }),
 
             // Due Tab
-            Obx(() {
-              return dueList();
-            }),
           ],
         ),
       ),
@@ -327,6 +326,9 @@ class NotificationReceiveView extends StatelessWidget {
                       desc: list[index]['unit_address'],
                       title: list[index]['unit_name'],
                       price: list[index]['transaction_amount'],
+                      trnsactionMode: list[index]['transaction_mode'],
+                      transactionModeValue: list[index]
+                          ['transaction_mode_value'],
                       name: list[index]['tenant'],
                       date: list[index]['transaction_date'],
                       status: status,

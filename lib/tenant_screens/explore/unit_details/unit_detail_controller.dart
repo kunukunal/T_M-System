@@ -61,6 +61,9 @@ class UnitDetailViewController extends GetxController {
     "available_from": "",
     "lanlord_name": "",
     "lanlord_image": "",
+    "landlord_mobile": "",
+    "landlord_email": "",
+    "landlord_address": "",
     "lat_long": [],
   }.obs;
 
@@ -74,7 +77,8 @@ class UnitDetailViewController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -97,6 +101,9 @@ class UnitDetailViewController extends GetxController {
         "available_from": data['available_from'] ?? "",
         "lanlord_name": data['landlord'] ?? "",
         "lanlord_image": data['landlord_image'] ?? "",
+        "landlord_mobile": data['landlord_mobile']??"",
+        "landlord_email": data['landlord_email']??"",
+        "landlord_address": data['landlord_address']??"",
         "lat_long": data['coordinates'],
       };
       unitRating.value = {
@@ -126,7 +133,8 @@ class UnitDetailViewController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -154,7 +162,8 @@ class UnitDetailViewController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -183,7 +192,8 @@ class UnitDetailViewController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 

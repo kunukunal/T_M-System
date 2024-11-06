@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.19"
+  badges:
+    dependency: "direct main"
+    description:
+      name: badges
+      sha256: a7b6bbd60dce418df0db3058b53f9d083c22cdb5132a052145dc267494df0b84
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -816,6 +824,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  new_version_plus:
+    dependency: "direct main"
+    description:
+      name: new_version_plus
+      sha256: e0d8027223488cc7f7c78f6ff286f1b5d9808f88814aecfa0bb12254d25f48ca
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.11"
   nm:
     dependency: transitive
     description:

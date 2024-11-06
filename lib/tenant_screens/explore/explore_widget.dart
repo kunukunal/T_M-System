@@ -186,199 +186,210 @@ class ExploreWidget {
               child: Text("no_units_found".tr),
             )
           : ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: exploreCntrl.getUnitResult.length,
+              controller: exploreCntrl.scrollController.value,
+              itemCount: exploreCntrl.getUnitResult.length +
+                  (exploreCntrl.paginationLoading.value ? 1 : 0),
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.to(() => UnitDetailView(), arguments: [
-                      exploreCntrl.getUnitResult[index]['id'],
-                      false
-                    ]);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: HexColor('#EBEBEB')),
-                        borderRadius: BorderRadius.circular(10.r)),
-                    child: Padding(
-                      padding: EdgeInsets.all(10.r),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRect(
-                                child: Container(
-                                  height: 65.h,
-                                  width: 60.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      image: exploreCntrl.getUnitResult[index]
-                                                  ['image'] !=
-                                              null
-                                          ? DecorationImage(
-                                              image: NetworkImage(exploreCntrl
-                                                      .getUnitResult[index]
-                                                  ['image']),
-                                              fit: BoxFit.cover)
-                                          : DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/images/apartment1_image.png"))),
+                if (index == exploreCntrl.getUnitResult.length) {
+                  return Center(
+                      child: CircularProgressIndicator()); // Loading indicator
+                } else {
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => UnitDetailView(), arguments: [
+                        exploreCntrl.getUnitResult[index]['id'],
+                        false
+                      ]);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: HexColor('#EBEBEB')),
+                          borderRadius: BorderRadius.circular(10.r)),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.r),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRect(
+                                  child: Container(
+                                    height: 65.h,
+                                    width: 60.w,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        image: exploreCntrl.getUnitResult[index]
+                                                    ['image'] !=
+                                                null
+                                            ? DecorationImage(
+                                                image: NetworkImage(exploreCntrl
+                                                        .getUnitResult[index]
+                                                    ['image']),
+                                                fit: BoxFit.cover)
+                                            : DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/apartment1_image.png"))),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: Text(
-                                          exploreCntrl.getUnitResult[index]
-                                                  ['name'] ??
-                                              "",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: CustomStyles.black14,
-                                        )),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "₹${exploreCntrl.getUnitResult[index]['unit_rent'] ?? ""}",
-                                              style: CustomStyles
-                                                  .amountFA4343W700S12
-                                                  .copyWith(
-                                                      color: lightBlue,
-                                                      fontSize: 15.0 -
-                                                          commonFontSize),
-                                            ),
-                                            SizedBox(
-                                              width: 20.w,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                exploreCntrl.addFavouriteUnit(
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: Text(
+                                            exploreCntrl.getUnitResult[index]
+                                                    ['name'] ??
+                                                "",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: CustomStyles.black14,
+                                          )),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "₹${exploreCntrl.getUnitResult[index]['unit_rent'] ?? ""}",
+                                                style: CustomStyles
+                                                    .amountFA4343W700S12
+                                                    .copyWith(
+                                                        color: lightBlue,
+                                                        fontSize: 15.0 -
+                                                            commonFontSize),
+                                              ),
+                                              SizedBox(
+                                                width: 20.w,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  exploreCntrl.addFavouriteUnit(
+                                                      exploreCntrl
+                                                              .getUnitResult[
+                                                          index]['id'],
+                                                      index);
+                                                },
+                                                child: CircleAvatar(
+                                                  radius: 15,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  child: exploreCntrl
+                                                              .getUnitResult[
+                                                          index]['favorite']
+                                                      ? const Icon(
+                                                          Icons.favorite,
+                                                          color: Colors.red,
+                                                        )
+                                                      : const Icon(Icons
+                                                          .favorite_border_outlined),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10.h,
+                                      ),
+                                      Text(
+                                        exploreCntrl.getUnitResult[index]
+                                                ['address'] ??
+                                            "",
+                                        style:
+                                            CustomStyles.address050505w400s12,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Flexible(
+                                            child: Row(
+                                              children: [
+                                                const Flexible(
+                                                    child: Icon(Icons
+                                                        .bedroom_parent_outlined)),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Text(
                                                     exploreCntrl.getUnitResult[
-                                                        index]['id'],
-                                                    index);
-                                              },
-                                              child: CircleAvatar(
-                                                radius: 15,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                child: exploreCntrl
-                                                            .getUnitResult[
-                                                        index]['favorite']
-                                                    ? const Icon(
-                                                        Icons.favorite,
-                                                        color: Colors.red,
-                                                      )
-                                                    : const Icon(Icons
-                                                        .favorite_border_outlined),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
-                                    Text(
-                                      exploreCntrl.getUnitResult[index]
-                                              ['address'] ??
-                                          "",
-                                      style: CustomStyles.address050505w400s12,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(
-                                      height: 5.h,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Row(
-                                            children: [
-                                              const Flexible(
-                                                  child: Icon(Icons
-                                                      .bedroom_parent_outlined)),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Text(
-                                                  exploreCntrl.getUnitResult[
-                                                          index]['unit_type'] ??
-                                                      "",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                ),
-                                              )
-                                            ],
+                                                                index]
+                                                            ['unit_type'] ??
+                                                        "",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        // Flexible(
-                                        //   child: Row(
-                                        //     children: [
-                                        //       Flexible(
-                                        //           child: Icon(
-                                        //               Icons.bathroom_outlined)),
-                                        //       Flexible(
-                                        //         flex: 2,
-                                        //         child: Text(
-                                        //           "4 Bathrooms",
-                                        //           overflow:
-                                        //               TextOverflow.ellipsis,
-                                        //           maxLines: 1,
-                                        //         ),
-                                        //       )
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                        Flexible(
-                                          child: Row(
-                                            children: [
-                                              Flexible(
-                                                  child: SvgPicture.asset(
-                                                "assets/icons/squareftratio.svg",
-                                                height: 20,
-                                              )),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Text(
-                                                  "${exploreCntrl.getUnitResult[index]['area_size'] ?? ""} ${'sqft'.tr}",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
+                                          // Flexible(
+                                          //   child: Row(
+                                          //     children: [
+                                          //       Flexible(
+                                          //           child: Icon(
+                                          //               Icons.bathroom_outlined)),
+                                          //       Flexible(
+                                          //         flex: 2,
+                                          //         child: Text(
+                                          //           "4 Bathrooms",
+                                          //           overflow:
+                                          //               TextOverflow.ellipsis,
+                                          //           maxLines: 1,
+                                          //         ),
+                                          //       )
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                          Flexible(
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                    child: SvgPicture.asset(
+                                                  "assets/icons/squareftratio.svg",
+                                                  height: 20,
+                                                )),
+                                                const SizedBox(
+                                                  width: 5,
                                                 ),
-                                              )
-                                            ],
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Text(
+                                                    "${exploreCntrl.getUnitResult[index]['area_size'] ?? ""} ${'sqft'.tr}",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
+                  );
+                }
               },
               separatorBuilder: (context, index) {
                 return SizedBox(

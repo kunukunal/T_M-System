@@ -10,17 +10,37 @@ import 'package:tanent_management/tenant_screens/explore/search_modal.dart';
 class ExploreController extends GetxController {
   final exploreSearch = <Property>[].obs;
   final exploreSearchItemSelected = Rx<Property?>(null);
- final serachPropertyController=TextEditingController().obs;
+  final serachPropertyController = TextEditingController().obs;
   final isDataSearch = false.obs;
-
+  final nextPagination = "".obs;
+  final scrollController = ScrollController().obs;
   final getUnitResult = [].obs;
+  @override
+  void dispose() {
+    scrollController.value.dispose();
+    super.dispose();
+  }
+
+  @override
+  void onInit() {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels ==
+          scrollController.value.position.maxScrollExtent) {
+        if (nextPagination.value != "") {
+          getUnitSearchByPropertyPagination(nextPagination.value);
+        }
+      }
+    });
+    super.onInit();
+  }
 
   getPropertyBySearchLocation(String searchValue) async {
     isDataSearch.value = true;
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -41,11 +61,17 @@ class ExploreController extends GetxController {
                 Property(id: item['id'], title: item['title'].toString()))
             .toList();
         getUnitResult.clear();
-
         // Reset the selected item since the search results have been updated
-        exploreSearchItemSelected.value = null;
+        if (exploreSearch.length == 1) {
+          exploreSearchItemSelected.value = exploreSearch[0];
+          onTapSearchProperty();
+        } else {
+          exploreSearchItemSelected.value = null;
+        }
       } else {
-        exploreSearch.value = [Property(id: -1, title: 'no_properties_found'.tr)];
+        exploreSearch.value = [
+          Property(id: -1, title: 'no_properties_found'.tr)
+        ];
         exploreSearchItemSelected.value = null;
         getUnitResult.clear();
       }
@@ -79,7 +105,8 @@ class ExploreController extends GetxController {
 
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
 
@@ -89,22 +116,57 @@ class ExploreController extends GetxController {
         "Content-Type": "application/json",
         "Accept-Language": languaeCode,
       },
-      url: "$getUnitByPropertySearch${exploreSearchItemSelected.value?.id}",
+      url:
+          "${getUnitByPropertySearch}property=${exploreSearchItemSelected.value?.id}",
     );
     if (response.statusCode == 200) {
+      final responseData = response.data;
+      nextPagination.value = responseData['next'] ?? "";
+      final data = response.data['results'];
+      print("dsaklkdla ${data}");
       getUnitResult.clear();
-      getUnitResult.addAll(response.data);
+      getUnitResult.addAll(data);
       getUnitByPropertySearchLoading.value = false;
     } else {
       getUnitByPropertySearchLoading.value = false;
     }
   }
 
-  addFavouriteUnit(int unitId, int index) async {
-
+  final paginationLoading = false.obs;
+  getUnitSearchByPropertyPagination(String url) async {
+    paginationLoading.value = true;
     String accessToken = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.accessToken.value) ??
-        "";        String languaeCode = await SharedPreferencesServices.getStringData(
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      isCustomUrl: true,
+      url: url,
+    );
+    if (response.statusCode == 200) {
+      final responseData = response.data;
+      nextPagination.value = responseData['next'] ?? "";
+      final data = response.data['results'];
+      getUnitResult.addAll(data);
+      paginationLoading.value = false;
+    } else {
+      paginationLoading.value = false;
+    }
+  }
+
+  addFavouriteUnit(int unitId, int index) async {
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
             key: SharedPreferencesKeysEnum.languaecode.value) ??
         "en";
     final response = await DioClientServices.instance.dioPostCall(

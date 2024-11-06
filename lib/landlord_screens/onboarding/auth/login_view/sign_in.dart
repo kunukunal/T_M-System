@@ -8,19 +8,30 @@ import 'package:tanent_management/landlord_screens/onboarding/auth/login_view/au
 
 import 'auth_widgets.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   final bool? isFromRegister;
   final bool? isFrstTime;
   SignInScreen({required this.isFromRegister, this.isFrstTime, super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final authCntrl = Get.put(AuthController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    advancedStatusCheck();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(
-          title: isFromRegister!
+          title: widget.isFromRegister!
               ? "${'register_as'.tr} ${authCntrl.onButtonTapTenant.value == 2 ? "tenant".tr : "landlord".tr}"
               : "Login",
           isBack: false,
@@ -53,9 +64,11 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
           ),
-          AuthWidget.loginForm(isFromRegister!),
-          isFromRegister! ? const SizedBox() : AuthWidget.registrationBox(),
-          if (isFromRegister == false)
+          AuthWidget.loginForm(widget.isFromRegister!),
+          widget.isFromRegister!
+              ? const SizedBox()
+              : AuthWidget.registrationBox(),
+          if (widget.isFromRegister == false)
             Padding(
               padding: const EdgeInsets.only(top: 15),
               child: Text("Version: $appVersion"),

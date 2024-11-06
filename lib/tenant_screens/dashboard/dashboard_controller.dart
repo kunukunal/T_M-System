@@ -28,7 +28,12 @@ class DashBoardTenantController extends GetxController {
   }
 
   onNotifTap() {
-    Get.to(() => NotificationView());
+    Get.to(() => NotificationView())?.then((value) {
+      print("fdsklakdsa ${value}");
+      if (value == true) {
+        getDashboardData();
+      }
+    });
   }
 
   onTapPayRent(Map unitData) {
@@ -44,6 +49,7 @@ class DashBoardTenantController extends GetxController {
   final paymentHistoryList = [].obs;
   final rentData = {}.obs;
   final isDashboardDataLaoding = false.obs;
+  final notificationCount = 0.obs;
 
   getDashboardData() async {
     isDashboardDataLaoding.value = true;
@@ -66,6 +72,7 @@ class DashBoardTenantController extends GetxController {
     if (response.statusCode == 200) {
       final data = response.data;
       userData = data['user_data'];
+      notificationCount.value = data['unread_notifications'];
       unitList.clear();
       paymentHistoryList.clear();
       unitList.addAll(data['units']);

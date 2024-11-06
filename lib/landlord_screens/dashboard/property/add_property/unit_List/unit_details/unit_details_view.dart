@@ -45,7 +45,7 @@ class UnitDetails extends StatelessWidget {
                       children: [
                         // if (unitDetailCntrl.unitImageList.isNotEmpty)
                         UnitDetailView().pageViewWidget(),
-
+                        SizedBox(height: 10.h),
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(

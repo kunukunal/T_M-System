@@ -170,7 +170,6 @@ class UnitDetailViewWidget {
               children: [
                 ...List.generate(
                   unitCntrl.amenitiesList.length,
-                  
                   (index) {
                     return Row(
                       children: [
@@ -231,28 +230,138 @@ class UnitDetailViewWidget {
           height: 10.h,
         ),
         Container(
+          padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
               border: Border.all(color: Colors.grey.shade300),
               borderRadius: BorderRadius.circular(10)),
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: unitCntrl.unitData['lanlord_image'].toString() != ""
-                ? CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                        unitCntrl.unitData['lanlord_image'].toString()))
-                : const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage(Assets.iconsProfile),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  unitCntrl.unitData['lanlord_image'].toString() != ""
+                      ? CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(
+                              unitCntrl.unitData['lanlord_image'].toString()))
+                      : const CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage(Assets.iconsProfile),
+                        ),
+                  SizedBox(
+                    width: 10.w,
                   ),
-            title: Text(
-              unitCntrl.unitData['lanlord_name'].toString(),
-              style: CustomStyles.titleText
-                  .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
-            ),
-            subtitle: Text("landlord".tr),
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        unitCntrl.unitData['lanlord_name'].toString(),
+                        style: CustomStyles.otpStyle050505W700S16
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text("landlord".tr)
+                    ],
+                  )),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  GestureDetector(
+                      onTap: () async {
+                        if (unitCntrl.unitData['landlord_email']
+                            .toString()
+                            .isNotEmpty) {
+                          try {
+                            final nativeUrl = Uri.parse(
+                                "mailto:${unitCntrl.unitData['landlord_email']}");
+                            if (await canLaunchUrl(nativeUrl)) {
+                              await launchUrl(nativeUrl);
+                            } else {}
+                          } catch (e) {
+                            print("sdajkasdj $e");
+                          }
+                        } else {
+                          customSnackBar(Get.context!, "email_not_found".tr);
+                        }
+                      },
+                      child: emailIcon),
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  GestureDetector(
+                      onTap: () async {
+                        if (unitCntrl.unitData['landlord_mobile']
+                            .toString()
+                            .isNotEmpty) {
+                          try {
+                            final nativeUrl = Uri.parse(
+                                "tel:${unitCntrl.unitData['landlord_mobile']}");
+                            if (await canLaunchUrl(nativeUrl)) {
+                              await launchUrl(nativeUrl);
+                            } else {}
+                          } catch (e) {
+                            print("sdajkasdj $e");
+                          }
+                        } else {
+                          customSnackBar(
+                              Get.context!, "phone_number_not_found".tr);
+                        }
+                      },
+                      child: callIcon)
+                ],
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Divider(
+                color: HexColor('#EBEBEB'),
+                height: .5,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              detailInnerWidget('${'phone_number'.tr}     :',
+                  '${unitCntrl.unitData['landlord_mobile']}'),
+              SizedBox(
+                height: 10.h,
+              ),
+              detailInnerWidget('${'email_address'.tr}      :',
+                  '${unitCntrl.unitData['landlord_email']}'),
+              SizedBox(
+                height: 10.h,
+              ),
+              detailInnerWidget('${'address'.tr}                :',
+                  '${unitCntrl.unitData['landlord_address']}'),
+              SizedBox(
+                height: 10.h,
+              ),
+              // detailInnerWidget(
+              //     '${'occupied_units'.tr}   :', '${cntrl.occupiedUnit}'),
+            ],
           ),
         ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //       border: Border.all(color: Colors.grey.shade300),
+        //       borderRadius: BorderRadius.circular(10)),
+        //   child: ListTile(
+        //     contentPadding: EdgeInsets.zero,
+        //     leading: unitCntrl.unitData['lanlord_image'].toString() != ""
+        //         ? CircleAvatar(
+        //             radius: 30,
+        //             backgroundImage: NetworkImage(
+        //                 unitCntrl.unitData['lanlord_image'].toString()))
+        //         : const CircleAvatar(
+        //             radius: 30,
+        //             backgroundImage: AssetImage(Assets.iconsProfile),
+        //           ),
+        //     title: Text(
+        //       unitCntrl.unitData['lanlord_name'].toString(),
+        //       style: CustomStyles.titleText
+        //           .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
+        //     ),
+        //     subtitle: Text("landlord".tr),
+        //   ),
+        // ),
         SizedBox(
           height: 10.h,
         ),
@@ -577,6 +686,32 @@ class UnitDetailViewWidget {
         ),
       ),
       barrierDismissible: false,
+    );
+  }
+
+  detailInnerWidget(key, value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 150.w,
+          child: Text(
+            key,
+            style: CustomStyles.otpStyle050505W400S14,
+          ),
+        ),
+        SizedBox(
+          width: 10.h,
+        ),
+        Expanded(
+            child: Text(
+          value,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: CustomStyles.desc606060.copyWith(
+              fontSize: 14.sp - commonFontSize, fontFamily: 'DM Sans'),
+        )),
+      ],
     );
   }
 }

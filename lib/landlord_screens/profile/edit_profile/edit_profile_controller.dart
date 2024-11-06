@@ -82,31 +82,31 @@ class EditProfileController extends GetxController {
   }
 
   onSubmit() {
-    if (nameCntrl.value.text.trim().isNotEmpty) {
-      // if (emailCntrl.value.text.trim().isNotEmpty) {
-      if (permanentAddCntrl.value.text.trim().isNotEmpty) {
-        if (selectedState.value != "Select") {
-          if (pinNoCntrl.value.text.trim().isNotEmpty) {
-            if (cityCntrl.value.text.trim().isNotEmpty) {
-              userProfileUpdate();
-            } else {
-              customSnackBar(Get.context!, "please_enter_city".tr);
-            }
-          } else {
-            customSnackBar(Get.context!, "please_enter_pincode".tr);
-          }
-        } else {
-          customSnackBar(Get.context!, "please_enter_state".tr);
-        }
-      } else {
-        customSnackBar(Get.context!, "please_enter_permanent_address".tr);
-      }
-      // } else {
-      //   customSnackBar(Get.context!, "Please enter your email");
-      // }
-    } else {
-      customSnackBar(Get.context!, "please_enter_name".tr);
-    }
+    // if (nameCntrl.value.text.trim().isNotEmpty) {
+    // if (emailCntrl.value.text.trim().isNotEmpty) {
+    // if (permanentAddCntrl.value.text.trim().isNotEmpty) {
+    // if (selectedState.value != "Select") {
+    // if (pinNoCntrl.value.text.trim().isNotEmpty) {
+    // if (cityCntrl.value.text.trim().isNotEmpty) {
+    userProfileUpdate();
+    //         } else {
+    //           customSnackBar(Get.context!, "please_enter_city".tr);
+    //         }
+    //       } else {
+    //         customSnackBar(Get.context!, "please_enter_pincode".tr);
+    //       }
+    //     } else {
+    //       customSnackBar(Get.context!, "please_enter_state".tr);
+    //     }
+    //   } else {
+    //     customSnackBar(Get.context!, "please_enter_permanent_address".tr);
+    //   }
+    //   // } else {
+    //   //   customSnackBar(Get.context!, "Please enter your email");
+    //   // }
+    // } else {
+    //   customSnackBar(Get.context!, "please_enter_name".tr);
+    // }
   }
 
   final isProfileUpdating = false.obs;
@@ -125,28 +125,34 @@ class EditProfileController extends GetxController {
                 "profile_image": await DioClientServices.instance
                     .multipartFile(file: selectedImage.value!),
                 "name": nameCntrl.value.text.trim(),
-                if (emailCntrl.value.text.isNotEmpty)
+                if (emailCntrl.value.text.trim().isNotEmpty)
                   "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),
-                "city": cityCntrl.value.text.trim(),
-                "zip_code": pinNoCntrl.value.text,
-                "state": selectedState.value,
+                if (cityCntrl.value.text.trim().isNotEmpty)
+                  "city": cityCntrl.value.text.trim(),
+                if (pinNoCntrl.value.text.trim().isNotEmpty)
+                  "zip_code": pinNoCntrl.value.text.trim(),
+                if (selectedState.value != "Select")
+                  "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
               }
             : {
                 "name": nameCntrl.value.text.trim(),
-                if (emailCntrl.value.text.isNotEmpty)
+                if (emailCntrl.value.text.trim().isNotEmpty)
                   "email": emailCntrl.value.text.trim(),
                 // "age": 19,
                 // "gender": "M",
                 "address": permanentAddCntrl.value.text.trim(),
-                "city": cityCntrl.value.text.trim(),
-                "zip_code": pinNoCntrl.value.text,
-                "state": selectedState.value,
+                if (cityCntrl.value.text.trim().isNotEmpty)
+                  "city": cityCntrl.value.text.trim(),
+                if (pinNoCntrl.value.text.trim().isNotEmpty)
+                  "zip_code": pinNoCntrl.value.text.trim(),
+                if (selectedState.value != "Select")
+                  "state": selectedState.value,
                 // "country": "Country",
                 // "longitude": 98.5656665,
                 // "latitude": 78.5656665,
@@ -160,10 +166,11 @@ class EditProfileController extends GetxController {
       if (response.statusCode == 200) {
         print("sdasdasdasd ${response.data}");
         userData['profile_image'] = response.data['profile_image'];
+        userData['name'] = response.data['name'] ?? "";
         final profileValue = response.data['profile_image'];
         customSnackBar(Get.context!, "profile_update_successfully".tr);
         isProfileUpdating.value = false;
-        Get.back(result: profileValue);
+        Get.back(result: [profileValue, userData['name']]);
         log("Profile update Successfully.");
       } else if (response.statusCode == 400) {
         if (response.data.toString().contains("email")) {

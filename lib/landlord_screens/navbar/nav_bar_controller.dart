@@ -7,7 +7,6 @@ import 'package:tanent_management/common/shared_pref_keys.dart';
 import 'package:tanent_management/landlord_screens/dashboard/tenant/tenant_list/tenant_list_view.dart';
 import 'package:tanent_management/landlord_screens/navbar_management/navbar_management_view.dart';
 import 'package:tanent_management/landlord_screens/notification/notification_receive/notification_receive_view.dart';
-import 'package:tanent_management/landlord_screens/reports/report_view.dart';
 import 'package:tanent_management/services/dio_client_service.dart';
 import 'package:tanent_management/services/shared_preferences_services.dart';
 
@@ -23,7 +22,6 @@ class NavBarController extends GetxController {
   //List Variables
   late final pages = [
     DashboardScreen(),
-
     NotificationReceiveView(),
     NavbarManagementScreen(), // TenantListScreen(),
     ExpenseScreen(),
@@ -33,7 +31,6 @@ class NavBarController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     uploadUserTokenToFcm();
   }
 

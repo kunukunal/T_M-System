@@ -433,7 +433,7 @@ class OverviewCard extends StatelessWidget {
                             showTitles: true,
                             getTextStyles: (context, value) => TextStyle(
                               color: Colors.black,
-                              fontSize: 10.sp - commonFontSize,
+                              fontSize: 9.sp - commonFontSize,
                             ),
                           ),
                           rightTitles: SideTitles(showTitles: false),

@@ -52,6 +52,19 @@ class AddTenantDocumentController extends GetxController {
         updateDocument();
       } else {
         uploadDocumenById();
+        // int index = -1;
+        // for (int i = 0; i < documentList.length; i++) {
+        //   if (documentList[i]['image'] == null) {
+        //     index = i;
+        //     break;
+        //   }
+        // }
+        // if (index == -1) {
+        //   uploadDocumenById();
+        // } else {
+        //   customSnackBar(Get.context!,
+        //       "${'please_add_the'.tr} ${documentList[index]['type_title']}");
+        // }
       }
       // int index = -1;
 
@@ -81,8 +94,12 @@ class AddTenantDocumentController extends GetxController {
 
     for (int i = 0; i < documentList.length; i++) {
       id.add(documentList[i]['id']);
-      image.add(await DioClientServices.instance
-          .multipartFile(file: documentList[i]['image']));
+      if (documentList[i]['image'] != null) {
+        image.add(await DioClientServices.instance
+            .multipartFile(file: documentList[i]['image']));
+      } else {
+        image.add(await DioClientServices.instance.multipartAssetsFile());
+      }
     }
 
     String languaeCode = await SharedPreferencesServices.getStringData(

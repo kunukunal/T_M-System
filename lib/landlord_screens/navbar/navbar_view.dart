@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/landlord_screens/navbar/nav_bar_controller.dart';
 import 'package:tanent_management/landlord_screens/navbar/nav_bar_widgets.dart';
 import '../../common/constants.dart';
@@ -28,6 +29,7 @@ class _NavBarState extends State<NavBar> {
       dashboardCntrl.pageController.value =
           PageController(initialPage: widget.initialPage);
     }
+       advancedStatusCheck( );
   }
 
   @override
@@ -80,7 +82,7 @@ class _NavBarState extends State<NavBar> {
                           : 'assets/icons/ic-bank.png',
                       color: dashboardCntrl.selectedIndex.value == 1
                           ? null
-                          : Colors.black,
+                          : Colors.black54,
                       'Payments'),
                   NavBarWidgets.buildNavItem(
                       2,

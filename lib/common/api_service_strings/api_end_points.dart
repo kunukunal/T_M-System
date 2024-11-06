@@ -83,7 +83,8 @@ const String tenantDashboard = "tenant/dashboard/";
 
 const String getExplore = "tenant/properties/?search=";
 
-const String getUnitByPropertySearch = "tenant/units/?property=";
+// const String getUnitByPropertySearch = "tenant/units/?property=";
+const String getUnitByPropertySearch = "tenant/units/?limit=10&";
 
 const String makeUnitFavourite = "tenant/favorite-properties/";
 
@@ -127,6 +128,7 @@ const String paytenantRent = "transaction/pay-tenant-rent/";
 const String phonePayCallbackUrl = "tenant/payment-callback/";
 
 const String report = "reports/transaction-receipts/";
+const String invoice = "reports/invoices/";
 
 const String expnseFilter = "landlord/expenses/";
 

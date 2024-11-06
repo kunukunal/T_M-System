@@ -10,7 +10,9 @@ import 'package:tanent_management/services/shared_preferences_services.dart';
 
 class ReportController extends GetxController {
   final reportList = [].obs;
+  final invoiceList = [].obs;
   final isReportDataloading = false.obs;
+  final isInvoiceDataloading = false.obs;
   final rentFrom = Rxn<DateTime>();
 
   @override
@@ -51,11 +53,41 @@ class ReportController extends GetxController {
     }
   }
 
+  getInvoiceData() async {
+    isInvoiceDataloading.value = true;
+
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    final response = await DioClientServices.instance.dioGetCall(
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url:
+          "$invoice?month=${rentFrom.value?.month}&year=${rentFrom.value?.year}",
+    );
+    if (response.statusCode == 200) {
+      final data = response.data;
+      log("|kasdkal $data");
+      invoiceList.clear();
+      invoiceList.addAll(data);
+      isInvoiceDataloading.value = false;
+    } else {
+      isInvoiceDataloading.value = false;
+    }
+  }
+
   Future<void> monthFilter(BuildContext context) async {
     final DateTime? picked = await selectMonthYear(context);
     if (picked != null) {
       rentFrom.value = DateTime(picked.year, picked.month);
       getReportData();
+      getInvoiceData();
     }
   }
 }

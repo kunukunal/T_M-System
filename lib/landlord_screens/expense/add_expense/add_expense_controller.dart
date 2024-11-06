@@ -155,6 +155,7 @@ class AddExpenseController extends GetxController {
       for (var item in responseData) {
         projectsListData.add(Property.fromJson(item));
       }
+
       if (isfromEdit.value) {
         for (int i = 0; i < projectsListData.length; i++) {
           print("jkkjkj ${editMap}");
@@ -176,6 +177,10 @@ class AddExpenseController extends GetxController {
             break;
           }
         }
+      } else {
+        if (projectsListData.length == 1) {
+          onProjectSelected(projectsListData[0]);
+        }
       }
     } else {
       print('Error: ${response.statusCode}');
@@ -196,7 +201,7 @@ class AddExpenseController extends GetxController {
         "Content-Type": "application/json",
         "Accept-Language": languaeCode,
       },
-      url: "$getFloorAndUnitList$buildingId/",
+      url: "$getFloorAndUnitList$buildingId/?show_all=true",
     );
 
     if (response.statusCode == 200) {
@@ -217,7 +222,6 @@ class AddExpenseController extends GetxController {
                 for (int k = 0; k < floorsList[i].units.length; k++) {
                   print(
                       "Selected Property: ${selectedProperty.value!.title}, Buildings Count: ${projectsListData[i].buildings.length}, Building ID: ${projectsListData[i].buildings[k].id}");
-
                   if (floorsList[i].units[k].id == editMap['unit']) {
                     print("dsadsa ${floorsList[i].units[k].id}");
                     selectedUnit.value = floorsList[i].units[k];
@@ -231,6 +235,10 @@ class AddExpenseController extends GetxController {
               break;
             }
           }
+        }
+      } else {
+        if (floorsList.length == 1) {
+          onFloorSelected(floorsList[0]);
         }
       }
     } else {
@@ -246,6 +254,10 @@ class AddExpenseController extends GetxController {
     selectedUnit.value = null;
     floorsList.clear();
     unitsList.clear();
+    if (projectsListData[0].buildings.length == 1 &&
+        isfromEdit.value == false) {
+      onBuildingSelected(selectedProperty.value?.buildings[0]);
+    }
   }
 
   void onBuildingSelected(Building? building) {
@@ -270,6 +282,9 @@ class AddExpenseController extends GetxController {
       unitsList.clear();
     }
     selectedUnit.value = null;
+    if (floorsList[0].units.length == 1 && isfromEdit.value == false) {
+      onUnitSelected(floorsList[0].units[0]);
+    }
   }
 
   void onUnitSelected(Unit? unit) {

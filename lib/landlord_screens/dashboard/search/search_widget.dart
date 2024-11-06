@@ -114,6 +114,7 @@ class SearchWidget {
       String? building,
       bool? isrentnegotiable,
       String? floor,
+      String? tenant,
       bool? isOccupied,
       List? amenities}) {
     final searchCntl = Get.find<SearchCntroller>();
@@ -227,7 +228,7 @@ class SearchWidget {
                                           maxLines: 1,
                                         ),
                                         Text(
-                                          'John Wick',
+                                          tenant??"",
                                           style: TextStyle(
                                             color: black,
                                             fontSize: 12.sp - commonFontSize,

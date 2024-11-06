@@ -66,10 +66,11 @@ class DioClientServices {
   Future dioGetCall({
     required String url,
     required dynamic headers,
+    bool isCustomUrl = false,
   }) async {
     try {
       Response response = await _dio.get(
-        (commonBaseUrl + url),
+        isCustomUrl ? url : (commonBaseUrl + url),
         options: Options(headers: headers),
       );
 
