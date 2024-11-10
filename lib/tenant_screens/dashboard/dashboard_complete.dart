@@ -235,17 +235,30 @@ unitList() {
                   color: lightBorderGrey,
                   // height: 1.h,
                 ),
-              if (dashCntrl.unitList[index]['pay_rent'] == true)
+              dashCntrl.unitList[index]['pay_rent'] == true?
                 customBorderWithIconButton(
                   "pay_your_rent".tr,
                   () {
-                    dashCntrl.onTapPayRent(dashCntrl.unitList[index]);
+                    dashCntrl.onTapPayRent(dashCntrl.unitList[index], 'online');
                   },
                   verticalPadding: 5.h,
                   horizontalPadding: 2.w,
                   btnHeight: 35.h,
                   borderColor: HexColor('#679BF1'),
                   textColor: HexColor('#679BF1'),
+                ):customBorderWithIconButton(
+                  "No Payment due".tr,
+                  () {
+                     Get.to(() => UnitDetailView(), arguments: [
+                    dashCntrl.unitList[index]['id'],
+                    true,
+                  ]);
+                  },
+                  verticalPadding: 5.h,
+                  horizontalPadding: 2.w,
+                  btnHeight: 35.h,
+                  borderColor:green,
+                  textColor: green,
                 ),
             ],
           ),

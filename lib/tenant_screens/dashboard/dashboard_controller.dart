@@ -36,9 +36,9 @@ class DashBoardTenantController extends GetxController {
     });
   }
 
-  onTapPayRent(Map unitData) {
+  onTapPayRent(Map unitData, paymentMode) {
     print("jjjkkjk ${unitData}");
-    Get.to(() => PaymentRequestScreen(), arguments: [unitData])!.then((value) {
+    Get.to(() => PaymentRequestScreen(paymentMode: paymentMode,), arguments: [unitData])!.then((value) {
       if (value) {
         getDashboardData();
       }

@@ -11,8 +11,9 @@ import 'package:tanent_management/tenant_screens/payment_request/payment_control
 import 'package:tanent_management/tenant_screens/payment_request/payment_widget.dart';
 
 class PaymentRequestScreen extends StatelessWidget {
+  final paymentMode;
   PaymentRequestScreen({
-    super.key,
+    super.key,this.paymentMode
   });
   final paymntCntrl = Get.put(PaymentController());
 
@@ -99,118 +100,114 @@ class PaymentRequestScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 10.h,
                                 ),
-                                Row(
+                                Column(
                                   children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          paymntCntrl.payentModeChoose.value =
-                                              2;
-                                        },
-                                        child: Container(
-                                             constraints:
-                                              BoxConstraints(minHeight: 100.h),
-                                          decoration: BoxDecoration(
+                                    GestureDetector(
+                                      onTap: () {
+                                        paymntCntrl.payentModeChoose.value =
+                                            2;
+                                      },
+                                      child: Container(
+                                          height: 130,
+                                          width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: paymntCntrl
+                                                        .payentModeChoose
+                                                        .value ==
+                                                    2
+                                                ? HexColor("#679BF1")
+                                                : null,
+                                            border: Border.all(
+                                                color: HexColor("#E5E7EB")),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 25, horizontal: 20),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/icons/cash_pay.svg",
                                               color: paymntCntrl
                                                           .payentModeChoose
                                                           .value ==
                                                       2
-                                                  ? HexColor("#679BF1")
-                                                  : null,
-                                              border: Border.all(
-                                                  color: HexColor("#E5E7EB")),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 25, horizontal: 20),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/icons/cash_pay.svg",
-                                                color: paymntCntrl
-                                                            .payentModeChoose
-                                                            .value ==
-                                                        2
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text("cash".tr,
-                                                  style: TextStyle(
-                                                      color: paymntCntrl
-                                                                  .payentModeChoose
-                                                                  .value ==
-                                                              2
-                                                          ? Colors.white
-                                                          : Colors.black,
-                                                      fontSize: 16.sp -
-                                                          commonFontSize,
-                                                      fontWeight:
-                                                          FontWeight.bold))
-                                            ],
-                                          ),
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Text("cash".tr,
+                                                style: TextStyle(
+                                                    color: paymntCntrl
+                                                                .payentModeChoose
+                                                                .value ==
+                                                            2
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontSize: 16.sp -
+                                                        commonFontSize,
+                                                    fontWeight:
+                                                        FontWeight.bold))
+                                          ],
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 5.w,
+                                      height: 5.w,
                                     ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          paymntCntrl.payentModeChoose.value =
-                                              1;
-                                        },
-                                        child: Container(
-                                          constraints:
-                                              BoxConstraints(minHeight: 100.h),
-                                          decoration: BoxDecoration(
+                                    GestureDetector(
+                                      onTap: () {
+                                        paymntCntrl.payentModeChoose.value =
+                                            1;
+                                      },
+                                      child: Container(
+                                        height: 130,
+                                         width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            color: paymntCntrl
+                                                        .payentModeChoose
+                                                        .value ==
+                                                    1
+                                                ? HexColor("#679BF1")
+                                                : null,
+                                            border: Border.all(
+                                                color: HexColor("#E5E7EB")),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 25, horizontal: 20),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/icons/online_pay.svg",
                                               color: paymntCntrl
                                                           .payentModeChoose
                                                           .value ==
                                                       1
-                                                  ? HexColor("#679BF1")
-                                                  : null,
-                                              border: Border.all(
-                                                  color: HexColor("#E5E7EB")),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 25, horizontal: 20),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/icons/online_pay.svg",
-                                                color: paymntCntrl
-                                                            .payentModeChoose
-                                                            .value ==
-                                                        1
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                              ),
-                                              SizedBox(
-                                                height: 10.h,
-                                              ),
-                                              Text("online_payments".tr,
-                                                  style: TextStyle(
-                                                      color: paymntCntrl
-                                                                  .payentModeChoose
-                                                                  .value ==
-                                                              1
-                                                          ? Colors.white
-                                                          : Colors.black,
-                                                      fontSize: 16.sp -
-                                                          commonFontSize,
-                                                      fontWeight:
-                                                          FontWeight.bold))
-                                            ],
-                                          ),
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            Text("online_payments".tr,
+                                                style: TextStyle(
+                                                    color: paymntCntrl
+                                                                .payentModeChoose
+                                                                .value ==
+                                                            1
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontSize: 16.sp -
+                                                        commonFontSize,
+                                                    fontWeight:
+                                                        FontWeight.bold))
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -268,7 +265,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                     ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
-                                    : customBorderButton("send_request".tr, () {
+                                    : customBorderButton(paymntCntrl.payentModeChoose.value==1?"Checkout":"send_request".tr, () {
                                         String amnt = paymntCntrl
                                             .ammountController.value.text;
                                         if (paymntCntrl.ammountController.value

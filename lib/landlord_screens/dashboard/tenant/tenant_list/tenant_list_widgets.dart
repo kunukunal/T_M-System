@@ -435,7 +435,7 @@ class TenantListWidgets {
                                                 .tenantUnitList[index]
                                                     ['amenities']
                                                 .length,
-                                            (index) {
+                                            (index1) {
                                               return Row(
                                                 children: [
                                                   Image.asset(
@@ -448,12 +448,12 @@ class TenantListWidgets {
                                                   ),
                                                   Text(cntrl.tenantUnitList[
                                                           index]['amenities']
-                                                      [index]['name']),
+                                                      [index1]['name']),
                                                   SizedBox(
                                                     width: 10.h,
                                                   ),
                                                   Text(
-                                                      "₹ ${cntrl.tenantUnitList[index]['amenities'][index]['price']}") // You can use unitCntrl.amenitiesList[index] to dynamically set the text
+                                                      "₹ ${cntrl.tenantUnitList[index]['amenities'][index1]['price']}") // You can use unitCntrl.amenitiesList[index] to dynamically set the text
                                                 ],
                                               );
                                             },
