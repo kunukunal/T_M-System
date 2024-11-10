@@ -49,7 +49,7 @@ class PaymentWidget {
                       index == 0
                           ? "Last Due"
                           : index == 1
-                              ? "This month due"
+                              ? "Rent due"
                               : "Process amount",
                       style: TextStyle(
                           color: black,

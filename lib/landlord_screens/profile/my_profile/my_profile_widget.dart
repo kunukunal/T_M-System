@@ -11,7 +11,7 @@ import '../../../common/constants.dart';
 class MyProfileWidget {
   static myProfileContainer({String? name, String? phoneNo, String? image}) {
     final profileCntrl = Get.find<MyProfileController>();
-
+    print("dasl;dl;as ${image}");
     return Stack(
       children: [
         Container(
@@ -59,9 +59,9 @@ class MyProfileWidget {
                   decoration: BoxDecoration(
                     color: HexColor('#444444'),
                     shape: BoxShape.circle,
-                    image: image != ""
+                    image: image != "" && image != null
                         ? DecorationImage(
-                            image: NetworkImage(image!), fit: BoxFit.cover)
+                            image: NetworkImage(image), fit: BoxFit.cover)
                         : DecorationImage(
                             image:
                                 Image.asset('assets/icons/profile.png').image,
@@ -77,7 +77,7 @@ class MyProfileWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name!,
+                      name??"",
                       style: TextStyle(
                           color: whiteColor,
                           fontWeight: FontWeight.w600,

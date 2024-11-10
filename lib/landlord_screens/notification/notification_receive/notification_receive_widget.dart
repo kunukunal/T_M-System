@@ -17,6 +17,7 @@ class NotifReceiveWidget {
       String? name,
       String? date,
       String? transactionModeValue,
+      String? unit_info,
       int? transId,
       int? trnsactionMode,
       int? status}) {
@@ -89,6 +90,15 @@ class NotifReceiveWidget {
                             ],
                           ),
                           Text(
+                            unit_info ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: CustomStyles.blue679BF1w700s20.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.sp,
+                                fontFamily: 'Inter'),
+                          ),
+                          Text(
                             desc ?? "",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -123,7 +133,7 @@ class NotifReceiveWidget {
                         ),
                       ),
                       Text(
-                        name??"",
+                        name ?? "",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14.sp - commonFontSize,

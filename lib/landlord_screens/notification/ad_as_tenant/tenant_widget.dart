@@ -76,9 +76,7 @@ class TenantListDetailsScreenWidgets {
                           if (await canLaunchUrl(nativeUrl)) {
                             await launchUrl(nativeUrl);
                           } else {}
-                        } catch (e) {
-                   
-                        }
+                        } catch (e) {}
                       } else {
                         customSnackBar(
                             Get.context!, "phone_number_not_found".tr);
@@ -180,6 +178,16 @@ class TenantListDetailsScreenWidgets {
                                       style: CustomStyles.amountFA4343W700S12,
                                     )
                                   ],
+                                ),
+                                Text(
+                                  cntrl.tenantUnitList[index]['unit_info'] ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: CustomStyles.blue679BF1w700s20
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12.sp,
+                                          fontFamily: 'Inter'),
                                 ),
                                 SizedBox(
                                   height: 8.h,

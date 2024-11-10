@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
             Expanded(
               child: SizedBox(
                 height: 125.h,
-                width: 200.w,
+                width: 300.w,
                 child: AnimatedSplashScreen(
                   duration: 1700,
                   splashIconSize: 150.h,

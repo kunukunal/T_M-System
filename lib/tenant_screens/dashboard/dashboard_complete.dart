@@ -157,6 +157,17 @@ unitList() {
                               )
                             ],
                           ),
+                          Text(
+                            dashCntrl.unitList[index]['unit_info'] ?? "",
+                      maxLines: 2,
+                                              style: CustomStyles
+                                                  .blue679BF1w700s20
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12.sp,
+                                                      fontFamily: 'Inter'),
+                          ),
                           SizedBox(
                             height: 10.h,
                           ),

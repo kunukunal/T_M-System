@@ -16,7 +16,10 @@ class MyProfileController extends GetxController {
           isFromProfile: isFromProfile,
         ))?.then(
       (value) {
-        if (value.isNotEmpty) {
+
+
+        print("dsalkdlaskldksald  ");
+        if (value!=null &&value.isNotEmpty ) {
           profileImage.value = value[0] ?? "";
           name.value = value[1] ?? "user".tr;
           userData['profile_image'] = profileImage.value;
@@ -33,6 +36,7 @@ class MyProfileController extends GetxController {
   void onInit() {
     profileImage.value = userData['profile_image'] ?? "";
     name.value = userData['name'] ?? "user".tr;
+    print("dsklksalkdlaskld");
     super.onInit();
   }
 

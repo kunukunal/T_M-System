@@ -142,6 +142,9 @@ class CompleteDashboard extends StatelessWidget {
               height: 10.h,
             ),
             propertiesList(),
+            SizedBox(
+              height: 70.h,
+            )
           ],
         ),
       ),

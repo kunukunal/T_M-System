@@ -174,6 +174,8 @@ class AdasTenatDetailsScreenController extends GetxController {
     );
 
     if (response != null) {
+      print("dklaskdas ${response}");
+
       if (response.statusCode == 200) {
         isRefreshmentRequired.value = true;
         isRequestLoading.value = false;

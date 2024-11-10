@@ -36,10 +36,14 @@ class MyProfileView extends StatelessWidget {
                 Obx(
                   () {
                     return MyProfileWidget.myProfileContainer(
-                        name: profileCntrl.name.value ,
+                        name: profileCntrl.name.value.isEmpty
+                            ? userData['name']
+                            : profileCntrl.name.value,
                         phoneNo:
                             '${userData['phone_code'] ?? ""} ${userData['phone'] ?? ""}',
-                        image: profileCntrl.profileImage.value);
+                        image: profileCntrl.profileImage.value.isEmpty
+                            ? userData['profile_image']
+                            : profileCntrl.profileImage.value);
                   },
                 ),
                 Padding(

@@ -97,144 +97,166 @@ class ReportScreen extends StatelessWidget {
                 ? const Center(
                     child: Text("No receipt data Found"),
                   )
-                : ListView.builder(
-                    itemCount: reportCntrl.reportList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(() => ReportPdfView(
-                                name: reportCntrl.reportList[index]
-                                        ['transaction']['unit_name'] ??
-                                    "",
-                                pdfUrl: reportCntrl.reportList[index]
-                                    ['receipt'],
-                              ));
-                        },
-                        child: Card(
-                          surfaceTintColor: Colors.transparent,
-                          elevation: 5,
-                          shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(
-                                color: reportCntrl.reportList[index]
-                                            ['transaction']['status'] ==
-                                        2
-                                    ? green
-                                    : reportCntrl.reportList[index]
-                                                ['transaction']['status'] ==
-                                            1
-                                        ? Colors.orange
-                                        : red,
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          if (isLandlord)
+                : Padding(
+                    padding: EdgeInsets.only(left: 12, right: 12, top: 10),
+                    child: ListView.builder(
+                      itemCount: reportCntrl.reportList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => ReportPdfView(
+                                  name: reportCntrl.reportList[index]
+                                          ['transaction']['unit_name'] ??
+                                      "",
+                                  pdfUrl: reportCntrl.reportList[index]
+                                      ['receipt'],
+                                ));
+                          },
+                          child: Card(
+                            surfaceTintColor: Colors.transparent,
+                            elevation: 5,
+                            shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(
+                                  color: reportCntrl.reportList[index]
+                                              ['transaction']['status'] ==
+                                          2
+                                      ? green
+                                      : reportCntrl.reportList[index]
+                                                  ['transaction']['status'] ==
+                                              1
+                                          ? Colors.orange
+                                          : red,
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (isLandlord)
+                                              Text(
+                                                reportCntrl.reportList[index]
+                                                        ['user']['name'] ??
+                                                    "",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: CustomStyles.titleText
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: 'Inter'),
+                                              ),
                                             Text(
                                               reportCntrl.reportList[index]
-                                                      ['user']['name'] ??
+                                                          ['transaction']
+                                                      ['unit_name'] ??
                                                   "",
-                                              maxLines: 1,
+                                              style: CustomStyles.titleText
+                                                  .copyWith(
+                                                      fontWeight: isLandlord
+                                                          ? FontWeight.w500
+                                                          : FontWeight.bold,
+                                                      fontSize: commonFontSize +
+                                                          (isLandlord
+                                                              ? 14
+                                                              : 15),
+                                                      fontFamily: 'Inter'),
+                                            ),
+                                            Text(
+                                              reportCntrl.reportList[index]
+                                                          ['transaction']
+                                                      ['unit_info'] ??
+                                                  "",
                                               overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: CustomStyles
+                                                  .blue679BF1w700s20
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12.sp,
+                                                      fontFamily: 'Inter'),
+                                            ),
+                                            Text(
+                                              "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
                                               style: CustomStyles.titleText
                                                   .copyWith(
                                                       fontWeight:
-                                                          FontWeight.bold,
+                                                          FontWeight.w500,
+                                                      fontSize:
+                                                          commonFontSize + 14,
+                                                      // color: whiteColor,
                                                       fontFamily: 'Inter'),
                                             ),
-                                          Text(
-                                            reportCntrl.reportList[index]
-                                                        ['transaction']
-                                                    ['unit_name'] ??
-                                                "",
-                                            style: CustomStyles.titleText
-                                                .copyWith(
-                                                    fontWeight: isLandlord
-                                                        ? FontWeight.w500
-                                                        : FontWeight.bold,
-                                                    fontSize: commonFontSize +
-                                                        (isLandlord ? 14 : 15),
-                                                    fontFamily: 'Inter'),
-                                          ),
-                                          Text(
-                                            "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
-                                            style: CustomStyles.titleText
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize:
-                                                        commonFontSize + 14,
-                                                    // color: whiteColor,
-                                                    fontFamily: 'Inter'),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    if (reportCntrl.reportList[index]
-                                            ['receipt'] !=
-                                        null)
-                                      IconButton(
-                                          onPressed: () {
-                                            saveNetworkPdf(reportCntrl
-                                                .reportList[index]['receipt']);
-                                          },
-                                          icon: const Icon(
-                                            Icons.download,
-                                          ))
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      reportCntrl.reportList[index]
-                                          ['transaction']['transaction_date'],
-                                      style: CustomStyles.titleText.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          // color: whiteColor,
-                                          fontSize: commonFontSize + 14,
-                                          fontFamily: 'Inter'),
-                                    ),
-                                    Text(
-                                      reportCntrl.reportList[index]
-                                              ['transaction']
-                                          ['payment_status_value'],
-                                      style: CustomStyles.titleText.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: commonFontSize + 14,
-                                          color: reportCntrl.reportList[index]
-                                                          ['transaction']
-                                                      ['status'] ==
-                                                  2
-                                              ? green
-                                              : reportCntrl.reportList[index]
-                                                              ['transaction']
-                                                          ['status'] ==
-                                                      1
-                                                  ? Colors.orange
-                                                  : red,
-                                          fontFamily: 'Inter'),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      if (reportCntrl.reportList[index]
+                                              ['receipt'] !=
+                                          null)
+                                        IconButton(
+                                            onPressed: () {
+                                              saveNetworkPdf(
+                                                  reportCntrl.reportList[index]
+                                                      ['receipt']);
+                                            },
+                                            icon: const Icon(
+                                              Icons.download,
+                                            ))
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        reportCntrl.reportList[index]
+                                            ['transaction']['transaction_date'],
+                                        style: CustomStyles.titleText.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            // color: whiteColor,
+                                            fontSize: commonFontSize + 14,
+                                            fontFamily: 'Inter'),
+                                      ),
+                                      Text(
+                                        reportCntrl.reportList[index]
+                                                ['transaction']
+                                            ['payment_status_value'],
+                                        style: CustomStyles.titleText.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: commonFontSize + 14,
+                                            color: reportCntrl.reportList[index]
+                                                            ['transaction']
+                                                        ['status'] ==
+                                                    2
+                                                ? green
+                                                : reportCntrl.reportList[index]
+                                                                ['transaction']
+                                                            ['status'] ==
+                                                        1
+                                                    ? Colors.orange
+                                                    : red,
+                                            fontFamily: 'Inter'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
       );
     });
@@ -254,133 +276,154 @@ class ReportScreen extends StatelessWidget {
                 ? const Center(
                     child: Text("No invoice data Found"),
                   )
-                : ListView.builder(
-                    itemCount: reportCntrl.invoiceList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(() => ReportPdfView(
-                                name: reportCntrl.invoiceList[index]['unit']
-                                        ['name'] ??
-                                    "",
-                                pdfUrl: reportCntrl.invoiceList[index]['bill'],
-                              ));
-                        },
-                        child: Card(
-                          surfaceTintColor: Colors.transparent,
-                          elevation: 5,
-                          shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(color: lightBlue)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          if (isLandlord)
+                : Padding(
+                    padding: EdgeInsets.only(left: 12, right: 12, top: 10),
+                    child: ListView.builder(
+                      itemCount: reportCntrl.invoiceList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => ReportPdfView(
+                                  name: reportCntrl.invoiceList[index]['unit']
+                                          ['name'] ??
+                                      "",
+                                  pdfUrl: reportCntrl.invoiceList[index]
+                                      ['bill'],
+                                ));
+                          },
+                          child: Card(
+                            surfaceTintColor: Colors.transparent,
+                            elevation: 5,
+                            shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(color: lightBlue)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (isLandlord)
+                                              Text(
+                                                reportCntrl.invoiceList[index]
+                                                        ['user']['name'] ??
+                                                    "",
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: CustomStyles.titleText
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontFamily: 'Inter'),
+                                              ),
                                             Text(
                                               reportCntrl.invoiceList[index]
-                                                      ['user']['name'] ??
+                                                      ['unit']['name'] ??
                                                   "",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
                                               style: CustomStyles.titleText
                                                   .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: isLandlord
+                                                          ? FontWeight.w500
+                                                          : FontWeight.bold,
+                                                      fontSize: commonFontSize +
+                                                          (isLandlord
+                                                              ? 14
+                                                              : 15),
                                                       fontFamily: 'Inter'),
                                             ),
-                                          Text(
-                                            reportCntrl.invoiceList[index]
-                                                    ['unit']['name'] ??
-                                                "",
-                                            style: CustomStyles.titleText
-                                                .copyWith(
-                                                    fontWeight: isLandlord
-                                                        ? FontWeight.w500
-                                                        : FontWeight.bold,
-                                                    fontSize: commonFontSize +
-                                                        (isLandlord ? 14 : 15),
-                                                    fontFamily: 'Inter'),
-                                          ),
-                                          // Text(
-                                          //   "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
-                                          //   style: CustomStyles.titleText
-                                          //       .copyWith(
-                                          //           fontWeight: FontWeight.w500,
-                                          //           fontSize:
-                                          //               commonFontSize + 14,
-                                          //           // color: whiteColor,
-                                          //           fontFamily: 'Inter'),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                    if (reportCntrl.invoiceList[index]
-                                            ['bill'] !=
-                                        null)
-                                      IconButton(
-                                          onPressed: () {
-                                            saveNetworkPdf(reportCntrl
-                                                .invoiceList[index]['bill']);
-                                          },
-                                          icon: Icon(
-                                            Icons.download,
-                                            color: lightBlue,
-                                          ))
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      reportCntrl.invoiceList[index]['unit']
-                                          ['rent_from'],
-                                      style: CustomStyles.titleText.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          // color: whiteColor,
-                                          fontSize: commonFontSize + 14,
-                                          fontFamily: 'Inter'),
-                                    ),
-                                    Text(
-                                      reportCntrl.invoiceList[index]['unit']
-                                          ['rent_type_value'],
-                                      style: CustomStyles.titleText.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: commonFontSize + 14,
-                                          color: black,
+                                            Text(
+                                              reportCntrl.invoiceList[index]
+                                                      ['unit']['unit_info'] ??
+                                                  "",
+                                              overflow: TextOverflow.ellipsis,
 
-                                          // reportCntrl.invoiceList[index]
-                                          //             ['unit']['rent_type'] ==
-                                          //         2
-                                          //     ? green
-                                          //     : reportCntrl.invoiceList[index]
-                                          //                     ['unit']
-                                          //                 ['rent_type'] ==
-                                          //             1
-                                          //         ? Colors.orange
-                                          //         : red,
-                                          fontFamily: 'Inter'),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                              maxLines: 2,
+                                              style: CustomStyles
+                                                  .blue679BF1w700s20
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12.sp,
+                                                      fontFamily: 'Inter'),
+                                            ),
+                                            // Text(
+                                            //   "₹${reportCntrl.reportList[index]['transaction']['transaction_amount']}",
+                                            //   style: CustomStyles.titleText
+                                            //       .copyWith(
+                                            //           fontWeight: FontWeight.w500,
+                                            //           fontSize:
+                                            //               commonFontSize + 14,
+                                            //           // color: whiteColor,
+                                            //           fontFamily: 'Inter'),
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (reportCntrl.invoiceList[index]
+                                              ['bill'] !=
+                                          null)
+                                        IconButton(
+                                            onPressed: () {
+                                              saveNetworkPdf(reportCntrl
+                                                  .invoiceList[index]['bill']);
+                                            },
+                                            icon: Icon(
+                                              Icons.download,
+                                              color: lightBlue,
+                                            ))
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        reportCntrl.invoiceList[index]['unit']
+                                            ['rent_from'],
+                                        style: CustomStyles.titleText.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            // color: whiteColor,
+                                            fontSize: commonFontSize + 14,
+                                            fontFamily: 'Inter'),
+                                      ),
+                                      Text(
+                                        "Invoice - [${reportCntrl.invoiceList[index]['unit']
+                                            ['rent_type_value']}]",
+                                        style: CustomStyles.titleText.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: commonFontSize + 14,
+                                            color: black,
+
+                                            // reportCntrl.invoiceList[index]
+                                            //             ['unit']['rent_type'] ==
+                                            //         2
+                                            //     ? green
+                                            //     : reportCntrl.invoiceList[index]
+                                            //                     ['unit']
+                                            //                 ['rent_type'] ==
+                                            //             1
+                                            //         ? Colors.orange
+                                            //         : red,
+                                            fontFamily: 'Inter'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
       );
     });

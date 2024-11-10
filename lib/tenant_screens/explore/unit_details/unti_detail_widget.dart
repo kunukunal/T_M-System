@@ -116,6 +116,15 @@ class UnitDetailViewWidget {
             )
           ],
         ),
+        Text(
+          unitCntrl.unitData['unit_info'].toString(),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          style: CustomStyles.blue679BF1w700s20.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 12.sp,
+              fontFamily: 'Inter'),
+        ),
         SizedBox(
           height: 5.h,
         ),
@@ -167,6 +176,7 @@ class UnitDetailViewWidget {
           children: [
             Wrap(
               spacing: 10,
+              direction: Axis.vertical,
               children: [
                 ...List.generate(
                   unitCntrl.amenitiesList.length,

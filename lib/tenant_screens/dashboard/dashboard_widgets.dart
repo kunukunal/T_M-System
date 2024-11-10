@@ -284,8 +284,20 @@ class DashBoardTenantWidgets {
                                 ),
                               ],
                             ),
+                            Text(
+                              paymentHistoryList[index]['unit_info'] ?? "",
+                              overflow: TextOverflow.ellipsis,
+                               maxLines: 2,
+                                              style: CustomStyles
+                                                  .blue679BF1w700s20
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 12.sp,
+                                                      fontFamily: 'Inter'),
+                            ),
                             SizedBox(
-                              height: 10.w,
+                              height: 5.h,
                             ),
                             Text(
                               "₹${paymentHistoryList[index]['transaction_amount'] ?? ""}",

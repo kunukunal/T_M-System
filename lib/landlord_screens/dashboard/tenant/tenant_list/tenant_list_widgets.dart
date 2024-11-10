@@ -356,6 +356,17 @@ class TenantListWidgets {
                                       )
                                     ],
                                   ),
+                                  Text(
+                                    cntrl.tenantUnitList[index]['unit_info'] ??
+                                        "",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: CustomStyles.blue679BF1w700s20
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Inter'),
+                                  ),
                                   SizedBox(
                                     height: 8.h,
                                   ),
@@ -411,55 +422,45 @@ class TenantListWidgets {
                                 ? Center(
                                     child: Text("no_amenties".tr),
                                   )
-                                : GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: cntrl
-                                        .tenantUnitList[index]['amenities']
-                                        .length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            mainAxisExtent: 23.h,
-                                            mainAxisSpacing: 10.h,
-                                            crossAxisSpacing: 5.w),
-                                    itemBuilder:
-                                        (BuildContext context, int ind) {
-                                      print(
-                                          "dsakdkl ${cntrl.tenantUnitList[index]}");
-                                      return SizedBox(
-                                        height: 24.h,
-                                        width: 156.5.w,
-                                        child: Row(
-                                          children: [
-                                            tickIcon,
-                                            SizedBox(
-                                              width: 5.w,
-                                            ),
-                                            Text(
-                                              cntrl.tenantUnitList[index]
-                                                  ['amenities'][ind]['name'],
-                                              style: CustomStyles.black14
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                            ),
-                                            SizedBox(
-                                              width: 5.w,
-                                            ),
-                                            Text(
-                                              "₹${cntrl.tenantUnitList[index]['amenities'][ind]['price']}",
-                                              style: CustomStyles.black14
-                                                  .copyWith(
-                                                      color: Colors.blue,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    },
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        spacing: 10,
+                                        direction: Axis.vertical,
+                                        children: [
+                                          ...List.generate(
+                                            cntrl
+                                                .tenantUnitList[index]
+                                                    ['amenities']
+                                                .length,
+                                            (index) {
+                                              return Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/icons/tick_icon.png",
+                                                    height: 25.h,
+                                                    width: 25.w,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10.h,
+                                                  ),
+                                                  Text(cntrl.tenantUnitList[
+                                                          index]['amenities']
+                                                      [index]['name']),
+                                                  SizedBox(
+                                                    width: 10.h,
+                                                  ),
+                                                  Text(
+                                                      "₹ ${cntrl.tenantUnitList[index]['amenities'][index]['price']}") // You can use unitCntrl.amenitiesList[index] to dynamically set the text
+                                                ],
+                                              );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ],
                                   ),
                           ],
                         ),
@@ -504,6 +505,7 @@ class TenantListWidgets {
                       Container(
                         height: 50.h,
                         width: 50.w,
+                        padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: HexColor('#BCD1F3'),
                             borderRadius: BorderRadius.circular(10.r)),
@@ -530,6 +532,15 @@ class TenantListWidgets {
                               style: CustomStyles.black16.copyWith(
                                 fontSize: 15.sp - commonFontSize,
                               ),
+                            ),
+                            Text(
+                              cntrl.paymentList[index]['unit_info'] ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: CustomStyles.blue679BF1w700s20.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Inter'),
                             ),
                             SizedBox(
                               height: 5.w,

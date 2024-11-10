@@ -55,6 +55,7 @@ class UnitDetailsController extends GetxController {
   final unitData = {
     "unit_name": "",
     "unit_rent": "",
+    "unit_info": "",
     "unit_address": "",
     "available_from": "",
     "lanlord_name": "",
@@ -93,6 +94,7 @@ class UnitDetailsController extends GetxController {
       unitData.value = {
         "unit_name": data['name'] ?? "",
         "unit_rent": data['unit_rent'] ?? "",
+        "unit_info": data['unit_info'] ?? "",
         "unit_address": data['address'] ?? "",
         "available_from": data['available_from'] ?? "",
         "lanlord_name": data['landlord'] ?? "",

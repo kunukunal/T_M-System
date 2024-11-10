@@ -1,77 +1,119 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
-import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
-import 'package:tanent_management/common/api_service_strings/base_url.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/common/widgets.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
+import 'package:tanent_management/tenant_screens/payment_request/payment_controller.dart';
 
-class PhonePayController extends GetxController {
-  String body = "";
-  String checksum = "";
-  bool enableLogs = true;
-  Object? result;
-  String environmentValue = 'SANDBOX';
-  String appId = "";
-  String merchantId = "PGTESTPAYUAT86";
-  String packageName = "com.daq.orbit";
-  String apiEndPoint = "/pg/v1/pay";
-  String saltKey = "96434309-7796-489d-8924-ab56988a6076";
-  String saltIndex = "1";
-  String callBackUrl = "$commonBaseUrl$phonePayCallbackUrl";
-  // String callBackUrl =
-  //     "https://webhook.site/f4d38d52-09ae-4570-be1e-7de0f3d5e9ed";
-
-  final merchantTransactionId = "".obs;
-
+class RazorPayController extends GetxController {
+  Razorpay? _razorpay;
   @override
   void onInit() {
-    initPhonePeSdk();
+    initRazorpaySdk();
     super.onInit();
   }
 
-  void initPhonePeSdk() async {
+  @override
+  void dispose() {
+    _razorpay?.clear();
+    super.dispose();
+  }
+
+  void initRazorpaySdk() async {
     try {
-      bool isInitialized = await PhonePePaymentSdk.init(
-          environmentValue, appId, merchantId, enableLogs);
-      result = 'PhonePe SDK Initialized - $isInitialized';
+      _razorpay = Razorpay();
+      _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentErrorResponse);
+      _razorpay?.on(
+          Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
+      _razorpay?.on(
+          Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWalletSelected);
     } catch (error) {
-      handleError(error);
+      // handleError(error);
     }
   }
 
-  void getChecksum({required double amount}) {
-    merchantTransactionId.value = "TM${DateTime.now().millisecondsSinceEpoch}";
-    final requestData = {
-      "merchantId": merchantId,
-      "merchantTransactionId": merchantTransactionId.value,
-      "merchantUserId": "90223250",
-      "amount": (amount * 100).toInt(), // Ensuring that amount is an integer
-      "mobileNumber": "9999999999",
-      "callbackUrl": callBackUrl,
-      "paymentInstrument": {"type": "PAY_PAGE"}
-    };
+  Future startTransaction({required double amount}) async {
+    // var options = {
+    //   'key': razor_key,
+    //   'amount': (amount * 100).toInt(),
+    //   "currency": "INR",
+    //   'name': userData['name'] ?? "",
+    //   'description': 'Rent Pay',
+    //   'retry': {'enabled': false, 'max_count': 1},
+    //   'send_sms_hash': true,
+    //   'prefill': {
+    //     'contact': userData['phone'] ?? "",
+    //     'email': userData['email'] ?? ""
+    //   },
+    //   // 'external': {
+    //   //   'wallets': ['paytm']
+    //   // }
+    // };
+    final paymentCntrl = Get.find<PaymentController>();
+    paymentCntrl.isPaymentRequestSucess.value = true;
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    final response = await DioClientServices.instance.dioPostCall(
+      body: {
+        "amount": amount,
+      },
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: getPaymentObject,
+      isRawData: true
+    );
 
-    String base64Body = base64.encode(utf8.encode(json.encode(requestData)));
-    checksum =
-        '${sha256.convert(utf8.encode(base64Body + apiEndPoint + saltKey)).toString()}###$saltIndex';
-    body = base64Body;
-  }
 
-  void handleError(dynamic error) {
-    if (error is Exception) {
-      result = error.toString();
+    if (response.statusCode == 200) {
+      // paymentCntrl.isPaymentRequestDataLoading.value = false;
+      final data = response.data;
+      try {
+        _razorpay?.open(data);
+      } catch (error) {
+        paymentCntrl.isPaymentRequestSucess.value = false;
+        customSnackBar(Get.context!, "Something went wrong");
+      }
     } else {
-      result = {"error": error};
+      paymentCntrl.isPaymentRequestSucess.value = false;
+      customSnackBar(Get.context!, "Something went wrong");
     }
   }
 
-  Future startTransaction() async {
-    try {
-      final response = await PhonePePaymentSdk.startTransaction(
-          body, callBackUrl, checksum, packageName);
-      return response;
-    } catch (error) {
-      handleError(error);
-    }
+  void handlePaymentErrorResponse(PaymentFailureResponse response) {
+    /*
+    * PaymentFailureResponse contains three values:
+    * 1. Error Code
+    * 2. Error Description
+    * 3. Metadata
+    * */
+    final paymentCntrl = Get.find<PaymentController>();
+    paymentCntrl.isPaymentRequest.value = 4;
+    print("Error: ${response}  ${response.message} ${response.error}");
+  }
+
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
+    /*
+    * Payment Success Response contains three values:
+    * 1. Order ID
+    * 2. Payment ID
+    * 3. Signature
+    * */
+    final paymentCntrl = Get.find<PaymentController>();
+    paymentCntrl.submitPaymentRequest(tansactionId: response.paymentId);
+    print(
+        "Success: ${response} ${response.data} ${response.orderId} ${response.paymentId} ${response.signature}");
+  }
+
+  void handleExternalWalletSelected(ExternalWalletResponse response) {
+    print("wallet: ${response}");
   }
 }

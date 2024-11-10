@@ -38,6 +38,9 @@ class SearchCntroller extends GetxController {
       url: "$unitSearch${searchCntrl.value.text.trim()}&limit=10",
     );
     if (response.statusCode == 200) {
+
+
+      print("dklaskdlas ${response.data}");
       unitDataLoading.value = false;
       items.clear();
       final responseData = response.data;

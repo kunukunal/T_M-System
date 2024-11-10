@@ -57,6 +57,7 @@ class UnitDetailViewController extends GetxController {
   final unitData = {
     "unit_name": "",
     "unit_rent": "",
+    "unit_info": "",
     "unit_address": "",
     "available_from": "",
     "lanlord_name": "",
@@ -96,14 +97,15 @@ class UnitDetailViewController extends GetxController {
       final data = response.data;
       unitData.value = {
         "unit_name": data['name'] ?? "",
+        "unit_info": data['unit_info'] ?? "",
         "unit_rent": data['unit_rent'] ?? "",
         "unit_address": data['address'] ?? "",
         "available_from": data['available_from'] ?? "",
         "lanlord_name": data['landlord'] ?? "",
         "lanlord_image": data['landlord_image'] ?? "",
-        "landlord_mobile": data['landlord_mobile']??"",
-        "landlord_email": data['landlord_email']??"",
-        "landlord_address": data['landlord_address']??"",
+        "landlord_mobile": data['landlord_mobile'] ?? "",
+        "landlord_email": data['landlord_email'] ?? "",
+        "landlord_address": data['landlord_address'] ?? "",
         "lat_long": data['coordinates'],
       };
       unitRating.value = {

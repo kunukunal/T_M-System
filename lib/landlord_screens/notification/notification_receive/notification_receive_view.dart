@@ -149,20 +149,48 @@ class NotificationReceiveView extends StatelessWidget {
                                                                 BorderRadius
                                                                     .circular(
                                                                         10)),
-                                                    title: Text(
-                                                      notifReceiveCntrl
-                                                                  .dueItemsList[
-                                                              ind]['units']
-                                                          [index]['unit_name'],
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16.sp -
-                                                            commonFontSize,
-                                                      ),
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                    title: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          notifReceiveCntrl
+                                                                      .dueItemsList[
+                                                                  ind]['units'][
+                                                              index]['unit_name'],
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16.sp -
+                                                                commonFontSize,
+                                                          ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        Text(
+                                                          notifReceiveCntrl
+                                                              .dueItemsList[ind]
+                                                                  ['units']
+                                                                  [index]
+                                                                  ['unit_info']
+                                                              .toString(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 2,
+                                                          style: CustomStyles
+                                                              .blue679BF1w700s20
+                                                              .copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  fontFamily:
+                                                                      'Inter'),
+                                                        ),
+                                                      ],
                                                     ),
                                                     subtitle: Column(
                                                       crossAxisAlignment:
@@ -325,6 +353,7 @@ class NotificationReceiveView extends StatelessWidget {
                       transactionId: list[index]['transaction_id'],
                       desc: list[index]['unit_address'],
                       title: list[index]['unit_name'],
+                      unit_info: list[index]['unit_info'],
                       price: list[index]['transaction_amount'],
                       trnsactionMode: list[index]['transaction_mode'],
                       transactionModeValue: list[index]

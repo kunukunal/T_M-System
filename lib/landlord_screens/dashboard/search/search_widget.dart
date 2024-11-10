@@ -228,7 +228,7 @@ class SearchWidget {
                                           maxLines: 1,
                                         ),
                                         Text(
-                                          tenant??"",
+                                          tenant ?? "",
                                           style: TextStyle(
                                             color: black,
                                             fontSize: 12.sp - commonFontSize,
@@ -262,47 +262,57 @@ class SearchWidget {
               ),
               Divider(color: HexColor('#EBEBEB'), height: 5.h),
               Padding(
-                padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${'property'.tr} $property',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.sp - commonFontSize,
-                          color: grey,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    Expanded(
-                      child: Text(
-                        '${'building'.tr} $building',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.sp - commonFontSize,
-                          color: grey,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    Expanded(
-                      child: Text(
-                        '${'floor'.tr} $floor',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.sp - commonFontSize,
-                          color: grey,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                padding: EdgeInsets.only(bottom: 10.h),
+                child: Text(
+                  "$property | $building | $floor",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: CustomStyles.blue679BF1w700s20.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.sp,
+                      fontFamily: 'Inter'),
                 ),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     Expanded(
+                //       child: Text(
+                //         '${'property'.tr} $property',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 14.sp - commonFontSize,
+                //           color: grey,
+                //         ),
+                //         overflow: TextOverflow.ellipsis,
+                //       ),
+                //     ),
+                //     SizedBox(width: 5.w),
+                //     Expanded(
+                //       child: Text(
+                //         '${'building'.tr} $building',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 14.sp - commonFontSize,
+                //           color: grey,
+                //         ),
+                //         overflow: TextOverflow.ellipsis,
+                //       ),
+                //     ),
+                //     SizedBox(width: 5.w),
+                //     Expanded(
+                //       child: Text(
+                //         '${'floor'.tr} $floor',
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 14.sp - commonFontSize,
+                //           color: grey,
+                //         ),
+                //         overflow: TextOverflow.ellipsis,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
             ],
           ),

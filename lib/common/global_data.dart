@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:new_version_plus/new_version_plus.dart';
+import 'package:tanent_management/common/api_service_strings/api_end_points.dart';
+import 'package:tanent_management/common/shared_pref_keys.dart';
+import 'package:tanent_management/services/dio_client_service.dart';
+import 'package:tanent_management/services/shared_preferences_services.dart';
 
 List state = [
   "Select",
@@ -75,6 +79,20 @@ clearAll() {
 }
 
 final newVersion = NewVersionPlus();
+bool forceUpdateAlllowed = true;
+
+getForceUpdate() async {
+  String languaeCode = await SharedPreferencesServices.getStringData(
+          key: SharedPreferencesKeysEnum.languaecode.value) ??
+      "en";
+  final response = await DioClientServices.instance.dioGetCall(headers: {
+    "Accept-Language": languaeCode,
+  }, url: forceUpdate);
+
+  if (response.statusCode == 200) {
+    forceUpdateAlllowed = response.data['force_update'];
+  }
+}
 
 advancedStatusCheck() async {
   final status = await newVersion.getVersionStatus();
@@ -92,7 +110,7 @@ advancedStatusCheck() async {
         dialogText:
             'A new version of Rentpur is available. Please update to enjoy the latest features and improvements.',
         launchModeVersion: LaunchModeVersion.external,
-        allowDismissal: false,
+        allowDismissal: !forceUpdateAlllowed,
       );
     }
   }

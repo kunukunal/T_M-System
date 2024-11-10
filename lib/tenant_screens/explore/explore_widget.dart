@@ -295,8 +295,20 @@ class ExploreWidget {
                                           )
                                         ],
                                       ),
+                                      Text(
+                                        exploreCntrl.getUnitResult[index]
+                                                ['unit_info'] ??
+                                            "",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: CustomStyles.blue679BF1w700s20
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12.sp,
+                                                fontFamily: 'Inter'),
+                                      ),
                                       SizedBox(
-                                        height: 10.h,
+                                        height: 5.h,
                                       ),
                                       Text(
                                         exploreCntrl.getUnitResult[index]

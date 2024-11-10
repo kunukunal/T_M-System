@@ -108,10 +108,19 @@ class UnitDetailView {
                 SizedBox(
                   width: 5.w,
                 ),
-                SvgPicture.asset("assets/icons/i_icon.svg")
+                // SvgPicture.asset("assets/icons/i_icon.svg")
               ],
             )
           ],
+        ),
+        Text(
+          unitCntrl.unitData['unit_info'].toString(),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          style: CustomStyles.blue679BF1w700s20.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 12.sp,
+              fontFamily: 'Inter'),
         ),
         SizedBox(
           height: 5.h,
@@ -160,15 +169,15 @@ class UnitDetailView {
         SizedBox(
           height: 10.h,
         ),
-         Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Wrap(
               spacing: 10,
+              direction: Axis.vertical,
               children: [
                 ...List.generate(
                   unitCntrl.amenitiesList.length,
-                  
                   (index) {
                     return Row(
                       children: [

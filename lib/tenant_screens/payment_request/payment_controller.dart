@@ -21,7 +21,6 @@ class PaymentController extends GetxController {
   final pendingthismonth = 0.0.obs;
   final pendingprocessamount = 0.0.obs;
   final needReload = false.obs;
-
   final rentBillUrl = "".obs;
 
   @override
@@ -47,43 +46,16 @@ class PaymentController extends GetxController {
     isPaymentRequest.value = 2;
   }
 
-  phonePayCallBack() async {
-    final phonepayCntrl = Get.put(PhonePayController());
-    phonepayCntrl.getChecksum(
+  razorPayCallBack() async {
+    final razorPayCntrl = Get.put(RazorPayController());
+    razorPayCntrl.startTransaction(
         amount: double.parse(ammountController.value.text));
-    var result = "";
-    await phonepayCntrl.startTransaction().then((response) {
-      if (response != null) {
-        String status = response['status'].toString();
-        String error = response['error'].toString();
-        if (status == 'SUCCESS') {
-          print("fdskladklasd ${response}");
-          print("fdskladklasd ${response}");
-          print("fdskladklasd ${phonepayCntrl.merchantTransactionId.value}");
-          submitPaymentRequest(
-              tansactionId: phonepayCntrl.merchantTransactionId.value);
-        } else if (status == "FAILURE") {
-          print("fdskladklasd ${response}");
-          print("fdskladklasd ${phonepayCntrl.merchantTransactionId.value}");
-          isPaymentRequest.value = 4;
-        } else {
-          result = "Flow Completed - Status: $status and Error: $error";
-        }
-      } else {
-        result = "Flow Incomplete";
-      }
-
-      print("dalskdlkasd $result");
-    }).catchError((error) {
-      // handleError(error);
-      print("Errorssss: $error");
-    });
   }
 
   ontapRequest() {
     if (ammountController.value.text.trim().isNotEmpty) {
       if (payentModeChoose.value == 1) {
-        phonePayCallBack();
+        razorPayCallBack();
       } else {
         isPaymentRequest.value = 3;
         submitPaymentRequest();

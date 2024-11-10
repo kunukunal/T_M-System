@@ -130,7 +130,7 @@ class NavbarManagementScreen extends StatelessWidget {
                                 }
                               });
                 }),
-              )
+              ),
             ],
           ),
         ),
