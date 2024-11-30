@@ -273,7 +273,7 @@ class AddUnitView extends StatelessWidget {
                                                   fit: BoxFit.cover)),
                                     ),
                                     titleAlignment: ListTileTitleAlignment.top,
-                                    title: Text("Image ${index + 1}"),
+                                    title: Text("${"image".tr} ${index + 1}"),
                                     trailing: IconButton(
                                         onPressed: () {
                                           if (addUnitCntrl

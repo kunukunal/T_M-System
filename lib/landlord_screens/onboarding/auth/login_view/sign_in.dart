@@ -33,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> {
       appBar: appBar(
           title: widget.isFromRegister!
               ? "${'register_as'.tr} ${authCntrl.onButtonTapTenant.value == 2 ? "tenant".tr : "landlord".tr}"
-              : "Login",
+              : "login".tr,
           isBack: false,
           actions: [
             PopupMenuButton<String>(
@@ -43,9 +43,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'Help',
-                  child: Text('Help'),
+                  child: Text('help'.tr),
                 ),
               ],
               icon: const Icon(Icons.more_vert),
@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (widget.isFromRegister == false)
             Padding(
               padding: const EdgeInsets.only(top: 15),
-              child: Text("Version: $appVersion"),
+              child: Text("${'version'.tr}: $appVersion"),
             )
         ],
       ),

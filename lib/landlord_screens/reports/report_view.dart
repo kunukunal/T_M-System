@@ -69,9 +69,9 @@ class ReportScreen extends StatelessWidget {
                 reportCntrl.getInvoiceData();
               }
             },
-            tabs: const [
-              Tab(text: 'Receipt'),
-              Tab(text: 'Invoice'),
+            tabs:  [
+              Tab(text: 'receipt'.tr),
+              Tab(text: 'invoice'.tr),
             ],
           ),
         ),
@@ -94,8 +94,8 @@ class ReportScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             : reportCntrl.reportList.isEmpty
-                ? const Center(
-                    child: Text("No receipt data Found"),
+                ?  Center(
+                    child: Text("no_receipt_data_found".tr),
                   )
                 : Padding(
                     padding: EdgeInsets.only(left: 12, right: 12, top: 10),
@@ -273,8 +273,8 @@ class ReportScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             : reportCntrl.invoiceList.isEmpty
-                ? const Center(
-                    child: Text("No invoice data Found"),
+                ?  Center(
+                    child: Text("no_invoice_data_found".tr),
                   )
                 : Padding(
                     padding: EdgeInsets.only(left: 12, right: 12, top: 10),
@@ -396,7 +396,7 @@ class ReportScreen extends StatelessWidget {
                                             fontFamily: 'Inter'),
                                       ),
                                       Text(
-                                        "Invoice - [${reportCntrl.invoiceList[index]['unit']
+                                        "${"invoice_data".tr} - [${reportCntrl.invoiceList[index]['unit']
                                             ['rent_type_value']}]",
                                         style: CustomStyles.titleText.copyWith(
                                             fontWeight: FontWeight.w500,

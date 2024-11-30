@@ -253,7 +253,7 @@ class TenantListWidgets {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rent Received',
+                      'rent_received'.tr,
                       style: CustomStyles.desc606060.copyWith(
                           fontSize: 14.sp - commonFontSize,
                           fontFamily: 'DM Sans'),

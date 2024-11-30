@@ -61,6 +61,8 @@ const String getFloorAndUnitList = "building/building-detail/";
 
 const String removeTenantFromUnit = "unit/unassign_unit/";
 
+const String rejectExitRequestUnit = "unit/reject_exit_request/";
+
 const String updateTenantByLandlord = "accounts/tenant-update/";
 
 const String updateTenantByLandlordVerify = "accounts/tenant-update-verify/";

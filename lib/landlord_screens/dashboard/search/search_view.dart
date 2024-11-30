@@ -72,7 +72,7 @@ class _SearchViewState extends State<SearchView> {
                       searchCntrl.getUnitBySearch();
                     } else {
                       customSnackBar(Get.context!,
-                          "Please enter the property name for search");
+                          "enter_property_name_for_search".tr);
                     }
                   },
                   keyboardType: TextInputType.emailAddress,
@@ -84,7 +84,7 @@ class _SearchViewState extends State<SearchView> {
                         searchCntrl.getUnitBySearch();
                       } else {
                         customSnackBar(Get.context!,
-                            "Please enter the property name for search");
+                            "enter_property_name_for_search".tr);
                       }
                     },
                     child: Padding(
@@ -147,8 +147,8 @@ class _SearchViewState extends State<SearchView> {
                       child: CircularProgressIndicator(),
                     )
                   : searchCntrl.items.isEmpty
-                      ? const Center(
-                          child: Text("No Units found"),
+                      ?  Center(
+                          child: Text("no_units_found".tr),
                         )
                       : ListView.builder(
                           shrinkWrap: true,

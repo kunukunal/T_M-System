@@ -43,7 +43,7 @@ class NotificationWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Transaction ID',
+                  'transaction_id'.tr,
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 14.sp - commonFontSize,
@@ -125,7 +125,7 @@ class NotificationWidget {
                       child: Row(
                         children: [
                           Text(
-                            'Name: ',
+                            '${'name'.tr}: ',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 14.sp - commonFontSize,
@@ -148,7 +148,7 @@ class NotificationWidget {
                     Row(
                       children: [
                         Text(
-                          'Date: ',
+                          '${'date'.tr}: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14.sp - commonFontSize,
@@ -170,7 +170,7 @@ class NotificationWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    customBorderButton('Decline', () {
+                    customBorderButton('decline'.tr, () {
                       // notifCntrl.onDeclineTap();
                       declinePopup(tranId!);
                     },
@@ -286,7 +286,7 @@ class NotificationWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'Date: ',
+                          '${'date'.tr}: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14.sp - commonFontSize,
@@ -310,7 +310,7 @@ class NotificationWidget {
                     SizedBox(
                       height: 5.h,
                     ),
-                    customBorderButton('View', () {
+                    customBorderButton('view'.tr, () {
                       if (unitId != null) {
                         Get.to(() => AdasTenatDetailsScreen(), arguments: [
                           unitId,
@@ -325,7 +325,7 @@ class NotificationWidget {
                           }
                         });
                       } else {
-                        customSnackBar(Get.context!, "Something went wrong");
+                        customSnackBar(Get.context!, "something_went_wrong".tr);
                       }
                     },
                         verticalPadding: 12.h,
@@ -409,7 +409,7 @@ class NotificationWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'Date: ',
+                          '${'date'.tr}: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14.sp - commonFontSize,
@@ -490,7 +490,7 @@ class NotificationWidget {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        isOccupied! ? 'Occupied' : 'Available',
+                                        isOccupied! ? 'occupied'.tr : 'available'.tr,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -521,14 +521,14 @@ class NotificationWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        customBorderButton('Cancel', () {},
+                        customBorderButton('cancel'.tr, () {},
                             verticalPadding: 12.h,
                             horizontalPadding: 2.w,
                             btnHeight: 30.h,
                             width: Get.width / 2.4,
                             borderColor: HexColor('#679BF1'),
                             textColor: HexColor('#679BF1')),
-                        customBorderButton('Paid', () {},
+                        customBorderButton('paid'.tr, () {},
                             verticalPadding: 12.h,
                             horizontalPadding: 2.w,
                             btnHeight: 30.h,
@@ -549,9 +549,9 @@ class NotificationWidget {
 
     return commonDeclinePopup(
       title: '',
-      subtitle: 'Are you sure you want to decline this request?',
-      button1: 'Cancel',
-      button2: 'Decline',
+      subtitle: 'decline_request_confirmation'.tr,
+      button1: 'cancel'.tr,
+      button2: 'decline'.tr,
       onButton1Tap: () {
         Get.back();
       },

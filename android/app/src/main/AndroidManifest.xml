@@ -17,7 +17,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -33,6 +33,15 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+
+  <data android:scheme="https" />
+  <data android:scheme="http" />
+  <data android:host="daqorbit.com/" />
+</intent-filter>
         </activity>
 
         <!-- Firebase notification metadata -->
@@ -49,9 +58,9 @@
             android:value="2" />
 
         <!-- PhonePe SDK metadata -->
-        <meta-data android:name="com.phonepe.android.sdk.isUAT" android:value="true"/> 
+        <!-- <meta-data android:name="com.phonepe.android.sdk.isUAT" android:value="true"/> 
         <meta-data android:name="com.phonepe.android.sdk.isSimulator" android:value="true"/>
-        <meta-data android:name="com.phonepe.android.sdk.MerchantId" android:value="PGTESTPAYUAT"/>
+        <meta-data android:name="com.phonepe.android.sdk.MerchantId" android:value="PGTESTPAYUAT"/> -->
         <!-- Uncomment and update with the actual AppId if necessary -->
         <!-- <meta-data android:name="com.phonepe.android.sdk.AppId" android:value="appId"/> -->
 

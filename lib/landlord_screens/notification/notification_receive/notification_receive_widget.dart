@@ -37,7 +37,7 @@ class NotifReceiveWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Transaction ID',
+                'transaction_id'.tr,
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14.sp - commonFontSize,
@@ -126,7 +126,7 @@ class NotifReceiveWidget {
                   Row(
                     children: [
                       Text(
-                        'Name: ',
+                        '${'name'.tr}: ',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.sp - commonFontSize,
@@ -144,7 +144,7 @@ class NotifReceiveWidget {
                   Row(
                     children: [
                       Text(
-                        'Date: ',
+                        '${'date'.tr}: ',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.sp - commonFontSize,
@@ -162,7 +162,7 @@ class NotifReceiveWidget {
                 ],
               ),
               if (trnsactionMode != 1)
-                customBorderButton('Edit', () {
+                customBorderButton('edit'.tr, () {
                   status == 2 ? declinePopup(transId!) : recivedPopup(transId!);
                 },
                     verticalPadding: 12.h,
@@ -183,9 +183,9 @@ class NotifReceiveWidget {
 
     return commonDeclinePopup(
       title: '',
-      subtitle: 'Are you sure you want to decline this request?',
-      button1: 'Close',
-      button2: 'Decline',
+      subtitle: 'decline_request_confirmation'.tr,
+      button1: 'close'.tr,
+      button2: 'decline'.tr,
       onButton1Tap: () {
         Get.back();
       },
@@ -201,8 +201,8 @@ class NotifReceiveWidget {
 
     return commonDeclinePopup(
       title: '',
-      subtitle: 'Are you sure you want to recieved this request?',
-      button1: 'Close',
+      subtitle: 'received_request_confirmation'.tr,
+      button1: 'close'.tr,
       button2: 'Recieved',
       onButton1Tap: () {
         Get.back();

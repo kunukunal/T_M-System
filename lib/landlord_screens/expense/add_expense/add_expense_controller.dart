@@ -407,7 +407,7 @@ class AddExpenseController extends GetxController {
                   }
                 } else {
                   customSnackBar(
-                      Get.context!, "Please enter the other Expense");
+                      Get.context!, "please_enter_the_other_expense".tr);
                 }
               }
             } else {

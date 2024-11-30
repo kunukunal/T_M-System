@@ -214,7 +214,7 @@ unitList() {
                                                   ));
                                             } else {
                                               customSnackBar(
-                                                  context, "No bill found");
+                                                  context, "no_bill_found".tr);
                                             }
                                           },
                                           child: eyeIcon),
@@ -247,7 +247,7 @@ unitList() {
                   borderColor: HexColor('#679BF1'),
                   textColor: HexColor('#679BF1'),
                 ):customBorderWithIconButton(
-                  "No Payment due".tr,
+                  "no_payment_due".tr,
                   () {
                      Get.to(() => UnitDetailView(), arguments: [
                     dashCntrl.unitList[index]['id'],

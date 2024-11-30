@@ -105,10 +105,10 @@ class DashBoardController extends GetxController {
           !incomingStartFrom.value!.isAtSameMomentAs(incomingEndFrom.value!)) {
         incomeFilter();
       } else {
-        customSnackBar(Get.context!, "Please select the correct date range");
+        customSnackBar(Get.context!, "select_date_range".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Date range can not be null");
+      customSnackBar(Get.context!, "date_range_null".tr);
     }
   }
 
@@ -119,10 +119,10 @@ class DashBoardController extends GetxController {
               .isAtSameMomentAs(occupancyEndFrom.value!)) {
         occupancyTread();
       } else {
-        customSnackBar(Get.context!, "Please select the correct date range");
+        customSnackBar(Get.context!, "select_date_range".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Date range can not be null");
+      customSnackBar(Get.context!, "date_range_null".tr);
     }
   }
 
@@ -211,7 +211,7 @@ class DashBoardController extends GetxController {
       firstDate: DateTime(2023, 1), // You can adjust the start date
       lastDate: DateTime(
           today.year, today.month, today.day), // Prevents future date selection
-      helpText: 'Select month and year', // Custom help text
+      helpText: 'select_month_year'.tr, // Custom help text
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(

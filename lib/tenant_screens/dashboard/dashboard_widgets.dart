@@ -197,13 +197,13 @@ class DashBoardTenantWidgets {
     );
   }
 
-  paymentHistory(final paymentHistoryList) {
+  paymentHistory(final paymentHistoryList, {bool? isFromDashboard = true}) {
     final dashCntrl = Get.find<DashBoardTenantController>();
 
     return ListView.builder(
       itemCount: paymentHistoryList.length,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: isFromDashboard == true ? NeverScrollableScrollPhysics() : null,
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(left: 0.h, right: 0.w, bottom: 5.h, top: 10.h),
         child: Container(
@@ -263,10 +263,10 @@ class DashBoardTenantWidgets {
                                 ),
                                 Text(
                                   paymentHistoryList[index]['status'] == 2
-                                      ? "Approved"
+                                      ? "approved".tr
                                       : paymentHistoryList[index]['status'] == 1
-                                          ? "Pending"
-                                          : "Reject",
+                                          ? "pending".tr
+                                          : "reject".tr,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -287,14 +287,11 @@ class DashBoardTenantWidgets {
                             Text(
                               paymentHistoryList[index]['unit_info'] ?? "",
                               overflow: TextOverflow.ellipsis,
-                               maxLines: 2,
-                                              style: CustomStyles
-                                                  .blue679BF1w700s20
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 12.sp,
-                                                      fontFamily: 'Inter'),
+                              maxLines: 2,
+                              style: CustomStyles.blue679BF1w700s20.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Inter'),
                             ),
                             SizedBox(
                               height: 5.h,

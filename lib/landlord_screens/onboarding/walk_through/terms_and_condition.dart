@@ -17,7 +17,7 @@ class TermsAndConditionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "T&C / Policies",
+          "terms_and_conditions_policy".tr,
           style: CustomStyles.otpStyle050505,
         ),
         backgroundColor: Colors.transparent,

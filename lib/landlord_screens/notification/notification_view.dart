@@ -25,7 +25,7 @@ class NotificationView extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text("Notifications", style: CustomStyles.otpStyle050505W700S16),
+        title: Text("notifications".tr, style: CustomStyles.otpStyle050505W700S16),
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -40,8 +40,8 @@ class NotificationView extends StatelessWidget {
                 child: notifCntrl.lanlordNotificationLoading.value
                     ? const Center(child: CircularProgressIndicator())
                     : notifCntrl.items.isEmpty
-                        ? const Center(
-                            child: Text("No notification found"),
+                        ?  Center(
+                            child: Text("no_notification_found".tr),
                           )
                         : ListView.builder(
                             shrinkWrap: true,

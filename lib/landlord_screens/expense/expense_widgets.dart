@@ -543,7 +543,7 @@ class ExpenseWidgets {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Expense",
+                      "expense".tr,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
@@ -578,7 +578,7 @@ class ExpenseWidgets {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text("Title: ",
+                                          Text("${'title'.tr}: ",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize:
@@ -602,7 +602,7 @@ class ExpenseWidgets {
                                       Row(
                                         children: [
                                           Text(
-                                            "Date: ",
+                                            "${'date'.tr}: ",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize:
@@ -656,7 +656,7 @@ class ExpenseWidgets {
                             ),
                             Row(
                               children: [
-                                Text("Property name: ",
+                                Text("${'property_name'.tr}: ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17.sp - commonFontSize,
@@ -674,7 +674,7 @@ class ExpenseWidgets {
                             ),
                             Row(
                               children: [
-                                Text("Building name: ",
+                                Text("${'building_name'.tr}: ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17.sp - commonFontSize,
@@ -692,7 +692,7 @@ class ExpenseWidgets {
                             ),
                             Row(
                               children: [
-                                Text("Floor name: ",
+                                Text("${'floor_name'.tr}: ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17.sp - commonFontSize,
@@ -710,7 +710,7 @@ class ExpenseWidgets {
                             ),
                             Row(
                               children: [
-                                Text("Unit name: ",
+                                Text("${'unit_name'.tr}: ",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 17.sp - commonFontSize,
@@ -730,7 +730,7 @@ class ExpenseWidgets {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Remark: ",
+                                  "${'remark'.tr}: ",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 17.sp - commonFontSize,

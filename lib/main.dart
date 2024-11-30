@@ -14,6 +14,7 @@ import 'package:tanent_management/common/utils.dart';
 import 'package:tanent_management/firebase_options.dart';
 import 'package:tanent_management/landlord_screens/onboarding/splash/splash.dart';
 import 'package:tanent_management/landlord_screens/onboarding/language/locale/locale.dart';
+import 'package:tanent_management/services/app_link_file.dart';
 import 'package:tanent_management/services/fcm_notification.dart';
 
 @pragma('vm:entry-point')
@@ -24,6 +25,7 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AppLinkUri().init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

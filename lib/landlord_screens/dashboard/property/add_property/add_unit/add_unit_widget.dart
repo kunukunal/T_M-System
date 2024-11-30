@@ -284,7 +284,7 @@ class AddUnitWidget {
                                     .value = value!;
                               },
                               title: Text(
-                                "Same Configuration with all Floors",
+                                "same_configuration_all_floors".tr,
                                 style: TextStyle(
                                     fontSize: 16.sp - commonFontSize,
                                     fontWeight: FontWeight.w500,

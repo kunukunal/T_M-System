@@ -83,7 +83,7 @@ class _NavBarState extends State<NavBar> {
                       color: dashboardCntrl.selectedIndex.value == 1
                           ? null
                           : Colors.black54,
-                      'Payments'),
+                      'payments'.tr),
                   NavBarWidgets.buildNavItem(
                       2,
                       dashboardCntrl.selectedIndex.value == 2

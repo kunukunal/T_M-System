@@ -110,7 +110,7 @@ class MyProfileView extends StatelessWidget {
                 ),
 
                 MyProfileWidget.commonListTile(
-                    title: "About Us",
+                    title: "about_us".tr,
                     onTap: () {
                       Get.to(() => PrivacyPolicyScreen(
                             isFrom: 1,
@@ -126,7 +126,7 @@ class MyProfileView extends StatelessWidget {
                     },
                     image: 'assets/icons/ic-security.png'),
                 MyProfileWidget.commonListTile(
-                    title: "Terms and conditions",
+                    title: "terms_and_conditions".tr,
                     onTap: () {
                       Get.to(() => PrivacyPolicyScreen(
                             isFrom: 3,
@@ -134,7 +134,7 @@ class MyProfileView extends StatelessWidget {
                     },
                     image: 'assets/icons/ic-security.png'),
                 MyProfileWidget.commonListTile(
-                    title: "Refund & Cancellation",
+                    title: "refund_and_cancellation".tr,
                     onTap: () {
                       Get.to(() => PrivacyPolicyScreen(
                             isFrom: 4,
@@ -165,7 +165,7 @@ class MyProfileView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Text(
-                    'Other',
+                    'other'.tr,
                     style: TextStyle(
                         fontSize: 16.sp - commonFontSize,
                         fontWeight: FontWeight.w700),
@@ -177,11 +177,11 @@ class MyProfileView extends StatelessWidget {
                     onTap: () {
                       profileCntrl.deleteController.value.clear();
                       deletePopup(
-                        title: "Delete Account",
+                        title: "delete_account".tr,
                         subtitle:
-                            "We're sorry to see you go. If you delete your account, all your data will be permanently removed and cannot be recovered. Are you sure you want to proceed?",
+                            "delete_account_warning".tr,
                         button2: 'cancel'.tr,
-                        button1: "Yes, Delete",
+                        button1: "yes_delete".tr,
                         deleteController: profileCntrl.deleteController.value,
                         onButton1Tap: () {
                           if (profileCntrl.deleteController.value.text
@@ -192,11 +192,11 @@ class MyProfileView extends StatelessWidget {
                               profileCntrl.deleteAccountApi(context);
                             } else {
                               customSnackBar(context,
-                                  "Please type \"Delete\" for delete this account");
+                                  "${'type_for_delete'.tr} \"Delete\" ${'for_delete_account'.tr}");
                             }
                           } else {
                             customSnackBar(
-                                context, "Please enter the text \"Delete\"");
+                                context, "${"enter_text_for_delete".tr} \"Delete\"");
                           }
                         },
                         onButton2Tap: () async {
@@ -210,7 +210,7 @@ class MyProfileView extends StatelessWidget {
                     onTap: () {
                       try {
                         final String message =
-                            "Get app from ${isPlatformIos ? ios_link : android_link}";
+                            "${"get_app_from".tr} ${isPlatformIos ? ios_link : android_link}";
                         Share.share(message);
                       } catch (e) {}
                     },
@@ -249,7 +249,7 @@ class MyProfileView extends StatelessWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                Center(child: Text("Version: $appVersion")),
+                Center(child: Text("${'version'.tr}: $appVersion")),
                 SizedBox(
                   height: 10.h,
                 ),

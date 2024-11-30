@@ -113,10 +113,10 @@ class ExpenseController extends GetxController {
           !expnseStartFrom.value!.isAtSameMomentAs(expnseEndFrom.value!)) {
         getExpenseData();
       } else {
-        customSnackBar(Get.context!, "Please select the correct date range");
+        customSnackBar(Get.context!, "select_date_range".tr);
       }
     } else {
-      customSnackBar(Get.context!, "Date range can not be null");
+      customSnackBar(Get.context!, "date_range_null".tr);
     }
   }
 
@@ -128,7 +128,7 @@ class ExpenseController extends GetxController {
           : expnseEndFrom.value ?? DateTime.now(),
       firstDate: DateTime(2023, 1), // You can adjust the start date
       lastDate: DateTime(2101),
-      helpText: 'Select month and year', // Custom help text
+      helpText: 'select_month_year'.tr, // Custom help text
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(

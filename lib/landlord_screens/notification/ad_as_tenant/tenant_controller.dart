@@ -140,6 +140,48 @@ class AdasTenatDetailsScreenController extends GetxController {
     }
   }
 
+  final rejectExitRequestLoading = false.obs;
+
+  rejectExitRequestUnitApi(int? unitId) async {
+    isRequestLoading.value = true;
+    String accessToken = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.accessToken.value) ??
+        "";
+    String languaeCode = await SharedPreferencesServices.getStringData(
+            key: SharedPreferencesKeysEnum.languaecode.value) ??
+        "en";
+    final response = await DioClientServices.instance.dioPatchCall(
+      body: {
+        "unit": unitId,
+      },
+      isRawData: true,
+      headers: {
+        'Authorization': "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Accept-Language": languaeCode,
+      },
+      url: "$rejectExitRequestUnit$unitId/",
+    );
+
+    if (response != null) {
+      print("dklasklksad ${response.data} ${response.statusCode}");
+      if (response.statusCode == 200) {
+        isRefreshmentRequired.value = true;
+        isRequestLoading.value = false;
+        Get.back(result: isRefreshmentRequired.value);
+        customSnackBar(Get.context!, response.data['message']);
+      } else if (response.statusCode == 400) {
+        isRequestLoading.value = false;
+        customSnackBar(Get.context!, response.data['message'][0]);
+        // Handle error
+      } else if (response.statusCode == 404) {
+        isRequestLoading.value = false;
+        customSnackBar(Get.context!, response.data['message']);
+        // Handle error
+      }
+    }
+  }
+
   addRejectTenant({
     bool isFromAccept = true,
     int? tenantId,

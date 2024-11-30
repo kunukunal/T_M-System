@@ -80,11 +80,11 @@ class RazorPayController extends GetxController {
         _razorpay?.open(data);
       } catch (error) {
         paymentCntrl.isPaymentRequestSucess.value = false;
-        customSnackBar(Get.context!, "Something went wrong");
+        customSnackBar(Get.context!, "something_went_wrong".tr);
       }
     } else {
       paymentCntrl.isPaymentRequestSucess.value = false;
-      customSnackBar(Get.context!, "Something went wrong");
+      customSnackBar(Get.context!, "something_went_wrong".tr);
     }
   }
 

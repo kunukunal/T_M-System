@@ -51,7 +51,7 @@ class PaymentRequestScreen extends StatelessWidget {
                           SizedBox(height: 5.h),
                           PaymentWidget().paymenRequestForm(),
                           SizedBox(height: 5.h),
-                          customBorderButton("Continue", () {
+                          customBorderButton("continue".tr, () {
                             String amnt =
                                 paymntCntrl.ammountController.value.text;
                             if (paymntCntrl
@@ -67,11 +67,11 @@ class PaymentRequestScreen extends StatelessWidget {
                                 paymntCntrl.ontapSendRequest();
                               } else {
                                 customSnackBar(context,
-                                    "Please enter the valid ammount. amount is less than or equal $amount");
+                                    "${'enter_valid_amount_less_equal'.tr} $amount");
                               }
                             } else {
                               customSnackBar(
-                                  context, "Please enter the valid ammount");
+                                  context, "enter_valid_amount".tr);
                             }
                           },
                               fontweight: FontWeight.w500,
@@ -215,7 +215,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            customBorderButton("Continue", () {
+                            customBorderButton("continue".tr, () {
                               paymntCntrl.ontappaymentVia();
                             },
                                 fontweight: FontWeight.w500,
@@ -265,7 +265,7 @@ class PaymentRequestScreen extends StatelessWidget {
                                     ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
-                                    : customBorderButton(paymntCntrl.payentModeChoose.value==1?"Checkout":"send_request".tr, () {
+                                    : customBorderButton(paymntCntrl.payentModeChoose.value==1?"checkout".tr:"send_request".tr, () {
                                         String amnt = paymntCntrl
                                             .ammountController.value.text;
                                         if (paymntCntrl.ammountController.value
@@ -285,11 +285,11 @@ class PaymentRequestScreen extends StatelessWidget {
                                             paymntCntrl.ontapRequest();
                                           } else {
                                             customSnackBar(context,
-                                                "Please enter the valid ammount. amount is less than or equal $amount");
+                                                "${'enter_valid_amount_less_equal'.tr} $amount");
                                           }
                                         } else {
                                           customSnackBar(context,
-                                              "Please enter the valid ammount");
+                                              "enter_valid_amount".tr);
                                         }
                                       },
                                         fontweight: FontWeight.w500,

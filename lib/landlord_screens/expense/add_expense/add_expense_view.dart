@@ -105,10 +105,10 @@ class AddExpenseScreen extends StatelessWidget {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              PersonlInfoWidget.commomText('Other Expense'),
+                              PersonlInfoWidget.commomText('other_expense'.tr),
                               customTextField(
                                   controller: addExpCntrl.otherExpense.value,
-                                  hintText: 'Type Expense...',
+                                  hintText: '${'type_expense'.tr}...',
                                   isBorder: true,
                                   color: HexColor('#FFFFFF'),
                                   isFilled: false),

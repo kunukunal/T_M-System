@@ -22,10 +22,10 @@ class PaymentWidget {
         height: 100,
         decoration: BoxDecoration(
             color: index == 0
-                ? Colors.red
+                ? HexColor("#FFCCCB")
                 : index == 1
                     ? HexColor("#E8EEF8")
-                    : Colors.orange,
+                    : HexColor("#FFFFC5"),
             borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Obx(() {
@@ -47,10 +47,10 @@ class PaymentWidget {
                   ),
                   Text(
                       index == 0
-                          ? "Last Due"
+                          ? "last_due".tr
                           : index == 1
-                              ? "Rent due"
-                              : "Process amount",
+                              ? "rent_due".tr
+                              : "process_amount".tr,
                       style: TextStyle(
                           color: black,
                           fontSize: 15.sp - commonFontSize,

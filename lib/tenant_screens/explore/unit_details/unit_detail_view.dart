@@ -65,8 +65,8 @@ class UnitDetailView extends StatelessWidget {
                             indicatorColor: Colors.transparent,
                             splashFactory: NoSplash.splashFactory,
                             tabs: [
-                              UnitDetailViewWidget().tabContent('Overview'),
-                              UnitDetailViewWidget().tabContent('Reviews'),
+                              UnitDetailViewWidget().tabContent('overview'.tr),
+                              UnitDetailViewWidget().tabContent('reviews'.tr),
                             ],
                           ),
                         ),

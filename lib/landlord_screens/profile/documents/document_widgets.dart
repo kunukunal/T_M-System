@@ -86,7 +86,7 @@ class DocumentWidgets {
             },
           );
         else
-          customSnackBar(Get.context!, "No document found");
+          customSnackBar(Get.context!, "no_document_found".tr);
       },
       child: Stack(
         children: [

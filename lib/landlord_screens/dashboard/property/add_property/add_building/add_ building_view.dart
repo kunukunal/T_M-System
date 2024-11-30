@@ -39,7 +39,7 @@ class AddBuildingView extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Text(
-                      'Building Details',
+                      'building_details'.tr,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16.sp - commonFontSize,

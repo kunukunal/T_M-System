@@ -232,7 +232,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                "Add Tenant",
+                "add_kirayedar".tr,
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -263,7 +263,7 @@ class DashBoardWidgets {
           child: Row(
             children: [
               Text(
-                "Add/Edit Properties",
+                "add_edit_properties".tr,
                 style: CustomStyles.otpStyle050505
                     .copyWith(fontSize: 16.sp - commonFontSize),
               ),
@@ -427,7 +427,7 @@ class DashBoardWidgets {
                                 fontSize: 18.sp - commonFontSize,
                                 fontWeight: FontWeight.w700)),
                       ),
-                      EditProfileWidget.commomText("From", isMandatory: true),
+                      EditProfileWidget.commomText("from".tr, isMandatory: true),
                       Obx(() {
                         return ManagementWidgets().datePickerContainer(
                             isFromIncomeExpense
@@ -455,7 +455,7 @@ class DashBoardWidgets {
                           }
                         });
                       }),
-                      EditProfileWidget.commomText("To", isMandatory: true),
+                      EditProfileWidget.commomText("to".tr, isMandatory: true),
                       Obx(() {
                         return ManagementWidgets().datePickerContainer(
                             isFromIncomeExpense

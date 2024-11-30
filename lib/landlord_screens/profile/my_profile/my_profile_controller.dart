@@ -72,7 +72,7 @@ class MyProfileController extends GetxController {
               builder: (context) => SignInScreen(isFromRegister: false),
             ),
             (route) => false);
-        customSnackBar(Get.context!, "Account deleted successfully.");
+        customSnackBar(Get.context!, "account_deleted_successfully".tr);
       } else if (response.statusCode == 400) {
         isAccountDelete.value = false;
         if (response != null &&

@@ -23,7 +23,7 @@ class NotificationReceiveView extends StatelessWidget {
       length: 3, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Payments', style: CustomStyles.otpStyle050505W700S16),
+          title: Text('payments'.tr, style: CustomStyles.otpStyle050505W700S16),
           centerTitle: true,
           bottom: TabBar(
             labelColor: HexColor('#679BF1'),
@@ -42,10 +42,10 @@ class NotificationReceiveView extends StatelessWidget {
                 notifReceiveCntrl.getTransactionByStatusApi(3);
               }
             },
-            tabs: const [
-              Tab(text: 'Received'),
-              Tab(text: 'Due'),
-              Tab(text: 'Cancelled'),
+            tabs: [
+              Tab(text: 'received'.tr),
+              Tab(text: 'due'.tr),
+              Tab(text: 'cancelled'.tr),
             ],
           ),
         ),
@@ -79,8 +79,8 @@ class NotificationReceiveView extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : notifReceiveCntrl.dueItemsList.isEmpty
-              ? const Center(
-                  child: Text("No due pending"),
+              ? Center(
+                  child: Text("no_due_pending".tr),
                 )
               : ListView.builder(
                   shrinkWrap: true,
@@ -218,7 +218,8 @@ class NotificationReceiveView extends StatelessWidget {
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              "This month due:",
+                                                              // "${'this_month_due'.tr}:",
+                                                              "${'total_due'.tr}:",
                                                               style: TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -241,40 +242,40 @@ class NotificationReceiveView extends StatelessWidget {
                                                                         red)),
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text("Last Due:",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontSize: 14
-                                                                            .sp -
-                                                                        commonFontSize,
-                                                                    color:
-                                                                        grey)),
-                                                            Text(
-                                                                "₹${notifReceiveCntrl.dueItemsList[ind]['units'][index]['due_till_last_month']}",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontSize: 14
-                                                                            .sp -
-                                                                        commonFontSize,
-                                                                    color:
-                                                                        red)),
-                                                          ],
-                                                        ),
+                                                        // Row(
+                                                        //   mainAxisAlignment:
+                                                        //       MainAxisAlignment
+                                                        //           .spaceBetween,
+                                                        //   children: [
+                                                        //     Text("${'last_due'.tr}:",
+                                                        //         style: TextStyle(
+                                                        //             fontWeight:
+                                                        //                 FontWeight
+                                                        //                     .w600,
+                                                        //             fontSize: 14
+                                                        //                     .sp -
+                                                        //                 commonFontSize,
+                                                        //             color:
+                                                        //                 grey)),
+                                                        //     Text(
+                                                        //         "₹${notifReceiveCntrl.dueItemsList[ind]['units'][index]['due_till_last_month']}",
+                                                        //         style: TextStyle(
+                                                        //             fontWeight:
+                                                        //                 FontWeight
+                                                        //                     .w600,
+                                                        //             fontSize: 14
+                                                        //                     .sp -
+                                                        //                 commonFontSize,
+                                                        //             color:
+                                                        //                 red)),
+                                                        //   ],
+                                                        // ),
                                                       ],
                                                     ),
                                                     isThreeLine: true,
                                                     trailing:
                                                         customBorderButton(
-                                                      'Paid',
+                                                      'paid'.tr,
                                                       () {
                                                         double toatalAmnt = (notifReceiveCntrl
                                                                         .dueItemsList[ind]
@@ -290,7 +291,7 @@ class NotificationReceiveView extends StatelessWidget {
                                                                 'due_till_last_month']);
                                                         paymentPayDialoge(
                                                             title:
-                                                                "Pay your ${notifReceiveCntrl.dueItemsList[ind]['units'][index]['unit_name']} rent",
+                                                                "${'pay_your'.tr} ${notifReceiveCntrl.dueItemsList[ind]['units'][index]['unit_name']} ${'rent'.tr}",
                                                             amount: toatalAmnt,
                                                             tenantId:
                                                                 notifReceiveCntrl
@@ -342,8 +343,8 @@ class NotificationReceiveView extends StatelessWidget {
             child: CircularProgressIndicator(),
           )
         : list.isEmpty
-            ? const Center(
-                child: Text("No Transaction found"),
+            ? Center(
+                child: Text("no_transaction_found".tr),
               )
             : ListView.builder(
                 shrinkWrap: true,
@@ -407,7 +408,7 @@ class NotificationReceiveView extends StatelessWidget {
                               fontSize: 18.sp - commonFontSize,
                               fontWeight: FontWeight.w700)),
                       AddPropertyWidget()
-                          .commomText('Amount', isMandatory: true),
+                          .commomText('amount'.tr, isMandatory: true),
                       customTextField(
                         textInputAction: TextInputAction.done,
                         controller: amountcntrl,
@@ -415,16 +416,16 @@ class NotificationReceiveView extends StatelessWidget {
                         // inputFormatters: [
                         //   FilteringTextInputFormatter.allow('.')
                         // ],
-                        hintText: 'Enter the amount',
+                        hintText: 'enter_amount'.tr,
                         isBorder: true,
                         isFilled: false,
                       ),
                       AddPropertyWidget()
-                          .commomText("Description", isMandatory: false),
+                          .commomText("description".tr, isMandatory: false),
                       customTextField(
                         textInputAction: TextInputAction.done,
                         controller: descriptionCntrl,
-                        hintText: 'Enter the description',
+                        hintText: 'enter_description'.tr,
                         isBorder: true,
                         maxLines: 2,
                         isFilled: false,
@@ -441,7 +442,7 @@ class NotificationReceiveView extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  customBorderButton("Cancel", () {
+                                  customBorderButton("cancel".tr, () {
                                     Get.back();
                                   },
                                       verticalPadding: 5.h,
@@ -451,7 +452,7 @@ class NotificationReceiveView extends StatelessWidget {
                                       borderColor: HexColor('#679BF1'),
                                       textColor: HexColor('#679BF1')),
                                   customBorderButton(
-                                    "Paid",
+                                    "paid".tr,
                                     () {
                                       if (amountcntrl.text
                                           .toString()
@@ -470,15 +471,15 @@ class NotificationReceiveView extends StatelessWidget {
                                                     descriptionCntrl.text);
                                           } else {
                                             customSnackBar(Get.context!,
-                                                "Please enter the amount less than $amount");
+                                                "${'please_enter_amount_less_than'.tr} $amount");
                                           }
                                         } else {
                                           customSnackBar(Get.context!,
-                                              "Please enter the amount greater than 0");
+                                              "${'please_enter_amount_greater_than_0'.tr}");
                                         }
                                       } else {
                                         customSnackBar(Get.context!,
-                                            "Please enter the amount");
+                                            "please_enter_amount".tr);
                                       }
                                     },
                                     verticalPadding: 5.h,

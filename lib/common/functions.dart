@@ -66,7 +66,7 @@ Future<DioResult?> handelApi({
       } else {
         automatic
             ? null
-            : CustomDialog.customSnackBar(Get.context!, "Something went wrong");
+            : CustomDialog.customSnackBar(Get.context!, "something_went_wrong".tr);
       }
       automatic ? null : Get.back();
       // Navigator.pop(context);
@@ -74,7 +74,7 @@ Future<DioResult?> handelApi({
     } catch (e) {
       automatic
           ? null
-          : CustomDialog.customSnackBar(Get.context!, "Something went wrong");
+          : CustomDialog.customSnackBar(Get.context!, "something_went_wrong".tr);
       // Navigator.pop(context);
       automatic ? null : Get.back();
       log("Exception - handelApi(): $e");

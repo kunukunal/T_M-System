@@ -141,7 +141,7 @@ class SearchWidget {
               }
             });
           } else {
-            customSnackBar(Get.context!, "Unit already Occupied");
+            customSnackBar(Get.context!, "unit_already_occupied".tr);
           }
         },
         child: Container(

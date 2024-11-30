@@ -59,14 +59,14 @@ class AuthWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Need Help?'),
+          title:  Text('need_help'.tr),
           content: RichText(
             text: TextSpan(
               style: const TextStyle(color: Colors.black, fontSize: 16),
               children: [
-                const TextSpan(
+                 TextSpan(
                   text:
-                      "If you have any questions or need assistance, feel free to reach out to us at ",
+                      "${'help_contact_message'.tr} ",
                 ),
                 TextSpan(
                   text: "info@daqorbit.com",
@@ -77,8 +77,8 @@ class AuthWidget {
                       _launchEmail("info@daqorbit.com");
                     },
                 ),
-                const TextSpan(
-                  text: ". We're here to help!",
+                 TextSpan(
+                  text: ". ${'here_to_help'.tr}",
                 ),
               ],
             ),
@@ -88,7 +88,7 @@ class AuthWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child:  Text('ok'.tr),
             ),
           ],
         );
@@ -134,7 +134,7 @@ class AuthWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                Text("Register your space as",
+                Text("register_space_as".tr,
                     style: CustomStyles.descriptionText6c6c6c),
                 // SizedBox(
                 //   height: 5.h,
@@ -167,7 +167,7 @@ class AuthWidget {
                     onPressed: () {
                       resgisterPopup(
                         title: 'registration'.tr,
-                        subtitle: "Register your space as",
+                        subtitle: "register_space_as".tr,
                         button1: 'landlord'.tr,
                         button2: 'tenant'.tr,
                         onButton1Tap: () {

@@ -17,7 +17,7 @@ class RentalInformation extends StatelessWidget {
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           title: Text(
-            'rental_information'.tr,
+           "payment_history".tr,
             style: CustomStyles.titleText
                 .copyWith(fontWeight: FontWeight.w500, fontFamily: 'Inter'),
           ),
@@ -56,11 +56,11 @@ class RentalInformation extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         )
                       : rentalCntrl.paymentHistoryList.isEmpty
-                          ? const Center(
-                              child: Text("No Payment record found"),
+                          ?  Center(
+                              child: Text("no_payment_record_found".tr),
                             )
                           : DashBoardTenantWidgets()
-                              .paymentHistory(rentalCntrl.paymentHistoryList),
+                              .paymentHistory(rentalCntrl.paymentHistoryList,isFromDashboard: false),
                 );
               })
             ],

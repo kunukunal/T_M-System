@@ -28,7 +28,7 @@ class UnitDetails extends StatelessWidget {
               child: backArrowImage,
             ),
           ),
-          title: Text("Unit Details".tr,
+          title: Text("unit_details".tr,
               style: CustomStyles.otpStyle050505W700S16),
         ),
         body: Obx(() {

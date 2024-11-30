@@ -86,7 +86,7 @@ class AdasTenatDetailsScreen extends StatelessWidget {
                                           .isTenantAlreadyAdded.value
                                       ? Center(
                                           child: Text(
-                                            "Tenant Already added",
+                                            "tenant_already_added".tr,
                                             style: TextStyle(
                                                 color: green,
                                                 fontSize: commonFontSize + 15,
@@ -99,7 +99,7 @@ class AdasTenatDetailsScreen extends StatelessWidget {
                                           children: [
                                             Expanded(
                                               child: customBorderButton(
-                                                  'Reject', () {
+                                                  'reject'.tr, () {
                                                 tenantDetailsCntrl
                                                     .addRejectTenant(
                                                   isFromAccept: false,
@@ -120,7 +120,7 @@ class AdasTenatDetailsScreen extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: customBorderButton(
-                                                'Add as Tenant',
+                                                'add_as_tenant'.tr,
                                                 () {
                                                   tenantDetailsCntrl
                                                       .addRejectTenant(
@@ -140,20 +140,65 @@ class AdasTenatDetailsScreen extends StatelessWidget {
                                             )
                                           ],
                                         )
-                                  : customBorderButton(
-                                      'Exit Unit',
-                                      () {
-                                        tenantDetailsCntrl.removeTenant(
-                                            tenantDetailsCntrl.unitId.value,tenantDetailsCntrl.notificationId.value);
-                                      },
-                                      verticalPadding: 12.h,
-                                      horizontalPadding: 2.w,
-                                      btnHeight: 30.h,
-                                      color: red,
-                                      borderColor: red,
-                                      textColor: HexColor('#FFFFFF'),
-                                    ),
-                            );
+                                  : Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "exit_unit_request".tr,
+                                          style: CustomStyles
+                                              .otpStyle050505W700S16,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: customBorderButton(
+                                                'reject_request'.tr,
+                                                () {
+                                                  tenantDetailsCntrl
+                                                      .rejectExitRequestUnitApi(
+                                                    tenantDetailsCntrl
+                                                        .unitId.value,
+                                                  );
+                                                },
+                                                verticalPadding: 12.h,
+                                                horizontalPadding: 2.w,
+                                                btnHeight: 30.h,
+                                                color: red,
+                                                borderColor: red,
+                                                textColor: HexColor('#FFFFFF'),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: customBorderButton(
+                                                'accept_request'.tr,
+                                                () {
+                                                  tenantDetailsCntrl
+                                                      .removeTenant(
+                                                          tenantDetailsCntrl
+                                                              .unitId.value,
+                                                          tenantDetailsCntrl
+                                                              .notificationId
+                                                              .value);
+                                                },
+                                                verticalPadding: 12.h,
+                                                horizontalPadding: 2.w,
+                                                btnHeight: 30.h,
+                                                color: HexColor('#679BF1'),
+                                                borderColor:
+                                                    HexColor('#679BF1'),
+                                                textColor: HexColor('#FFFFFF'),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ));
                     }),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),

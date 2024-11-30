@@ -17,12 +17,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(
           title: Text(
               isFrom == 1
-                  ? "About Us"
+                  ? "about_us".tr
                   : isFrom == 2
                       ? 'privacy_policy'.tr
                       : isFrom == 3
-                          ? "Terms and Conditions"
-                          : "Refund & Cancellation",
+                          ? "terms_and_conditions".tr
+                          : "refund_and_cancellation".tr,
               style: CustomStyles.skipBlack)),
       body: SingleChildScrollView(
         child: Obx(() {
@@ -37,12 +37,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 : privacyCntrl.privacyPolicyHtml.keys.isEmpty
                     ? Center(
                         child: Text(isFrom == 1
-                            ? "About us data not found"
+                            ? "about_us_data_not_found".tr
                             : isFrom == 2
                                 ? "privacy_policy_data_not_found".tr
                                 : isFrom == 3
-                                    ? "Terms and Conditions data not found"
-                                    : "Refund & Cancellation"),
+                                    ? "terms_and_conditions_data_not_found".tr
+                                    : "refund_and_cancellation".tr),
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -57,8 +57,8 @@ class CompleteDashboard extends StatelessWidget {
                 searchTap: () {
                   DashBoardWidgets().filterDashboardOnChart(
                     title: "income_expense".tr,
-                    button1: "Cancel",
-                    button2: "Search",
+                    button1: "cancel".tr,
+                    button2: "search".tr,
                     onButton1Tap: () {
                       dashCntrl.incomingStartFrom.value = null;
                       dashCntrl.incomingEndFrom.value = null;
@@ -90,8 +90,8 @@ class CompleteDashboard extends StatelessWidget {
                   DashBoardWidgets().filterDashboardOnChart(
                     isFromIncomeExpense: false,
                     title: "occupancy_trend".tr,
-                    button1: "Cancel",
-                    button2: "Search",
+                    button1: "cancel".tr,
+                    button2: "search".tr,
                     onButton1Tap: () {
                       dashCntrl.occupancyStartFrom.value = null;
                       dashCntrl.occupancyEndFrom.value = null;
@@ -198,7 +198,7 @@ tenantRentContainer() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Total rent received",
+                    "total_rent_received".tr,
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -213,7 +213,7 @@ tenantRentContainer() {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "Total rent due",
+                    "total_rent_due".tr,
                     style: CustomStyles.desc606060.copyWith(
                         fontSize: 14.sp - commonFontSize,
                         fontFamily: 'DM Sans'),
@@ -305,7 +305,7 @@ tenantRentContainerWithFilter() {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Total rent received",
+                      "total_rent_received".tr,
                       style: CustomStyles.desc606060.copyWith(
                           fontSize: 14.sp - commonFontSize,
                           fontFamily: 'DM Sans'),
@@ -320,7 +320,7 @@ tenantRentContainerWithFilter() {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "Total rent due",
+                      "total_rent_due".tr,
                       style: CustomStyles.desc606060.copyWith(
                           fontSize: 14.sp - commonFontSize,
                           fontFamily: 'DM Sans'),
