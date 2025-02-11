@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/management/management_view.dart';
 import 'package:tanent_management/landlord_screens/dashboard/search/search_controller.dart';
@@ -252,10 +253,15 @@ class SearchWidget {
                         ],
                       ),
                     ),
-                    Image.asset(
-                      'assets/icons/Frame.png',
-                      height: 24.h,
-                      width: 24.w,
+                    InkWell(
+                      onTap: () {
+                        shareUnitById(unitId!);
+                      },
+                      child: Image.asset(
+                        'assets/icons/Frame.png',
+                        height: 24.h,
+                        width: 24.w,
+                      ),
                     ),
                   ],
                 ),

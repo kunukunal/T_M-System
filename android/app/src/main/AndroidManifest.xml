@@ -40,7 +40,7 @@
 
   <data android:scheme="https" />
   <data android:scheme="http" />
-  <data android:host="daqorbit.com/" />
+  <data android:host="143.110.176.101" />
 </intent-filter>
         </activity>
 

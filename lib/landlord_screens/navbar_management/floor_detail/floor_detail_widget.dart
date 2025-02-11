@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tanent_management/common/global_data.dart';
 import 'package:tanent_management/common/widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/management/management_widgets.dart';
 import 'package:tanent_management/landlord_screens/dashboard/property/add_property/unit_List/unit_details/unit_details_view.dart';
@@ -219,10 +220,15 @@ class FloorDetailWidget {
                                       width: 10,
                                     ),
                                     if (isOccupied == false)
-                                      Image.asset(
-                                        'assets/icons/Frame.png',
-                                        height: 20.h,
-                                        width: 20.w,
+                                      InkWell(
+                                        onTap: () {
+                                          shareUnitById(unitId!);
+                                        },
+                                        child: Image.asset(
+                                          'assets/icons/Frame.png',
+                                          height: 20.h,
+                                          width: 20.w,
+                                        ),
                                       ),
                                   ],
                                 ),

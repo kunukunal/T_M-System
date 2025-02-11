@@ -34,7 +34,7 @@ class DioClientServices {
         formData = FormData.fromMap(body);
       } else {}
       Response response = await _dio.post(
-        (commonBaseUrl + url),
+        (apiBaseUrl + url),
         data: isRawData == true ? jsonEncode(body) : formData,
         options: Options(headers: headers),
       );
@@ -70,7 +70,7 @@ class DioClientServices {
   }) async {
     try {
       Response response = await _dio.get(
-        isCustomUrl ? url : (commonBaseUrl + url),
+        isCustomUrl ? url : (apiBaseUrl + url),
         options: Options(headers: headers),
       );
 
@@ -105,7 +105,7 @@ class DioClientServices {
   }) async {
     try {
       Response response = await _dio.delete(
-        (commonBaseUrl + url),
+        (apiBaseUrl + url),
         options: Options(headers: headers),
       );
 
@@ -145,7 +145,7 @@ class DioClientServices {
         formData = FormData.fromMap(body);
       } else {}
       Response response = await _dio.patch(
-        (commonBaseUrl + url),
+        (apiBaseUrl + url),
         data: isRawData == true ? jsonEncode(body) : formData,
         options: Options(headers: headers),
       );
@@ -184,7 +184,7 @@ class DioClientServices {
         formData = FormData.fromMap(body);
       } else {}
       Response response = await _dio.put(
-        (commonBaseUrl + url),
+        (apiBaseUrl + url),
         data: isRawData == true ? jsonEncode(body) : formData,
         options: Options(headers: headers),
       );

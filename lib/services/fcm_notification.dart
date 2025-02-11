@@ -28,6 +28,12 @@ class NotificationService {
     } catch (e) {}
   }
 
+  getFcmToken() async {
+    try {
+      return await _firebaseMessaging.getToken() ?? "";
+    } catch (e) {}
+  }
+
 // handle operation
   void handleMessage(
     RemoteMessage? event,
